@@ -1,6 +1,6 @@
 # THE OFFICE — Production Studio Site
 
-A production-grade landing page for THE OFFICE, a four-person studio for book strategy, web design, bot making, and book research.
+A production-grade landing page for THE OFFICE, a four-person studio for book strategy, web design, automation, and book research.
 
 ## Architecture
 
@@ -103,7 +103,7 @@ Output goes to `dist/`.
 | Variable | Value Example | Environment |
 |----------|--------------|-------------|
 | `RESEND_API_KEY` | `re_xxxxxxxx` | Production, Preview |
-| `TO_EMAIL` | `hello@theoffice.studio` | Production, Preview |
+| `TO_EMAIL` | `theoffice@gmail.com` | Production, Preview |
 | `FROM_EMAIL` | `onboarding@resend.dev` | Production, Preview |
 
 ### Custom Domain

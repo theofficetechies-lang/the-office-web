@@ -4,7 +4,7 @@ import { rateLimit } from "./_lib/rate-limit.js";
 import { briefSchema, sanitizeText } from "./_lib/validate.js";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const TO_EMAIL = process.env.TO_EMAIL ?? "hello@theoffice.studio";
+const TO_EMAIL = process.env.TO_EMAIL ?? "theoffice@gmail.com";
 const FROM_EMAIL = process.env.FROM_EMAIL ?? "onboarding@resend.dev";
 const ENV = process.env.VERCEL_ENV ?? "development";
 
@@ -153,7 +153,7 @@ export default async function handler(
     console.error("[Brief API] Email send failed:", err);
     return res.status(502).json({
       success: false,
-      error: "Unable to deliver your brief. Please email us directly at hello@theoffice.studio",
+      error: "Unable to deliver your brief. Please email us directly at theoffice@gmail.com",
     });
   }
 }

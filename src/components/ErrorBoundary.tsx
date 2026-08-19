@@ -46,10 +46,10 @@ export default class ErrorBoundary extends Component<Props, State> {
               The page encountered an unexpected error. Try refreshing, or reach
               us directly at{" "}
               <a
-                href="mailto:hello@theoffice.studio"
+                href="mailto:theoffice@gmail.com"
                 className="border-b border-black"
               >
-                hello@theoffice.studio
+                theoffice@gmail.com
               </a>
               .
             </p>

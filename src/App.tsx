@@ -38,7 +38,7 @@ const services = [
   },
   {
     n: "03",
-    title: "Bot Making",
+    title: "Automation Services",
     blurb:
       "Custom automation and conversational systems. Internal tools that replace a hundred spreadsheets, reader-facing assistants that know a back-catalogue, agents that do the boring half of your week.",
     deliverables: [
@@ -366,7 +366,7 @@ function ContactForm() {
         const body = encodeURIComponent(
           `Name: ${payload.name}\nEmail: ${payload.email}\nOrg: ${payload.org}\nService: ${payload.service}\n\n—\n\n${payload.brief}\n\n—\n(Form delivery failed; this email is a fallback. Please reply to confirm receipt.)`
         );
-        window.location.href = `mailto:hello@theoffice.studio?subject=${subject}&body=${body}`;
+        window.location.href = `mailto:theoffice@gmail.com?subject=${subject}&body=${body}`;
       }
     }
   }
@@ -423,8 +423,8 @@ function ContactForm() {
           <option value="web-design" className="text-black">
             Web Design
           </option>
-          <option value="bot-making" className="text-black">
-            Bot Making
+          <option value="automation-services" className="text-black">
+            Automation Services
           </option>
           <option value="book-research" className="text-black">
             Book Research &amp; Analysis
@@ -629,7 +629,7 @@ function NotFound() {
                 ← FRONT DOOR
               </a>
               <a
-                href="mailto:hello@theoffice.studio?subject=Broken%20link%20on%20theoffice.studio"
+                href="mailto:theoffice@gmail.com?subject=Broken%20link%20on%20theoffice.studio"
                 className="font-mono text-[12px] tracking-mono font-semibold border-b border-black self-center"
               >
                 REPORT A BROKEN LINK →
@@ -746,7 +746,7 @@ export default function App() {
                 behind the{" "}
                 <span className="italic font-normal">book</span>, the
                 <br />
-                site, and the bot.
+                site, and the automation.
               </h1>
 
               <div className="mt-10 sm:mt-14 grid grid-cols-12 gap-x-6 gap-y-8">
@@ -937,7 +937,7 @@ export default function App() {
                     marketing one. Position the book correctly and the rest
                     of the job gets easier. Build the site like a piece of
                     editorial design and the conversion takes care of
-                    itself. Write the bot to do the boring half of the job
+                    itself. Write the automation to do the boring half of the job
                     and the human team gets their week back.
                   </p>
                   <p>
@@ -1066,10 +1066,10 @@ export default function App() {
                     DIRECT
                   </div>
                   <a
-                    href="mailto:hello@theoffice.studio"
+                    href="mailto:theoffice@gmail.com"
                     className="block font-display text-[22px] sm:text-[26px] tracking-display leading-tight border-b border-white/40 pb-2 hover:border-white"
                   >
-                    hello@theoffice.studio
+                    theoffice@gmail.com
                   </a>
 
                   <div className="mt-6 font-mono text-[11px] tracking-mono opacity-70 leading-[1.7]">
