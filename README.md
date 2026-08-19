@@ -103,7 +103,7 @@ Output goes to `dist/`.
 | Variable | Value Example | Environment |
 |----------|--------------|-------------|
 | `RESEND_API_KEY` | `re_xxxxxxxx` | Production, Preview |
-| `TO_EMAIL` | `theoffice@gmail.com` | Production, Preview |
+| `TO_EMAIL` | `theofficetechies@gmail.com` | Production, Preview |
 | `FROM_EMAIL` | `onboarding@resend.dev` | Production, Preview |
 
 ### Custom Domain

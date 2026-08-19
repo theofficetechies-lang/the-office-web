@@ -366,7 +366,7 @@ function ContactForm() {
         const body = encodeURIComponent(
           `Name: ${payload.name}\nEmail: ${payload.email}\nOrg: ${payload.org}\nService: ${payload.service}\n\n—\n\n${payload.brief}\n\n—\n(Form delivery failed; this email is a fallback. Please reply to confirm receipt.)`
         );
-        window.location.href = `mailto:theoffice@gmail.com?subject=${subject}&body=${body}`;
+        window.location.href = `mailto:theofficetechies@gmail.com?subject=${subject}&body=${body}`;
       }
     }
   }
@@ -629,7 +629,7 @@ function NotFound() {
                 ← FRONT DOOR
               </a>
               <a
-                href="mailto:theoffice@gmail.com?subject=Broken%20link%20on%20theoffice.studio"
+                href="mailto:theofficetechies@gmail.com?subject=Broken%20link%20on%20theoffice.studio"
                 className="font-mono text-[12px] tracking-mono font-semibold border-b border-black self-center"
               >
                 REPORT A BROKEN LINK →
@@ -1066,10 +1066,10 @@ export default function App() {
                     DIRECT
                   </div>
                   <a
-                    href="mailto:theoffice@gmail.com"
+                    href="mailto:theofficetechies@gmail.com"
                     className="block font-display text-[22px] sm:text-[26px] tracking-display leading-tight border-b border-white/40 pb-2 hover:border-white"
                   >
-                    theoffice@gmail.com
+                    theofficetechies@gmail.com
                   </a>
 
                   <div className="mt-6 font-mono text-[11px] tracking-mono opacity-70 leading-[1.7]">
