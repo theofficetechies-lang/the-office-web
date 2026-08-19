@@ -1,6 +1,6 @@
 /**
  * Compact mobile/tablet version of the manuscript galley's "margin rail".
- * Persists the signature layout device (SEC. / FOLIO / RUNNING HEAD) at
+ * Persists the signature layout device (SEC. / PORTFOLIO / RUNNING HEAD) at
  * every breakpoint — the full rail still appears at lg+, but most traffic
  * sees this.
  */
@@ -31,7 +31,7 @@ export default function MobileFolioStrip({
         <span className="opacity-60">SEC.</span>
         <span className="font-semibold">{sectionNum}</span>
         <span className="opacity-50">/</span>
-        <span className="opacity-60">FOLIO</span>
+        <span className="opacity-60">PORTFOLIO</span>
         <span>{folio ?? "—"}</span>
         <span className="opacity-50">/</span>
         <span className="truncate">{sectionLabel}</span>

@@ -597,14 +597,14 @@ function NotFound() {
         <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10">
           <MarginRail
             sectionNum="∅"
-            sectionLabel="THIS FOLIO IS NOT IN THE ARCHIVE"
-            folio="FOLIO NULL"
+            sectionLabel="THIS PORTFOLIO IS NOT IN THE ARCHIVE"
+            folio="PORTFOLIO NULL"
             note="The page you asked for has been moved, renamed, or never existed."
           />
           <div className="col-span-12 lg:col-span-10">
             <MobileFolioStrip
               sectionNum="∅"
-              sectionLabel="FOLIO NOT FOUND"
+              sectionLabel="PORTFOLIO NOT FOUND"
               folio="—"
             />
             <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
@@ -614,7 +614,7 @@ function NotFound() {
               id="nf-heading"
               className="font-display tracking-display-tight text-[56px] sm:text-[88px] lg:text-[128px] leading-[0.95] font-light"
             >
-              FOLIO not found.
+              PORTFOLIO not found.
             </h1>
             <p className="mt-8 max-w-prose text-[16px] leading-[1.6]">
               The page you tried to reach is not in the archive. It may have
@@ -720,7 +720,7 @@ export default function App() {
             <MarginRail
               sectionNum="00"
               sectionLabel="THE OFFICE / A STUDIO FOR BOOKS, WEB, BOTS, AND RESEARCH"
-              folio="FOLIO I"
+              folio="PORTFOLIO I"
               note="If you are reading this, the manifest bar above is real time. It is also the only animation on this page."
             />
 
@@ -728,7 +728,7 @@ export default function App() {
               <MobileFolioStrip
                 sectionNum="00"
                 sectionLabel="A STUDIO FOR BOOKS, WEB, BOTS, AND RESEARCH"
-                folio="FOLIO I"
+                folio="PORTFOLIO I"
               />
               <div className="font-mono text-[11px] sm:text-[12px] tracking-mono opacity-70 mb-6 sm:mb-10">
                 <span className="opacity-60">A SMALL STUDIO. </span>
@@ -801,7 +801,7 @@ export default function App() {
             <MarginRail
               sectionNum="01"
               sectionLabel="FOUR SERVICES. ONE STUDIO."
-              folio="FOLIO II"
+              folio="PORTFOLIO II"
               note="These are not packages. We scope each engagement against the brief."
             />
 
@@ -809,7 +809,7 @@ export default function App() {
               <MobileFolioStrip
                 sectionNum="01"
                 sectionLabel="FOUR SERVICES. ONE STUDIO."
-                folio="FOLIO II"
+                folio="PORTFOLIO II"
               />
               <div className="mb-10 sm:mb-14">
                 <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
@@ -846,7 +846,7 @@ export default function App() {
             <MarginRail
               sectionNum="02"
               sectionLabel="SELECTED WORK, 2024–2025"
-              folio="FOLIO III"
+              folio="PORTFOLIO III"
               note="A3 / B7: details altered or generalised to protect client confidentiality. Real case studies available on request under NDA."
             />
 
@@ -854,7 +854,7 @@ export default function App() {
               <MobileFolioStrip
                 sectionNum="02"
                 sectionLabel="SELECTED WORK, 2024–2025"
-                folio="FOLIO III"
+                folio="PORTFOLIO III"
               />
               <div className="mb-10 sm:mb-14">
                 <div className="font-mono text-[11px] tracking-mono opacity-60 mb-3">
@@ -901,7 +901,7 @@ export default function App() {
             <MarginRail
               sectionNum="03"
               sectionLabel="FOUR PEOPLE. ONE STUDIO."
-              folio="FOLIO IV"
+              folio="PORTFOLIO IV"
               note="No headshots. No founding myth. Just the work and a way to reach us."
             />
 
@@ -909,7 +909,7 @@ export default function App() {
               <MobileFolioStrip
                 sectionNum="03"
                 sectionLabel="FOUR PEOPLE. ONE STUDIO."
-                folio="FOLIO IV"
+                folio="PORTFOLIO IV"
               />
               <div className="mb-10 sm:mb-14">
                 <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
@@ -1017,8 +1017,8 @@ export default function App() {
                   <div className="text-base font-semibold">04</div>
                 </div>
                 <div className="mb-6">
-                  <div className="opacity-60 mb-1">FOLIO</div>
-                  <div>FOLIO V</div>
+                  <div className="opacity-60 mb-1">PORTFOLIO</div>
+                  <div>PORTFOLIO V</div>
                 </div>
                 <div className="mb-6">
                   <div className="opacity-60 mb-1">RUNNING HEAD</div>
@@ -1039,7 +1039,7 @@ export default function App() {
               <MobileFolioStrip
                 sectionNum="04"
                 sectionLabel="START A BRIEF"
-                folio="FOLIO V"
+                folio="PORTFOLIO V"
                 inverse
               />
               <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">

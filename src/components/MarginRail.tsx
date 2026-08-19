@@ -28,7 +28,7 @@ export default function MarginRail({
         </div>
 
         <div className="mb-6">
-          <div className="opacity-50 mb-1">FOLIO</div>
+          <div className="opacity-50 mb-1">PORTFOLIO</div>
           <div>{folio ?? "—"}</div>
         </div>
 
