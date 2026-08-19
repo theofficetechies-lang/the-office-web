@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="THE OFFICE — a small studio for book strategy, web design, custom bots, and book research. Four people, no subcontractors, no juniors on your brief." />
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="canonical" href="https://theoffice.studio/" />
+
+    <!-- Favicon set -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.svg" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="THE OFFICE" />
+    <meta property="og:title" content="THE OFFICE — Book strategy, web design, bots, research" />
+    <meta property="og:description" content="A four-person studio for authors, publishers, and the people who run literary businesses. Book strategy, custom web, automation, research." />
+    <meta property="og:url" content="https://theoffice.studio/" />
+    <meta property="og:image" content="https://theoffice.studio/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="THE OFFICE — a small studio for book strategy, web, bots, and research." />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="THE OFFICE — Book strategy, web design, bots, research" />
+    <meta name="twitter:description" content="A four-person studio for authors, publishers, and the people who run literary businesses." />
+    <meta name="twitter:image" content="https://theoffice.studio/og-image.png" />
+    <meta name="twitter:image:alt" content="THE OFFICE — a small studio for book strategy, web, bots, and research." />
+
+    <!-- JSON-LD: ProfessionalService -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "@id": "https://theoffice.studio/#organization",
+      "name": "THE OFFICE",
+      "alternateName": "The Office Studio",
+      "url": "https://theoffice.studio/",
+      "logo": "https://theoffice.studio/favicon.svg",
+      "image": "https://theoffice.studio/og-image.png",
+      "description": "A four-person studio for authors, publishers, and the people who run literary businesses. Book strategy, custom web design, conversational systems, and book research.",
+      "foundingDate": "2021",
+      "areaServed": ["US", "PT", "GB", "EU"],
+      "knowsLanguage": ["en", "pt"],
+      "serviceType": [
+        "Book Strategy",
+        "Web Design",
+        "Conversational AI / Bot Building",
+        "Book Research & Analysis"
+      ],
+      "priceRange": "$$$",
+      "sameAs": []
+    }
+    </script>
+
+    <!-- Font preconnect + preloads for the display face used above the fold -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!--
+      We only preload Fraunces (the display face) for above-the-fold hero text.
+      Body and mono faces load via the stylesheet below with display=swap,
+      so body text never blocks first paint.
+    -->
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..700,0..100&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..700,0..100&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    />
+
+    <title>THE OFFICE — Book strategy, web, bots, research</title>
+  </head>
+  <body>
+    <!--
+      Noscript fallback: this is a client-rendered React app. Without
+      JS, the document body is empty. Give visitors (and crawlers
+      without JS) a real, in-voice message + a mailto.
+    -->
+    <noscript>
+      <div style="font-family: Georgia, serif; max-width: 640px; margin: 4rem auto; padding: 0 1.5rem; color: #000; background: #fff;">
+        <p style="font-size: 11px; letter-spacing: 0.1em; font-family: monospace; text-transform: uppercase; opacity: 0.6; margin: 0 0 0.5rem 0;">THE OFFICE</p>
+        <h1 style="font-size: 2.5rem; line-height: 1; margin: 0 0 1.5rem 0; font-weight: 300;">JavaScript is off.</h1>
+        <p style="font-size: 1rem; line-height: 1.6; margin: 0 0 1rem 0;">This page is a small client-rendered site. With scripting disabled you are seeing the fallback. The short version of who we are: a four-person studio for book strategy, web design, custom bots, and book research.</p>
+        <p style="font-size: 1rem; line-height: 1.6; margin: 0 0 1.5rem 0;">The best way to reach us is by email:</p>
+        <p style="font-size: 1.1rem; margin: 0;"><a href="mailto:hello@theoffice.studio" style="color: #000; border-bottom: 1px solid #000; text-decoration: none;">hello@theoffice.studio</a></p>
+      </div>
+    </noscript>
+
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
