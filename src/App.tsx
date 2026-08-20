@@ -117,6 +117,16 @@ const projects = [
     stack: ["Strategy", "PR", "Partnerships"],
     year: "2024",
   },
+  {
+    n: "P/050",
+    sector: "Publishing / Backlist optimisation",
+    title: "Amazon SEO audit and visibility recovery for two backlist titles",
+    outcome:
+      "Both titles advanced two Amazon grade tiers over an eight-week period. Performance gained 45 percentage points, visibility 43 points, backlinking more than doubled. Methodology documented with full audit trail.",
+    stack: ["Amazon SEO", "Audit", "Backlist Optimisation"],
+    year: "2025",
+    download: "/downloads/amazon-seo-sample-report.pdf",
+  },
 ];
 
 const principles = [
@@ -256,12 +266,23 @@ function ProjectCard({
 
       <p className="text-[14px] leading-[1.6] mb-6 flex-1">{p.outcome}</p>
 
-      <footer className="mt-auto pt-4 border-t border-current/20 flex flex-wrap gap-x-3 gap-y-1 font-mono text-[11px] tracking-mono">
+      <footer className="mt-auto pt-4 border-t border-current/20 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] tracking-mono">
         {p.stack.map((tag) => (
           <span key={tag} className="opacity-80">
             {tag}
           </span>
         ))}
+        {p.download && (
+          <a
+            href={p.download}
+            download
+            className="ml-auto inline-flex items-center gap-1 opacity-80 hover:opacity-100 underline-offset-2 hover:underline"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <span>↓</span>
+            <span>Report</span>
+          </a>
+        )}
       </footer>
     </article>
   );
