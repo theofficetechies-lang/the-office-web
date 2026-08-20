@@ -156,6 +156,33 @@ const testimonials = [
   },
 ];
 
+const team = [
+  {
+    initials: "SD",
+    name: "Samantha Dion",
+    role: "Book Strategist & Editorial Lead",
+    note: "Former commissioning editor at a mid-size trade house. Has repositioned manuscripts that went on to longlist for major prizes. Writes the briefs.",
+  },
+  {
+    initials: "MK",
+    name: "Marcus Kowalski",
+    role: "Web Design & Front-End",
+    note: "Built editorial products inside publishing and product teams for twelve years. The person who argues with you about information architecture and is usually right.",
+  },
+  {
+    initials: "LP",
+    name: "Lena Park",
+    role: "Automation & Systems",
+    note: "Engineer who spent a decade building conversational systems and workflow tools. Replaces spreadsheets with things that actually work.",
+  },
+  {
+    initials: "JR",
+    name: "James Reid",
+    role: "Research & Analysis",
+    note: "Former literary agency researcher. Can map a market in a week and find the comp title nobody else noticed. Reads faster than is reasonable.",
+  },
+];
+
 /* ------------------------------------------------------------------ */
 /* Analytics helper                                                    */
 /* ------------------------------------------------------------------ */
@@ -216,6 +243,29 @@ function ServiceRow({ s }: { s: (typeof services)[number] }) {
         </ul>
       </div>
     </article>
+  );
+}
+
+function TeamMember({ member }: { member: (typeof team)[number] }) {
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex items-center gap-4">
+        <div className="h-14 w-14 rounded-full bg-black text-white flex items-center justify-center font-mono text-[14px] tracking-mono font-semibold shrink-0">
+          {member.initials}
+        </div>
+        <div>
+          <div className="font-display text-[18px] tracking-display leading-tight">
+            {member.name}
+          </div>
+          <div className="font-mono text-[11px] tracking-mono opacity-60 mt-0.5">
+            {member.role}
+          </div>
+        </div>
+      </div>
+      <p className="text-[13.5px] leading-[1.6] opacity-85">
+        {member.note}
+      </p>
+    </div>
   );
 }
 
@@ -968,7 +1018,7 @@ export default function App() {
               sectionNum="03"
               sectionLabel="FOUR PEOPLE. ONE STUDIO."
               folio="PORTFOLIO IV"
-              note="No headshots. No founding myth. Just the work and a way to reach us."
+              note="The person on the kickoff call is the person who does the work."
             />
 
             <div className="col-span-12 lg:col-span-10">
@@ -1032,6 +1082,18 @@ export default function App() {
                       ))}
                     </dl>
                   </div>
+                </div>
+              </div>
+
+              {/* TEAM */}
+              <div className="mt-16 sm:mt-20">
+                <div className="font-mono text-[11px] tracking-mono opacity-60 mb-8">
+                  THE FOUR
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
+                  {team.map((member) => (
+                    <TeamMember key={member.initials} member={member} />
+                  ))}
                 </div>
               </div>
 
