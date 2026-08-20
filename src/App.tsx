@@ -6,6 +6,9 @@ import Typewriter from "./components/Typewriter";
 import ToastContainer from "./components/Toast";
 import { submitBrief, ApiError } from "./lib/api";
 import { useToast } from "./hooks/useToast";
+import PrivacyPage from "./pages/PrivacyPage";
+import TermsPage from "./pages/TermsPage";
+import NotesPage from "./pages/NotesPage";
 
 /* ------------------------------------------------------------------ */
 /* Data                                                                */
@@ -183,6 +186,76 @@ const team = [
   },
 ];
 
+const processSteps = [
+  {
+    n: "01",
+    title: "The Brief",
+    desc: "You tell us what you are trying to make happen. We ask questions. By the end of the call we both know whether this is a fit.",
+  },
+  {
+    n: "02",
+    title: "The Audit",
+    desc: "We look at what exists — the manuscript, the site, the workflow, the market. We find the gap between where you are and where you need to be.",
+  },
+  {
+    n: "03",
+    title: "The Build",
+    desc: "We do the work. You see drafts, not surprises. The person on the kickoff call is the person delivering.",
+  },
+  {
+    n: "04",
+    title: "The Handover",
+    desc: "You get the files, the documentation, and the training to run it without us. We do not hold your work hostage.",
+  },
+];
+
+const faqs = [
+  {
+    q: "Do you work with unpublished manuscripts?",
+    a: "Yes, but selectively. We take on pre-publication positioning and strategy work when the manuscript is far enough along that we can assess its real shape. We do not take on projects where the book is still an idea.",
+  },
+  {
+    q: "What does a typical engagement cost?",
+    a: "Most projects fall between $4,000 and $18,000 depending on scope. A book strategy engagement is usually at the lower end; a full site build with CMS is at the higher end. We scope against the brief, not a rate card.",
+  },
+  {
+    q: "Do you work remotely?",
+    a: "Always. We are split between Lisbon and New York and have worked with clients in London, Berlin, São Paulo, and Los Angeles. All calls are video; all deliverables are digital.",
+  },
+  {
+    q: "What if we are not a publisher?",
+    a: "We work with authors, literary agencies, independent presses, and adjacent businesses — anyone whose work involves books, readers, or the systems that connect them. If your brief is clear, we will consider it.",
+  },
+  {
+    q: "How long does a project take?",
+    a: "Six to fourteen weeks is the typical range. A positioning brief might be six. A full site build with editorial copy is usually twelve to fourteen. We do not take on rush work.",
+  },
+];
+
+const recentNotes = [
+  {
+    slug: "what-book-positioning-actually-means",
+    title: "What book positioning actually means",
+    date: "August 2026",
+    excerpt:
+      "Most authors think positioning is a tagline. It is not. Positioning is the answer to a single question: what shelf does this book belong on?",
+  },
+  {
+    slug: "why-most-author-websites-fail",
+    title: "Why most author websites fail",
+    date: "July 2026",
+    excerpt:
+      "The typical author site is a digital CV. It treats every visitor as someone who already knows who the author is. The problem is that most visitors do not.",
+  },
+  {
+    slug: "how-to-audit-your-own-amazon-listing",
+    title: "How to audit your own Amazon listing",
+    date: "June 2026",
+    excerpt:
+      "Amazon is a search engine dressed as a shop. Here is a practical checklist for authors and publishers who want to improve discoverability.",
+  },
+];
+
 /* ------------------------------------------------------------------ */
 /* Analytics helper                                                    */
 /* ------------------------------------------------------------------ */
@@ -266,6 +339,64 @@ function TeamMember({ member }: { member: (typeof team)[number] }) {
         {member.note}
       </p>
     </div>
+  );
+}
+
+function ProcessStep({ s }: { s: (typeof processSteps)[number] }) {
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="font-mono text-[11px] tracking-mono opacity-60">
+        {s.n}
+      </div>
+      <h3 className="font-display text-[20px] sm:text-[24px] tracking-display leading-tight">
+        {s.title}
+      </h3>
+      <p className="text-[14px] leading-[1.65] opacity-85">{s.desc}</p>
+    </div>
+  );
+}
+
+function FAQItem({ q, a }: { q: string; a: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="border-t border-black/90">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full py-5 flex items-start justify-between gap-4 text-left"
+        aria-expanded={open}
+      >
+        <span className="font-display text-[17px] sm:text-[19px] tracking-display leading-tight">
+          {q}
+        </span>
+        <span className="font-mono text-[14px] tracking-mono opacity-60 shrink-0 mt-0.5">
+          {open ? "−" : "+"}
+        </span>
+      </button>
+      {open && (
+        <div className="pb-5 max-w-prose">
+          <p className="text-[14.5px] leading-[1.65] opacity-85">{a}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function NoteCard({ note }: { note: (typeof recentNotes)[number] }) {
+  return (
+    <article className="flex flex-col gap-3 border-t border-black pt-5">
+      <div className="font-mono text-[11px] tracking-mono opacity-60">
+        {note.date}
+      </div>
+      <h3 className="font-display text-[18px] sm:text-[20px] tracking-display leading-tight">
+        {note.title}
+      </h3>
+      <p className="text-[13.5px] leading-[1.6] opacity-85 flex-1">
+        {note.excerpt}
+      </p>
+      <span className="font-mono text-[11px] tracking-mono opacity-50">
+        Full post coming soon.
+      </span>
+    </article>
   );
 }
 
@@ -703,12 +834,52 @@ export default function App() {
   const [route, setRoute] = useState<string>(() =>
     typeof window === "undefined" ? "/" : window.location.pathname || "/"
   );
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
   useEffect(() => {
-    const onPop = () => setRoute(window.location.pathname || "/");
+    const onPop = () => {
+      setRoute(window.location.pathname || "/");
+      setMobileNavOpen(false);
+    };
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
   }, []);
 
+  useEffect(() => {
+    if (mobileNavOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileNavOpen]);
+
+  if (route === "/privacy") {
+    return (
+      <>
+        <PrivacyPage />
+        <ToastContainer />
+      </>
+    );
+  }
+  if (route === "/terms") {
+    return (
+      <>
+        <TermsPage />
+        <ToastContainer />
+      </>
+    );
+  }
+  if (route === "/notes") {
+    return (
+      <>
+        <NotesPage />
+        <ToastContainer />
+      </>
+    );
+  }
   if (route !== "/" && route !== "") {
     return (
       <div className="min-h-screen bg-white text-black flex flex-col">
@@ -725,7 +896,7 @@ export default function App() {
       <ManifestBar />
 
       {/* HEADER / NAV */}
-      <header className="rule-b">
+      <header className="rule-b relative">
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-4 flex items-center gap-6">
           <a
             href="#top"
@@ -744,6 +915,7 @@ export default function App() {
           >
             <a href="#services" className="hover:opacity-60">SERVICES</a>
             <a href="#work" className="hover:opacity-60">WORK</a>
+            <a href="#notes" className="hover:opacity-60">NOTES</a>
             <a href="#about" className="hover:opacity-60">ABOUT</a>
             <a href="#contact" className="hover:opacity-60">CONTACT</a>
             <a
@@ -754,13 +926,80 @@ export default function App() {
             </a>
           </nav>
 
-          <a
-            href="#contact"
-            className="md:hidden ml-auto ink-block px-3 py-1.5 font-mono text-[11px] tracking-mono font-semibold"
+          <button
+            className="md:hidden ml-auto font-mono text-[11px] tracking-mono font-semibold border border-black px-3 py-1.5"
+            onClick={() => setMobileNavOpen(true)}
+            aria-label="Open menu"
           >
-            BRIEF →
-          </a>
+            MENU
+          </button>
         </div>
+
+        {/* Mobile nav overlay */}
+        {mobileNavOpen && (
+          <div className="fixed inset-0 z-50 bg-white flex flex-col">
+            <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-4 flex items-center justify-between">
+              <a
+                href="#top"
+                onClick={() => setMobileNavOpen(false)}
+                className="font-display text-[20px] sm:text-[22px] tracking-display-tight font-semibold"
+              >
+                THE&nbsp;OFFICE
+              </a>
+              <button
+                onClick={() => setMobileNavOpen(false)}
+                className="font-mono text-[11px] tracking-mono font-semibold border border-black px-3 py-1.5"
+                aria-label="Close menu"
+              >
+                CLOSE
+              </button>
+            </div>
+            <nav className="flex-1 flex flex-col items-start justify-center px-4 sm:px-6 gap-6">
+              <a
+                href="#services"
+                onClick={() => setMobileNavOpen(false)}
+                className="font-display text-[32px] sm:text-[48px] tracking-display leading-tight"
+              >
+                Services
+              </a>
+              <a
+                href="#work"
+                onClick={() => setMobileNavOpen(false)}
+                className="font-display text-[32px] sm:text-[48px] tracking-display leading-tight"
+              >
+                Work
+              </a>
+              <a
+                href="#notes"
+                onClick={() => setMobileNavOpen(false)}
+                className="font-display text-[32px] sm:text-[48px] tracking-display leading-tight"
+              >
+                Notes
+              </a>
+              <a
+                href="#about"
+                onClick={() => setMobileNavOpen(false)}
+                className="font-display text-[32px] sm:text-[48px] tracking-display leading-tight"
+              >
+                About
+              </a>
+              <a
+                href="#contact"
+                onClick={() => setMobileNavOpen(false)}
+                className="font-display text-[32px] sm:text-[48px] tracking-display leading-tight"
+              >
+                Contact
+              </a>
+              <a
+                href="#contact"
+                onClick={() => setMobileNavOpen(false)}
+                className="mt-4 ink-block px-5 py-3 font-mono text-[12px] tracking-mono font-semibold"
+              >
+                START A BRIEF →
+              </a>
+            </nav>
+          </div>
+        )}
       </header>
 
       {/* HERO */}
@@ -889,6 +1128,45 @@ export default function App() {
         </div>
       </section>
 
+      {/* HOW WE WORK */}
+      <section id="process" className="rule-b" aria-labelledby="process-heading">
+        <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+          <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-14 sm:py-20">
+            <MarginRail
+              sectionNum="01½"
+              sectionLabel="HOW WE WORK. FROM BRIEF TO HANDOVER."
+              folio="PORTFOLIO II½"
+              note="Every engagement follows the same four steps. The scope changes; the rigour does not."
+            />
+
+            <div className="col-span-12 lg:col-span-10">
+              <MobileFolioStrip
+                sectionNum="01½"
+                sectionLabel="HOW WE WORK. FROM BRIEF TO HANDOVER."
+                folio="PORTFOLIO II½"
+              />
+              <div className="mb-10 sm:mb-14">
+                <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
+                  01½ / PROCESS
+                </div>
+                <h2
+                  id="process-heading"
+                  className="font-display tracking-display text-[36px] sm:text-[52px] lg:text-[68px] leading-[0.98] font-light max-w-[18ch]"
+                >
+                  Four steps. No surprises.
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
+                {processSteps.map((s) => (
+                  <ProcessStep key={s.n} s={s} />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* WORK */}
       <section id="work" className="rule-b" aria-labelledby="work-heading">
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
@@ -1003,6 +1281,78 @@ export default function App() {
                   className="font-mono text-[12px] tracking-mono font-semibold border-b border-black self-start sm:self-auto"
                 >
                   REQUEST THE FULL BOOK →
+                </a>
+              </div>
+
+              {/* Mid-page CTA */}
+              <div className="mt-14 border border-black p-6 sm:p-8">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
+                  <div className="lg:col-span-8">
+                    <h3 className="font-display text-[24px] sm:text-[32px] tracking-display leading-[1.05] mb-3">
+                      Have a project that fits?
+                    </h3>
+                    <p className="text-[15px] leading-[1.65] opacity-85 max-w-prose">
+                      We take on a small number of engagements at a time. The
+                      best way to find out if we are the right studio is to send
+                      the actual brief.
+                    </p>
+                  </div>
+                  <div className="lg:col-span-4 lg:text-right">
+                    <a
+                      href="#contact"
+                      className="inline-flex items-center gap-2 border border-black px-5 py-3 font-mono text-[12px] tracking-mono font-semibold hover:bg-black hover:text-white transition-colors"
+                    >
+                      START A BRIEF →
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* NOTES */}
+      <section id="notes" className="rule-b" aria-labelledby="notes-heading">
+        <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+          <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-14 sm:py-20">
+            <MarginRail
+              sectionNum="02½"
+              sectionLabel="NOTES ON PUBLISHING, CRAFT, AND THE BUSINESS OF BOOKS."
+              folio="PORTFOLIO III½"
+              note="Short essays. No SEO bait. Written by the people who do the work."
+            />
+
+            <div className="col-span-12 lg:col-span-10">
+              <MobileFolioStrip
+                sectionNum="02½"
+                sectionLabel="NOTES ON PUBLISHING, CRAFT, AND THE BUSINESS OF BOOKS."
+                folio="PORTFOLIO III½"
+              />
+              <div className="mb-10 sm:mb-14">
+                <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
+                  02½ / NOTES
+                </div>
+                <h2
+                  id="notes-heading"
+                  className="font-display tracking-display text-[36px] sm:text-[52px] lg:text-[68px] leading-[0.98] font-light max-w-[18ch]"
+                >
+                  We write about what we do.
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                {recentNotes.map((note) => (
+                  <NoteCard key={note.slug} note={note} />
+                ))}
+              </div>
+
+              <div className="mt-10">
+                <a
+                  href="/notes"
+                  className="font-mono text-[12px] tracking-mono font-semibold border-b border-black"
+                >
+                  READ ALL NOTES →
                 </a>
               </div>
             </div>
@@ -1127,6 +1477,45 @@ export default function App() {
         </div>
       </section>
 
+      {/* FAQ */}
+      <section id="faq" className="rule-b" aria-labelledby="faq-heading">
+        <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+          <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-14 sm:py-20">
+            <MarginRail
+              sectionNum="03½"
+              sectionLabel="QUESTIONS WE ARE ASKED BEFORE THE FIRST CALL."
+              folio="PORTFOLIO IV½"
+              note="If your question is not here, the brief form below is the fastest way to get an answer."
+            />
+
+            <div className="col-span-12 lg:col-span-10">
+              <MobileFolioStrip
+                sectionNum="03½"
+                sectionLabel="QUESTIONS WE ARE ASKED BEFORE THE FIRST CALL."
+                folio="PORTFOLIO IV½"
+              />
+              <div className="mb-10 sm:mb-14">
+                <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
+                  03½ / FAQ
+                </div>
+                <h2
+                  id="faq-heading"
+                  className="font-display tracking-display text-[36px] sm:text-[52px] lg:text-[68px] leading-[0.98] font-light max-w-[18ch]"
+                >
+                  Is this for you?
+                </h2>
+              </div>
+
+              <div>
+                {faqs.map((faq) => (
+                  <FAQItem key={faq.q} q={faq.q} a={faq.a} />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CONTACT */}
       <section
         id="contact"
@@ -1240,10 +1629,34 @@ function SiteFooter() {
           </a>
         </nav>
         <div className="sm:ml-auto flex flex-wrap items-center gap-3 sm:gap-5">
+          <a
+            href="https://linkedin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:opacity-100 opacity-80"
+          >
+            LINKEDIN
+          </a>
+          <a
+            href="https://x.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:opacity-100 opacity-80"
+          >
+            X / TWITTER
+          </a>
+          <a
+            href="https://instagram.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:opacity-100 opacity-80"
+          >
+            INSTAGRAM
+          </a>
+          <span className="opacity-40 hidden sm:inline">/</span>
           <a href="#top" className="hover:opacity-100 opacity-80">
             BACK TO TOP ↑
           </a>
-          <span className="opacity-40">SET IN FRAUNCES &amp; INTER TIGHT</span>
         </div>
       </div>
       <CookieNotice />
