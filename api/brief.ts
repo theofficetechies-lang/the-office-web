@@ -5,6 +5,7 @@ import { briefSchema, sanitizeText } from "./_lib/validate.js";
 
 const apiKey = process.env.RESEND_API_KEY;
 const resend = apiKey ? new Resend(apiKey) : null;
+const web3FormsKey = process.env.WEB3FORMS_KEY || process.env.WEB3FORMS_ACCESS_KEY;
 const TO_EMAIL = process.env.TO_EMAIL ?? "theofficetechies@gmail.com";
 const FROM_EMAIL = process.env.FROM_EMAIL ?? "onboarding@resend.dev";
 const ENV = process.env.VERCEL_ENV ?? "development";
@@ -90,7 +91,43 @@ export default async function handler(
   const safeOrg = data.org ? sanitizeText(data.org) : undefined;
   const safeBrief = sanitizeText(data.brief);
 
-  // If Resend is available and API key configured, send real email
+  // 1. If Web3Forms Access Key is provided, use it (No domain required, delivers to any inbox)
+  if (web3FormsKey) {
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: web3FormsKey,
+          subject: `Brief from ${safeName}${safeOrg ? ` · ${safeOrg}` : ""}`,
+          from_name: "THE OFFICE Studio",
+          name: safeName,
+          email: data.email,
+          organization: safeOrg || "None",
+          service: data.service || "General Inquiry",
+          timeline: data.timeline || "Not specified",
+          budget: data.budget || "Not specified",
+          discovery: data.discovery || "Not specified",
+          message: safeBrief,
+        }),
+      });
+
+      const json = await response.json();
+      if (json.success) {
+        return res.status(200).json({
+          success: true,
+          message: "Brief received. We reply within two working days.",
+        });
+      }
+    } catch (err) {
+      console.error("[Brief API] Web3Forms error:", err);
+    }
+  }
+
+  // 2. If Resend is available and API key configured, send real email
   if (resend) {
     try {
       const subject = `Brief from ${safeName}${safeOrg ? ` · ${safeOrg}` : ""}`;
@@ -141,7 +178,7 @@ export default async function handler(
     }
   }
 
-  // Resend API key not configured (e.g. initial setup / development / preview)
+  // Fallback (e.g. dev/preview or when keys not yet set)
   console.log("[Brief Received]:", {
     name: safeName,
     email: data.email,
