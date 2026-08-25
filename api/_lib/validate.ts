@@ -24,6 +24,24 @@ export const briefSchema = z.object({
     .optional()
     .or(z.literal(""))
     .transform((s) => (s ? s.trim() : "")),
+  timeline: z
+    .string()
+    .max(50)
+    .optional()
+    .or(z.literal(""))
+    .transform((s) => (s ? s.trim() : "")),
+  budget: z
+    .string()
+    .max(50)
+    .optional()
+    .or(z.literal(""))
+    .transform((s) => (s ? s.trim() : "")),
+  discovery: z
+    .string()
+    .max(100)
+    .optional()
+    .or(z.literal(""))
+    .transform((s) => (s ? s.trim() : "")),
   brief: z
     .string()
     .min(3, "Brief must be at least 3 characters")

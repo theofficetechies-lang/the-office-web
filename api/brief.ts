@@ -99,6 +99,9 @@ export default async function handler(
         `Email: ${data.email}`,
         safeOrg ? `Organization: ${safeOrg}` : null,
         data.service ? `Service: ${data.service}` : null,
+        data.timeline ? `Timeline: ${data.timeline}` : null,
+        data.budget ? `Budget: ${data.budget}` : null,
+        data.discovery ? `Discovery: ${data.discovery}` : null,
         ``,
         `---`,
         ``,
@@ -139,11 +142,14 @@ export default async function handler(
   }
 
   // Resend API key not configured (e.g. initial setup / development / preview)
-  console.log("[Brief Received - Resend API key not configured]:", {
+  console.log("[Brief Received]:", {
     name: safeName,
     email: data.email,
     org: safeOrg,
     service: data.service,
+    timeline: data.timeline,
+    budget: data.budget,
+    discovery: data.discovery,
     briefPreview: safeBrief.slice(0, 200),
   });
 

@@ -8,6 +8,7 @@ type Props = {
   sectionLabel: string;
   folio?: string;
   note?: string;
+  inverse?: boolean;
 };
 
 export default function MarginRail({
@@ -15,14 +16,18 @@ export default function MarginRail({
   sectionLabel,
   folio,
   note,
+  inverse = false,
 }: Props) {
   return (
     <aside
-      className="hidden lg:flex flex-col text-[11px] font-mono tracking-mono"
+      className={[
+        "hidden lg:flex flex-col text-[11px] font-mono tracking-mono",
+        inverse ? "text-white/80" : "text-black",
+      ].join(" ")}
       aria-hidden="true"
     >
       <div className="sticky top-20 pt-2">
-        <div className="rule-t pt-3 mb-4">
+        <div className={[inverse ? "border-t border-white/20" : "rule-t", "pt-3 mb-4"].join(" ")}>
           <div className="opacity-50">SEC.</div>
           <div className="text-base font-semibold">{sectionNum}</div>
         </div>

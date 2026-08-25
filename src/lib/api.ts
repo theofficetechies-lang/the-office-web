@@ -56,6 +56,9 @@ export interface BriefPayload {
   email: string;
   org?: string;
   service?: string;
+  timeline?: string;
+  budget?: string;
+  discovery?: string;
   brief: string;
   company_website?: string;
 }
