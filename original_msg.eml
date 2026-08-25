@@ -1,0 +1,1531 @@
+Delivered-To: theofficetechies@gmail.com
+Received: by 2002:ac8:7ec8:0:b0:528:3c29:f261 with SMTP id x8csp6278430qtj;
+        Tue, 25 Aug 2026 13:47:28 -0700 (PDT)
+X-Received: by 2002:a05:6122:1d4b:b0:5c5:d7aa:13ec with SMTP id 71dfb90a1353d-5c65bc91337mr465760e0c.1.1787690848537;
+        Tue, 25 Aug 2026 13:47:28 -0700 (PDT)
+ARC-Seal: i=2; a=rsa-sha256; t=1787690848; cv=pass;
+        d=google.com; s=arc-20260327;
+        b=g372jAqQ/Yig/inBIo2/B5gStOFmbb62jAp+8r8zTxFDLgnlKPx/x0LjUyvGANKCeU
+         m6Wv2W2xiksrYCmYfZ2QyekrxPzDqNKbb1ghe+n1RteMZ205J9w8uhj9HzXiCsFE3cB7
+         FoA0jywd2kqVZcmOc1OcImRV+BCDkq7AFhAkkX9TZx7sSga10fv+Rf3K08CdPYs1JRq1
+         jyAgbry1dj+y6CBXAFPy2tbegPw4uZSgkNKxzEBDP8izwWWmabiLovPC6hr0g+URbvva
+         83n0xxUlb8PHctPAI/rxEFY3NHA1YJZVNIxhG4VlChQZF6Y6h6PXPTfnc8d4ngWrcaoi
+         6sww==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=+d+Knw5gJ8SHZlO04g10YCyGnoKZ4Tl4HNv47MgHU58=;
+        fh=l+jyL4A8DmmsOBsnM+3Zju4ByjkPtEqo03rn4/ebvZM=;
+        b=qieNGfiGtIEbN43ScmQVjLSRfj867f6Zi0LLWmy4Wo87RCz1T3FLvZB2SdcmIhP/Ct
+         3nIyCsoeJA1dnGjr+t4WQ5DVaAyGhKGDj9FY5ixgBKnLNlXYZ6xMGFsGSwr+WUbfdqZ+
+         vlxiiXmrd+jEMtxzKwpl1QI1G5P70oMELXUiJun+5Tuqvfr2TnfESS4j9JpROKyie6UY
+         eWjOrRrVCWFTIv7UNmApD67MIy2NLxttaudyMrVy0VS48wNJHUaU1CRfvNx2qERxL02e
+         gl6rU1oK8lv96XHqU2AUJWAEVRk6dK9W7AYuosD+QC6pIqwxJY+l2eEaqB4xqUaiyDJp
+         V07w==;
+        dara=google.com
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@gmail.com header.s=20251104 header.b=Zp39FM+u;
+       arc=pass (i=1);
+       spf=pass (google.com: domain of desmondmorrisonx@gmail.com designates 209.85.220.65 as permitted sender) smtp.mailfrom=desmondmorrisonx@gmail.com;
+       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com;
+       dara=pass header.i=@gmail.com
+Return-Path: <desmondmorrisonx@gmail.com>
+Received: from mail-sor-f65.google.com (mail-sor-f65.google.com. [209.85.220.65])
+        by mx.google.com with SMTPS id 71dfb90a1353d-5c65ac0cb36sor258050e0c.5.2026.08.25.13.47.28
+        for <theofficetechies@gmail.com>
+        (Google Transport Security);
+        Tue, 25 Aug 2026 13:47:28 -0700 (PDT)
+Received-SPF: pass (google.com: domain of desmondmorrisonx@gmail.com designates 209.85.220.65 as permitted sender) client-ip=209.85.220.65;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@gmail.com header.s=20251104 header.b=Zp39FM+u;
+       arc=pass (i=1);
+       spf=pass (google.com: domain of desmondmorrisonx@gmail.com designates 209.85.220.65 as permitted sender) smtp.mailfrom=desmondmorrisonx@gmail.com;
+       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com;
+       dara=pass header.i=@gmail.com
+ARC-Seal: i=1; a=rsa-sha256; t=1787690848; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Scw9OmxrK4RnB/rmyAXA/tzeiKolJ2VaQDmxxgfhWHIZ6MkaHVG/9dHGne+JmwNr9p
+         Vyt3FtpfX2aOAip+AfU7DVSqV8FmmCYsXCp9QtGujrtBDQOHlsgHTEarluWkjxUBVuYu
+         C92xPU4ZY3aQ9RYaXJ/937HcWQzR9n9ZPWWT2xTyx6oNUeDGcc6/9lek3jTkiGAdxUE5
+         0SrwYsV9xhxRzmqgAeGofZ5mnp6OJ7vh6V7uS2yIcpZnBjxsiA1K0+FyZzaasM+cbP0p
+         1k5pDffxhJKbtl6xLm2X5wWZz8Lb/sh7mnq/5Z67wKdQWGMykFE+ztCrBcoa/xoNvHfB
+         K5uw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=+d+Knw5gJ8SHZlO04g10YCyGnoKZ4Tl4HNv47MgHU58=;
+        fh=l+jyL4A8DmmsOBsnM+3Zju4ByjkPtEqo03rn4/ebvZM=;
+        b=b3vW3fA2vpuk+J3Bi5+D7l2QAhW6yiUVLMfXDskOAXI2JzNJP7G94/3OfLU69W/vXo
+         6XlDQP9RczHEMBEA2YSH2tE+DOHOVLnx4PuZ7ZyGz6nqkDX7yLRML841rTBqgVw41rzn
+         Ga2lAXaEx0xfIXqXs27+gAJfkN/Rpwc0gB0qyA0ao8dznVShC59zyYSxjl/DWop8Hg1c
+         BZrce+SGfokTP/aOlw+nPUaLVw/25HTNvZqvqHZC0Dd7hr9NMko/z+Esz8liwTaL/hJD
+         xU++lg/ibBc0KlFmagfTzFrCJCz0R49X3HWTgf6+XxhiORMShKhpwgiAIDDPzQzmooTM
+         slRw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787690848; x=1788295648; dara=google.com;
+        h=content-type:to:subject:message-id:date:from:mime-version:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=+d+Knw5gJ8SHZlO04g10YCyGnoKZ4Tl4HNv47MgHU58=;
+        b=Zp39FM+ukgCnndMxb0sK1Hjz8UahOS3/Aoq0bvpzcFIaPB8YYR+ZcUz0hBhvBHshVL
+         7WZg2m6V5cXqH9XdnQ6e4+LfMBit71YD9GGsHXaoilyi9IPwjOe/wvIIgr51WWDAbQKE
+         obU6FM8iBbtT7r1+YswXKam+ah6KCHjj7IHMz367hwQgN1F9aZNLhlcytTmZp7MskueM
+         rxsIO4RV8hIllpexpGkNbHqdh9WmHhh5O8L2AoH7eZjrmGcSZWVUCheHv/b4Fw889YLX
+         JacOAfAas4alJ+lIatRk5wnOrKzN4msyElefKg+zM6yoC+oWZ0RKNPwOhs8rw1zf/i+2
+         O2kA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787690848; x=1788295648;
+        h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=+d+Knw5gJ8SHZlO04g10YCyGnoKZ4Tl4HNv47MgHU58=;
+        b=MPkj3unn1IwBWODpH8rnzzTE9oVNQxCfDdTcUU4kNXcapBqCabnJuab2SrdRVYLXh3
+         Ha2U2gZCl7smR4HVHQ2erxixWplxm/2MjEsdKivZrsC7Yn+OXDEVTwd9FeFQYQtmOYQT
+         Nx8pV047SZlOfrZU6OkV05aDwKIp3PRvACUI9RCn5HUITnGcdKEh7Ox43jy+9Qi02+EB
+         8tzKEA084fb6j4HyeyUeflRgiKjYDmS1yBbOM6hPbvCa3Af9uYhbJPz842pUmv5Nql03
+         PlDyXuH3s39BdS0vZc4pd5BW7sDGksKtR7GCCkgm5fR7fyKz0DXIqotECxuh6jvR2NwX
+         9QHg==
+X-Gm-Message-State: AFuF++k8k5PoOJH4MyGdc5sW7ttEwIXsv8O5WL83AdtQAPw0VL+Iq3sE
+	Y1TY99oTG7AbgkZGcar+MDMs82j8VQZFpqec20yJvVJSBVADB/IA+cd2TVOpSFw8XMi+TFk3kfU
+	1Gp1H4TIKuPe9ugHz3i5q3klOo36iHHwf15fCfC0mEJ77
+X-Gm-Gg: AR+sD11YteXFkTensDz9JSkod2kFJn1XwV59Do8bn3JbDh5iAtXwVnSmqTs7a//Xe/Q
+	/kar9CGGgqt14LX4O/6O360+h9f/kZuFj7jkd1fr5mEsZi2gL7LMlld39X8MrYjgvFB8L4p9Y6A
+	zD365HkdfIWb+ZTWagzYu8C2Yj32riuz0uMjv++smWY3IFkZPF3Fxl8PukQ1RP+KtcT3xC8ybnn
+	LazHEfeOmX8iASi3LbTkhKDmSP2P5AUCHF589YHpX2o3B+mYPTCBcdWTcwilSTXKoyLXq7La+jL
+	2zskBmpP0ym0oG6fHFlAAu25ipH013NSYt7Vkjasmdeph46Rv6XJQfrrkdusPKhOBA12hpxEt0j
+	XAQ==
+X-Received: by 2002:a05:6122:4888:b0:5bd:fb78:5461 with SMTP id
+ 71dfb90a1353d-5c65b5f9c8amr600564e0c.0.1787690847567; Tue, 25 Aug 2026
+ 13:47:27 -0700 (PDT)
+MIME-Version: 1.0
+From: Morrison Desmond <desmondmorrisonx@gmail.com>
+Date: Tue, 25 Aug 2026 16:47:15 -0400
+X-Gm-Features: AcwNN1WXme0LxEdjXj9ABd-QE42omXlZk8xyKXnc6H9172-opmsaQUuqEW84dTM
+Message-ID: <CAOkeaxRrfW3YRpi6a7=883R=zVC7gXwU1aP+_K-ge6AWtv_-7w@mail.gmail.com>
+Subject: 
+To: The office Techies <theofficetechies@gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000f005190659e535a4"
+
+--000000000000f005190659e535a4
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+You are a world-class digital product team consisting of:
+
+- Senior Product Designer
+- Creative Director
+- UX Strategist
+- Conversion Rate Optimization Specialist
+- Brand Strategist
+- Senior Frontend Engineer
+- Design Systems Architect
+- SEO Specialist
+- Accessibility Expert
+- Performance Engineer
+- Content Strategist
+- Technical Product Manager
+
+Your mission is to deeply audit, refine, expand, and professionally
+complete the existing website:
+
+https://the-office-test4.vercel.app/
+
+The website represents:
+
+THE OFFICE
+
+A four-person creative technology studio offering:
+
+- Book strategy
+- Book research
+- Web design
+- Automation
+- Digital experiences
+- Research-driven creative services
+- Technology-assisted workflows
+
+Your goal is NOT to create a generic redesign.
+
+Your goal is to transform the existing website into a premium,
+production-ready digital experience that could compete with respected
+independent creative studios, boutique technology consultancies, research
+firms, publishing-focused studios, and high-end digital agencies.
+
+The final result must feel:
+
+- Intelligent
+- Distinctive
+- Editorial
+- Strategic
+- Human
+- Precise
+- Modern
+- Premium
+- Trustworthy
+- Thoughtful
+
+It must NOT feel:
+
+- AI-generated
+- Template-based
+- Like a SaaS landing page
+- Like a generic creative agency
+- Over-designed
+- Trend-chasing
+- Filled with meaningless animations
+- Full of empty marketing language
+
+The website should communicate that THE OFFICE combines:
+
+Research + Strategy + Design + Technology + Human Judgment
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+IMPORTANT: PRESERVE EXISTING UI/UX FOUNDATION
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+This is a critical requirement.
+
+Do NOT blindly redesign the entire website.
+
+The existing website is the foundation.
+
+Before changing anything, carefully analyze the current:
+
+- Page structure
+- Layout system
+- Component hierarchy
+- Navigation
+- Visual language
+- Spacing system
+- Typography choices
+- Interaction patterns
+- Responsive behavior
+- User journey
+
+Preserve existing UI/UX decisions that are already strong.
+
+Do not replace the interface simply because you prefer another aesthetic
+direction.
+
+Any major UI, UX, or layout change must be justified by a clear improvement
+in:
+
+- User experience
+- Accessibility
+- Conversion performance
+- Brand clarity
+- Content organization
+- Mobile usability
+- Technical quality
+- Maintainability
+
+The goal is:
+
+"Refine, elevate, and complete the existing experience."
+
+Not:
+
+"Replace the website with a completely different template."
+
+Maintain the recognizable identity of the current product while improving
+weaknesses.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+PHASE 1 =E2=80=94 COMPLETE WEBSITE AUDIT
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Before implementing changes, perform a detailed professional audit.
+
+Analyze every available page and component.
+
+Review:
+
+## Visual Design Audit
+
+Evaluate:
+
+- Typography
+- Color system
+- Contrast
+- Layout rhythm
+- Spacing consistency
+- Grid structure
+- Visual hierarchy
+- Composition
+- Brand personality
+- Image usage
+- Component consistency
+
+Identify:
+
+- What already works
+- What feels unfinished
+- What feels generic
+- What reduces trust
+- What harms conversion
+- What feels inconsistent
+
+
+## UX Audit
+
+Analyze:
+
+- User journey
+- Information architecture
+- Navigation clarity
+- Page scanning behavior
+- CTA placement
+- Content hierarchy
+- User intent
+- Friction points
+- Missing interactions
+
+Evaluate the journey:
+
+DISCOVER =E2=86=92 UNDERSTAND =E2=86=92 TRUST =E2=86=92 EXPLORE =E2=86=92 C=
+ONTACT
+
+
+## Conversion Audit
+
+Identify:
+
+- Missing CTAs
+- Weak CTAs
+- Unclear positioning
+- Missing trust signals
+- Missing decision-making information
+- Weak contact flow
+- Lost conversion opportunities
+
+
+## Technical Audit
+
+Review:
+
+- Framework implementation
+- Component architecture
+- Code quality
+- Responsive behavior
+- Performance
+- Dependencies
+- Image optimization
+- Rendering behavior
+- Errors
+- Maintainability
+
+
+## SEO Audit
+
+Review:
+
+- Metadata
+- Titles
+- Descriptions
+- Heading hierarchy
+- Structured data
+- Open Graph
+- Canonical URLs
+- Indexability
+- Sitemap readiness
+- Keyword targeting
+
+
+## Accessibility Audit
+
+Review:
+
+- Keyboard navigation
+- Screen-reader experience
+- Semantic HTML
+- ARIA usage
+- Focus states
+- Contrast
+- Motion preferences
+- Form accessibility
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+PHASE 2 =E2=80=94 DEVELOP A DISTINCT BRAND SYSTEM
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Strengthen THE OFFICE into a recognizable studio brand.
+
+The brand direction should communicate:
+
+- Intelligence
+- Research
+- Taste
+- Craft
+- Strategic thinking
+- Technology with purpose
+- Curiosity
+- Precision
+- Quiet confidence
+
+
+Avoid:
+
+- Neon futuristic aesthetics
+- Excessive gradients
+- AI clich=C3=A9s
+- Generic startup visuals
+- Glassmorphism everywhere
+- Decorative 3D objects without meaning
+
+
+The desired direction:
+
+Independent creative studio +
+Research laboratory +
+Publishing intelligence +
+Digital craftsmanship +
+Strategic technology consultancy
+
+
+Visual inspiration:
+
+- Editorial design
+- Contemporary publishing
+- Modern architecture
+- Research institutions
+- Premium independent studios
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+PHASE 3 =E2=80=94 IMPROVE THE HERO EXPERIENCE
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Create a powerful hero while respecting the existing layout system.
+
+The hero must immediately communicate:
+
+1. Who is THE OFFICE?
+2. What do they do?
+3. Who do they help?
+4. Why should someone care?
+
+
+Develop:
+
+- Strong headline
+- Supporting statement
+- Primary CTA
+- Secondary CTA
+- Visual identity system
+- Typography hierarchy
+- Responsive behavior
+
+
+Possible CTA directions:
+
+- Start a project
+- Tell us what you're building
+- Work with THE OFFICE
+- Explore our approach
+- Discuss your project
+
+
+Avoid generic statements like:
+
+"We create innovative solutions."
+
+Every word should communicate value.
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+PHASE 4 =E2=80=94 BUILD A COMPLETE SERVICE SYSTEM
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Create a refined services experience.
+
+Services:
+
+## BOOK STRATEGY
+
+Explain:
+
+- Positioning
+- Concept development
+- Audience understanding
+- Editorial direction
+- Publishing strategy
+
+
+## BOOK RESEARCH
+
+Explain:
+
+- Research systems
+- Source discovery
+- Knowledge organization
+- Information synthesis
+- Fact development
+
+
+## WEB DESIGN
+
+Explain:
+
+- Digital experiences
+- Websites
+- UX systems
+- Interaction design
+- Frontend implementation
+
+
+## AUTOMATION
+
+Explain:
+
+- Workflow improvement
+- Internal tools
+- AI-assisted processes
+- Integrations
+- Operational efficiency
+
+
+Only introduce additional services if they logically fit THE OFFICE.
+
+For every service explain:
+
+- What it is
+- Who needs it
+- The problem it solves
+- The process
+- Expected outcomes
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+PHASE 5 =E2=80=94 CREATE A STRONG PROCESS SECTION
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Add a clear methodology.
+
+Example:
+
+01 =E2=80=94 Understand
+02 =E2=80=94 Research
+03 =E2=80=94 Define
+04 =E2=80=94 Design
+05 =E2=80=94 Build
+06 =E2=80=94 Refine
+
+
+Explain:
+
+THE OFFICE adapts the process depending on project requirements.
+
+Create subtle interaction where appropriate.
+
+Do not add motion without purpose.
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+PHASE 6 =E2=80=94 SELECTED WORK SYSTEM
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Create a scalable portfolio/case study structure.
+
+IMPORTANT:
+
+Never fabricate:
+
+- Clients
+- Results
+- Revenue
+- Awards
+- Testimonials
+- Partnerships
+
+
+If verified projects exist:
+
+Present them professionally.
+
+Each project should support:
+
+- Title
+- Category
+- Description
+- Services
+- Visual
+- Outcome
+- Case study page
+
+
+If projects do not exist:
+
+Create an elegant framework ready for future content.
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+PHASE 7 =E2=80=94 WHY THE OFFICE
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Create a positioning section explaining:
+
+Why choose THE OFFICE?
+
+Possible themes:
+
+- Strategy before execution
+- Research before assumptions
+- Technology where useful
+- Human thinking where essential
+- Small team attention
+- Cross-disciplinary expertise
+- Quality over volume
+
+
+Avoid arrogance.
+
+Be confident and specific.
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+PHASE 8 =E2=80=94 FIELD NOTES / EDITORIAL SYSTEM
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Create an intellectual content area.
+
+Potential categories:
+
+- Research notes
+- Design observations
+- Book thinking
+- Technology experiments
+- Automation insights
+- Studio perspectives
+
+
+Do not create fake articles.
+
+Build the architecture for future publishing.
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+PHASE 9 =E2=80=94 TRUST WITHOUT FABRICATION
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Only display verified:
+
+- Clients
+- Testimonials
+- Publications
+- Awards
+- Partnerships
+- Statistics
+
+
+If unavailable:
+
+Create truthful alternatives:
+
+- Studio principles
+- Working philosophy
+- Process transparency
+
+
+Never invent credibility.
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+PHASE 10 =E2=80=94 TEAM SECTION
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+The studio has four members.
+
+Create a team framework.
+
+Only use verified:
+
+- Names
+- Photos
+- Roles
+- Bios
+- Links
+
+
+If unavailable:
+
+Create a flexible component structure.
+
+Do not invent identities.
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+PHASE 11 =E2=80=94 PREMIUM CONTACT EXPERIENCE
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Replace simple contact patterns with a professional inquiry experience.
+
+Include:
+
+- Name
+- Email
+- Company
+- Project description
+- Required services
+- Timeline
+- Scope
+- Optional budget
+- Discovery source
+
+
+Use verified contact:
+
+theofficetechies@gmail.com
+
+
+Do not invent:
+
+- Phone numbers
+- Addresses
+- Social accounts
+
+
+Create:
+
+- Validation states
+- Error handling
+- Success states
+- Loading states
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+PHASE 12 =E2=80=94 NAVIGATION AND FOOTER
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Create a polished navigation.
+
+Desktop:
+
+- Logo
+- Work
+- Services
+- Approach
+- About
+- Notes
+- Contact
+
+
+Mobile:
+
+- Elegant menu
+- Clear CTA
+- Smooth interaction
+
+
+Footer:
+
+Include:
+
+- Brand statement
+- Navigation
+- Services
+- Contact
+- Verified links only
+- Copyright
+- Legal links if required
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+PHASE 13 =E2=80=94 DESIGN SYSTEM
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Create a consistent design language.
+
+Prioritize:
+
+- Typography
+- Spacing
+- Grid
+- Components
+- Borders
+- Motion
+- Responsive behavior
+
+
+Preferred aesthetic:
+
+- Warm neutral backgrounds
+- Deep charcoal typography
+- Restrained accent color
+- Editorial layouts
+- Monospace technical details
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+PHASE 14 =E2=80=94 INTERACTION DESIGN
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Implement meaningful interactions:
+
+- Hover states
+- Focus states
+- Scroll reveals
+- Image transitions
+- Navigation animation
+- Button feedback
+- Micro interactions
+
+
+Requirements:
+
+- Respect prefers-reduced-motion
+- Maintain performance
+- Avoid unnecessary animation
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+PHASE 15 =E2=80=94 MOBILE QUALITY
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Test:
+
+- Small phones
+- Large phones
+- Tablets
+- Desktop
+- Large screens
+
+
+Verify:
+
+- No overflow
+- Correct spacing
+- Touch targets
+- Navigation
+- Forms
+- Typography
+- Performance
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+PHASE 16 =E2=80=94 SEO IMPLEMENTATION
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Implement:
+
+- Metadata
+- Semantic HTML
+- Open Graph
+- Twitter metadata
+- Canonical URL
+- Alt text
+- Structured data
+- Sitemap readiness
+
+
+Target keywords naturally:
+
+- Creative studio
+- Book strategy
+- Book research
+- Web design studio
+- Digital studio
+- Automation studio
+- Research and strategy
+
+
+No keyword stuffing.
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+PHASE 17 =E2=80=94 ACCESSIBILITY
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Ensure:
+
+- WCAG-conscious contrast
+- Keyboard support
+- Focus indicators
+- Semantic structure
+- Form labels
+- Screen-reader compatibility
+- Reduced motion
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+PHASE 18 =E2=80=94 PERFORMANCE ENGINEERING
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Optimize:
+
+- Images
+- Fonts
+- Bundles
+- Dependencies
+- Animations
+- Rendering
+- Loading behavior
+
+
+Aim for excellent Core Web Vitals.
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+PHASE 19 =E2=80=94 ERROR AND EDGE STATES
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Create:
+
+- 404 page
+- Loading states
+- Empty states
+- Error states
+- Form failures
+- Success confirmations
+- Mobile menu states
+
+
+The 404 page should match THE OFFICE personality.
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+FINAL QUALITY REVIEW
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+After implementation, perform a second independent audit.
+
+Review the final result as:
+
+1. Creative Director
+2. Potential Client
+3. UX Designer
+4. Mobile User
+5. SEO Specialist
+6. Accessibility Specialist
+7. Frontend Engineer
+8. Conversion Specialist
+
+
+Identify remaining weaknesses.
+
+Fix them.
+
+Perform final checks:
+
+=E2=9C=93 Desktop experience
+=E2=9C=93 Mobile experience
+=E2=9C=93 Tablet experience
+=E2=9C=93 Navigation
+=E2=9C=93 Hero
+=E2=9C=93 Services
+=E2=9C=93 Process
+=E2=9C=93 Work section
+=E2=9C=93 About/team
+=E2=9C=93 Why THE OFFICE
+=E2=9C=93 Notes section
+=E2=9C=93 Contact experience
+=E2=9C=93 Footer
+=E2=9C=93 404 page
+=E2=9C=93 SEO
+=E2=9C=93 Accessibility
+=E2=9C=93 Performance
+=E2=9C=93 Responsive typography
+=E2=9C=93 Hover states
+=E2=9C=93 Focus states
+=E2=9C=93 Loading states
+=E2=9C=93 Error states
+=E2=9C=93 Reduced motion
+=E2=9C=93 No fabricated information
+=E2=9C=93 No broken links
+=E2=9C=93 No unintended placeholders
+=E2=9C=93 No console errors
+=E2=9C=93 No horizontal overflow
+
+
+FINAL OBJECTIVE:
+
+Create a website that THE OFFICE could confidently send to serious clients.
+
+It should feel:
+
+Designed.
+Considered.
+Intelligent.
+Premium.
+Human.
+Distinctive.
+
+Do not stop after improving the homepage hero.
+
+Complete the entire digital product experience.
+
+--000000000000f005190659e535a4
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto">You are a world-class digital product team consisting of:=
+<div dir=3D"auto"><br></div><div dir=3D"auto">- Senior Product Designer</di=
+v><div dir=3D"auto">- Creative Director</div><div dir=3D"auto">- UX Strateg=
+ist</div><div dir=3D"auto">- Conversion Rate Optimization Specialist</div><=
+div dir=3D"auto">- Brand Strategist</div><div dir=3D"auto">- Senior Fronten=
+d Engineer</div><div dir=3D"auto">- Design Systems Architect</div><div dir=
+=3D"auto">- SEO Specialist</div><div dir=3D"auto">- Accessibility Expert</d=
+iv><div dir=3D"auto">- Performance Engineer</div><div dir=3D"auto">- Conten=
+t Strategist</div><div dir=3D"auto">- Technical Product Manager</div><div d=
+ir=3D"auto"><br></div><div dir=3D"auto">Your mission is to deeply audit, re=
+fine, expand, and professionally complete the existing website:</div><div d=
+ir=3D"auto"><br></div><div dir=3D"auto"><a href=3D"https://the-office-test4=
+.vercel.app/">https://the-office-test4.vercel.app/</a></div><div dir=3D"aut=
+o"><br></div><div dir=3D"auto">The website represents:</div><div dir=3D"aut=
+o"><br></div><div dir=3D"auto">THE OFFICE</div><div dir=3D"auto"><br></div>=
+<div dir=3D"auto">A four-person creative technology studio offering:</div><=
+div dir=3D"auto"><br></div><div dir=3D"auto">- Book strategy</div><div dir=
+=3D"auto">- Book research</div><div dir=3D"auto">- Web design</div><div dir=
+=3D"auto">- Automation</div><div dir=3D"auto">- Digital experiences</div><d=
+iv dir=3D"auto">- Research-driven creative services</div><div dir=3D"auto">=
+- Technology-assisted workflows</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">Your goal is NOT to create a generic redesign.</div><div dir=3D"a=
+uto"><br></div><div dir=3D"auto">Your goal is to transform the existing web=
+site into a premium, production-ready digital experience that could compete=
+ with respected independent creative studios, boutique technology consultan=
+cies, research firms, publishing-focused studios, and high-end digital agen=
+cies.</div><div dir=3D"auto"><br></div><div dir=3D"auto">The final result m=
+ust feel:</div><div dir=3D"auto"><br></div><div dir=3D"auto">- Intelligent<=
+/div><div dir=3D"auto">- Distinctive</div><div dir=3D"auto">- Editorial</di=
+v><div dir=3D"auto">- Strategic</div><div dir=3D"auto">- Human</div><div di=
+r=3D"auto">- Precise</div><div dir=3D"auto">- Modern</div><div dir=3D"auto"=
+>- Premium</div><div dir=3D"auto">- Trustworthy</div><div dir=3D"auto">- Th=
+oughtful</div><div dir=3D"auto"><br></div><div dir=3D"auto">It must NOT fee=
+l:</div><div dir=3D"auto"><br></div><div dir=3D"auto">- AI-generated</div><=
+div dir=3D"auto">- Template-based</div><div dir=3D"auto">- Like a SaaS land=
+ing page</div><div dir=3D"auto">- Like a generic creative agency</div><div =
+dir=3D"auto">- Over-designed</div><div dir=3D"auto">- Trend-chasing</div><d=
+iv dir=3D"auto">- Filled with meaningless animations</div><div dir=3D"auto"=
+>- Full of empty marketing language</div><div dir=3D"auto"><br></div><div d=
+ir=3D"auto">The website should communicate that THE OFFICE combines:</div><=
+div dir=3D"auto"><br></div><div dir=3D"auto">Research + Strategy + Design +=
+ Technology + Human Judgment</div><div dir=3D"auto"><br></div><div dir=3D"a=
+uto"><br></div><div dir=3D"auto">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div dir=3D"auto">IMPORTANT: PRESERV=
+E EXISTING UI/UX FOUNDATION</div><div dir=3D"auto">=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div dir=3D"auto">=
+<br></div><div dir=3D"auto">This is a critical requirement.</div><div dir=
+=3D"auto"><br></div><div dir=3D"auto">Do NOT blindly redesign the entire we=
+bsite.</div><div dir=3D"auto"><br></div><div dir=3D"auto">The existing webs=
+ite is the foundation.</div><div dir=3D"auto"><br></div><div dir=3D"auto">B=
+efore changing anything, carefully analyze the current:</div><div dir=3D"au=
+to"><br></div><div dir=3D"auto">- Page structure</div><div dir=3D"auto">- L=
+ayout system</div><div dir=3D"auto">- Component hierarchy</div><div dir=3D"=
+auto">- Navigation</div><div dir=3D"auto">- Visual language</div><div dir=
+=3D"auto">- Spacing system</div><div dir=3D"auto">- Typography choices</div=
+><div dir=3D"auto">- Interaction patterns</div><div dir=3D"auto">- Responsi=
+ve behavior</div><div dir=3D"auto">- User journey</div><div dir=3D"auto"><b=
+r></div><div dir=3D"auto">Preserve existing UI/UX decisions that are alread=
+y strong.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Do not replace=
+ the interface simply because you prefer another aesthetic direction.</div>=
+<div dir=3D"auto"><br></div><div dir=3D"auto">Any major UI, UX, or layout c=
+hange must be justified by a clear improvement in:</div><div dir=3D"auto"><=
+br></div><div dir=3D"auto">- User experience</div><div dir=3D"auto">- Acces=
+sibility</div><div dir=3D"auto">- Conversion performance</div><div dir=3D"a=
+uto">- Brand clarity</div><div dir=3D"auto">- Content organization</div><di=
+v dir=3D"auto">- Mobile usability</div><div dir=3D"auto">- Technical qualit=
+y</div><div dir=3D"auto">- Maintainability</div><div dir=3D"auto"><br></div=
+><div dir=3D"auto">The goal is:</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">&quot;Refine, elevate, and complete the existing experience.&quot=
+;</div><div dir=3D"auto"><br></div><div dir=3D"auto">Not:</div><div dir=3D"=
+auto"><br></div><div dir=3D"auto">&quot;Replace the website with a complete=
+ly different template.&quot;</div><div dir=3D"auto"><br></div><div dir=3D"a=
+uto">Maintain the recognizable identity of the current product while improv=
+ing weaknesses.</div><div dir=3D"auto"><br></div><div dir=3D"auto">=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div>=
+<div dir=3D"auto">PHASE 1 =E2=80=94 COMPLETE WEBSITE AUDIT</div><div dir=3D=
+"auto">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D</div><div dir=3D"auto"><br></div><div dir=3D"auto">Before impleme=
+nting changes, perform a detailed professional audit.</div><div dir=3D"auto=
+"><br></div><div dir=3D"auto">Analyze every available page and component.</=
+div><div dir=3D"auto"><br></div><div dir=3D"auto">Review:</div><div dir=3D"=
+auto"><br></div><div dir=3D"auto">## Visual Design Audit</div><div dir=3D"a=
+uto"><br></div><div dir=3D"auto">Evaluate:</div><div dir=3D"auto"><br></div=
+><div dir=3D"auto">- Typography</div><div dir=3D"auto">- Color system</div>=
+<div dir=3D"auto">- Contrast</div><div dir=3D"auto">- Layout rhythm</div><d=
+iv dir=3D"auto">- Spacing consistency</div><div dir=3D"auto">- Grid structu=
+re</div><div dir=3D"auto">- Visual hierarchy</div><div dir=3D"auto">- Compo=
+sition</div><div dir=3D"auto">- Brand personality</div><div dir=3D"auto">- =
+Image usage</div><div dir=3D"auto">- Component consistency</div><div dir=3D=
+"auto"><br></div><div dir=3D"auto">Identify:</div><div dir=3D"auto"><br></d=
+iv><div dir=3D"auto">- What already works</div><div dir=3D"auto">- What fee=
+ls unfinished</div><div dir=3D"auto">- What feels generic</div><div dir=3D"=
+auto">- What reduces trust</div><div dir=3D"auto">- What harms conversion</=
+div><div dir=3D"auto">- What feels inconsistent</div><div dir=3D"auto"><br>=
+</div><div dir=3D"auto"><br></div><div dir=3D"auto">## UX Audit</div><div d=
+ir=3D"auto"><br></div><div dir=3D"auto">Analyze:</div><div dir=3D"auto"><br=
+></div><div dir=3D"auto">- User journey</div><div dir=3D"auto">- Informatio=
+n architecture</div><div dir=3D"auto">- Navigation clarity</div><div dir=3D=
+"auto">- Page scanning behavior</div><div dir=3D"auto">- CTA placement</div=
+><div dir=3D"auto">- Content hierarchy</div><div dir=3D"auto">- User intent=
+</div><div dir=3D"auto">- Friction points</div><div dir=3D"auto">- Missing =
+interactions</div><div dir=3D"auto"><br></div><div dir=3D"auto">Evaluate th=
+e journey:</div><div dir=3D"auto"><br></div><div dir=3D"auto">DISCOVER =E2=
+=86=92 UNDERSTAND =E2=86=92 TRUST =E2=86=92 EXPLORE =E2=86=92 CONTACT</div>=
+<div dir=3D"auto"><br></div><div dir=3D"auto"><br></div><div dir=3D"auto">#=
+# Conversion Audit</div><div dir=3D"auto"><br></div><div dir=3D"auto">Ident=
+ify:</div><div dir=3D"auto"><br></div><div dir=3D"auto">- Missing CTAs</div=
+><div dir=3D"auto">- Weak CTAs</div><div dir=3D"auto">- Unclear positioning=
+</div><div dir=3D"auto">- Missing trust signals</div><div dir=3D"auto">- Mi=
+ssing decision-making information</div><div dir=3D"auto">- Weak contact flo=
+w</div><div dir=3D"auto">- Lost conversion opportunities</div><div dir=3D"a=
+uto"><br></div><div dir=3D"auto"><br></div><div dir=3D"auto">## Technical A=
+udit</div><div dir=3D"auto"><br></div><div dir=3D"auto">Review:</div><div d=
+ir=3D"auto"><br></div><div dir=3D"auto">- Framework implementation</div><di=
+v dir=3D"auto">- Component architecture</div><div dir=3D"auto">- Code quali=
+ty</div><div dir=3D"auto">- Responsive behavior</div><div dir=3D"auto">- Pe=
+rformance</div><div dir=3D"auto">- Dependencies</div><div dir=3D"auto">- Im=
+age optimization</div><div dir=3D"auto">- Rendering behavior</div><div dir=
+=3D"auto">- Errors</div><div dir=3D"auto">- Maintainability</div><div dir=
+=3D"auto"><br></div><div dir=3D"auto"><br></div><div dir=3D"auto">## SEO Au=
+dit</div><div dir=3D"auto"><br></div><div dir=3D"auto">Review:</div><div di=
+r=3D"auto"><br></div><div dir=3D"auto">- Metadata</div><div dir=3D"auto">- =
+Titles</div><div dir=3D"auto">- Descriptions</div><div dir=3D"auto">- Headi=
+ng hierarchy</div><div dir=3D"auto">- Structured data</div><div dir=3D"auto=
+">- Open Graph</div><div dir=3D"auto">- Canonical URLs</div><div dir=3D"aut=
+o">- Indexability</div><div dir=3D"auto">- Sitemap readiness</div><div dir=
+=3D"auto">- Keyword targeting</div><div dir=3D"auto"><br></div><div dir=3D"=
+auto"><br></div><div dir=3D"auto">## Accessibility Audit</div><div dir=3D"a=
+uto"><br></div><div dir=3D"auto">Review:</div><div dir=3D"auto"><br></div><=
+div dir=3D"auto">- Keyboard navigation</div><div dir=3D"auto">- Screen-read=
+er experience</div><div dir=3D"auto">- Semantic HTML</div><div dir=3D"auto"=
+>- ARIA usage</div><div dir=3D"auto">- Focus states</div><div dir=3D"auto">=
+- Contrast</div><div dir=3D"auto">- Motion preferences</div><div dir=3D"aut=
+o">- Form accessibility</div><div dir=3D"auto"><br></div><div dir=3D"auto">=
+<br></div><div dir=3D"auto">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div dir=3D"auto">PHASE 2 =E2=80=94 DEV=
+ELOP A DISTINCT BRAND SYSTEM</div><div dir=3D"auto">=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div dir=3D"aut=
+o"><br></div><div dir=3D"auto">Strengthen THE OFFICE into a recognizable st=
+udio brand.</div><div dir=3D"auto"><br></div><div dir=3D"auto">The brand di=
+rection should communicate:</div><div dir=3D"auto"><br></div><div dir=3D"au=
+to">- Intelligence</div><div dir=3D"auto">- Research</div><div dir=3D"auto"=
+>- Taste</div><div dir=3D"auto">- Craft</div><div dir=3D"auto">- Strategic =
+thinking</div><div dir=3D"auto">- Technology with purpose</div><div dir=3D"=
+auto">- Curiosity</div><div dir=3D"auto">- Precision</div><div dir=3D"auto"=
+>- Quiet confidence</div><div dir=3D"auto"><br></div><div dir=3D"auto"><br>=
+</div><div dir=3D"auto">Avoid:</div><div dir=3D"auto"><br></div><div dir=3D=
+"auto">- Neon futuristic aesthetics</div><div dir=3D"auto">- Excessive grad=
+ients</div><div dir=3D"auto">- AI clich=C3=A9s</div><div dir=3D"auto">- Gen=
+eric startup visuals</div><div dir=3D"auto">- Glassmorphism everywhere</div=
+><div dir=3D"auto">- Decorative 3D objects without meaning</div><div dir=3D=
+"auto"><br></div><div dir=3D"auto"><br></div><div dir=3D"auto">The desired =
+direction:</div><div dir=3D"auto"><br></div><div dir=3D"auto">Independent c=
+reative studio +</div><div dir=3D"auto">Research laboratory +</div><div dir=
+=3D"auto">Publishing intelligence +</div><div dir=3D"auto">Digital craftsma=
+nship +</div><div dir=3D"auto">Strategic technology consultancy</div><div d=
+ir=3D"auto"><br></div><div dir=3D"auto"><br></div><div dir=3D"auto">Visual =
+inspiration:</div><div dir=3D"auto"><br></div><div dir=3D"auto">- Editorial=
+ design</div><div dir=3D"auto">- Contemporary publishing</div><div dir=3D"a=
+uto">- Modern architecture</div><div dir=3D"auto">- Research institutions</=
+div><div dir=3D"auto">- Premium independent studios</div><div dir=3D"auto">=
+<br></div><div dir=3D"auto"><br></div><div dir=3D"auto">=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div dir=3D"=
+auto">PHASE 3 =E2=80=94 IMPROVE THE HERO EXPERIENCE</div><div dir=3D"auto">=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+</div><div dir=3D"auto"><br></div><div dir=3D"auto">Create a powerful hero =
+while respecting the existing layout system.</div><div dir=3D"auto"><br></d=
+iv><div dir=3D"auto">The hero must immediately communicate:</div><div dir=
+=3D"auto"><br></div><div dir=3D"auto">1. Who is THE OFFICE?</div><div dir=
+=3D"auto">2. What do they do?</div><div dir=3D"auto">3. Who do they help?</=
+div><div dir=3D"auto">4. Why should someone care?</div><div dir=3D"auto"><b=
+r></div><div dir=3D"auto"><br></div><div dir=3D"auto">Develop:</div><div di=
+r=3D"auto"><br></div><div dir=3D"auto">- Strong headline</div><div dir=3D"a=
+uto">- Supporting statement</div><div dir=3D"auto">- Primary CTA</div><div =
+dir=3D"auto">- Secondary CTA</div><div dir=3D"auto">- Visual identity syste=
+m</div><div dir=3D"auto">- Typography hierarchy</div><div dir=3D"auto">- Re=
+sponsive behavior</div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></=
+div><div dir=3D"auto">Possible CTA directions:</div><div dir=3D"auto"><br><=
+/div><div dir=3D"auto">- Start a project</div><div dir=3D"auto">- Tell us w=
+hat you&#39;re building</div><div dir=3D"auto">- Work with THE OFFICE</div>=
+<div dir=3D"auto">- Explore our approach</div><div dir=3D"auto">- Discuss y=
+our project</div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></div><d=
+iv dir=3D"auto">Avoid generic statements like:</div><div dir=3D"auto"><br><=
+/div><div dir=3D"auto">&quot;We create innovative solutions.&quot;</div><di=
+v dir=3D"auto"><br></div><div dir=3D"auto">Every word should communicate va=
+lue.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D</div><div dir=3D"auto">PHASE 4 =E2=80=94 BUILD A COMPLETE SERV=
+ICE SYSTEM</div><div dir=3D"auto">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div dir=3D"auto"><br></div><div =
+dir=3D"auto">Create a refined services experience.</div><div dir=3D"auto"><=
+br></div><div dir=3D"auto">Services:</div><div dir=3D"auto"><br></div><div =
+dir=3D"auto">## BOOK STRATEGY</div><div dir=3D"auto"><br></div><div dir=3D"=
+auto">Explain:</div><div dir=3D"auto"><br></div><div dir=3D"auto">- Positio=
+ning</div><div dir=3D"auto">- Concept development</div><div dir=3D"auto">- =
+Audience understanding</div><div dir=3D"auto">- Editorial direction</div><d=
+iv dir=3D"auto">- Publishing strategy</div><div dir=3D"auto"><br></div><div=
+ dir=3D"auto"><br></div><div dir=3D"auto">## BOOK RESEARCH</div><div dir=3D=
+"auto"><br></div><div dir=3D"auto">Explain:</div><div dir=3D"auto"><br></di=
+v><div dir=3D"auto">- Research systems</div><div dir=3D"auto">- Source disc=
+overy</div><div dir=3D"auto">- Knowledge organization</div><div dir=3D"auto=
+">- Information synthesis</div><div dir=3D"auto">- Fact development</div><d=
+iv dir=3D"auto"><br></div><div dir=3D"auto"><br></div><div dir=3D"auto">## =
+WEB DESIGN</div><div dir=3D"auto"><br></div><div dir=3D"auto">Explain:</div=
+><div dir=3D"auto"><br></div><div dir=3D"auto">- Digital experiences</div><=
+div dir=3D"auto">- Websites</div><div dir=3D"auto">- UX systems</div><div d=
+ir=3D"auto">- Interaction design</div><div dir=3D"auto">- Frontend implemen=
+tation</div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></div><div di=
+r=3D"auto">## AUTOMATION</div><div dir=3D"auto"><br></div><div dir=3D"auto"=
+>Explain:</div><div dir=3D"auto"><br></div><div dir=3D"auto">- Workflow imp=
+rovement</div><div dir=3D"auto">- Internal tools</div><div dir=3D"auto">- A=
+I-assisted processes</div><div dir=3D"auto">- Integrations</div><div dir=3D=
+"auto">- Operational efficiency</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto"><br></div><div dir=3D"auto">Only introduce additional services if=
+ they logically fit THE OFFICE.</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">For every service explain:</div><div dir=3D"auto"><br></div><div =
+dir=3D"auto">- What it is</div><div dir=3D"auto">- Who needs it</div><div d=
+ir=3D"auto">- The problem it solves</div><div dir=3D"auto">- The process</d=
+iv><div dir=3D"auto">- Expected outcomes</div><div dir=3D"auto"><br></div><=
+div dir=3D"auto"><br></div><div dir=3D"auto">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div dir=3D"auto">PHASE =
+5 =E2=80=94 CREATE A STRONG PROCESS SECTION</div><div dir=3D"auto">=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div>=
+<div dir=3D"auto"><br></div><div dir=3D"auto">Add a clear methodology.</div=
+><div dir=3D"auto"><br></div><div dir=3D"auto">Example:</div><div dir=3D"au=
+to"><br></div><div dir=3D"auto">01 =E2=80=94 Understand</div><div dir=3D"au=
+to">02 =E2=80=94 Research</div><div dir=3D"auto">03 =E2=80=94 Define</div><=
+div dir=3D"auto">04 =E2=80=94 Design</div><div dir=3D"auto">05 =E2=80=94 Bu=
+ild</div><div dir=3D"auto">06 =E2=80=94 Refine</div><div dir=3D"auto"><br><=
+/div><div dir=3D"auto"><br></div><div dir=3D"auto">Explain:</div><div dir=
+=3D"auto"><br></div><div dir=3D"auto">THE OFFICE adapts the process dependi=
+ng on project requirements.</div><div dir=3D"auto"><br></div><div dir=3D"au=
+to">Create subtle interaction where appropriate.</div><div dir=3D"auto"><br=
+></div><div dir=3D"auto">Do not add motion without purpose.</div><div dir=
+=3D"auto"><br></div><div dir=3D"auto"><br></div><div dir=3D"auto">=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><di=
+v dir=3D"auto">PHASE 6 =E2=80=94 SELECTED WORK SYSTEM</div><div dir=3D"auto=
+">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D</div><div dir=3D"auto"><br></div><div dir=3D"auto">Create a scalable po=
+rtfolio/case study structure.</div><div dir=3D"auto"><br></div><div dir=3D"=
+auto">IMPORTANT:</div><div dir=3D"auto"><br></div><div dir=3D"auto">Never f=
+abricate:</div><div dir=3D"auto"><br></div><div dir=3D"auto">- Clients</div=
+><div dir=3D"auto">- Results</div><div dir=3D"auto">- Revenue</div><div dir=
+=3D"auto">- Awards</div><div dir=3D"auto">- Testimonials</div><div dir=3D"a=
+uto">- Partnerships</div><div dir=3D"auto"><br></div><div dir=3D"auto"><br>=
+</div><div dir=3D"auto">If verified projects exist:</div><div dir=3D"auto">=
+<br></div><div dir=3D"auto">Present them professionally.</div><div dir=3D"a=
+uto"><br></div><div dir=3D"auto">Each project should support:</div><div dir=
+=3D"auto"><br></div><div dir=3D"auto">- Title</div><div dir=3D"auto">- Cate=
+gory</div><div dir=3D"auto">- Description</div><div dir=3D"auto">- Services=
+</div><div dir=3D"auto">- Visual</div><div dir=3D"auto">- Outcome</div><div=
+ dir=3D"auto">- Case study page</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto"><br></div><div dir=3D"auto">If projects do not exist:</div><div d=
+ir=3D"auto"><br></div><div dir=3D"auto">Create an elegant framework ready f=
+or future content.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><br><=
+/div><div dir=3D"auto">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D</div><div dir=3D"auto">PHASE 7 =E2=80=94 WHY THE O=
+FFICE</div><div dir=3D"auto">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div dir=3D"auto"><br></div><div dir=3D=
+"auto">Create a positioning section explaining:</div><div dir=3D"auto"><br>=
+</div><div dir=3D"auto">Why choose THE OFFICE?</div><div dir=3D"auto"><br><=
+/div><div dir=3D"auto">Possible themes:</div><div dir=3D"auto"><br></div><d=
+iv dir=3D"auto">- Strategy before execution</div><div dir=3D"auto">- Resear=
+ch before assumptions</div><div dir=3D"auto">- Technology where useful</div=
+><div dir=3D"auto">- Human thinking where essential</div><div dir=3D"auto">=
+- Small team attention</div><div dir=3D"auto">- Cross-disciplinary expertis=
+e</div><div dir=3D"auto">- Quality over volume</div><div dir=3D"auto"><br><=
+/div><div dir=3D"auto"><br></div><div dir=3D"auto">Avoid arrogance.</div><d=
+iv dir=3D"auto"><br></div><div dir=3D"auto">Be confident and specific.</div=
+><div dir=3D"auto"><br></div><div dir=3D"auto"><br></div><div dir=3D"auto">=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+</div><div dir=3D"auto">PHASE 8 =E2=80=94 FIELD NOTES / EDITORIAL SYSTEM</d=
+iv><div dir=3D"auto">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D</div><div dir=3D"auto"><br></div><div dir=3D"auto">Cr=
+eate an intellectual content area.</div><div dir=3D"auto"><br></div><div di=
+r=3D"auto">Potential categories:</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">- Research notes</div><div dir=3D"auto">- Design observations</di=
+v><div dir=3D"auto">- Book thinking</div><div dir=3D"auto">- Technology exp=
+eriments</div><div dir=3D"auto">- Automation insights</div><div dir=3D"auto=
+">- Studio perspectives</div><div dir=3D"auto"><br></div><div dir=3D"auto">=
+<br></div><div dir=3D"auto">Do not create fake articles.</div><div dir=3D"a=
+uto"><br></div><div dir=3D"auto">Build the architecture for future publishi=
+ng.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D</div><div dir=3D"auto">PHASE 9 =E2=80=94 TRUST WITHOUT FABRICA=
+TION</div><div dir=3D"auto">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div dir=3D"auto"><br></div><div dir=3D=
+"auto">Only display verified:</div><div dir=3D"auto"><br></div><div dir=3D"=
+auto">- Clients</div><div dir=3D"auto">- Testimonials</div><div dir=3D"auto=
+">- Publications</div><div dir=3D"auto">- Awards</div><div dir=3D"auto">- P=
+artnerships</div><div dir=3D"auto">- Statistics</div><div dir=3D"auto"><br>=
+</div><div dir=3D"auto"><br></div><div dir=3D"auto">If unavailable:</div><d=
+iv dir=3D"auto"><br></div><div dir=3D"auto">Create truthful alternatives:</=
+div><div dir=3D"auto"><br></div><div dir=3D"auto">- Studio principles</div>=
+<div dir=3D"auto">- Working philosophy</div><div dir=3D"auto">- Process tra=
+nsparency</div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></div><div=
+ dir=3D"auto">Never invent credibility.</div><div dir=3D"auto"><br></div><d=
+iv dir=3D"auto"><br></div><div dir=3D"auto">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div dir=3D"auto">PHASE =
+10 =E2=80=94 TEAM SECTION</div><div dir=3D"auto">=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div dir=3D"auto">=
+<br></div><div dir=3D"auto">The studio has four members.</div><div dir=3D"a=
+uto"><br></div><div dir=3D"auto">Create a team framework.</div><div dir=3D"=
+auto"><br></div><div dir=3D"auto">Only use verified:</div><div dir=3D"auto"=
+><br></div><div dir=3D"auto">- Names</div><div dir=3D"auto">- Photos</div><=
+div dir=3D"auto">- Roles</div><div dir=3D"auto">- Bios</div><div dir=3D"aut=
+o">- Links</div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></div><di=
+v dir=3D"auto">If unavailable:</div><div dir=3D"auto"><br></div><div dir=3D=
+"auto">Create a flexible component structure.</div><div dir=3D"auto"><br></=
+div><div dir=3D"auto">Do not invent identities.</div><div dir=3D"auto"><br>=
+</div><div dir=3D"auto"><br></div><div dir=3D"auto">=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div dir=3D"aut=
+o">PHASE 11 =E2=80=94 PREMIUM CONTACT EXPERIENCE</div><div dir=3D"auto">=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</d=
+iv><div dir=3D"auto"><br></div><div dir=3D"auto">Replace simple contact pat=
+terns with a professional inquiry experience.</div><div dir=3D"auto"><br></=
+div><div dir=3D"auto">Include:</div><div dir=3D"auto"><br></div><div dir=3D=
+"auto">- Name</div><div dir=3D"auto">- Email</div><div dir=3D"auto">- Compa=
+ny</div><div dir=3D"auto">- Project description</div><div dir=3D"auto">- Re=
+quired services</div><div dir=3D"auto">- Timeline</div><div dir=3D"auto">- =
+Scope</div><div dir=3D"auto">- Optional budget</div><div dir=3D"auto">- Dis=
+covery source</div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></div>=
+<div dir=3D"auto">Use verified contact:</div><div dir=3D"auto"><br></div><d=
+iv dir=3D"auto"><a href=3D"mailto:theofficetechies@gmail.com">theofficetech=
+ies@gmail.com</a></div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></=
+div><div dir=3D"auto">Do not invent:</div><div dir=3D"auto"><br></div><div =
+dir=3D"auto">- Phone numbers</div><div dir=3D"auto">- Addresses</div><div d=
+ir=3D"auto">- Social accounts</div><div dir=3D"auto"><br></div><div dir=3D"=
+auto"><br></div><div dir=3D"auto">Create:</div><div dir=3D"auto"><br></div>=
+<div dir=3D"auto">- Validation states</div><div dir=3D"auto">- Error handli=
+ng</div><div dir=3D"auto">- Success states</div><div dir=3D"auto">- Loading=
+ states</div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></div><div d=
+ir=3D"auto">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D</div><div dir=3D"auto">PHASE 12 =E2=80=94 NAVIGATION AND FOOTE=
+R</div><div dir=3D"auto">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div dir=3D"auto"><br></div><div dir=3D"au=
+to">Create a polished navigation.</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">Desktop:</div><div dir=3D"auto"><br></div><div dir=3D"auto">- Log=
+o</div><div dir=3D"auto">- Work</div><div dir=3D"auto">- Services</div><div=
+ dir=3D"auto">- Approach</div><div dir=3D"auto">- About</div><div dir=3D"au=
+to">- Notes</div><div dir=3D"auto">- Contact</div><div dir=3D"auto"><br></d=
+iv><div dir=3D"auto"><br></div><div dir=3D"auto">Mobile:</div><div dir=3D"a=
+uto"><br></div><div dir=3D"auto">- Elegant menu</div><div dir=3D"auto">- Cl=
+ear CTA</div><div dir=3D"auto">- Smooth interaction</div><div dir=3D"auto">=
+<br></div><div dir=3D"auto"><br></div><div dir=3D"auto">Footer:</div><div d=
+ir=3D"auto"><br></div><div dir=3D"auto">Include:</div><div dir=3D"auto"><br=
+></div><div dir=3D"auto">- Brand statement</div><div dir=3D"auto">- Navigat=
+ion</div><div dir=3D"auto">- Services</div><div dir=3D"auto">- Contact</div=
+><div dir=3D"auto">- Verified links only</div><div dir=3D"auto">- Copyright=
+</div><div dir=3D"auto">- Legal links if required</div><div dir=3D"auto"><b=
+r></div><div dir=3D"auto"><br></div><div dir=3D"auto">=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div dir=3D"aut=
+o">PHASE 13 =E2=80=94 DESIGN SYSTEM</div><div dir=3D"auto">=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div dir=
+=3D"auto"><br></div><div dir=3D"auto">Create a consistent design language.<=
+/div><div dir=3D"auto"><br></div><div dir=3D"auto">Prioritize:</div><div di=
+r=3D"auto"><br></div><div dir=3D"auto">- Typography</div><div dir=3D"auto">=
+- Spacing</div><div dir=3D"auto">- Grid</div><div dir=3D"auto">- Components=
+</div><div dir=3D"auto">- Borders</div><div dir=3D"auto">- Motion</div><div=
+ dir=3D"auto">- Responsive behavior</div><div dir=3D"auto"><br></div><div d=
+ir=3D"auto"><br></div><div dir=3D"auto">Preferred aesthetic:</div><div dir=
+=3D"auto"><br></div><div dir=3D"auto">- Warm neutral backgrounds</div><div =
+dir=3D"auto">- Deep charcoal typography</div><div dir=3D"auto">- Restrained=
+ accent color</div><div dir=3D"auto">- Editorial layouts</div><div dir=3D"a=
+uto">- Monospace technical details</div><div dir=3D"auto"><br></div><div di=
+r=3D"auto"><br></div><div dir=3D"auto">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div dir=3D"auto">PHASE 14 =E2=
+=80=94 INTERACTION DESIGN</div><div dir=3D"auto">=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div dir=3D"auto">=
+<br></div><div dir=3D"auto">Implement meaningful interactions:</div><div di=
+r=3D"auto"><br></div><div dir=3D"auto">- Hover states</div><div dir=3D"auto=
+">- Focus states</div><div dir=3D"auto">- Scroll reveals</div><div dir=3D"a=
+uto">- Image transitions</div><div dir=3D"auto">- Navigation animation</div=
+><div dir=3D"auto">- Button feedback</div><div dir=3D"auto">- Micro interac=
+tions</div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">Requirements:</div><div dir=3D"auto"><br></div><div dir=3D"auto">=
+- Respect prefers-reduced-motion</div><div dir=3D"auto">- Maintain performa=
+nce</div><div dir=3D"auto">- Avoid unnecessary animation</div><div dir=3D"a=
+uto"><br></div><div dir=3D"auto"><br></div><div dir=3D"auto">=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div d=
+ir=3D"auto">PHASE 15 =E2=80=94 MOBILE QUALITY</div><div dir=3D"auto">=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div>=
+<div dir=3D"auto"><br></div><div dir=3D"auto">Test:</div><div dir=3D"auto">=
+<br></div><div dir=3D"auto">- Small phones</div><div dir=3D"auto">- Large p=
+hones</div><div dir=3D"auto">- Tablets</div><div dir=3D"auto">- Desktop</di=
+v><div dir=3D"auto">- Large screens</div><div dir=3D"auto"><br></div><div d=
+ir=3D"auto"><br></div><div dir=3D"auto">Verify:</div><div dir=3D"auto"><br>=
+</div><div dir=3D"auto">- No overflow</div><div dir=3D"auto">- Correct spac=
+ing</div><div dir=3D"auto">- Touch targets</div><div dir=3D"auto">- Navigat=
+ion</div><div dir=3D"auto">- Forms</div><div dir=3D"auto">- Typography</div=
+><div dir=3D"auto">- Performance</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto"><br></div><div dir=3D"auto">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div dir=3D"auto">PHASE 16 =E2=
+=80=94 SEO IMPLEMENTATION</div><div dir=3D"auto">=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div dir=3D"auto">=
+<br></div><div dir=3D"auto">Implement:</div><div dir=3D"auto"><br></div><di=
+v dir=3D"auto">- Metadata</div><div dir=3D"auto">- Semantic HTML</div><div =
+dir=3D"auto">- Open Graph</div><div dir=3D"auto">- Twitter metadata</div><d=
+iv dir=3D"auto">- Canonical URL</div><div dir=3D"auto">- Alt text</div><div=
+ dir=3D"auto">- Structured data</div><div dir=3D"auto">- Sitemap readiness<=
+/div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></div><div dir=3D"au=
+to">Target keywords naturally:</div><div dir=3D"auto"><br></div><div dir=3D=
+"auto">- Creative studio</div><div dir=3D"auto">- Book strategy</div><div d=
+ir=3D"auto">- Book research</div><div dir=3D"auto">- Web design studio</div=
+><div dir=3D"auto">- Digital studio</div><div dir=3D"auto">- Automation stu=
+dio</div><div dir=3D"auto">- Research and strategy</div><div dir=3D"auto"><=
+br></div><div dir=3D"auto"><br></div><div dir=3D"auto">No keyword stuffing.=
+</div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></div><div dir=3D"a=
+uto">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D</div><div dir=3D"auto">PHASE 17 =E2=80=94 ACCESSIBILITY</div><div di=
+r=3D"auto">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D</div><div dir=3D"auto"><br></div><div dir=3D"auto">Ensure:</di=
+v><div dir=3D"auto"><br></div><div dir=3D"auto">- WCAG-conscious contrast</=
+div><div dir=3D"auto">- Keyboard support</div><div dir=3D"auto">- Focus ind=
+icators</div><div dir=3D"auto">- Semantic structure</div><div dir=3D"auto">=
+- Form labels</div><div dir=3D"auto">- Screen-reader compatibility</div><di=
+v dir=3D"auto">- Reduced motion</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto"><br></div><div dir=3D"auto">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div dir=3D"auto">PHASE 18 =E2=
+=80=94 PERFORMANCE ENGINEERING</div><div dir=3D"auto">=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div dir=3D"aut=
+o"><br></div><div dir=3D"auto">Optimize:</div><div dir=3D"auto"><br></div><=
+div dir=3D"auto">- Images</div><div dir=3D"auto">- Fonts</div><div dir=3D"a=
+uto">- Bundles</div><div dir=3D"auto">- Dependencies</div><div dir=3D"auto"=
+>- Animations</div><div dir=3D"auto">- Rendering</div><div dir=3D"auto">- L=
+oading behavior</div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></di=
+v><div dir=3D"auto">Aim for excellent Core Web Vitals.</div><div dir=3D"aut=
+o"><br></div><div dir=3D"auto"><br></div><div dir=3D"auto">=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div dir=
+=3D"auto">PHASE 19 =E2=80=94 ERROR AND EDGE STATES</div><div dir=3D"auto">=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+</div><div dir=3D"auto"><br></div><div dir=3D"auto">Create:</div><div dir=
+=3D"auto"><br></div><div dir=3D"auto">- 404 page</div><div dir=3D"auto">- L=
+oading states</div><div dir=3D"auto">- Empty states</div><div dir=3D"auto">=
+- Error states</div><div dir=3D"auto">- Form failures</div><div dir=3D"auto=
+">- Success confirmations</div><div dir=3D"auto">- Mobile menu states</div>=
+<div dir=3D"auto"><br></div><div dir=3D"auto"><br></div><div dir=3D"auto">T=
+he 404 page should match THE OFFICE personality.</div><div dir=3D"auto"><br=
+></div><div dir=3D"auto"><br></div><div dir=3D"auto">=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div dir=3D"aut=
+o">FINAL QUALITY REVIEW</div><div dir=3D"auto">=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div dir=3D"auto"><br=
+></div><div dir=3D"auto">After implementation, perform a second independent=
+ audit.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Review the final=
+ result as:</div><div dir=3D"auto"><br></div><div dir=3D"auto">1. Creative =
+Director</div><div dir=3D"auto">2. Potential Client</div><div dir=3D"auto">=
+3. UX Designer</div><div dir=3D"auto">4. Mobile User</div><div dir=3D"auto"=
+>5. SEO Specialist</div><div dir=3D"auto">6. Accessibility Specialist</div>=
+<div dir=3D"auto">7. Frontend Engineer</div><div dir=3D"auto">8. Conversion=
+ Specialist</div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></div><d=
+iv dir=3D"auto">Identify remaining weaknesses.</div><div dir=3D"auto"><br><=
+/div><div dir=3D"auto">Fix them.</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">Perform final checks:</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">=E2=9C=93 Desktop experience=C2=A0=C2=A0</div><div dir=3D"auto">=
+=E2=9C=93 Mobile experience=C2=A0=C2=A0</div><div dir=3D"auto">=E2=9C=93 Ta=
+blet experience=C2=A0=C2=A0</div><div dir=3D"auto">=E2=9C=93 Navigation=C2=
+=A0=C2=A0</div><div dir=3D"auto">=E2=9C=93 Hero=C2=A0=C2=A0</div><div dir=
+=3D"auto">=E2=9C=93 Services=C2=A0=C2=A0</div><div dir=3D"auto">=E2=9C=93 P=
+rocess=C2=A0=C2=A0</div><div dir=3D"auto">=E2=9C=93 Work section=C2=A0=C2=
+=A0</div><div dir=3D"auto">=E2=9C=93 About/team=C2=A0=C2=A0</div><div dir=
+=3D"auto">=E2=9C=93 Why THE OFFICE=C2=A0=C2=A0</div><div dir=3D"auto">=E2=
+=9C=93 Notes section=C2=A0=C2=A0</div><div dir=3D"auto">=E2=9C=93 Contact e=
+xperience=C2=A0=C2=A0</div><div dir=3D"auto">=E2=9C=93 Footer=C2=A0=C2=A0</=
+div><div dir=3D"auto">=E2=9C=93 404 page=C2=A0=C2=A0</div><div dir=3D"auto"=
+>=E2=9C=93 SEO=C2=A0=C2=A0</div><div dir=3D"auto">=E2=9C=93 Accessibility=
+=C2=A0=C2=A0</div><div dir=3D"auto">=E2=9C=93 Performance=C2=A0=C2=A0</div>=
+<div dir=3D"auto">=E2=9C=93 Responsive typography=C2=A0=C2=A0</div><div dir=
+=3D"auto">=E2=9C=93 Hover states=C2=A0=C2=A0</div><div dir=3D"auto">=E2=9C=
+=93 Focus states=C2=A0=C2=A0</div><div dir=3D"auto">=E2=9C=93 Loading state=
+s=C2=A0=C2=A0</div><div dir=3D"auto">=E2=9C=93 Error states=C2=A0=C2=A0</di=
+v><div dir=3D"auto">=E2=9C=93 Reduced motion=C2=A0=C2=A0</div><div dir=3D"a=
+uto">=E2=9C=93 No fabricated information=C2=A0=C2=A0</div><div dir=3D"auto"=
+>=E2=9C=93 No broken links=C2=A0=C2=A0</div><div dir=3D"auto">=E2=9C=93 No =
+unintended placeholders=C2=A0=C2=A0</div><div dir=3D"auto">=E2=9C=93 No con=
+sole errors=C2=A0=C2=A0</div><div dir=3D"auto">=E2=9C=93 No horizontal over=
+flow=C2=A0=C2=A0</div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></d=
+iv><div dir=3D"auto">FINAL OBJECTIVE:</div><div dir=3D"auto"><br></div><div=
+ dir=3D"auto">Create a website that THE OFFICE could confidently send to se=
+rious clients.</div><div dir=3D"auto"><br></div><div dir=3D"auto">It should=
+ feel:</div><div dir=3D"auto"><br></div><div dir=3D"auto">Designed.</div><d=
+iv dir=3D"auto">Considered.</div><div dir=3D"auto">Intelligent.</div><div d=
+ir=3D"auto">Premium.</div><div dir=3D"auto">Human.</div><div dir=3D"auto">D=
+istinctive.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Do not stop =
+after improving the homepage hero.</div><div dir=3D"auto"><br></div><div di=
+r=3D"auto">Complete the entire digital product experience.</div></div>
+
+--000000000000f005190659e535a4--
