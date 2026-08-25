@@ -5,7 +5,10 @@ import { briefSchema, sanitizeText } from "./_lib/validate.js";
 
 const apiKey = process.env.RESEND_API_KEY;
 const resend = apiKey ? new Resend(apiKey) : null;
-const web3FormsKey = process.env.WEB3FORMS_KEY || process.env.WEB3FORMS_ACCESS_KEY;
+const web3FormsKey =
+  process.env.WEB3FORMS_KEY ||
+  process.env.WEB3FORMS_ACCESS_KEY ||
+  "9c3fe5d9-088e-4c8c-80b9-5a2d3702d395";
 const TO_EMAIL = process.env.TO_EMAIL ?? "theofficetechies@gmail.com";
 const FROM_EMAIL = process.env.FROM_EMAIL ?? "onboarding@resend.dev";
 const ENV = process.env.VERCEL_ENV ?? "development";
@@ -91,7 +94,7 @@ export default async function handler(
   const safeOrg = data.org ? sanitizeText(data.org) : undefined;
   const safeBrief = sanitizeText(data.brief);
 
-  // 1. If Web3Forms Access Key is provided, use it (No domain required, delivers to any inbox)
+  // 1. Web3Forms Delivery (Free, delivers directly to theofficetechies@gmail.com without any custom domain)
   if (web3FormsKey) {
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
@@ -103,7 +106,7 @@ export default async function handler(
         body: JSON.stringify({
           access_key: web3FormsKey,
           subject: `Brief from ${safeName}${safeOrg ? ` · ${safeOrg}` : ""}`,
-          from_name: "THE OFFICE Studio",
+          from_name: "THE OFFICE Studio Web",
           name: safeName,
           email: data.email,
           organization: safeOrg || "None",
@@ -127,7 +130,7 @@ export default async function handler(
     }
   }
 
-  // 2. If Resend is available and API key configured, send real email
+  // 2. Resend Delivery (if configured with custom verified domain)
   if (resend) {
     try {
       const subject = `Brief from ${safeName}${safeOrg ? ` · ${safeOrg}` : ""}`;
@@ -178,7 +181,7 @@ export default async function handler(
     }
   }
 
-  // Fallback (e.g. dev/preview or when keys not yet set)
+  // Development/offline log fallback
   console.log("[Brief Received]:", {
     name: safeName,
     email: data.email,
