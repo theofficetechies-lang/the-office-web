@@ -1294,6 +1294,12 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white text-black font-sans selection:bg-black selection:text-white">
+      <a
+        href="#top"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-black focus:text-white focus:px-4 focus:py-2 focus:font-mono focus:text-[12px] focus:outline-none"
+      >
+        Skip to main content
+      </a>
       <ToastContainer />
       <ManifestBar />
 
