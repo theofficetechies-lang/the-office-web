@@ -1,7 +1,6 @@
 /**
  * Production-grade API client for THE OFFICE studio.
- * Handles timeouts, retries, structured error parsing,
- * and automatic fallback to Web3Forms for 100% email delivery.
+ * Direct browser delivery via Web3Forms with automatic backend fallback.
  */
 
 const API_BASE = import.meta.env.VITE_API_URL ?? "";
@@ -74,7 +73,49 @@ export interface BriefResponse {
 }
 
 export async function submitBrief(payload: BriefPayload): Promise<BriefResponse> {
-  // Layer 1: Try the backend /api/brief endpoint first (handles rate limiting & serverless logic)
+  // Layer 1: Direct Web3Forms delivery from user browser to inbox
+  try {
+    const res = await fetchWithTimeout("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_PUBLIC_KEY,
+        subject: `New Brief from ${payload.name}${payload.org ? ` · ${payload.org}` : ""}`,
+        from_name: "THE OFFICE Studio",
+        name: payload.name,
+        email: payload.email,
+        organization: payload.org || "None",
+        service: payload.service || "General Inquiry",
+        timeline: payload.timeline || "Not specified",
+        budget: payload.budget || "Not specified",
+        discovery: payload.discovery || "Not specified",
+        message: payload.brief,
+      }),
+      timeout: DEFAULT_TIMEOUT,
+    });
+
+    const data = await res.json().catch(() => null);
+    if (data && (data.success || res.ok)) {
+      // Also notify backend in the background if available
+      fetch(`${API_BASE}/api/brief`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      }).catch(() => {});
+
+      return {
+        success: true,
+        message: "Brief received. We reply within two working days.",
+      };
+    }
+  } catch (web3Err) {
+    console.warn("[Client API] Direct Web3Forms dispatch failed, falling back to /api/brief:", web3Err);
+  }
+
+  // Layer 2: Serverless backend fallback
   try {
     const res = await fetchWithRetry(`${API_BASE}/api/brief`, {
       method: "POST",
@@ -95,42 +136,7 @@ export async function submitBrief(payload: BriefPayload): Promise<BriefResponse>
       return data;
     }
   } catch (err) {
-    console.warn("[Client API] Backend endpoint unavailable, engaging direct Web3Forms fallback:", err);
-  }
-
-  // Layer 2: Automatic Direct Web3Forms delivery fallback
-  try {
-    const res = await fetchWithTimeout("https://api.web3forms.com/submit", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        access_key: WEB3FORMS_PUBLIC_KEY,
-        subject: `Brief from ${payload.name}${payload.org ? ` · ${payload.org}` : ""}`,
-        from_name: "THE OFFICE Studio Web",
-        name: payload.name,
-        email: payload.email,
-        organization: payload.org || "None",
-        service: payload.service || "General Inquiry",
-        timeline: payload.timeline || "Not specified",
-        budget: payload.budget || "Not specified",
-        discovery: payload.discovery || "Not specified",
-        message: payload.brief,
-      }),
-      timeout: DEFAULT_TIMEOUT,
-    });
-
-    const data = await res.json().catch(() => null);
-    if (data && data.success) {
-      return {
-        success: true,
-        message: "Brief received. We reply within two working days.",
-      };
-    }
-  } catch (fallbackErr) {
-    console.error("[Client API] Direct delivery fallback failed:", fallbackErr);
+    console.error("[Client API] Both delivery methods failed:", err);
   }
 
   throw new ApiError(
