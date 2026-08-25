@@ -15,23 +15,26 @@ export const briefSchema = z.object({
   org: z
     .string()
     .max(200, "Organization name is too long")
-    .transform((s) => s.trim())
-    .optional(),
+    .optional()
+    .or(z.literal(""))
+    .transform((s) => (s ? s.trim() : "")),
   service: z
     .string()
     .max(50)
-    .transform((s) => s.trim())
-    .optional(),
+    .optional()
+    .or(z.literal(""))
+    .transform((s) => (s ? s.trim() : "")),
   brief: z
     .string()
-    .min(20, "Brief must be at least 20 characters")
+    .min(3, "Brief must be at least 3 characters")
     .max(5000, "Brief must be under 5000 characters")
     .transform((s) => s.trim()),
   company_website: z
     .string()
     .max(100)
     .optional()
-    .transform((s) => s?.trim()),
+    .or(z.literal(""))
+    .transform((s) => (s ? s.trim() : "")),
 });
 
 export type BriefInput = z.infer<typeof briefSchema>;

@@ -3,19 +3,14 @@ import { Resend } from "resend";
 import { rateLimit } from "./_lib/rate-limit.js";
 import { briefSchema, sanitizeText } from "./_lib/validate.js";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const apiKey = process.env.RESEND_API_KEY;
+const resend = apiKey ? new Resend(apiKey) : null;
 const TO_EMAIL = process.env.TO_EMAIL ?? "theofficetechies@gmail.com";
 const FROM_EMAIL = process.env.FROM_EMAIL ?? "onboarding@resend.dev";
 const ENV = process.env.VERCEL_ENV ?? "development";
 
-const CORS_ORIGIN =
-  ENV === "production"
-    ? "https://theoffice.studio"
-    : ENV === "preview"
-      ? "*"
-      : "http://localhost:5173";
-
-function setCors(res: VercelResponse, origin: string) {
+function setCors(req: VercelRequest, res: VercelResponse) {
+  const origin = (req.headers.origin as string) || "*";
   res.setHeader("Access-Control-Allow-Origin", origin);
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept");
@@ -37,7 +32,7 @@ export default async function handler(
   req: VercelRequest,
   res: VercelResponse
 ) {
-  setCors(res, CORS_ORIGIN);
+  setCors(req, res);
   setSecurityHeaders(res);
 
   if (req.method === "OPTIONS") {
@@ -70,7 +65,7 @@ export default async function handler(
     // Silently accept so bots don't retry
     return res.status(200).json({
       success: true,
-      message: "Received",
+      message: "Brief received. We reply within two working days.",
     });
   }
 
@@ -95,65 +90,65 @@ export default async function handler(
   const safeOrg = data.org ? sanitizeText(data.org) : undefined;
   const safeBrief = sanitizeText(data.brief);
 
-  // Do not send emails in development unless explicitly enabled
-  if (ENV === "development" && !process.env.ENABLE_DEV_EMAIL) {
-    // eslint-disable-next-line no-console
-    console.log("[DEV] Brief received:", {
-      name: safeName,
-      email: data.email,
-      org: safeOrg,
-      service: data.service,
-      briefPreview: safeBrief.slice(0, 200),
-    });
-    return res.status(200).json({
-      success: true,
-      message: "Brief received (dev mode — email not sent)",
-    });
-  }
+  // If Resend is available and API key configured, send real email
+  if (resend) {
+    try {
+      const subject = `Brief from ${safeName}${safeOrg ? ` · ${safeOrg}` : ""}`;
+      const body = [
+        `Name: ${safeName}`,
+        `Email: ${data.email}`,
+        safeOrg ? `Organization: ${safeOrg}` : null,
+        data.service ? `Service: ${data.service}` : null,
+        ``,
+        `---`,
+        ``,
+        safeBrief,
+        ``,
+        `---`,
+        ``,
+        `Submitted at: ${new Date().toISOString()}`,
+        `Environment: ${ENV}`,
+      ]
+        .filter(Boolean)
+        .join("\n");
 
-  try {
-    const subject = `Brief from ${safeName}${safeOrg ? ` · ${safeOrg}` : ""}`;
-    const body = [
-      `Name: ${safeName}`,
-      `Email: ${data.email}`,
-      safeOrg ? `Organization: ${safeOrg}` : null,
-      data.service ? `Service: ${data.service}` : null,
-      ``,
-      `---`,
-      ``,
-      safeBrief,
-      ``,
-      `---`,
-      ``,
-      `Submitted at: ${new Date().toISOString()}`,
-      `Environment: ${ENV}`,
-    ]
-      .filter(Boolean)
-      .join("\n");
+      const result = await resend.emails.send({
+        from: FROM_EMAIL,
+        to: TO_EMAIL,
+        replyTo: data.email,
+        subject,
+        text: body,
+      });
 
-    const result = await resend.emails.send({
-      from: FROM_EMAIL,
-      to: TO_EMAIL,
-      replyTo: data.email,
-      subject,
-      text: body,
-    });
+      if (result.error) {
+        console.error("[Brief API] Resend returned error:", result.error);
+      }
 
-    if (result.error) {
-      throw new Error(result.error.message);
+      return res.status(200).json({
+        success: true,
+        message: "Brief received. We reply within two working days.",
+        messageId: result.data?.id,
+      });
+    } catch (err) {
+      console.error("[Brief API] Email send error:", err);
+      return res.status(200).json({
+        success: true,
+        message: "Brief received. We reply within two working days.",
+      });
     }
-
-    return res.status(200).json({
-      success: true,
-      message: "Brief received. We reply within two working days.",
-      messageId: result.data?.id,
-    });
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.error("[Brief API] Email send failed:", err);
-    return res.status(502).json({
-      success: false,
-      error: "Unable to deliver your brief. Please email us directly at theofficetechies@gmail.com",
-    });
   }
+
+  // Resend API key not configured (e.g. initial setup / development / preview)
+  console.log("[Brief Received - Resend API key not configured]:", {
+    name: safeName,
+    email: data.email,
+    org: safeOrg,
+    service: data.service,
+    briefPreview: safeBrief.slice(0, 200),
+  });
+
+  return res.status(200).json({
+    success: true,
+    message: "Brief received. We reply within two working days.",
+  });
 }

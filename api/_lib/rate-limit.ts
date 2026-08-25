@@ -73,7 +73,7 @@ export function rateLimit(req: {
 }
 
 // Periodic cleanup to prevent unbounded memory growth
-setInterval(() => {
+const cleanupInterval = setInterval(() => {
   const now = Date.now();
   for (const [ip, entry] of store.entries()) {
     if (now > entry.resetTime) {
@@ -81,3 +81,5 @@ setInterval(() => {
     }
   }
 }, 60_000);
+cleanupInterval.unref?.();
+

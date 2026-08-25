@@ -6,6 +6,7 @@ import Typewriter from "./components/Typewriter";
 import ToastContainer from "./components/Toast";
 import { submitBrief, ApiError } from "./lib/api";
 import { useToast } from "./hooks/useToast";
+import { cn } from "./utils/cn";
 import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
 import NotesPage from "./pages/NotesPage";
@@ -454,69 +455,125 @@ function ProjectCard({
 
 type FormState = "idle" | "submitting" | "sent" | "error";
 
+interface FormDataState {
+  name: string;
+  email: string;
+  org: string;
+  service: string;
+  brief: string;
+  company_website: string;
+}
+
+const initialFormData: FormDataState = {
+  name: "",
+  email: "",
+  org: "",
+  service: "",
+  brief: "",
+  company_website: "",
+};
+
 function ContactForm() {
   const { addToast } = useToast();
+  const [formData, setFormData] = useState<FormDataState>(initialFormData);
   const [status, setStatus] = useState<FormState>("idle");
   const [errorMsg, setErrorMsg] = useState<string>("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const formRef = useRef<HTMLFormElement>(null);
 
-  function validate(form: HTMLFormElement) {
-    const data = new FormData(form);
-    const next: Record<string, string> = {};
-    const name = (data.get("name") as string)?.trim() ?? "";
-    const email = (data.get("email") as string)?.trim() ?? "";
-    const brief = (data.get("brief") as string)?.trim() ?? "";
-    const hp = (data.get("company_website") as string)?.trim() ?? "";
-
-    if (hp) {
-      return { ok: false, honeypot: true, errors: next };
+  const handleChange = (field: keyof FormDataState, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors((prev) => {
+        const next = { ...prev };
+        delete next[field];
+        if (Object.keys(next).length === 0) {
+          setStatus("idle");
+          setErrorMsg("");
+        }
+        return next;
+      });
     }
-    if (!name) next.name = "REQUIRED FIELD";
-    if (!email) next.email = "REQUIRED FIELD";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-      next.email = "NOT A VALID EMAIL";
-    if (!brief) next.brief = "REQUIRED FIELD";
-    else if (brief.length < 20) next.brief = "A FEW MORE LINES, PLEASE";
-    return { ok: Object.keys(next).length === 0, honeypot: false, errors: next };
+  };
+
+  function validate(): { ok: boolean; errors: Record<string, string> } {
+    const next: Record<string, string> = {};
+    const name = formData.name.trim();
+    const email = formData.email.trim();
+    const brief = formData.brief.trim();
+
+    if (!name) {
+      next.name = "Please enter your name";
+    } else if (name.length > 100) {
+      next.name = "Name must be under 100 characters";
+    }
+
+    if (!email) {
+      next.email = "Please enter your email address";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      next.email = "Please enter a valid email address (e.g. name@company.com)";
+    }
+
+    if (!brief) {
+      next.brief = "Please tell us what you are looking to make happen";
+    } else if (brief.length < 5) {
+      next.brief = "Please provide a few more details about your project";
+    } else if (brief.length > 5000) {
+      next.brief = "Brief must be under 5,000 characters";
+    }
+
+    return { ok: Object.keys(next).length === 0, errors: next };
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (status === "submitting") return;
-    const form = e.currentTarget as HTMLFormElement;
-    const result = validate(form);
+
+    const result = validate();
     setErrors(result.errors);
+
     if (!result.ok) {
-      if (!result.honeypot) {
-        setStatus("error");
-        setErrorMsg("FIX THE FIELDS MARKED BELOW");
-        addToast("Please fix the form errors before submitting.", "error");
+      setStatus("error");
+      setErrorMsg("PLEASE COMPLETE THE REQUIRED FIELDS");
+      addToast("Please complete the required fields before submitting.", "error");
+
+      // Auto-focus the first field with an error
+      const firstErrorField = Object.keys(result.errors)[0];
+      if (firstErrorField) {
+        const el = document.getElementById(firstErrorField);
+        if (el) {
+          el.focus();
+        }
       }
       return;
     }
+
     setStatus("submitting");
     setErrorMsg("");
 
-    const data = new FormData(form);
     const payload = {
-      name: String(data.get("name") ?? ""),
-      email: String(data.get("email") ?? ""),
-      org: String(data.get("org") ?? ""),
-      service: String(data.get("service") ?? ""),
-      brief: String(data.get("brief") ?? ""),
-      company_website: String(data.get("company_website") ?? ""),
+      name: formData.name.trim(),
+      email: formData.email.trim(),
+      org: formData.org.trim(),
+      service: formData.service.trim(),
+      brief: formData.brief.trim(),
+      company_website: formData.company_website.trim(),
     };
 
     try {
       const response = await submitBrief(payload);
       setStatus("sent");
       track("brief_submitted", { service: payload.service });
-      addToast(response.message ?? "Brief received. We reply within two working days.", "success");
-      form.reset();
-      setTimeout(() => setStatus("idle"), 5000);
+      addToast(
+        response.message ?? "Brief received. We reply within two working days.",
+        "success"
+      );
+      setFormData(initialFormData);
+      setErrors({});
+      setTimeout(() => setStatus("idle"), 6000);
     } catch (err) {
-      let message = "Something went wrong. Please try again or email us directly.";
+      let message =
+        "Unable to send brief automatically. Please email us directly at theofficetechies@gmail.com";
 
       if (err instanceof ApiError) {
         if (err.status === 429) {
@@ -524,31 +581,18 @@ function ContactForm() {
         } else if (err.status === 400 && err.issues) {
           const fieldErrors: Record<string, string> = {};
           err.issues.forEach((issue) => {
-            fieldErrors[issue.path] = issue.message.toUpperCase();
+            fieldErrors[issue.path] = issue.message;
           });
           setErrors(fieldErrors);
-          message = "Please correct the fields marked below.";
-        } else if (err.status === 502) {
-          message = err.message;
-        } else {
+          message = "Please correct the highlighted fields below.";
+        } else if (err.message) {
           message = err.message;
         }
       }
 
       setStatus("error");
-      setErrorMsg(message.toUpperCase());
+      setErrorMsg("DELIVERY ISSUE · PLEASE EMAIL US DIRECTLY");
       addToast(message, "error");
-
-      // Ultimate fallback: if the network is completely down, open mailto
-      if (err instanceof ApiError && err.status >= 500) {
-        const subject = encodeURIComponent(
-          `Brief from ${payload.name} — ${payload.service || "THE OFFICE"}`
-        );
-        const body = encodeURIComponent(
-          `Name: ${payload.name}\nEmail: ${payload.email}\nOrg: ${payload.org}\nService: ${payload.service}\n\n—\n\n${payload.brief}\n\n—\n(Form delivery failed; this email is a fallback. Please reply to confirm receipt.)`
-        );
-        window.location.href = `mailto:theofficetechies@gmail.com?subject=${subject}&body=${body}`;
-      }
     }
   }
 
@@ -566,6 +610,8 @@ function ContactForm() {
         type="text"
         autoComplete="name"
         required
+        value={formData.name}
+        onChange={(val) => handleChange("name", val)}
         error={errors.name}
       />
       <Field
@@ -574,12 +620,16 @@ function ContactForm() {
         type="email"
         autoComplete="email"
         required
+        value={formData.email}
+        onChange={(val) => handleChange("email", val)}
         error={errors.email}
       />
       <Field
         id="org"
         label="COMPANY / PUBLISHER / NONE"
         type="text"
+        value={formData.org}
+        onChange={(val) => handleChange("org", val)}
         error={errors.org}
       />
       <div className="col-span-2 sm:col-span-1">
@@ -592,8 +642,14 @@ function ContactForm() {
         <select
           id="service"
           name="service"
-          defaultValue=""
-          className="w-full bg-transparent border-b border-white/50 focus:border-white py-2 text-[15px] outline-none"
+          value={formData.service}
+          onChange={(e) => handleChange("service", e.target.value)}
+          className={cn(
+            "w-full bg-transparent border-b py-2 text-[15px] outline-none transition-colors cursor-pointer",
+            errors.service
+              ? "border-red-400 focus:border-red-400 text-white"
+              : "border-white/50 focus:border-white text-white"
+          )}
         >
           <option value="" disabled className="text-black">
             Select one
@@ -608,77 +664,111 @@ function ContactForm() {
             Automation Services
           </option>
           <option value="book-research" className="text-black">
-            Book Research &amp; Analysis
+            Book Research & Analysis
           </option>
           <option value="not-sure" className="text-black">
             Not sure yet
           </option>
         </select>
-        {errors.service && <ErrLine>{errors.service}</ErrLine>}
+        {errors.service && <ErrLine id="service-err">{errors.service}</ErrLine>}
       </div>
       <div className="col-span-2">
-        <label
-          htmlFor="brief"
-          className="block font-mono text-[11px] tracking-mono opacity-60 mb-2"
-        >
-          THE BRIEF
-        </label>
+        <div className="flex items-center justify-between mb-2">
+          <label
+            htmlFor="brief"
+            className={cn(
+              "block font-mono text-[11px] tracking-mono transition-colors",
+              errors.brief ? "text-red-400" : "opacity-60"
+            )}
+          >
+            THE BRIEF <span className="opacity-50 ml-1">*</span>
+          </label>
+          <span className="font-mono text-[10px] tracking-mono opacity-40">
+            {formData.brief.length > 0 ? `${formData.brief.length} characters` : ""}
+          </span>
+        </div>
         <textarea
           id="brief"
           name="brief"
           required
           rows={5}
+          value={formData.brief}
+          onChange={(e) => handleChange("brief", e.target.value)}
           placeholder="What you are trying to make happen. A timeline. A budget range. The thing that keeps you up at night about it."
-          className="w-full bg-transparent border-b border-white/50 focus:border-white py-2 text-[15px] outline-none resize-none placeholder:opacity-40"
+          aria-invalid={Boolean(errors.brief) || undefined}
+          aria-describedby={errors.brief ? "brief-err" : undefined}
+          className={cn(
+            "w-full bg-transparent border-b py-2 text-[15px] outline-none resize-none placeholder:opacity-40 transition-colors",
+            errors.brief
+              ? "border-red-400 focus:border-red-400 text-white"
+              : "border-white/50 focus:border-white text-white"
+          )}
         />
-        {errors.brief && <ErrLine>{errors.brief}</ErrLine>}
+        {errors.brief && <ErrLine id="brief-err">{errors.brief}</ErrLine>}
       </div>
 
-      {/* B5 honeypot */}
+      {/* Honeypot field — hidden from real users, screen readers, and text selection */}
       <div
+        className="hidden"
         aria-hidden="true"
-        style={{
-          position: "absolute",
-          left: "-10000px",
-          width: "1px",
-          height: "1px",
-          overflow: "hidden",
-        }}
+        style={{ display: "none" }}
       >
-        <label htmlFor="company_website">Company website (leave blank)</label>
+        <label htmlFor="company_website">Website</label>
         <input
           id="company_website"
           name="company_website"
           type="text"
           tabIndex={-1}
           autoComplete="off"
+          value={formData.company_website}
+          onChange={(e) => handleChange("company_website", e.target.value)}
         />
       </div>
 
       <div className="col-span-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-2">
-        <p
-          className="text-[12px] opacity-60 font-mono tracking-mono max-w-[36ch]"
+        <div
+          className="text-[12px] font-mono tracking-mono max-w-[38ch]"
           aria-live="polite"
         >
-          {status === "error" && errorMsg
-            ? errorMsg
-            : status === "sent"
-              ? "RECEIVED. WE REPLY WITHIN TWO WORKING DAYS."
-              : "WE REPLY WITHIN TWO WORKING DAYS. WE TURN DOWN BRIEFS WHEN WE ARE NOT THE RIGHT FIT."}
-        </p>
-        <button
-          type="submit"
-          disabled={status === "submitting"}
-          className="bg-white text-black px-5 py-3 font-mono text-[12px] tracking-mono font-semibold border border-white hover:bg-transparent hover:text-white transition-colors disabled:opacity-60 disabled:cursor-wait"
-        >
-          {status === "submitting"
-            ? "SENDING…"
-            : status === "sent"
-              ? "RECEIVED ✓"
-              : status === "error"
-                ? "TRY AGAIN →"
-                : "SEND BRIEF →"}
-        </button>
+          {status === "error" && errorMsg ? (
+            <span className="text-red-400">{errorMsg}</span>
+          ) : status === "sent" ? (
+            <span className="text-emerald-400">
+              RECEIVED. WE REPLY WITHIN TWO WORKING DAYS.
+            </span>
+          ) : (
+            <span className="opacity-60">
+              WE REPLY WITHIN TWO WORKING DAYS. WE TURN DOWN BRIEFS WHEN WE ARE NOT THE RIGHT FIT.
+            </span>
+          )}
+        </div>
+        <div className="flex items-center gap-3">
+          {status === "error" && (
+            <a
+              href={`mailto:theofficetechies@gmail.com?subject=${encodeURIComponent(
+                formData.name ? `Brief from ${formData.name}` : "Project Brief"
+              )}&body=${encodeURIComponent(
+                `Name: ${formData.name}\nEmail: ${formData.email}\nOrg: ${formData.org}\nService: ${formData.service}\n\n${formData.brief}`
+              )}`}
+              className="text-[11px] font-mono tracking-mono underline opacity-70 hover:opacity-100"
+            >
+              EMAIL US DIRECTLY →
+            </a>
+          )}
+          <button
+            type="submit"
+            disabled={status === "submitting"}
+            className="bg-white text-black px-5 py-3 font-mono text-[12px] tracking-mono font-semibold border border-white hover:bg-transparent hover:text-white transition-colors disabled:opacity-60 disabled:cursor-wait cursor-pointer whitespace-nowrap"
+          >
+            {status === "submitting"
+              ? "SENDING…"
+              : status === "sent"
+                ? "RECEIVED ✓"
+                : status === "error"
+                  ? "TRY AGAIN →"
+                  : "SEND BRIEF →"}
+          </button>
+        </div>
       </div>
     </form>
   );
@@ -690,6 +780,8 @@ function Field({
   type,
   required,
   autoComplete,
+  value,
+  onChange,
   error,
 }: {
   id: string;
@@ -697,25 +789,40 @@ function Field({
   type: string;
   required?: boolean;
   autoComplete?: string;
+  value: string;
+  onChange: (val: string) => void;
   error?: string;
 }) {
   return (
     <div className="col-span-2 sm:col-span-1">
-      <label
-        htmlFor={id}
-        className="block font-mono text-[11px] tracking-mono opacity-60 mb-2"
-      >
-        {label}
-      </label>
+      <div className="flex items-center justify-between mb-2">
+        <label
+          htmlFor={id}
+          className={cn(
+            "block font-mono text-[11px] tracking-mono transition-colors",
+            error ? "text-red-400" : "opacity-60"
+          )}
+        >
+          {label}
+          {required && <span className="opacity-50 ml-1">*</span>}
+        </label>
+      </div>
       <input
         id={id}
         name={id}
         required={required}
         type={type}
         autoComplete={autoComplete}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
         aria-invalid={Boolean(error) || undefined}
         aria-describedby={error ? `${id}-err` : undefined}
-        className="w-full bg-transparent border-b border-white/50 focus:border-white py-2 text-[15px] outline-none"
+        className={cn(
+          "w-full bg-transparent border-b py-2 text-[15px] outline-none transition-colors",
+          error
+            ? "border-red-400 focus:border-red-400 text-white"
+            : "border-white/50 focus:border-white text-white"
+        )}
       />
       {error && <ErrLine id={`${id}-err`}>{error}</ErrLine>}
     </div>
@@ -733,9 +840,10 @@ function ErrLine({
     <p
       id={id}
       role="alert"
-      className="mt-1.5 font-mono text-[10.5px] tracking-mono text-white"
+      className="mt-1.5 font-mono text-[11px] tracking-mono text-red-400 flex items-center gap-1"
     >
-      ↑ {children}
+      <span aria-hidden="true">↑</span>
+      <span>{children}</span>
     </p>
   );
 }
