@@ -81,7 +81,7 @@ npm run vercel:dev   # or: npx vercel dev
 | `npm run build` | `tsc && vite build` → `dist/` |
 | `npm run lint` | Typecheck (`tsc --noEmit`) over `src`, `api` and `vite.config.ts` |
 | `npm run eslint` | ESLint 9 flat config: typescript-eslint + react-hooks + jsx-a11y |
-| `npm run smoke` | All three smoke suites — 121 reported checks |
+| `npm run smoke` | All three smoke suites — 131 reported checks |
 | `npm run smoke:ssr` | Renders all 8 routes through the real `App` tree and asserts section content |
 | `npm run smoke:api` | Drives `api/brief.ts` and `api/health.ts` with mock req/res |
 | `npm run smoke:dom` | Bundles the real client entry and mounts it in jsdom per route |

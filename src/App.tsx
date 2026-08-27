@@ -16,7 +16,6 @@ import { routeKey, useRoute } from "./lib/router";
 import { useDocumentMeta } from "./hooks/useDocumentMeta";
 import { useReveal } from "./hooks/useReveal";
 import { CONTACT_EMAIL } from "./lib/site";
-import { prefersReducedMotion } from "./utils/motion";
 import { services } from "./data/services";
 import { projects, workNote } from "./data/projects";
 import { processStages, processCaveat } from "./data/process";
@@ -216,9 +215,6 @@ function TeamMember({ member }: { member: (typeof team)[number] }) {
 /* ------------------------------------------------------------------ */
 
 function HomePage() {
-  // With reduced motion the line is rendered in full immediately, so the
-  // primary CTA must not wait on a callback to become visible.
-  const [heroDone, setHeroDone] = useState(() => prefersReducedMotion());
 
   useDocumentMeta({
     title: "THE OFFICE — Book strategy, web, automation, research",
@@ -286,7 +282,6 @@ function HomePage() {
                       <Typewriter
                         text="“A working class of letters.” — a novel repositioning, Spring '26."
                         speed={28}
-                        onDone={() => setHeroDone(true)}
                       />
                     </div>
                     <a
@@ -295,12 +290,12 @@ function HomePage() {
                         "mt-2 inline-flex items-center gap-2 self-start",
                         "border border-black px-4 py-2.5",
                         "font-mono text-[12px] tracking-mono font-semibold",
-                        "transition-opacity duration-500",
+                        "transition-colors duration-200",
                         "hover:bg-black hover:text-white",
                         "focus-visible:bg-black focus-visible:text-white",
-                        // Kept reachable and focusable from the first frame; the
-                        // fade is cosmetic only.
-                        heroDone ? "opacity-100" : "opacity-0",
+                        // Visible from the first paint. Gating the primary CTA on
+                        // the typewriter left it invisible-but-clickable for the
+                        // ~2.5s the animation runs; the animation is decoration.
                       ].join(" ")}
                     >
                       SEND A BRIEF →

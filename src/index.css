@@ -114,13 +114,14 @@
     letter-spacing: -0.01em;
   }
 
-  /* The signature element: typewriter cursor */
+  /* The signature element: typewriter cursor. Pure black, matching the
+     original — it only ever renders on the paper-white hero. */
   .caret::after {
     content: "";
     display: inline-block;
     width: 0.55em;
     height: 0.85em;
-    background: currentColor;
+    background: #000;
     margin-left: 0.05em;
     vertical-align: -0.05em;
     animation: blink 1s steps(1) infinite;

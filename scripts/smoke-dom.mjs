@@ -461,20 +461,78 @@ console.log("\nBrief payload wiring:");
 /* 5. Reduced motion                                                   */
 /* ------------------------------------------------------------------ */
 
-console.log("\nReduced motion:");
+console.log("\nTyping animation:");
 {
-  const { document } = await mount("/", { reducedMotion: true });
+  const { document } = await mount("/");
+  const line = () => {
+    const tw = document.querySelector('[aria-label^="\u201cA working class"]');
+    return {
+      el: tw,
+      typed: tw ? tw.querySelector("span").textContent.length : -1,
+      caret: document.querySelectorAll(".caret").length,
+    };
+  };
   const cta = [...document.querySelectorAll('a[href="#contact"]')].find((a) =>
     a.textContent.includes("SEND A BRIEF")
   );
+
+  check("line starts empty with a caret", line().typed === 0 && line().caret === 1);
   check(
-    "hero CTA is visible without waiting for the typewriter",
-    cta?.className.includes("opacity-100"),
+    "full line is exposed to assistive tech immediately",
+    line().el?.getAttribute("aria-label").includes("A working class of letters"),
+    `aria-label="${line().el?.getAttribute("aria-label")}"`
+  );
+  check(
+    "hero CTA is visible from the first paint",
+    !cta?.className.includes("opacity-0"),
     `class="${cta?.className}"`
+  );
+  check(
+    "hero CTA is never invisible-but-clickable",
+    !cta?.className.includes("pointer-events-none"),
+    `class="${cta?.className}"`
+  );
+  check(
+    "hero CTA keeps its hover colour transition",
+    cta?.className.includes("transition-colors") && cta?.className.includes("hover:bg-black"),
+    `class="${cta?.className}"`
+  );
+
+  await new Promise((r) => setTimeout(r, 1200));
+  const mid = line();
+  check("line is typing partway through", mid.typed > 0 && mid.caret === 1, `typed=${mid.typed}`);
+
+  await new Promise((r) => setTimeout(r, 2200));
+  const end = line();
+  check("line finishes typing", end.typed === 66 && end.caret === 0, `typed=${end.typed} caret=${end.caret}`);
+  check(
+    "hero CTA is still visible once typing ends",
+    ![...document.querySelectorAll('a[href="#contact"]')]
+      .find((a) => a.textContent.includes("SEND A BRIEF"))
+      ?.className.includes("opacity-0")
+  );
+}
+
+console.log("\nReduced motion:");
+{
+  const { document } = await mount("/", { reducedMotion: true });
+  const tw = document.querySelector('[aria-label^="\u201cA working class"]');
+  check(
+    "full line is present on the first paint",
+    tw?.querySelector("span").textContent.length === 66,
+    `typed=${tw?.querySelector("span").textContent.length}`
   );
   check(
     "no blinking caret is rendered",
     document.querySelectorAll(".caret").length === 0
+  );
+  const cta = [...document.querySelectorAll('a[href="#contact"]')].find((a) =>
+    a.textContent.includes("SEND A BRIEF")
+  );
+  check(
+    "hero CTA is visible",
+    !cta?.className.includes("opacity-0"),
+    `class="${cta?.className}"`
   );
 }
 
@@ -492,6 +550,9 @@ console.log("\nShipped CSS:");
   check("skip link reveals on focus", css.includes(".skip-link:focus"));
   check("reduced-motion media query shipped", css.includes("prefers-reduced-motion"));
   check("charcoal type token shipped", css.includes("#141414"));
+  // The minifier may collapse ::after to :after, so accept either.
+  const caretRule = css.match(/\.caret:{1,2}after\{[^}]*\}/)?.[0] ?? "";
+  check("typewriter caret is pure black", caretRule.includes("background:#000"), caretRule || "rule missing");
   check("warm paper token shipped", css.includes("#f4f3ef"));
 }
 

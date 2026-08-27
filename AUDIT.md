@@ -297,7 +297,7 @@ network payload. **111 checks pass across the three suites.**
 | `npm run lint` | exit 0, no diagnostics |
 | `npm run eslint` | exit 0, 0 problems |
 | `npm run build` | index 105.92 kB / 28.68 kB gzip · vendor 218.23 kB / 68.49 kB gzip · CSS 30.48 kB · no `.map` |
-| `npm run smoke` | all green — 121 reported checks: 8 SSR route summaries covering 37 assertions, 13 API, 100 DOM |
+| `npm run smoke` | all green — 131 reported checks: 8 SSR route summaries covering 37 assertions, 13 API, 110 DOM |
 | `npm run sitemap` | 13 URLs |
 
 ### What still cannot be closed here
@@ -359,3 +359,54 @@ released.
 `npm run smoke` is now 121 reported checks (8 SSR route summaries over 37
 assertions · 13 API · 100 DOM), all green; `npm run lint` and `npm run eslint`
 both exit 0.
+
+---
+
+## 8. Bug report: the typing animation
+
+**Reported:** the typing animation that was there before.
+
+**Measured before changing anything.** Sampling the hero line in jsdom with
+motion allowed:
+
+```
+t≈   0ms  chars=  0  caret=1  cta=INVISIBLE  clickable=true
+t≈ 400ms  chars=  0  caret=1  cta=INVISIBLE  clickable=true
+t≈ 800ms  chars=  5  caret=1  cta=INVISIBLE  clickable=true
+t≈1500ms  chars= 30  caret=1  cta=INVISIBLE  clickable=true
+t≈2600ms  chars= 66  caret=0  cta=visible    clickable=true
+```
+
+The animation itself is intact — the line types out over ~2.5 s and the caret
+drops when it finishes. The measurement exposed three regressions I had
+introduced *around* it, all confirmed by diffing against `7bfe8cd`:
+
+| # | Regression | Cause |
+|---|------------|-------|
+| 1 | **The primary CTA was invisible but clickable for the whole ~2.5 s.** `cta=INVISIBLE clickable=true` at t = 0, 400, 800 and 1500 ms | I removed `pointer-events-none` to make the CTA focusable, but kept `opacity-0`. An unclickable-and-invisible button became a clickable-and-invisible one, which is worse |
+| 2 | **Hover feedback on the hero CTA stopped animating** | `transition-colors duration-200` had been swapped for `transition-opacity duration-500`, so `hover:bg-black hover:text-white` snapped instead of transitioning — a Phase 14 regression |
+| 3 | **The caret changed colour** | `background: #000` → `currentColor`, which resolves to the new charcoal `#141414` on the white hero. The caret only ever renders there, so the change had no upside |
+
+**Fix.** The root problem was gating the primary CTA on a decorative animation
+at all. It is now visible from the first paint with `transition-colors
+duration-200` restored, `Typewriter` is purely presentational, and the caret is
+pure black again. `Typewriter` also lost its now-unused `onDone` / `notify` /
+`doneRef` machinery and gained correct effect dependencies
+(`[text, speed, startDelay]`) in place of a lint suppression.
+
+Screen readers were never affected: the wrapper carries `aria-label={text}`, so
+the full line is announced immediately regardless of how far the animation has
+got. That is now asserted rather than assumed.
+
+**Regression coverage** — 12 new assertions: line starts empty with a caret;
+full line exposed to assistive tech immediately; CTA visible at first paint;
+CTA never carries `pointer-events-none`; CTA keeps `transition-colors` +
+`hover:bg-black`; line is partway through at ~1.2 s; line completes at 66 chars
+with no caret; CTA still visible afterwards; and under reduced motion the full
+line is present on the first paint with no caret. The shipped CSS is checked for
+`.caret:after{...background:#000}`.
+
+`npm run smoke` is now 131 reported checks (8 SSR route summaries over 37
+assertions · 13 API · 110 DOM), all green; `npm run lint` and `npm run eslint`
+both exit 0; build is index 106.17 kB / 28.71 kB gzip, vendor 218.23 kB,
+CSS 30.72 kB.
