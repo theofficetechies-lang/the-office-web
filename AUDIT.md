@@ -297,7 +297,7 @@ network payload. **111 checks pass across the three suites.**
 | `npm run lint` | exit 0, no diagnostics |
 | `npm run eslint` | exit 0, 0 problems |
 | `npm run build` | index 105.92 kB / 28.68 kB gzip · vendor 218.23 kB / 68.49 kB gzip · CSS 30.48 kB · no `.map` |
-| `npm run smoke` | all green — 111 reported checks: 8 SSR route summaries covering 37 assertions, 13 API, 90 DOM |
+| `npm run smoke` | all green — 121 reported checks: 8 SSR route summaries covering 37 assertions, 13 API, 100 DOM |
 | `npm run sitemap` | 13 URLs |
 
 ### What still cannot be closed here
@@ -313,3 +313,49 @@ network payload. **111 checks pass across the three suites.**
   `theofficetechies@gmail.com`. Not sent without being asked — say the word and
   it is one request.
 - **Verified content, custom domain.** Unchanged from §5: both need the studio.
+
+---
+
+## 7. Bug report: mobile menu would not close
+
+**Reported:** the menu icon does not close after opening.
+
+**Reproduced first**, before touching the component. The DOM suite only covered
+Escape; clicking the toggle a second time was never tested. Adding that case
+failed exactly as reported — `aria-expanded` stayed `"true"`.
+
+**Cause.** `SiteHeader` attached a document-level `mousedown` click-away handler
+that closed the menu for any target outside the panel. The toggle button lives
+outside the panel, so clicking it ran two handlers in sequence:
+
+1. `mousedown` → click-away sees the button as "outside" → `setOpen(false)`
+2. `click` → the button's own `onClick` toggles `false` back to `true`
+
+The menu reopened on the same gesture. Escape worked, which is why the earlier
+suite passed.
+
+**Fix.** The click-away handler now ignores targets inside the toggle, letting
+the button own its state. `src/components/SiteHeader.tsx`.
+
+**Two related defects found while in there:**
+
+- *Scroll lock could stick.* The panel and the toggle are both `lg:hidden`, so
+  resizing past the desktop breakpoint with the menu open would leave
+  `document.body.style.overflow = "hidden"` with nothing on screen to release
+  it. Viewport width is now tracked by `useIsDesktop()` and the panel is
+  rendered only when `open && !isDesktop`, so the lock is released by the
+  effect cleanup.
+- *`react-hooks/set-state-in-effect`.* The first attempt at that fix called
+  `setOpen(false)` synchronously in an effect body and ESLint rejected it.
+  `useIsDesktop()` reads `matchMedia` during the initial state computation
+  instead, and the subscription only reports later changes.
+
+**Regression coverage** — ten assertions now cover the menu: opens, closes via
+the toggle (with the panel unmounting and the label reverting to `MENU`),
+reopens, closes via Escape, closes on an outside click, closes once when a menu
+item is chosen, and closes on growing to desktop width with the scroll lock
+released.
+
+`npm run smoke` is now 121 reported checks (8 SSR route summaries over 37
+assertions · 13 API · 100 DOM), all green; `npm run lint` and `npm run eslint`
+both exit 0.

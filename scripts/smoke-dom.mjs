@@ -91,6 +91,8 @@ function check(label, ok, detail = "") {
   }
 }
 
+const tick = () => new Promise((r) => setTimeout(r, 30));
+
 async function mount(route, { reducedMotion = false } = {}) {
   const errors = [];
   const vc = new VirtualConsole();
@@ -106,15 +108,32 @@ async function mount(route, { reducedMotion = false } = {}) {
   const { window } = dom;
 
   // jsdom gaps that are not app bugs: no layout-driven scroll, no matchMedia.
+  // The stub records change listeners so a viewport change can be simulated.
   window.scrollTo = () => {};
+  const media = { desktop: false, listeners: new Set() };
   window.matchMedia = (query) => ({
-    matches: reducedMotion && query.includes("prefers-reduced-motion"),
+    get matches() {
+      if (query.includes("prefers-reduced-motion")) return reducedMotion;
+      if (query.includes("min-width: 1024px")) return media.desktop;
+      return false;
+    },
     media: query,
-    addEventListener: () => {},
-    removeEventListener: () => {},
+    addEventListener: (type, fn) => {
+      if (type === "change") media.listeners.add(fn);
+    },
+    removeEventListener: (type, fn) => {
+      if (type === "change") media.listeners.delete(fn);
+    },
     addListener: () => {},
     removeListener: () => {},
   });
+
+  /** Flip the stubbed viewport to >=1024px and notify listeners. */
+  const resizeToDesktop = async () => {
+    media.desktop = true;
+    for (const fn of [...media.listeners]) fn({ matches: true, media: "(min-width: 1024px)" });
+    await tick();
+  };
 
   const calls = [];
   window.fetch = async (input, init) => {
@@ -130,7 +149,7 @@ async function mount(route, { reducedMotion = false } = {}) {
   window.eval(bundle);
   await new Promise((r) => setTimeout(r, 60));
 
-  return { window, document: window.document, errors, calls };
+  return { window, document: window.document, errors, calls, resizeToDesktop };
 }
 
 function setValue(window, el, value) {
@@ -146,7 +165,6 @@ function setValue(window, el, value) {
   );
 }
 
-const tick = () => new Promise((r) => setTimeout(r, 30));
 
 /* ------------------------------------------------------------------ */
 /* 1. Every route mounts clean                                         */
@@ -235,7 +253,7 @@ console.log("\nLink and image hygiene:");
 
 console.log("\nHome interactions:");
 {
-  const { window, document, errors } = await mount("/");
+  const { window, document, errors, resizeToDesktop } = await mount("/");
 
   // Skip link is the first thing a keyboard user reaches.
   const firstFocusable = document.querySelector("a[href], button");
@@ -255,11 +273,90 @@ console.log("\nHome interactions:");
     document.querySelector("[aria-controls='mobile-menu']")?.getAttribute("aria-expanded") === "true"
   );
   check("menu panel is in the DOM", Boolean(document.getElementById("mobile-menu")));
+  // Closing with the same toggle must work: mousedown fires before click, and
+  // the button sits outside the panel, so a naive click-away handler closes the
+  // menu and the click immediately reopens it.
+  const toggle = document.querySelector("[aria-controls='mobile-menu']");
+  toggle?.dispatchEvent(new window.MouseEvent("mousedown", { bubbles: true }));
+  toggle?.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+  await tick();
+  check(
+    "clicking the toggle again closes the menu",
+    document.querySelector("[aria-controls='mobile-menu']")?.getAttribute("aria-expanded") === "false",
+    `aria-expanded="${document.querySelector("[aria-controls='mobile-menu']")?.getAttribute("aria-expanded")}"`
+  );
+  check(
+    "menu panel is removed from the DOM",
+    document.getElementById("mobile-menu") === null
+  );
+  check(
+    "toggle label reverts to MENU",
+    document.querySelector("[aria-controls='mobile-menu']")?.textContent.includes("MENU")
+  );
+
+  // Reopen, then close via Escape.
+  document
+    .querySelector("[aria-controls='mobile-menu']")
+    ?.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+  await tick();
+  check(
+    "menu reopens after being closed",
+    document.querySelector("[aria-controls='mobile-menu']")?.getAttribute("aria-expanded") === "true"
+  );
   document.dispatchEvent(new window.KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
   await tick();
   check(
     "Escape closes the menu",
     document.querySelector("[aria-controls='mobile-menu']")?.getAttribute("aria-expanded") === "false"
+  );
+
+  // Reopen, then click outside the menu (not the toggle).
+  document
+    .querySelector("[aria-controls='mobile-menu']")
+    ?.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+  await tick();
+  document
+    .querySelector("h1")
+    ?.dispatchEvent(new window.MouseEvent("mousedown", { bubbles: true }));
+  await tick();
+  check(
+    "clicking outside the menu closes it",
+    document.querySelector("[aria-controls='mobile-menu']")?.getAttribute("aria-expanded") === "false"
+  );
+  check(
+    "body scroll is restored after close",
+    window.document.body.style.overflow === ""
+  );
+
+  // A link inside the panel closes it once, not twice.
+  document
+    .querySelector("[aria-controls='mobile-menu']")
+    ?.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+  await tick();
+  const panelLink = document.querySelector("#mobile-menu a");
+  panelLink?.dispatchEvent(new window.MouseEvent("mousedown", { bubbles: true }));
+  panelLink?.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+  await tick();
+  check(
+    "choosing a menu item closes the menu once",
+    document.querySelector("[aria-controls='mobile-menu']")?.getAttribute("aria-expanded") === "false",
+    `aria-expanded="${document.querySelector("[aria-controls='mobile-menu']")?.getAttribute("aria-expanded")}"`
+  );
+
+  // Growing past the desktop breakpoint while open must release the scroll lock.
+  document
+    .querySelector("[aria-controls='mobile-menu']")
+    ?.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+  await tick();
+  check("menu is open again before the resize check", window.document.body.style.overflow === "hidden");
+  await resizeToDesktop();
+  check(
+    "growing to desktop width closes the menu",
+    document.querySelector("[aria-controls='mobile-menu']")?.getAttribute("aria-expanded") === "false"
+  );
+  check(
+    "scroll lock is released on resize",
+    window.document.body.style.overflow === ""
   );
 
   // Empty submission must be blocked with per-field errors.
