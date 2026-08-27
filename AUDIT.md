@@ -436,3 +436,13 @@ to the initials mark when not, so the page is not broken in the meantime.
 
 **Spelling confirmation requested** for "Brain" (vs "Brian") and "Collen" (vs
 "Colleen"); recorded verbatim pending that.
+
+**Portraits integrated (later on 27 Aug).** The studio committed the photo sheet
+to the branch (`ChatGPT Image Aug 27, 2026, 06_36_43 PM.png`, 1254×1254). The
+three circles were cropped with ImageMagick to `public/team/{brain-j-fiore,
+henri-will,collen-johnstone}.jpg` (600×600) and wired via the `portrait:` fields
+in `src/data/team.ts`. Each crop was visually verified as centered and complete;
+the component clips them to circles. The SSR/DOM suites now assert the three
+portrait paths and their alt text. The source sheet remains at the repo root as
+provenance (it is not served — it is outside `public/`); it can be deleted once
+the crops are confirmed.

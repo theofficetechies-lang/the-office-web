@@ -58,6 +58,9 @@ const cases = [
       "Brain J. Fiore",
       "Henri Will",
       "Collen Johnstone",
+      "/team/brain-j-fiore.jpg",
+      "/team/henri-will.jpg",
+      "/team/collen-johnstone.jpg",
     ],
     mustNot: [
       "Samantha Dion",
