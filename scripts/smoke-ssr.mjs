@@ -54,6 +54,10 @@ const cases = [
       "aria-label=\"Project brief\"",
       "Six stages. Then we bend them to fit the brief.",
       "Eight things that are true about how we work.",
+      // Three confirmed principals (names as supplied 27 Aug 2026).
+      "Brain J. Fiore",
+      "Henri Will",
+      "Collen Johnstone",
     ],
     mustNot: [
       "Samantha Dion",

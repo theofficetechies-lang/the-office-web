@@ -410,3 +410,29 @@ line is present on the first paint with no caret. The shipped CSS is checked for
 assertions · 13 API · 110 DOM), all green; `npm run lint` and `npm run eslint`
 both exit 0; build is index 106.17 kB / 28.71 kB gzip, vendor 218.23 kB,
 CSS 30.72 kB.
+
+---
+
+## 9. Team identities — three of four supplied
+
+On 27 Aug 2026 the studio supplied three principals' names and roles. They are
+recorded in `src/data/team.ts` exactly as provided, with `verified: true`:
+
+| Role | Name (as supplied) |
+|------|--------------------|
+| Book Strategist & Editorial Lead | Brain J. Fiore |
+| Web Design & Front-End | Henri Will |
+| Automation & Systems | Collen Johnstone |
+
+The Research & Analysis seat remains role-first until the fourth name arrives.
+
+**Portraits not yet integrated.** The attached photo sheet did not persist into
+the workspace (the file was visible in the message but its bytes are not on
+disk), so the three portraits could not be cropped and are not wired. Each seat
+carries a commented `portrait: "/team/<slug>.jpg"` placeholder; dropping the
+images into `public/team/` and uncommenting is the entire remaining step. The
+`TeamMember` component already renders a portrait when present and falls back
+to the initials mark when not, so the page is not broken in the meantime.
+
+**Spelling confirmation requested** for "Brain" (vs "Brian") and "Collen" (vs
+"Colleen"); recorded verbatim pending that.

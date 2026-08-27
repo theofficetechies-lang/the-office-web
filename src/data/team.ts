@@ -24,24 +24,39 @@ export interface TeamMember {
   verified: boolean;
 }
 
+/**
+ * Three of the four principals supplied and confirmed their names and roles
+ * (27 Aug 2026). Portraits arrive with the studio's photo file; when each
+ * image is dropped into public/team/ set `portrait` and the card picks it up
+ * with no other change. The Research & Analysis seat stays role-first until
+ * the fourth name is provided.
+ *
+ * Names are recorded exactly as supplied; spelling confirmation pending.
+ */
 export const team: TeamMember[] = [
   {
     role: "Book Strategist & Editorial Lead",
-    initials: "BS",
+    initials: "BF",
+    name: "Brain J. Fiore",
+    // portrait: "/team/brain-j-fiore.jpg",
     note: "Owns positioning, the comp set, and the pitch. Reads the manuscript before anyone else does and writes the brief the rest of the studio works from.",
-    verified: false,
+    verified: true,
   },
   {
     role: "Web Design & Front-End",
-    initials: "WD",
+    initials: "HW",
+    name: "Henri Will",
+    // portrait: "/team/henri-will.jpg",
     note: "Information architecture, editorial copy and the custom build. Argues about navigation until it is right, then ships and maintains it.",
-    verified: false,
+    verified: true,
   },
   {
     role: "Automation & Systems",
-    initials: "AS",
+    initials: "CJ",
+    name: "Collen Johnstone",
+    // portrait: "/team/collen-johnstone.jpg",
     note: "Conversational systems, retrieval over your archive, and the internal tools that take a recurring task off a human team.",
-    verified: false,
+    verified: true,
   },
   {
     role: "Research & Analysis",
@@ -52,4 +67,4 @@ export const team: TeamMember[] = [
 ];
 
 export const teamNote =
-  "Four seats, listed by what each one does rather than by name. Individual names, portraits and links are published on this page once each principal has confirmed them in writing — we would rather the section look unfinished than be wrong.";
+  "Four seats. Three principals have confirmed their names; portraits and the fourth seat follow as they are confirmed in writing. We would rather the section look unfinished than be wrong.";
