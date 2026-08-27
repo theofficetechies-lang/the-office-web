@@ -5,12 +5,18 @@ import { useEffect, useState } from "react";
  * Mono-typed data that ticks. Specific to a studio that works with words
  * (book strategy, research) — not a cursor follower, not a blob.
  *
- * The live clock and counter are decorative. They are hidden from assistive
- * tech (aria-hidden) so screen readers do not re-announce them on every tick.
+ * Everything in here is verifiable: the live UTC clock and the current
+ * quarter. The bar used to count up to an invented "active engagements"
+ * figure; that has been removed, because the studio does not publish numbers
+ * it cannot back up.
  */
+function currentQuarter(d: Date): string {
+  return `Q${Math.floor(d.getMonth() / 3) + 1} ${d.getUTCFullYear()}`;
+}
+
 export default function ManifestBar() {
   const [now, setNow] = useState<string>("");
-  const [count, setCount] = useState<number>(0);
+  const [quarter, setQuarter] = useState<string>("");
 
   useEffect(() => {
     const fmt = () => {
@@ -19,23 +25,11 @@ export default function ManifestBar() {
       const mm = d.getUTCMinutes().toString().padStart(2, "0");
       const ss = d.getUTCSeconds().toString().padStart(2, "0");
       setNow(`${hh}:${mm}:${ss} UTC`);
+      setQuarter(currentQuarter(d));
     };
     fmt();
     const t = setInterval(fmt, 1000);
-    // Count-up: illustrative. Label is "ACTIVE ENGAGEMENTS" and framed
-    // as "—IL" in the UI to read as a rolling indicator rather than a
-    // hard count. See A3.
-    let n = 0;
-    const target = 142;
-    const step = setInterval(() => {
-      n += 1;
-      setCount(n);
-      if (n >= target) clearInterval(step);
-    }, 12);
-    return () => {
-      clearInterval(t);
-      clearInterval(step);
-    };
+    return () => clearInterval(t);
   }, []);
 
   return (
@@ -45,14 +39,16 @@ export default function ManifestBar() {
     >
       <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-1.5 flex items-center gap-3 sm:gap-5 overflow-hidden whitespace-nowrap">
         <span className="flex items-center gap-1.5">
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
+          <span className="inline-block h-1.5 w-1.5 rounded-full bg-signal animate-pulse" />
           <span className="font-semibold">MANIFEST</span>
         </span>
         <span className="opacity-60 hidden sm:inline">/</span>
-        <span className="hidden sm:inline opacity-80">STATUS: ACCEPTING BRIEFS · Q1</span>
+        <span className="hidden sm:inline opacity-80">
+          STATUS: ACCEPTING BRIEFS · {quarter}
+        </span>
         <span className="opacity-60 hidden md:inline">/</span>
         <span className="hidden md:inline opacity-80">
-          ACTIVE&nbsp;{count.toString().padStart(3, "0")}&nbsp;—IL
+          FOUR PEOPLE · NO SUBCONTRACTORS
         </span>
         <span className="opacity-60 ml-auto">/</span>
         <span className="ml-auto sm:ml-0 opacity-90 tabular-nums">{now}</span>

@@ -3,11 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="description" content="THE OFFICE — a small studio for book strategy, web design, automation, and book research. Four people, no subcontractors, no juniors on your brief." />
+    <meta name="description" content="THE OFFICE — a four-person studio for book strategy, book research, web design, and automation. Research, strategy, design and technology on one brief. No subcontractors, no juniors on your project." />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="color-scheme" content="light dark" />
-    <link rel="canonical" href="https://theoffice.studio/" />
+    <link rel="canonical" href="https://the-office-test4.vercel.app/" />
 
     <!-- Favicon set -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -18,9 +19,9 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="THE OFFICE" />
     <meta property="og:title" content="THE OFFICE — Book strategy, web design, automation, research" />
-    <meta property="og:description" content="A four-person studio for authors, publishers, and the people who run literary businesses. Book strategy, custom web, automation, research." />
-    <meta property="og:url" content="https://theoffice.studio/" />
-    <meta property="og:image" content="https://theoffice.studio/og-image.png" />
+    <meta property="og:description" content="A four-person studio for authors, publishers, and the people who run literary businesses. Book strategy, book research, custom web, automation." />
+    <meta property="og:url" content="https://the-office-test4.vercel.app/" />
+    <meta property="og:image" content="https://the-office-test4.vercel.app/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="THE OFFICE — a small studio for book strategy, web, automation, and research." />
@@ -30,32 +31,48 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="THE OFFICE — Book strategy, web design, automation, research" />
     <meta name="twitter:description" content="A four-person studio for authors, publishers, and the people who run literary businesses." />
-    <meta name="twitter:image" content="https://theoffice.studio/og-image.png" />
+    <meta name="twitter:image" content="https://the-office-test4.vercel.app/og-image.png" />
     <meta name="twitter:image:alt" content="THE OFFICE — a small studio for book strategy, web, automation, and research." />
 
-    <!-- JSON-LD: ProfessionalService -->
+    <!-- JSON-LD: organization + services + site -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      "@id": "https://theoffice.studio/#organization",
-      "name": "THE OFFICE",
-      "alternateName": "The Office Studio",
-      "url": "https://theoffice.studio/",
-      "logo": "https://theoffice.studio/favicon.svg",
-      "image": "https://theoffice.studio/og-image.png",
-      "description": "A four-person studio for authors, publishers, and the people who run literary businesses. Book strategy, custom web design, conversational systems, and book research.",
-      "foundingDate": "2021",
-      "areaServed": ["US", "PT", "GB", "EU"],
-      "knowsLanguage": ["en", "pt"],
-      "serviceType": [
-        "Book Strategy",
-        "Web Design",
-        "Automation Services",
-        "Book Research & Analysis"
-      ],
-      "priceRange": "$$$",
-      "sameAs": []
+      "@graph": [
+        {
+          "@type": "ProfessionalService",
+          "@id": "https://the-office-test4.vercel.app/#organization",
+          "name": "THE OFFICE",
+          "alternateName": "The Office Studio",
+          "url": "https://the-office-test4.vercel.app/",
+          "logo": "https://the-office-test4.vercel.app/favicon.svg",
+          "image": "https://the-office-test4.vercel.app/og-image.png",
+          "description": "A four-person studio for authors, publishers, and the people who run literary businesses. Book strategy, book research, custom web design, and automation.",
+          "foundingDate": "2021",
+          "areaServed": ["US", "PT", "GB", "EU"],
+          "knowsLanguage": ["en", "pt"],
+          "priceRange": "$$$",
+          "email": "theofficetechies@gmail.com",
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Studio services",
+            "itemListElement": [
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Book Strategy" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Book Research & Analysis" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Web Design" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Automation" } }
+            ]
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://the-office-test4.vercel.app/#website",
+          "url": "https://the-office-test4.vercel.app/",
+          "name": "THE OFFICE",
+          "publisher": { "@id": "https://the-office-test4.vercel.app/#organization" },
+          "inLanguage": "en"
+        }
+      ]
     }
     </script>
 
@@ -90,7 +107,7 @@
         <p style="font-size: 11px; letter-spacing: 0.1em; font-family: monospace; text-transform: uppercase; opacity: 0.6; margin: 0 0 0.5rem 0;">THE OFFICE</p>
         <h1 style="font-size: 2.5rem; line-height: 1; margin: 0 0 1.5rem 0; font-weight: 300;">JavaScript is off.</h1>
         <p style="font-size: 1rem; line-height: 1.6; margin: 0 0 1rem 0;">This page is a small client-rendered site. With scripting disabled you are seeing the fallback. The short version of who we are: a four-person studio for book strategy, web design, automation, and book research.</p>
-        <p style="font-size: 1rem; line-height: 1.6; margin: 0 0 1.5rem 0;">The best way to reach us is by email:</p>
+        <p style="font-size: 1rem; line-height: 1.6; margin: 0 0 1rem 0;">The best way to reach us is by email:</p>
         <p style="font-size: 1.1rem; margin: 0;"><a href="mailto:theofficetechies@gmail.com" style="color: #000; border-bottom: 1px solid #000; text-decoration: none;">theofficetechies@gmail.com</a></p>
       </div>
     </noscript>

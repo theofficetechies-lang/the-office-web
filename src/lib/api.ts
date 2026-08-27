@@ -3,10 +3,11 @@
  * Direct browser delivery via Web3Forms with automatic backend fallback.
  */
 
+import { WEB3FORMS_KEY } from "./site";
+
 const API_BASE = import.meta.env.VITE_API_URL ?? "";
 const DEFAULT_TIMEOUT = 10_000;
 const MAX_RETRIES = 1;
-const WEB3FORMS_PUBLIC_KEY = "9c3fe5d9-088e-4c8c-80b9-5a2d3702d395";
 
 export class ApiError extends Error {
   constructor(
@@ -29,8 +30,7 @@ async function fetchWithTimeout(
   const id = setTimeout(() => controller.abort(), timeout);
 
   try {
-    const res = await fetch(input, { ...rest, signal: controller.signal });
-    return res;
+    return await fetch(input, { ...rest, signal: controller.signal });
   } finally {
     clearTimeout(id);
   }
@@ -58,6 +58,7 @@ export interface BriefPayload {
   org?: string;
   service?: string;
   timeline?: string;
+  scope?: string;
   budget?: string;
   discovery?: string;
   brief: string;
@@ -73,7 +74,7 @@ export interface BriefResponse {
 }
 
 export async function submitBrief(payload: BriefPayload): Promise<BriefResponse> {
-  // Layer 1: Direct Web3Forms delivery from user browser to inbox
+  // Layer 1: direct Web3Forms delivery from the visitor's browser to the inbox.
   try {
     const res = await fetchWithTimeout("https://api.web3forms.com/submit", {
       method: "POST",
@@ -82,7 +83,7 @@ export async function submitBrief(payload: BriefPayload): Promise<BriefResponse>
         Accept: "application/json",
       },
       body: JSON.stringify({
-        access_key: WEB3FORMS_PUBLIC_KEY,
+        access_key: WEB3FORMS_KEY,
         subject: `New Brief from ${payload.name}${payload.org ? ` · ${payload.org}` : ""}`,
         from_name: "THE OFFICE Studio",
         name: payload.name,
@@ -90,6 +91,7 @@ export async function submitBrief(payload: BriefPayload): Promise<BriefResponse>
         organization: payload.org || "None",
         service: payload.service || "General Inquiry",
         timeline: payload.timeline || "Not specified",
+        scope: payload.scope || "Not specified",
         budget: payload.budget || "Not specified",
         discovery: payload.discovery || "Not specified",
         message: payload.brief,
@@ -99,7 +101,7 @@ export async function submitBrief(payload: BriefPayload): Promise<BriefResponse>
 
     const data = await res.json().catch(() => null);
     if (data && (data.success || res.ok)) {
-      // Also notify backend in the background if available
+      // Mirror to our own endpoint in the background, if it is deployed.
       fetch(`${API_BASE}/api/brief`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -112,10 +114,13 @@ export async function submitBrief(payload: BriefPayload): Promise<BriefResponse>
       };
     }
   } catch (web3Err) {
-    console.warn("[Client API] Direct Web3Forms dispatch failed, falling back to /api/brief:", web3Err);
+    console.warn(
+      "[Client API] Direct Web3Forms dispatch failed, falling back to /api/brief:",
+      web3Err
+    );
   }
 
-  // Layer 2: Serverless backend fallback
+  // Layer 2: serverless backend fallback.
   try {
     const res = await fetchWithRetry(`${API_BASE}/api/brief`, {
       method: "POST",
@@ -135,7 +140,10 @@ export async function submitBrief(payload: BriefPayload): Promise<BriefResponse>
     if (res.ok) {
       return data;
     }
+
+    throw new ApiError(data.error ?? "Request rejected", res.status, undefined, data.issues);
   } catch (err) {
+    if (err instanceof ApiError) throw err;
     console.error("[Client API] Both delivery methods failed:", err);
   }
 

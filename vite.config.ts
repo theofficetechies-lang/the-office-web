@@ -72,11 +72,20 @@ export default defineConfig({
     allowedHosts: true,
   },
   build: {
-    sourcemap: true,
+    // Production sourcemaps expose the full source tree and add ~1 MB to every
+    // deploy. Dev keeps its own sourcemaps automatically.
+    sourcemap: false,
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ["react", "react-dom"],
+        /**
+         * Keep every dependency out of the app chunk. The previous
+         * `manualChunks: { vendor: ["react", "react-dom"] }` form only caught
+         * `react` itself — react-dom and scheduler stayed in the 274 kB entry
+         * chunk, which defeats the point of splitting.
+         */
+        manualChunks(id) {
+          if (id.includes("node_modules")) return "vendor";
+          return undefined;
         },
       },
     },

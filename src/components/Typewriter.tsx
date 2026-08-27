@@ -1,9 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { prefersReducedMotion } from "@/utils/motion";
 
 /**
  * The other half of the signature element:
  * a single line that types itself out on load, then resolves.
  * Specific to a studio that works with prose.
+ *
+ * Reduced motion is resolved during the initial state computation, so the
+ * full line is present on the very first paint rather than arriving via a
+ * state update from an effect. Both the start timeout and the typing interval
+ * are cleaned up on unmount — an earlier version only cleared the timeout and
+ * left the interval running against an unmounted component.
  */
 type Props = {
   text: string;
@@ -20,31 +27,40 @@ export default function Typewriter({
   onDone,
   startDelay = 600,
 }: Props) {
-  const [i, setI] = useState(0);
+  const [i, setI] = useState(() => (prefersReducedMotion() ? text.length : 0));
+  const doneRef = useRef(false);
 
   useEffect(() => {
-    // Check reduced motion: render full text instantly
-    const reduce = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    if (reduce) {
-      setI(text.length);
+    const notify = () => {
+      if (doneRef.current) return;
+      doneRef.current = true;
       onDone?.();
+    };
+
+    // Already complete (reduced motion, or nothing to type).
+    if (prefersReducedMotion()) {
+      notify();
       return;
     }
+
+    let t: ReturnType<typeof setInterval> | undefined;
     const start = setTimeout(() => {
-      const t = setInterval(() => {
+      t = setInterval(() => {
         setI((prev) => {
           if (prev >= text.length) {
-            clearInterval(t);
-            onDone?.();
+            if (t) clearInterval(t);
+            notify();
             return prev;
           }
           return prev + 1;
         });
       }, speed);
     }, startDelay);
-    return () => clearTimeout(start);
+
+    return () => {
+      clearTimeout(start);
+      if (t) clearInterval(t);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -2,7 +2,8 @@
 
 /* =========================================================================
    THE OFFICE — global styles
-   Black & white only. Typography carries the personality.
+   Black rules, warm paper surfaces, deep charcoal type.
+   Typography carries the personality; colour stays out of the way.
    ========================================================================= */
 
 @theme {
@@ -10,12 +11,16 @@
   --font-sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
+  /* Deep charcoal for type; pure black reserved for rules and ink blocks. */
+  --color-charcoal: #141414;
   --color-ink: #000000;
   --color-paper: #ffffff;
-  --color-rule: #000000;
-  --color-mute: #6b6b6b;
-  --color-faint: #d4d4d4;
   --color-paper-tint: #f4f3ef;
+  --color-rule: #000000;
+  --color-mute: #5f5f5c;
+  --color-faint: #d6d3cc;
+  /* One restrained accent. Used for live/active markers only. */
+  --color-signal: #8a3324;
 }
 
 @layer base {
@@ -24,7 +29,8 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     background: var(--color-paper);
-    color: var(--color-ink);
+    color: var(--color-charcoal);
+    scroll-behavior: smooth;
   }
 
   body {
@@ -55,6 +61,31 @@
       scroll-behavior: auto !important;
     }
   }
+}
+
+/* Unlayered so these beat the layered Tailwind rules above. */
+
+/* Phase 17 — skip link: hidden until focused. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: #000;
+  color: #fff;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: -0.01em;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+/* Phase 17 — the black contact section needs a white focus ring, not a black one. */
+.on-ink :focus-visible,
+.on-ink:focus-visible {
+  outline-color: #ffffff;
 }
 
 @layer utilities {
@@ -89,7 +120,7 @@
     display: inline-block;
     width: 0.55em;
     height: 0.85em;
-    background: #000;
+    background: currentColor;
     margin-left: 0.05em;
     vertical-align: -0.05em;
     animation: blink 1s steps(1) infinite;
@@ -100,16 +131,28 @@
     }
   }
 
-  /* Page-load fade (used very sparingly) */
+  /*
+    Phase 14 — scroll reveal.
+    The hidden state is scoped under `.js`, added to <html> by main.tsx, so a
+    visitor with scripting disabled never sees an invisible page.
+  */
   .reveal {
-    opacity: 0;
-    transform: translateY(8px);
     transition: opacity 700ms cubic-bezier(0.2, 0.7, 0.2, 1),
       transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
   }
-  .reveal.in {
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  .js .reveal.is-visible {
     opacity: 1;
     transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .js .reveal {
+      opacity: 1;
+      transform: none;
+    }
   }
 
   /* Toast entrance */

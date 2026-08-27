@@ -18,15 +18,22 @@ export const briefSchema = z.object({
     .optional()
     .or(z.literal(""))
     .transform((s) => (s ? s.trim() : "")),
+  /** Comma-separated list of service labels chosen in the form. */
   service: z
     .string()
-    .max(50)
+    .max(200, "Service selection is too long")
     .optional()
     .or(z.literal(""))
     .transform((s) => (s ? s.trim() : "")),
   timeline: z
     .string()
-    .max(50)
+    .max(80)
+    .optional()
+    .or(z.literal(""))
+    .transform((s) => (s ? s.trim() : "")),
+  scope: z
+    .string()
+    .max(120)
     .optional()
     .or(z.literal(""))
     .transform((s) => (s ? s.trim() : "")),

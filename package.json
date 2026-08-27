@@ -8,6 +8,12 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "tsc --noEmit",
+    "eslint": "eslint .",
+    "smoke": "npm run smoke:ssr && npm run smoke:api && npm run smoke:dom",
+    "smoke:ssr": "node scripts/smoke-ssr.mjs",
+    "smoke:api": "node scripts/smoke-api.mjs",
+    "smoke:dom": "node scripts/smoke-dom.mjs",
+    "sitemap": "node scripts/build-sitemap.mjs",
     "vercel:dev": "vercel dev"
   },
   "dependencies": {
@@ -19,14 +25,21 @@
     "zod": "3.25.7"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.5",
     "@tailwindcss/vite": "4.1.17",
     "@types/node": "22.19.17",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
     "@vercel/node": "5.1.14",
     "@vitejs/plugin-react": "5.1.1",
+    "eslint": "^9.39.5",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.11.0",
+    "jsdom": "^30.0.1",
     "tailwindcss": "4.1.17",
     "typescript": "5.9.3",
+    "typescript-eslint": "^8.68.0",
     "vite": "7.3.2"
   },
   "engines": {
