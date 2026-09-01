@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import { ToastProvider } from "./hooks/useToast";
 import ErrorBoundary from "./components/ErrorBoundary";
+import { I18nProvider } from "./lib/i18n";
 
 /**
  * Marks the document as scriptable before first paint. The scroll-reveal
@@ -15,9 +16,11 @@ document.documentElement.classList.add("js");
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ErrorBoundary>
-      <ToastProvider>
-        <App />
-      </ToastProvider>
+      <I18nProvider>
+        <ToastProvider>
+          <App />
+        </ToastProvider>
+      </I18nProvider>
     </ErrorBoundary>
   </StrictMode>
 );

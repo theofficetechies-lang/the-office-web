@@ -10,14 +10,17 @@
 import { renderToString } from "react-dom/server";
 import App from "./App";
 import { ToastProvider } from "./hooks/useToast";
+import { I18nProvider } from "./lib/i18n";
 import ErrorBoundary from "./components/ErrorBoundary";
 
 export function render(): string {
   return renderToString(
     <ErrorBoundary>
-      <ToastProvider>
-        <App />
-      </ToastProvider>
+      <I18nProvider>
+        <ToastProvider>
+          <App />
+        </ToastProvider>
+      </I18nProvider>
     </ErrorBoundary>
   );
 }

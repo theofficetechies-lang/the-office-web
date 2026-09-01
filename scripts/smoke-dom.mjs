@@ -66,6 +66,13 @@ const KNOWN = [
   "/work/market-map-second-book",
   "/work/rights-triage-automation",
   "/work/memoir-launch-architecture",
+  "/services/book-strategy",
+  "/services/web-design",
+  "/services/automation",
+  "/services/book-research",
+  "/press",
+  "/glossary",
+  "/resources/backlist-audit-checklist",
 ];
 
 /** Every path served from public/, so the link check can verify assets exist. */
@@ -93,7 +100,7 @@ function check(label, ok, detail = "") {
 
 const tick = () => new Promise((r) => setTimeout(r, 30));
 
-async function mount(route, { reducedMotion = false } = {}) {
+async function mount(route, { reducedMotion = false, presetLang } = {}) {
   const errors = [];
   const vc = new VirtualConsole();
   vc.on("jsdomError", (e) => errors.push(`jsdomError: ${e.message}`));
@@ -134,6 +141,10 @@ async function mount(route, { reducedMotion = false } = {}) {
     for (const fn of [...media.listeners]) fn({ matches: true, media: "(min-width: 1024px)" });
     await tick();
   };
+
+  if (presetLang) {
+    try { window.localStorage.setItem("the-office:lang", presetLang); } catch { /* storage unavailable */ }
+  }
 
   const calls = [];
   window.fetch = async (input, init) => {
@@ -487,6 +498,11 @@ console.log("\nTyping animation:");
     !cta?.className.includes("opacity-0"),
     `class="${cta?.className}"`
   );
+  check("FAQ section renders", document.body.textContent.includes("Questions we actually get."));
+  check("Pricing section renders", document.body.textContent.includes("Three shapes of engagement."));
+  check("Reviews honesty block renders", document.body.textContent.includes("ASK FOR REFERENCES"));
+  check("service page links present", Boolean(document.querySelector('a[href="/services/book-strategy"]')));
+  check("footer exposes press + glossary", Boolean(document.querySelector('a[href="/press"]')) && Boolean(document.querySelector('a[href="/glossary"]')));
   check(
     "hero CTA is never invisible-but-clickable",
     !cta?.className.includes("pointer-events-none"),
@@ -539,6 +555,18 @@ console.log("\nReduced motion:");
 /* ------------------------------------------------------------------ */
 /* 6. Shipped CSS carries the a11y rules                               */
 /* ------------------------------------------------------------------ */
+
+console.log("\nPortuguese:");
+{
+  const { document } = await mount("/", { presetLang: "pt" });
+  await new Promise((r) => setTimeout(r, 80));
+  check("html lang switches to pt", document.documentElement.lang === "pt", `lang=${document.documentElement.lang}`);
+  check("hero sub is Portuguese", document.body.textContent.includes("um estúdio de quatro pessoas"));
+  check("nav Services is Serviços", document.body.textContent.includes("SERVIÇOS"));
+  check("form services prompt translated", document.body.textContent.includes("DE QUE PRECISA DE NÓS?"));
+  check("FAQ heading translated", document.body.textContent.includes("Perguntas que realmente recebemos."));
+  check("language note present", document.body.textContent.includes("publicados em inglês"));
+}
 
 console.log("\nShipped CSS:");
 {

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import MarginRail from "@/components/MarginRail";
 import MobileFolioStrip from "@/components/MobileFolioStrip";
 import SiteHeader from "@/components/SiteHeader";
@@ -13,6 +13,59 @@ import { getAdjacentNotes, getNote, notesData } from "@/data/notes";
  * shareable link, no indexable page and no per-note metadata. Each note now has
  * a route of its own, driven by src/data/notes.ts.
  */
+/** Thin scroll-progress bar, hidden in print. */
+function ReadingProgress() {
+  const [p, setP] = useState(0);
+  useEffect(() => {
+    const onScroll = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      setP(max > 0 ? h.scrollTop / max : 0);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  return (
+    <div
+      aria-hidden="true"
+      className="fixed top-0 left-0 h-[2px] bg-black z-50 no-print"
+      style={{ width: `${p * 100}%` }}
+    />
+  );
+}
+
+function ShareRow() {
+  const [copied, setCopied] = useState(false);
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // clipboard unavailable
+    }
+  };
+  return (
+    <div className="flex flex-wrap items-center gap-3 no-print">
+      <button
+        type="button"
+        onClick={copy}
+        className="border border-black px-4 py-2 font-mono text-[11px] tracking-mono font-semibold hover:bg-black hover:text-white transition-colors cursor-pointer"
+      >
+        {copied ? "COPIED ✓" : "COPY LINK"}
+      </button>
+      <button
+        type="button"
+        onClick={() => window.print()}
+        className="border border-black px-4 py-2 font-mono text-[11px] tracking-mono font-semibold hover:bg-black hover:text-white transition-colors cursor-pointer"
+      >
+        PRINT
+      </button>
+    </div>
+  );
+}
+
 export default function NotePage({ slug }: { slug: string }) {
   const note = getNote(slug);
   const { prev, next } = getAdjacentNotes(slug);
@@ -58,6 +111,7 @@ export default function NotePage({ slug }: { slug: string }) {
 
   return (
     <div className="min-h-screen bg-paper text-charcoal flex flex-col">
+      <ReadingProgress />
       <SkipLink />
       <SiteHeader mode="page" />
 
@@ -105,6 +159,9 @@ export default function NotePage({ slug }: { slug: string }) {
                   <p className="text-[17px] sm:text-[19px] leading-[1.6] max-w-prose opacity-90">
                     {note.excerpt}
                   </p>
+                  <div className="mt-6">
+                    <ShareRow />
+                  </div>
                 </div>
               </div>
             </div>

@@ -1,24 +1,36 @@
+import { useState } from "react";
 import MarginRail from "@/components/MarginRail";
 import MobileFolioStrip from "@/components/MobileFolioStrip";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import SkipLink from "@/components/SkipLink";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import { useI18n } from "@/lib/i18n";
 import { notesData } from "@/data/notes";
 
-/**
- * Phase 8 — the editorial index.
- * Each note links to its own URL so it can be shared, indexed and given its own
- * metadata. The essays live in src/data/notes.ts; adding one there adds it here
- * and to the sitemap.
- */
 export default function NotesPage() {
+  const { lang } = useI18n();
+  const P = lang === "pt";
+  const [query, setQuery] = useState("");
+
   useDocumentMeta({
-    title: "Notes — THE OFFICE",
-    description:
-      "Field notes from THE OFFICE on book positioning, author websites, algorithmic book discovery, and building systems that outlast the season.",
+    title: P ? "Notas — THE OFFICE" : "Notes — THE OFFICE",
+    description: P
+      ? "Notas do estúdio sobre posicionamento, web editorial, descoberta algorítmica de livros e sistemas."
+      : "Field notes from THE OFFICE on book positioning, author websites, algorithmic book discovery, and building systems that outlast the season.",
     path: "/notes",
   });
+
+  const q = query.trim().toLowerCase();
+  const filtered = q
+    ? notesData.filter(
+        (n) =>
+          n.title.toLowerCase().includes(q) ||
+          n.excerpt.toLowerCase().includes(q) ||
+          n.category.toLowerCase().includes(q) ||
+          n.paragraphs.some((p) => p.toLowerCase().includes(q))
+      )
+    : notesData;
 
   return (
     <div className="min-h-screen bg-paper text-charcoal flex flex-col">
@@ -32,33 +44,52 @@ export default function NotesPage() {
               sectionNum="N"
               sectionLabel="NOTES & INSIGHTS"
               folio="NOTES"
-              note="Essays on book strategy, digital craft, search systems, and the business of publishing."
+              note={P ? "Ensaios sobre o ofício." : "Essays on the work."}
             />
             <div className="col-span-12 lg:col-span-10">
               <MobileFolioStrip sectionNum="N" sectionLabel="NOTES & INSIGHTS" folio="NOTES" />
-              <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
-                WRITING / FIELD NOTES
+              <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+                <div className="font-mono text-[11px] tracking-mono opacity-60">
+                  {P ? "ESCRITA / NOTAS DE CAMPO" : "WRITING / FIELD NOTES"}
+                </div>
+                <a href="/rss.xml" className="font-mono text-[11px] tracking-mono underline opacity-70 hover:opacity-100">
+                  RSS ↗
+                </a>
               </div>
               <h1
                 id="notes-heading"
                 className="font-display tracking-display text-[36px] sm:text-[52px] lg:text-[68px] leading-[0.98] font-light max-w-[20ch] mb-4"
               >
-                Notes on the work.
+                {P ? "Notas sobre o trabalho." : "Notes on the work."}
               </h1>
-              <p className="text-[16px] leading-[1.65] opacity-80 max-w-prose mb-12">
-                We write about what we do: category architecture, editorial
-                front-ends, algorithmic book discovery, and building systems
-                that outlast the season. Written by the studio — no guest posts,
-                no sponsored content.
+              <p className="text-[16px] leading-[1.65] opacity-80 max-w-prose mb-8">
+                {P
+                  ? "Escrevemos sobre o que fazemos: arquitetura de categoria, front-ends editoriais, descoberta algorítmica de livros e sistemas que duram."
+                  : "We write about what we do: category architecture, editorial front-ends, algorithmic book discovery, and building systems that outlast the season."}
               </p>
 
+              <div className="mb-10">
+                <label htmlFor="notes-search" className="block font-mono text-[11px] tracking-mono opacity-60 mb-2">
+                  {P ? "PESQUISAR NAS NOTAS" : "SEARCH THE NOTES"}
+                </label>
+                <input
+                  id="notes-search"
+                  type="search"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder={P ? "posicionamento, Amazon, IA…" : "positioning, Amazon, AI…"}
+                  className="w-full max-w-md bg-transparent border-b border-black/50 focus:border-black py-2 text-[15px] outline-none transition-colors"
+                />
+                {q && (
+                  <p className="mt-2 font-mono text-[11px] tracking-mono opacity-60" aria-live="polite">
+                    {filtered.length} {P ? "resultado(s)" : "result(s)"}
+                  </p>
+                )}
+              </div>
+
               <div className="space-y-12">
-                {notesData.map((note) => (
-                  <article
-                    key={note.slug}
-                    id={note.slug}
-                    className="border-t border-black pt-8"
-                  >
+                {filtered.map((note) => (
+                  <article key={note.slug} id={note.slug} className="border-t border-black pt-8">
                     <div className="flex flex-wrap items-center gap-3 font-mono text-[11px] tracking-mono opacity-60 mb-3">
                       <span>{note.date}</span>
                       <span aria-hidden="true">·</span>
@@ -74,38 +105,39 @@ export default function NotesPage() {
                         {note.title}
                       </a>
                     </h2>
-                    <p className="text-[16px] leading-[1.65] opacity-90 max-w-prose mb-6">
-                      {note.excerpt}
-                    </p>
+                    <p className="text-[16px] leading-[1.65] opacity-90 max-w-prose mb-6">{note.excerpt}</p>
                     <a
                       href={`/notes/${note.slug}`}
                       className="inline-flex items-center gap-2 border border-black px-4 py-2 font-mono text-[11px] tracking-mono uppercase font-semibold hover:bg-black hover:text-white transition-colors"
                     >
-                      Read the full note ({note.readTime}) →
+                      {P ? `Ler a nota completa (${note.readTime})` : `Read the full note (${note.readTime})`} →
                     </a>
                   </article>
                 ))}
+                {q && filtered.length === 0 && (
+                  <p className="text-[15px] leading-[1.6] opacity-70 border-t border-black pt-8">
+                    {P ? "Nada encontrado para essa pesquisa." : "Nothing found for that search."}
+                  </p>
+                )}
               </div>
 
-              {/* Inquiries callout */}
               <div className="mt-20 border border-black bg-paper-tint p-8 sm:p-10">
                 <div className="font-mono text-[11px] tracking-mono opacity-60 mb-2">
                   THE OFFICE / EDITORIAL PRACTICE
                 </div>
                 <h2 className="font-display text-[24px] sm:text-[30px] tracking-display leading-snug mb-3">
-                  Have a manuscript, backlist, or digital system to discuss?
+                  {P ? "Tem um manuscrito, catálogo ou sistema digital para discutir?" : "Have a manuscript, backlist, or digital system to discuss?"}
                 </h2>
                 <p className="text-[15px] leading-[1.65] opacity-80 max-w-prose mb-6">
-                  We take on a small number of engagements each quarter. We read
-                  every brief personally, and we reply within two working days —
-                  including when the answer is that we are not the right studio
-                  for it.
+                  {P
+                    ? "Aceitamos poucos projetos por trimestre e lemos cada brief pessoalmente."
+                    : "We take on a small number of engagements each quarter. We read every brief personally."}
                 </p>
                 <a
                   href="/#contact"
                   className="inline-flex items-center gap-2 bg-black text-white px-5 py-3 font-mono text-[12px] tracking-mono font-semibold hover:bg-black/80 transition-colors"
                 >
-                  SEND US YOUR BRIEF →
+                  {P ? "ENVIE-NOS O SEU BRIEF →" : "SEND US YOUR BRIEF →"}
                 </a>
               </div>
             </div>

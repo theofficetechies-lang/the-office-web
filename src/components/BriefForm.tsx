@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { submitBrief, ApiError } from "@/lib/api";
 import { useToast } from "@/hooks/useToast";
+import { useI18n } from "@/lib/i18n";
 import { cn } from "@/utils/cn";
 import { CONTACT_EMAIL } from "@/lib/site";
 import {
@@ -47,6 +48,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function BriefForm() {
   const { addToast } = useToast();
+  const { t } = useI18n();
   const [data, setData] = useState<BriefFormState>(initial);
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errorMsg, setErrorMsg] = useState("");
@@ -201,7 +203,7 @@ export default function BriefForm() {
     >
       <Field
         id="name"
-        label="YOUR NAME"
+        label={t("form.name").toUpperCase()}
         type="text"
         autoComplete="name"
         required
@@ -211,7 +213,7 @@ export default function BriefForm() {
       />
       <Field
         id="email"
-        label="EMAIL"
+        label={t("form.email").toUpperCase()}
         type="email"
         autoComplete="email"
         required
@@ -221,7 +223,7 @@ export default function BriefForm() {
       />
       <Field
         id="org"
-        label="COMPANY / PUBLISHER / NONE"
+        label={t("form.org").toUpperCase()}
         type="text"
         autoComplete="organization"
         value={data.org}
@@ -232,7 +234,7 @@ export default function BriefForm() {
       {/* Required services — multi-select */}
       <fieldset className="col-span-2" aria-describedby={errors.services ? "services-err" : undefined}>
         <legend className="font-mono text-[11px] tracking-mono opacity-60 mb-3">
-          WHAT DO YOU NEED FROM US? <span className="opacity-50 ml-1">*</span>
+          {t("form.services").toUpperCase()} <span className="opacity-50 ml-1">*</span>
         </legend>
         <div className="flex flex-wrap gap-2">
           {SERVICE_CHOICES.map((choice) => {
@@ -276,7 +278,7 @@ export default function BriefForm() {
               errors.brief ? "text-red-400" : "opacity-60"
             )}
           >
-            THE BRIEF <span className="opacity-50 ml-1">*</span>
+            {t("form.brief").toUpperCase()} <span className="opacity-50 ml-1">*</span>
           </label>
           <span
             className={cn(
@@ -310,7 +312,7 @@ export default function BriefForm() {
 
       <Select
         id="timeline"
-        label="TIMELINE"
+        label={t("form.timeline").toUpperCase()}
         required
         value={data.timeline}
         onChange={(v) => set("timeline", v)}
@@ -320,7 +322,7 @@ export default function BriefForm() {
       />
       <Select
         id="scope"
-        label="SHAPE OF THE WORK"
+        label={t("form.scope").toUpperCase()}
         required
         value={data.scope}
         onChange={(v) => set("scope", v)}
@@ -330,7 +332,7 @@ export default function BriefForm() {
       />
       <Select
         id="budget"
-        label="BUDGET RANGE (OPTIONAL)"
+        label={t("form.budget").toUpperCase()}
         value={data.budget}
         onChange={(v) => set("budget", v)}
         options={BUDGET_CHOICES.map((c) => ({ value: c.value, label: c.label }))}
@@ -339,7 +341,7 @@ export default function BriefForm() {
       />
       <Select
         id="discovery"
-        label="HOW DID YOU FIND US? (OPTIONAL)"
+        label={t("form.discovery").toUpperCase()}
         value={data.discovery}
         onChange={(v) => set("discovery", v)}
         options={DISCOVERY_CHOICES.map((c) => ({ value: c.value, label: c.label }))}
@@ -371,8 +373,7 @@ export default function BriefForm() {
             </span>
           ) : (
             <span className="opacity-60">
-              WE REPLY WITHIN TWO WORKING DAYS. WE TURN DOWN BRIEFS WHEN WE ARE
-              NOT THE RIGHT FIT.
+              {t("form.reply")}
             </span>
           )}
         </div>
@@ -392,12 +393,12 @@ export default function BriefForm() {
             className="bg-white text-black px-5 py-3 font-mono text-[12px] tracking-mono font-semibold border border-white hover:bg-transparent hover:text-white transition-colors disabled:opacity-60 disabled:cursor-wait cursor-pointer whitespace-nowrap"
           >
             {status === "submitting"
-              ? "SENDING…"
+              ? t("form.sending")
               : status === "sent"
-                ? "RECEIVED ✓"
+                ? t("form.sent")
                 : status === "error"
-                  ? "TRY AGAIN →"
-                  : "SEND BRIEF →"}
+                  ? `${t("form.tryAgain")} →`
+                  : `${t("form.submit")} →`}
           </button>
         </div>
       </div>

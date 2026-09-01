@@ -45,6 +45,8 @@ export const WEB3FORMS_KEY = orFallback(
 /** Primary navigation, in the order the brief specifies. */
 export interface NavItem {
   label: string;
+  /** i18n key for the translated label. */
+  tkey: string;
   /** Anchor target on the home page. */
   anchor: string;
   /** Absolute target from any other page. */
@@ -52,13 +54,13 @@ export interface NavItem {
 }
 
 export const NAV_ITEMS: NavItem[] = [
-  { label: "Services", anchor: "#services", href: "/#services" },
-  { label: "Work", anchor: "#work", href: "/#work" },
-  { label: "Approach", anchor: "#approach", href: "/#approach" },
-  { label: "Why", anchor: "#why", href: "/#why" },
-  { label: "About", anchor: "#about", href: "/#about" },
-  { label: "Notes", anchor: "/notes", href: "/notes" },
-  { label: "Contact", anchor: "#contact", href: "/#contact" },
+  { label: "Services", tkey: "nav.services", anchor: "#services", href: "/#services" },
+  { label: "Work", tkey: "nav.work", anchor: "#work", href: "/#work" },
+  { label: "Approach", tkey: "nav.approach", anchor: "#approach", href: "/#approach" },
+  { label: "Why", tkey: "nav.why", anchor: "#why", href: "/#why" },
+  { label: "About", tkey: "nav.about", anchor: "#about", href: "/#about" },
+  { label: "Notes", tkey: "nav.notes", anchor: "/notes", href: "/notes" },
+  { label: "Contact", tkey: "nav.contact", anchor: "#contact", href: "/#contact" },
 ];
 
 /** Service choices offered in the brief form, keyed to src/data/services.ts. */

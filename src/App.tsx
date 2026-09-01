@@ -7,11 +7,19 @@ import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
 import SkipLink from "./components/SkipLink";
 import BriefForm from "./components/BriefForm";
+import FaqSection from "./components/sections/FaqSection";
+import PricingSection from "./components/sections/PricingSection";
+import ReviewsSection from "./components/sections/ReviewsSection";
 import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
 import NotesPage from "./pages/NotesPage";
 import NotePage from "./pages/NotePage";
 import CaseStudyPage from "./pages/CaseStudyPage";
+import ServicePage from "./pages/ServicePage";
+import PressPage from "./pages/PressPage";
+import GlossaryPage from "./pages/GlossaryPage";
+import ChecklistPage from "./pages/ChecklistPage";
+import { useI18n } from "./lib/i18n";
 import { routeKey, useRoute } from "./lib/router";
 import { useDocumentMeta } from "./hooks/useDocumentMeta";
 import { useReveal } from "./hooks/useReveal";
@@ -42,6 +50,14 @@ export default function App() {
       return <NotePage slug={route.slug} />;
     case "work":
       return <CaseStudyPage slug={route.slug} />;
+    case "service":
+      return <ServicePage slug={route.slug} />;
+    case "press":
+      return <PressPage />;
+    case "glossary":
+      return <GlossaryPage />;
+    case "checklist":
+      return <ChecklistPage />;
     case "notfound":
       return <NotFound path={route.path} />;
     case "home":
@@ -59,8 +75,15 @@ function ServiceRow({ s }: { s: (typeof services)[number] }) {
     <article className="grid grid-cols-12 gap-x-6 py-10 sm:py-12 border-t border-black/90 first:border-t-0">
       <div className="col-span-12 sm:col-span-3 mb-4 sm:mb-0">
         <div className="font-mono text-xs tracking-mono opacity-60 mb-2">{s.n} / SERVICE</div>
-        <h3 className="font-display text-2xl sm:text-3xl tracking-display leading-[1.05]">{s.title}</h3>
+        <h3 className="font-display text-2xl sm:text-3xl tracking-display leading-[1.05]">
+          <a href={`/services/${s.slug}`} className="no-underline text-inherit hover:underline decoration-1 underline-offset-4">
+            {s.title}
+          </a>
+        </h3>
         <div className="font-mono text-[10.5px] tracking-mono opacity-60 mt-2">{s.duration}</div>
+        <a href={`/services/${s.slug}`} className="mt-3 inline-block font-mono text-[11px] tracking-mono font-semibold border-b border-black">
+          READ →
+        </a>
       </div>
 
       <div className="col-span-12 sm:col-span-6 space-y-5">
@@ -215,6 +238,7 @@ function TeamMember({ member }: { member: (typeof team)[number] }) {
 /* ------------------------------------------------------------------ */
 
 function HomePage() {
+  const { t } = useI18n();
 
   useDocumentMeta({
     title: "THE OFFICE — Book strategy, web, automation, research",
@@ -248,35 +272,31 @@ function HomePage() {
                   folio="PORTFOLIO I"
                 />
                 <div className="font-mono text-[11px] sm:text-[12px] tracking-mono opacity-70 mb-6 sm:mb-10">
-                  <span className="opacity-60">A SMALL STUDIO. </span>
-                  <span>FOUR PEOPLE. </span>
-                  <span className="hidden sm:inline">EST. 2021. </span>
-                  <span>LISBON &amp; NEW YORK.</span>
+                  <span className="opacity-60">{t("hero.kicker1").toUpperCase()} </span>
+                  <span>{t("hero.kicker2").toUpperCase()} </span>
+                  <span className="hidden sm:inline">{t("hero.kicker3").toUpperCase()} </span>
+                  <span>{t("hero.kicker4").toUpperCase()}</span>
                 </div>
 
                 <h1
                   id="hero-heading"
                   className="font-display tracking-display-tight font-light text-[44px] leading-[0.98] sm:text-[72px] sm:leading-[0.96] lg:text-[112px] lg:leading-[0.94]"
                 >
-                  We do the work
+                  {t("hero.title1")}
                   <br />
-                  behind the <span className="italic font-normal">book</span>, the
+                  {t("hero.title2")}
                   <br />
-                  site, and the automation.
+                  {t("hero.title3")}
                 </h1>
 
                 <div className="mt-10 sm:mt-14 grid grid-cols-12 gap-x-6 gap-y-8">
                   <p className="col-span-12 lg:col-span-7 text-[16.5px] sm:text-[18px] leading-[1.6] max-w-prose">
-                    THE&nbsp;OFFICE is a four-person studio for authors,
-                    publishers, and the people who run literary businesses. We
-                    write the positioning, build the site, ship the automation,
-                    and run the research. We do not pitch, decorate, or staff
-                    your project with juniors.
+                    {t("hero.sub")}
                   </p>
 
                   <div className="col-span-12 lg:col-span-4 lg:col-start-9 flex flex-col gap-3">
                     <div className="font-mono text-[11px] tracking-mono opacity-60">
-                      CURRENTLY READING ON THE BRIEF:
+                      {t("hero.reading").toUpperCase()}
                     </div>
                     <div className="font-display text-[20px] sm:text-[22px] tracking-display leading-[1.25]">
                       <Typewriter
@@ -298,7 +318,7 @@ function HomePage() {
                         // ~2.5s the animation runs; the animation is decoration.
                       ].join(" ")}
                     >
-                      SEND A BRIEF →
+                      {t("hero.cta").toUpperCase()} →
                     </a>
                   </div>
                 </div>
@@ -326,13 +346,13 @@ function HomePage() {
                 />
                 <div className="mb-10 sm:mb-14">
                   <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
-                    01 / SERVICES
+                    01 / {t("section.services").toUpperCase()}
                   </div>
                   <h2
                     id="services-heading"
                     className="font-display tracking-display text-[36px] sm:text-[52px] lg:text-[68px] leading-[0.98] font-light max-w-[18ch]"
                   >
-                    Four ways we work with people who publish, sell, and write.
+                    {t("section.servicesTitle")}
                   </h2>
                 </div>
 
@@ -368,7 +388,7 @@ function HomePage() {
                 />
                 <div className="mb-10 sm:mb-14">
                   <div className="font-mono text-[11px] tracking-mono opacity-60 mb-3">
-                    02 / WORK
+                    02 / {t("section.work").toUpperCase()}
                   </div>
                   <div className="font-mono text-[10.5px] tracking-mono uppercase opacity-70 mb-5">
                     Engagement patterns · No client named · No result claimed
@@ -377,7 +397,7 @@ function HomePage() {
                     id="work-heading"
                     className="font-display tracking-display text-[36px] sm:text-[52px] lg:text-[68px] leading-[0.98] font-light max-w-[22ch]"
                   >
-                    What the work looks like when it is done properly.
+                    {t("section.workTitle")}
                   </h2>
                   <p className="mt-6 text-[15px] leading-[1.7] max-w-prose opacity-80">
                     {workNote}
@@ -497,13 +517,13 @@ function HomePage() {
                 />
                 <div className="mb-10 sm:mb-14">
                   <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
-                    03 / APPROACH
+                    03 / {t("section.approach").toUpperCase()}
                   </div>
                   <h2
                     id="approach-heading"
                     className="font-display tracking-display text-[36px] sm:text-[52px] lg:text-[68px] leading-[0.98] font-light max-w-[18ch]"
                   >
-                    Six stages. Then we bend them to fit the brief.
+                    {t("section.approachTitle")}
                   </h2>
                 </div>
 
@@ -561,13 +581,13 @@ function HomePage() {
                 />
                 <div className="mb-10 sm:mb-14">
                   <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
-                    04 / WHY THE OFFICE
+                    04 / {t("section.why").toUpperCase()}
                   </div>
                   <h2
                     id="why-heading"
                     className="font-display tracking-display text-[36px] sm:text-[52px] lg:text-[68px] leading-[0.98] font-light max-w-[18ch]"
                   >
-                    Eight things that are true about how we work.
+                    {t("section.whyTitle")}
                   </h2>
                 </div>
 
@@ -629,13 +649,13 @@ function HomePage() {
                 />
                 <div className="mb-10 sm:mb-14">
                   <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
-                    05 / ABOUT
+                    05 / {t("section.about").toUpperCase()}
                   </div>
                   <h2
                     id="about-heading"
                     className="font-display tracking-display text-[36px] sm:text-[52px] lg:text-[68px] leading-[0.98] font-light max-w-[20ch]"
                   >
-                    A studio of four, by design.
+                    {t("section.aboutTitle")}
                   </h2>
                 </div>
 
@@ -685,6 +705,12 @@ function HomePage() {
           </div>
         </section>
 
+        <ReviewsSection />
+
+        <FaqSection />
+
+        <PricingSection />
+
         {/* 06 / CONTACT */}
         <section
           id="contact"
@@ -709,15 +735,16 @@ function HomePage() {
                   inverse
                 />
                 <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
-                  06 / CONTACT
+                  06 / {t("section.contact").toUpperCase()}
                 </div>
                 <h2
                   id="contact-heading"
                   className="font-display tracking-display text-[40px] sm:text-[60px] lg:text-[84px] leading-[0.95] font-light max-w-[16ch]"
                 >
-                  Send us the
+                  {t("section.contactTitle1")}
                   <br />
-                  <span className="italic">actual</span> brief.
+                  <span className="italic">{t("section.contactTitle2")}</span>{" "}
+                  {t("section.contactTitle3")}
                 </h2>
                 <p className="mt-6 max-w-prose text-[16px] leading-[1.65] opacity-85">
                   No form-filling if you would rather write. Email works too —

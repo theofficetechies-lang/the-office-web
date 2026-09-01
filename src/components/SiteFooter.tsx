@@ -1,4 +1,5 @@
 import { CONTACT_EMAIL, NAV_ITEMS } from "@/lib/site";
+import { useI18n, type TKey } from "@/lib/i18n";
 import { services } from "@/data/services";
 
 /**
@@ -6,6 +7,7 @@ import { services } from "@/data/services";
  * legal. Only links that resolve to something real on this site.
  */
 export default function SiteFooter({ mode }: { mode: "home" | "page" }) {
+  const { t, lang } = useI18n();
   const href = (anchor: string, path: string) => (mode === "home" ? anchor : path);
 
   return (
@@ -30,20 +32,22 @@ export default function SiteFooter({ mode }: { mode: "home" | "page" }) {
           </div>
 
           <nav className="col-span-6 sm:col-span-4 lg:col-span-2 lg:col-start-7" aria-label="Footer navigation">
-            <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-4">NAVIGATE</div>
+            <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-4">{t("footer.navigate").toUpperCase()}</div>
             <ul className="space-y-2.5 font-mono text-[12px] tracking-mono">
               {NAV_ITEMS.map((item) => (
                 <li key={item.label}>
                   <a href={href(item.anchor, item.href)} className="opacity-80 hover:opacity-100">
-                    {item.label.toUpperCase()}
+                    {t(item.tkey as TKey).toUpperCase()}
                   </a>
                 </li>
               ))}
+              <li><a href="/press" className="opacity-80 hover:opacity-100">PRESS</a></li>
+              <li><a href="/glossary" className="opacity-80 hover:opacity-100">GLOSSARY</a></li>
             </ul>
           </nav>
 
           <nav className="col-span-6 sm:col-span-4 lg:col-span-2" aria-label="Services">
-            <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-4">SERVICES</div>
+            <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-4">{t("footer.services").toUpperCase()}</div>
             <ul className="space-y-2.5 font-mono text-[12px] tracking-mono">
               {services.map((s) => (
                 <li key={s.slug}>
@@ -59,11 +63,9 @@ export default function SiteFooter({ mode }: { mode: "home" | "page" }) {
           </nav>
 
           <div className="col-span-12 sm:col-span-4 lg:col-span-2">
-            <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-4">REPLY WINDOW</div>
+            <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-4">{t("footer.reply").toUpperCase()}</div>
             <p className="font-mono text-[12px] tracking-mono leading-[1.8] opacity-80">
-              MON–THU
-              <br />
-              WITHIN 2 WORKING DAYS
+              {t("footer.replyDetail").toUpperCase()}
             </p>
             <a
               href={href("#contact", "/#contact")}
@@ -74,6 +76,14 @@ export default function SiteFooter({ mode }: { mode: "home" | "page" }) {
           </div>
         </div>
       </div>
+
+      {lang === "pt" && (
+        <div className="border-t border-white/15">
+          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-3 font-mono text-[10.5px] tracking-mono opacity-70">
+            {t("lang.note")}
+          </div>
+        </div>
+      )}
 
       <div className="border-t border-white/15">
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-5 flex flex-col gap-3 font-mono text-[11px] tracking-mono opacity-80 sm:flex-row sm:items-center">

@@ -11,6 +11,10 @@ export type Route =
   | { kind: "notesIndex" }
   | { kind: "note"; slug: string }
   | { kind: "work"; slug: string }
+  | { kind: "service"; slug: string }
+  | { kind: "press" }
+  | { kind: "glossary" }
+  | { kind: "checklist" }
   | { kind: "notfound"; path: string };
 
 const SLUG = /^([a-z0-9]+(?:-[a-z0-9]+)*)$/;
@@ -22,12 +26,18 @@ export function matchRoute(pathname: string): Route {
   if (p === "/privacy") return { kind: "privacy" };
   if (p === "/terms") return { kind: "terms" };
   if (p === "/notes") return { kind: "notesIndex" };
+  if (p === "/press") return { kind: "press" };
+  if (p === "/glossary") return { kind: "glossary" };
+  if (p === "/resources/backlist-audit-checklist") return { kind: "checklist" };
 
   const note = p.match(/^\/notes\/(.+)$/);
   if (note && SLUG.test(note[1])) return { kind: "note", slug: note[1] };
 
   const work = p.match(/^\/work\/(.+)$/);
   if (work && SLUG.test(work[1])) return { kind: "work", slug: work[1] };
+
+  const service = p.match(/^\/services\/(.+)$/);
+  if (service && SLUG.test(service[1])) return { kind: "service", slug: service[1] };
 
   return { kind: "notfound", path: p };
 }

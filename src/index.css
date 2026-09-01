@@ -193,3 +193,27 @@
     color: #fff;
   }
 }
+
+/* =========================================================================
+   Print — notes and the checklist are meant to be saved as paper/PDF.
+   ========================================================================= */
+@media print {
+  .no-print,
+  header,
+  footer,
+  aside,
+  .skip-link {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+    color: #000;
+  }
+  a {
+    text-decoration: none;
+    color: #000;
+  }
+  main {
+    padding: 0 !important;
+  }
+}

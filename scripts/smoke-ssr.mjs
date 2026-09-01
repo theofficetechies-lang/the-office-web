@@ -38,12 +38,12 @@ const cases = [
     route: "/",
     must: [
       "We do the work",
-      "01 / SERVICES",
-      "02 / WORK",
-      "03 / APPROACH",
-      "04 / WHY THE OFFICE",
-      "05 / ABOUT",
-      "06 / CONTACT",
+      "Four ways we work with people who publish, sell, and write.",
+      "What the work looks like when it is done properly.",
+      "Six stages. Then we bend them to fit the brief.",
+      "Eight things that are true about how we work.",
+      "A studio of four, by design.",
+      "Send us the",
       "WHAT DO YOU NEED FROM US?",
       "SHAPE OF THE WORK",
       "BUDGET RANGE (OPTIONAL)",
@@ -112,6 +112,10 @@ const cases = [
     must: ["This document is not in the archive.", "REQUESTED: /this-does-not-exist"],
     mustNot: [],
   },
+  { route: "/services/book-strategy", must: ["Book Strategy", "WHO IT IS FOR", "YOU END UP WITH"], mustNot: [] },
+  { route: "/press", must: ["media kit.", "STUDIO FACTS"], mustNot: [] },
+  { route: "/glossary", must: ["The vocabulary of the trade.", "Positioning"], mustNot: [] },
+  { route: "/resources/backlist-audit-checklist", must: ["The backlist audit checklist.", "PRINT / SAVE AS PDF"], mustNot: [] },
 ];
 
 let failures = 0;

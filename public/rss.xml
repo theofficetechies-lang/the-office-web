@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>THE OFFICE — Notes</title>
+    <link>https://the-office-test4.vercel.app/notes</link>
+    <atom:link href="https://the-office-test4.vercel.app/rss.xml" rel="self" type="application/rss+xml" />
+    <description>Field notes on book strategy, digital craft, search systems, and the business of publishing.</description>
+    <language>en</language>
+    <lastBuildDate>Tue, 01 Sep 2026 17:37:50 GMT</lastBuildDate>
+    <item>
+      <title>What book positioning actually means</title>
+      <link>https://the-office-test4.vercel.app/notes/what-book-positioning-actually-means</link>
+      <guid isPermaLink="true">https://the-office-test4.vercel.app/notes/what-book-positioning-actually-means</guid>
+      <description>Most authors think positioning is a tagline or a clever subhead. It is not. Positioning is the answer to a single question: what shelf does this book belong on, and why would someone who walks past every other title on that shelf stop for this one?</description>
+    </item>
+    <item>
+      <title>Why most author websites fail</title>
+      <link>https://the-office-test4.vercel.app/notes/why-most-author-websites-fail</link>
+      <guid isPermaLink="true">https://the-office-test4.vercel.app/notes/why-most-author-websites-fail</guid>
+      <description>The typical author site is a digital CV: bio, headshot, list of awards, and an abandoned blog. It treats every visitor as someone who already knows who the author is. The problem is that most visitors do not.</description>
+    </item>
+    <item>
+      <title>How to audit your own Amazon listing</title>
+      <link>https://the-office-test4.vercel.app/notes/how-to-audit-your-own-amazon-listing</link>
+      <guid isPermaLink="true">https://the-office-test4.vercel.app/notes/how-to-audit-your-own-amazon-listing</guid>
+      <description>Amazon is not a bookstore; it is a search engine with a shopping cart attached. If your metadata, browse nodes, and backend keyword hierarchy are weak, your book is algorithmically invisible.</description>
+    </item>
+  </channel>
+</rss>

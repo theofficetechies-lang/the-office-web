@@ -1,81 +1,163 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://the-office-test4.vercel.app/</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://the-office-test4.vercel.app/" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://the-office-test4.vercel.app/" />
   </url>
   <url>
     <loc>https://the-office-test4.vercel.app/notes</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://the-office-test4.vercel.app/notes" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://the-office-test4.vercel.app/notes" />
   </url>
   <url>
     <loc>https://the-office-test4.vercel.app/notes/what-book-positioning-actually-means</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://the-office-test4.vercel.app/notes/what-book-positioning-actually-means" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://the-office-test4.vercel.app/notes/what-book-positioning-actually-means" />
   </url>
   <url>
     <loc>https://the-office-test4.vercel.app/notes/why-most-author-websites-fail</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://the-office-test4.vercel.app/notes/why-most-author-websites-fail" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://the-office-test4.vercel.app/notes/why-most-author-websites-fail" />
   </url>
   <url>
     <loc>https://the-office-test4.vercel.app/notes/how-to-audit-your-own-amazon-listing</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://the-office-test4.vercel.app/notes/how-to-audit-your-own-amazon-listing" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://the-office-test4.vercel.app/notes/how-to-audit-your-own-amazon-listing" />
   </url>
   <url>
     <loc>https://the-office-test4.vercel.app/work/debut-novel-repositioning</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://the-office-test4.vercel.app/work/debut-novel-repositioning" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://the-office-test4.vercel.app/work/debut-novel-repositioning" />
   </url>
   <url>
     <loc>https://the-office-test4.vercel.app/work/editorial-site-rebuild</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://the-office-test4.vercel.app/work/editorial-site-rebuild" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://the-office-test4.vercel.app/work/editorial-site-rebuild" />
   </url>
   <url>
     <loc>https://the-office-test4.vercel.app/work/backlist-reading-assistant</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://the-office-test4.vercel.app/work/backlist-reading-assistant" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://the-office-test4.vercel.app/work/backlist-reading-assistant" />
   </url>
   <url>
     <loc>https://the-office-test4.vercel.app/work/market-map-second-book</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://the-office-test4.vercel.app/work/market-map-second-book" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://the-office-test4.vercel.app/work/market-map-second-book" />
   </url>
   <url>
     <loc>https://the-office-test4.vercel.app/work/rights-triage-automation</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://the-office-test4.vercel.app/work/rights-triage-automation" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://the-office-test4.vercel.app/work/rights-triage-automation" />
   </url>
   <url>
     <loc>https://the-office-test4.vercel.app/work/memoir-launch-architecture</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://the-office-test4.vercel.app/work/memoir-launch-architecture" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://the-office-test4.vercel.app/work/memoir-launch-architecture" />
+  </url>
+  <url>
+    <loc>https://the-office-test4.vercel.app/services/book-strategy</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://the-office-test4.vercel.app/services/book-strategy" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://the-office-test4.vercel.app/services/book-strategy" />
+  </url>
+  <url>
+    <loc>https://the-office-test4.vercel.app/services/book-research</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://the-office-test4.vercel.app/services/book-research" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://the-office-test4.vercel.app/services/book-research" />
+  </url>
+  <url>
+    <loc>https://the-office-test4.vercel.app/services/web-design</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://the-office-test4.vercel.app/services/web-design" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://the-office-test4.vercel.app/services/web-design" />
+  </url>
+  <url>
+    <loc>https://the-office-test4.vercel.app/services/automation</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://the-office-test4.vercel.app/services/automation" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://the-office-test4.vercel.app/services/automation" />
+  </url>
+  <url>
+    <loc>https://the-office-test4.vercel.app/glossary</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://the-office-test4.vercel.app/glossary" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://the-office-test4.vercel.app/glossary" />
+  </url>
+  <url>
+    <loc>https://the-office-test4.vercel.app/press</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://the-office-test4.vercel.app/press" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://the-office-test4.vercel.app/press" />
+  </url>
+  <url>
+    <loc>https://the-office-test4.vercel.app/resources/backlist-audit-checklist</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://the-office-test4.vercel.app/resources/backlist-audit-checklist" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://the-office-test4.vercel.app/resources/backlist-audit-checklist" />
   </url>
   <url>
     <loc>https://the-office-test4.vercel.app/privacy</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://the-office-test4.vercel.app/privacy" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://the-office-test4.vercel.app/privacy" />
   </url>
   <url>
     <loc>https://the-office-test4.vercel.app/terms</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://the-office-test4.vercel.app/terms" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://the-office-test4.vercel.app/terms" />
   </url>
 </urlset>
