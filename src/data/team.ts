@@ -60,11 +60,13 @@ export const team: TeamMember[] = [
   },
   {
     role: "Research & Analysis",
-    initials: "RA",
+    initials: "MD",
+    name: "Morrison Desmond",
+    portrait: "/team/morrison-desmond.jpg",
     note: "Source discovery, annotated reading, market mapping. Every claim that reaches a client document has been through this desk.",
-    verified: false,
+    verified: true,
   },
 ];
 
 export const teamNote =
-  "Four seats. Three principals have confirmed their names; portraits and the fourth seat follow as they are confirmed in writing. We would rather the section look unfinished than be wrong.";
+  "Four seats, four confirmed principals. We would rather the section look unfinished than be wrong — so names and portraits appear only once each principal has confirmed them in writing.";
