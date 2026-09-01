@@ -1,68 +1,63 @@
 /**
- * Phase 5 — the methodology.
- * Six stages, in order, with the studio's actual caveat attached: the sequence
- * flexes to the engagement, and we say so rather than pretending otherwise.
+ * Part 2 §5 — the canonical six-stage methodology. This is the single source
+ * of truth for stage names site-wide; the email, the homepage strip and the
+ * methodology page all use these exact names so nothing contradicts anything.
+ *
+ * Payment gates follow stages: Discovery and Analysis produce a deliverable the
+ * client keeps, which bounds their risk to a defined, recoverable amount.
  */
 export interface ProcessStage {
   n: string;
   title: string;
-  summary: string;
-  /** What the client sees at the end of this stage. */
-  artifact: string;
-  /** Rough share of a full engagement. */
+  happens: string;
+  receive: string;
   weight: string;
 }
 
 export const processStages: ProcessStage[] = [
   {
     n: "01",
-    title: "Understand",
-    summary:
-      "We read everything you send and ask the questions nobody has asked yet. This is where most engagements are actually won or lost, so we do not rush it.",
-    artifact: "A written account of the problem, agreed by both sides.",
+    title: "Discovery",
+    happens: "Intake: goals, history, existing assets, constraints. A go/no-go before any spend.",
+    receive: "Discovery summary; go/no-go decision before any spend.",
     weight: "Week 1",
   },
   {
     n: "02",
-    title: "Research",
-    summary:
-      "Category, comps, competitors, primary sources. We come back with what is true about the market you are in, including the parts that are inconvenient.",
-    artifact: "A research pack with sources and confidence notes.",
+    title: "Analysis",
+    happens: "Market, audience, competitive, search and asset audits.",
+    receive: "Written findings document — yours to keep.",
     weight: "Weeks 1–3",
   },
   {
     n: "03",
-    title: "Define",
-    summary:
-      "The position, the scope, and the one thing the work has to be judged on. Anything we cannot measure here does not get built later.",
-    artifact: "A positioning brief and a scoped plan.",
+    title: "Strategy",
+    happens: "Recommendations derived from findings; channels selected and justified; scope, timeline and cost fixed in writing.",
+    receive: "Proposal with fixed scope and named deliverables.",
     weight: "Week 3",
   },
   {
     n: "04",
-    title: "Design",
-    summary:
-      "Structure before surface: information architecture, argument, copy, then the visual system. Design is the last part of this stage, not the first.",
-    artifact: "Architecture, copy and a design system you can extend.",
-    weight: "Weeks 4–6",
+    title: "Implementation",
+    happens: "Executed actions, logged and dated.",
+    receive: "An action log, not just summaries.",
+    weight: "Weeks 4–10",
   },
   {
     n: "05",
-    title: "Build",
-    summary:
-      "Custom front-end, tools, integrations. Shipped in pieces you can see working, on infrastructure you own.",
-    artifact: "A deployed, documented, working thing.",
-    weight: "Weeks 5–12",
+    title: "Measurement",
+    happens: "Results compared against baseline at defined intervals.",
+    receive: "Scheduled written reports with interpretation.",
+    weight: "Ongoing, on cadence",
   },
   {
     n: "06",
-    title: "Refine",
-    summary:
-      "Measured against the thing we agreed in Define. We fix what the numbers say, hand over the documentation, and leave.",
-    artifact: "A review, a handover pack, and a decision about what is next.",
+    title: "Optimization",
+    happens: "Findings fed back into execution; scope adjusted by agreement.",
+    receive: "A revised plan where the evidence warrants it.",
     weight: "Final weeks",
   },
 ];
 
 export const processCaveat =
-  "This is the shape, not a contract. A positioning sprint collapses stages 01–03 into two weeks; a research programme lives almost entirely in 02; an automation build spends longer in 05 than anywhere else. We adapt the sequence to the engagement and tell you which stages we are compressing, and why.";
+  "Strategy follows from analysis — never the other way round. And the payment gates follow the stages: Discovery and Analysis produce a deliverable you keep whether or not we proceed, so your risk is bounded to a defined, recoverable amount. That is the mechanism behind \"you keep the analysis.\"";

@@ -65,10 +65,11 @@ export const NAV_ITEMS: NavItem[] = [
 
 /** Service choices offered in the brief form, keyed to src/data/services.ts. */
 export const SERVICE_CHOICES = [
-  { value: "book-strategy", label: "Book Strategy" },
-  { value: "book-research", label: "Book Research & Analysis" },
-  { value: "web-design", label: "Web Design" },
-  { value: "automation", label: "Automation" },
+  { value: "book-positioning", label: "Strategic Book Positioning" },
+  { value: "discoverability", label: "Discoverability Optimization" },
+  { value: "author-authority", label: "Author Authority Development" },
+  { value: "launch-strategy", label: "Launch Strategy" },
+  { value: "analytics-reporting", label: "Analytics & Reporting" },
   { value: "not-sure", label: "Not sure yet" },
 ] as const;
 

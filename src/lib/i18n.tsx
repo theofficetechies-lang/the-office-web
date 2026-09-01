@@ -37,7 +37,7 @@ const en = {
   "hero.cta": "Send a brief",
 
   "section.services": "Services",
-  "section.servicesTitle": "Four ways we work with people who publish, sell, and write.",
+  "section.servicesTitle": "Five services. One analytical method.",
   "section.work": "Work",
   "section.workTitle": "What the work looks like when it is done properly.",
   "section.approach": "Approach",
@@ -89,6 +89,23 @@ const en = {
   "footer.reply": "Reply window",
   "footer.replyDetail": "Mon–Thu, within 2 working days",
 
+  "cta.requestAnalysis": "Request an analysis",
+  "section.methodology": "Methodology",
+  "section.methodologyTitle": "Six stages. Evidence in, strategy out.",
+  "home.positioning": "The Office builds long-term discoverability and authority for authors and publishers through analysis-driven strategy.",
+  "home.audience": "Who we help",
+  "home.problem": "The problem we solve",
+  "common.analyze": "What we analyze",
+  "common.actions": "Actions performed",
+  "common.receive": "What you receive",
+  "common.measured": "How it is measured",
+  "common.pricing": "Pricing",
+  "cs.problem": "Problem",
+  "cs.strategy": "Strategy",
+  "cs.execution": "Execution",
+  "cs.measurement": "Measurement",
+  "cs.learning": "Learning",
+
   "lang.note":
     "Long-form notes and engagement write-ups are published in English; the interface is fully translated.",
 } as const;
@@ -122,7 +139,7 @@ const pt: Record<TKey, string> = {
   "hero.cta": "Enviar um brief",
 
   "section.services": "Serviços",
-  "section.servicesTitle": "Quatro formas de trabalhar com quem publica, vende e escreve.",
+  "section.servicesTitle": "Cinco serviços. Um método analítico.",
   "section.work": "Trabalho",
   "section.workTitle": "Como é o trabalho quando é bem feito.",
   "section.approach": "Método",
@@ -173,6 +190,23 @@ const pt: Record<TKey, string> = {
   "footer.services": "Serviços",
   "footer.reply": "Janela de resposta",
   "footer.replyDetail": "Seg–Qui, em 2 dias úteis",
+
+  "cta.requestAnalysis": "Pedir uma análise",
+  "section.methodology": "Metodologia",
+  "section.methodologyTitle": "Seis etapas. Evidência entra, estratégia sai.",
+  "home.positioning": "The Office constrói descobribilidade e autoridade de longo prazo para autores e editoras através de estratégia baseada em análise.",
+  "home.audience": "Quem ajudamos",
+  "home.problem": "O problema que resolvemos",
+  "common.analyze": "O que analisamos",
+  "common.actions": "Ações realizadas",
+  "common.receive": "O que recebe",
+  "common.measured": "Como é medido",
+  "common.pricing": "Preço",
+  "cs.problem": "Problema",
+  "cs.strategy": "Estratégia",
+  "cs.execution": "Execução",
+  "cs.measurement": "Medição",
+  "cs.learning": "Aprendizagem",
 
   "lang.note":
     "As notas longas e os estudos de caso são publicados em inglês; a interface está totalmente traduzida.",

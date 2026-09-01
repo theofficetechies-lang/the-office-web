@@ -8,6 +8,30 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useI18n } from "@/lib/i18n";
 import { services } from "@/data/services";
 
+function Block({ label, items, tint = false }: { label: string; items: string[]; tint?: boolean }) {
+  return (
+    <section className={tint ? "rule-b bg-paper-tint" : "rule-b"}>
+      <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+        <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-12 sm:py-16">
+          <div className="col-span-12 lg:col-span-3">
+            <div className="font-mono text-[11px] tracking-mono opacity-60">{label}</div>
+          </div>
+          <ul className="col-span-12 lg:col-span-9 mt-4 lg:mt-0 space-y-4">
+            {items.map((item, i) => (
+              <li key={item} className="flex gap-4 text-[15.5px] leading-[1.65]">
+                <span className="font-mono text-[11px] tracking-mono opacity-50 pt-1 shrink-0">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="max-w-prose">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function ServicePage({ slug }: { slug: string }) {
   const { t } = useI18n();
   const service = services.find((s) => s.slug === slug);
@@ -49,6 +73,7 @@ export default function ServicePage({ slug }: { slug: string }) {
 
   const others = services.filter((s) => s.slug !== service.slug).slice(0, 3);
 
+
   return (
     <div className="min-h-screen bg-paper text-charcoal flex flex-col">
       <SkipLink />
@@ -62,7 +87,7 @@ export default function ServicePage({ slug }: { slug: string }) {
                 sectionNum={service.n}
                 sectionLabel={service.title.toUpperCase()}
                 folio={`SERVICE / ${service.n}`}
-                note={service.duration}
+                note={service.pricing}
               />
               <div className="col-span-12 lg:col-span-10">
                 <MobileFolioStrip
@@ -73,68 +98,32 @@ export default function ServicePage({ slug }: { slug: string }) {
                 <a href="/#services" className="inline-block font-mono text-[11px] tracking-mono opacity-60 hover:opacity-100 mb-8">
                   ← {t("section.services").toUpperCase()}
                 </a>
-                <h1 className="font-display tracking-display text-[34px] sm:text-[52px] lg:text-[64px] leading-[1] font-light max-w-[20ch] mb-6">
+                <h1 className="font-display tracking-display text-[34px] sm:text-[52px] lg:text-[64px] leading-[1] font-light max-w-[20ch] mb-4">
                   {service.title}
                 </h1>
+                <div className="font-mono text-[12px] tracking-mono opacity-70 mb-6">{service.tagline}</div>
                 <p className="text-[17px] sm:text-[19px] leading-[1.6] max-w-prose opacity-90">{service.what}</p>
+                <div className="mt-6 border border-black bg-paper-tint p-5 font-mono text-[11px] tracking-mono opacity-80 max-w-prose">
+                  {t("common.pricing").toUpperCase()}: {service.pricing}
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="rule-b bg-paper-tint">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
-            <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-12 sm:py-16">
-              <div className="col-span-12 lg:col-span-3">
-                <div className="font-mono text-[11px] tracking-mono opacity-60">{t("common.whoFor").toUpperCase()}</div>
-              </div>
-              <p className="col-span-12 lg:col-span-9 mt-4 lg:mt-0 text-[16px] leading-[1.7] max-w-prose">{service.who}</p>
-            </div>
-            <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-12 sm:py-16 border-t border-black/15">
-              <div className="col-span-12 lg:col-span-3">
-                <div className="font-mono text-[11px] tracking-mono opacity-60">{t("common.problem").toUpperCase()}</div>
-              </div>
-              <p className="col-span-12 lg:col-span-9 mt-4 lg:mt-0 text-[16px] leading-[1.7] max-w-prose">{service.problem}</p>
-            </div>
-          </div>
-        </section>
+        <Block label={t("common.analyze").toUpperCase()} items={service.analyze} tint />
+        <Block label={t("common.actions").toUpperCase()} items={service.actions} />
+        <Block label={t("common.receive").toUpperCase()} items={service.receive} tint />
 
         <section className="rule-b">
           <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
             <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-12 sm:py-16">
               <div className="col-span-12 lg:col-span-3">
-                <div className="font-mono text-[11px] tracking-mono opacity-60">{t("common.howItRuns").toUpperCase()}</div>
+                <div className="font-mono text-[11px] tracking-mono opacity-60">{t("common.measured").toUpperCase()}</div>
               </div>
-              <ol className="col-span-12 lg:col-span-9 mt-4 lg:mt-0 space-y-6">
-                {service.process.map((step, i) => (
-                  <li key={step} className="flex gap-5 border-t border-black pt-5">
-                    <span className="font-mono text-[11px] tracking-mono opacity-50 pt-1 shrink-0">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <p className="text-[16px] leading-[1.7] max-w-prose">{step}</p>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          </div>
-        </section>
-
-        <section className="rule-b bg-paper-tint">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
-            <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-12 sm:py-16">
-              <div className="col-span-12 lg:col-span-3">
-                <div className="font-mono text-[11px] tracking-mono opacity-60">{t("common.youGet").toUpperCase()}</div>
-              </div>
-              <ul className="col-span-12 lg:col-span-9 mt-4 lg:mt-0 grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-4">
-                {service.outcomes.map((o) => (
-                  <li key={o} className="flex gap-3 text-[15.5px] leading-[1.6]">
-                    <span aria-hidden="true" className="opacity-50">
-                      —
-                    </span>
-                    <span>{o}</span>
-                  </li>
-                ))}
-              </ul>
+              <p className="col-span-12 lg:col-span-9 mt-4 lg:mt-0 text-[16px] leading-[1.7] max-w-prose">
+                {service.measured}
+              </p>
             </div>
           </div>
         </section>
@@ -148,7 +137,7 @@ export default function ServicePage({ slug }: { slug: string }) {
               href="/#contact"
               className="inline-block bg-white text-black px-5 py-3 font-mono text-[12px] tracking-mono font-semibold border border-white hover:bg-transparent hover:text-white transition-colors"
             >
-              {t("common.startBrief").toUpperCase()} →
+              {t("cta.requestAnalysis").toUpperCase()} →
             </a>
           </div>
         </section>

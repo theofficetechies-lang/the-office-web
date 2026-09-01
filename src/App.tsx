@@ -19,6 +19,7 @@ import ServicePage from "./pages/ServicePage";
 import PressPage from "./pages/PressPage";
 import GlossaryPage from "./pages/GlossaryPage";
 import ChecklistPage from "./pages/ChecklistPage";
+import MethodologyPage from "./pages/MethodologyPage";
 import { useI18n } from "./lib/i18n";
 import { routeKey, useRoute } from "./lib/router";
 import { useDocumentMeta } from "./hooks/useDocumentMeta";
@@ -58,6 +59,8 @@ export default function App() {
       return <GlossaryPage />;
     case "checklist":
       return <ChecklistPage />;
+    case "methodology":
+      return <MethodologyPage />;
     case "notfound":
       return <NotFound path={route.path} />;
     case "home":
@@ -71,6 +74,7 @@ export default function App() {
 /* ------------------------------------------------------------------ */
 
 function ServiceRow({ s }: { s: (typeof services)[number] }) {
+  const { t } = useI18n();
   return (
     <article className="grid grid-cols-12 gap-x-6 py-10 sm:py-12 border-t border-black/90 first:border-t-0">
       <div className="col-span-12 sm:col-span-3 mb-4 sm:mb-0">
@@ -80,42 +84,46 @@ function ServiceRow({ s }: { s: (typeof services)[number] }) {
             {s.title}
           </a>
         </h3>
-        <div className="font-mono text-[10.5px] tracking-mono opacity-60 mt-2">{s.duration}</div>
+        <div className="font-mono text-[10.5px] tracking-mono opacity-60 mt-2">{s.tagline}</div>
         <a href={`/services/${s.slug}`} className="mt-3 inline-block font-mono text-[11px] tracking-mono font-semibold border-b border-black">
-          READ →
+          {t("common.readMore").toUpperCase()} →
         </a>
       </div>
 
       <div className="col-span-12 sm:col-span-6 space-y-5">
         <p className="text-[15.5px] leading-[1.65] max-w-prose">{s.what}</p>
         <div>
-          <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-1.5">WHO IT IS FOR</div>
-          <p className="text-[14px] leading-[1.6] opacity-90 max-w-prose">{s.who}</p>
-        </div>
-        <div>
-          <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-1.5">THE PROBLEM</div>
-          <p className="text-[14px] leading-[1.6] opacity-90 max-w-prose">{s.problem}</p>
+          <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-1.5">{t("common.analyze").toUpperCase()}</div>
+          <ul className="text-[14px] leading-[1.6] opacity-90 space-y-1.5">
+            {s.analyze.map((a) => (
+              <li key={a} className="flex gap-2">
+                <span aria-hidden="true" className="opacity-50">—</span>
+                <span>{a}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
       <div className="col-span-12 sm:col-span-3 mt-5 sm:mt-0">
-        <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-2">YOU END UP WITH</div>
+        <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-2">{t("common.receive").toUpperCase()}</div>
         <ul className="text-[13.5px] leading-[1.6] space-y-1.5">
-          {s.outcomes.map((d) => (
+          {s.receive.map((d) => (
             <li key={d} className="flex gap-2">
-              <span aria-hidden="true" className="opacity-50">
-                —
-              </span>
+              <span aria-hidden="true" className="opacity-50">—</span>
               <span>{d}</span>
             </li>
           ))}
         </ul>
+        <div className="mt-4 pt-3 border-t border-black/15 font-mono text-[10.5px] tracking-mono opacity-70 leading-[1.6]">
+          {t("common.pricing").toUpperCase()}: {s.pricing}
+        </div>
       </div>
 
       <div className="col-span-12 mt-7">
-        <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-3">HOW IT RUNS</div>
+        <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-3">{t("common.actions").toUpperCase()}</div>
         <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-4">
-          {s.process.map((step, i) => (
+          {s.actions.map((step, i) => (
             <li key={step} className="flex gap-3">
               <span className="font-mono text-[10.5px] tracking-mono opacity-50 pt-0.5">
                 {String(i + 1).padStart(2, "0")}
@@ -124,6 +132,9 @@ function ServiceRow({ s }: { s: (typeof services)[number] }) {
             </li>
           ))}
         </ol>
+        <p className="mt-5 font-mono text-[11px] tracking-mono opacity-70 max-w-prose leading-[1.6]">
+          {t("common.measured").toUpperCase()}: {s.measured}
+        </p>
       </div>
     </article>
   );
@@ -290,9 +301,14 @@ function HomePage() {
                 </h1>
 
                 <div className="mt-10 sm:mt-14 grid grid-cols-12 gap-x-6 gap-y-8">
-                  <p className="col-span-12 lg:col-span-7 text-[16.5px] sm:text-[18px] leading-[1.6] max-w-prose">
-                    {t("hero.sub")}
-                  </p>
+                  <div className="col-span-12 lg:col-span-7">
+                    <p className="font-display text-[20px] sm:text-[24px] tracking-display leading-[1.3] max-w-prose mb-5">
+                      {t("home.positioning")}
+                    </p>
+                    <p className="text-[16.5px] sm:text-[18px] leading-[1.6] max-w-prose opacity-90">
+                      {t("hero.sub")}
+                    </p>
+                  </div>
 
                   <div className="col-span-12 lg:col-span-4 lg:col-start-9 flex flex-col gap-3">
                     <div className="font-mono text-[11px] tracking-mono opacity-60">
@@ -318,10 +334,40 @@ function HomePage() {
                         // ~2.5s the animation runs; the animation is decoration.
                       ].join(" ")}
                     >
-                      {t("hero.cta").toUpperCase()} →
+                      {t("cta.requestAnalysis").toUpperCase()} →
                     </a>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        {/* 00b / POSITIONING + TRUST (Part 2 §1) */}
+        <section className="rule-b bg-paper-tint" aria-label="Positioning">
+          <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+            <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-10 sm:py-14">
+              <div className="col-span-12 lg:col-span-4">
+                <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-3">{t("home.audience").toUpperCase()}</div>
+                <p className="text-[15px] leading-[1.65] max-w-prose">
+                  Nonfiction and technical authors, independent authors, and small-to-mid publishers.
+                </p>
+              </div>
+              <div className="col-span-12 lg:col-span-4 mt-6 lg:mt-0">
+                <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-3">{t("home.problem").toUpperCase()}</div>
+                <p className="text-[15px] leading-[1.65] max-w-prose">
+                  Books that are good but invisible. Marketing that is activity without analysis. Vendors that report impressions instead of outcomes.
+                </p>
+              </div>
+              <div className="col-span-12 lg:col-span-4 mt-6 lg:mt-0">
+                <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-3">WHY TRUST US</div>
+                <ul className="font-mono text-[11.5px] tracking-mono leading-[1.9] opacity-80">
+                  <li>EST. 2021 · FOUR PEOPLE · NO SUBCONTRACTORS</li>
+                  <li>SIX-STAGE NAMED METHODOLOGY</li>
+                  <li>YOU KEEP THE ANALYSIS</li>
+                  <li><a href="/#work" className="underline">CASE STUDIES →</a></li>
+                </ul>
               </div>
             </div>
           </div>
@@ -525,6 +571,17 @@ function HomePage() {
                   >
                     {t("section.approachTitle")}
                   </h2>
+                  <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[11px] sm:text-[12px] tracking-mono" aria-label="Process">
+                    {processStages.map((st, i) => (
+                      <span key={st.n} className="flex items-center gap-3">
+                        <span className="border border-black px-2.5 py-1">{st.title.toUpperCase()}</span>
+                        {i < processStages.length - 1 && <span aria-hidden="true" className="opacity-50">→</span>}
+                      </span>
+                    ))}
+                  </div>
+                  <a href="/methodology" className="mt-5 inline-block font-mono text-[12px] tracking-mono font-semibold border-b border-black">
+                    {t("section.methodology").toUpperCase()} →
+                  </a>
                 </div>
 
                 <ol className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-10">
@@ -543,11 +600,11 @@ function HomePage() {
                           </span>
                         </div>
                         <p className="text-[14.5px] leading-[1.65] opacity-90 max-w-prose">
-                          {stage.summary}
+                          {stage.happens}
                         </p>
                         <p className="mt-3 font-mono text-[11px] tracking-mono opacity-70">
-                          <span className="opacity-60">YOU GET: </span>
-                          {stage.artifact}
+                          <span className="opacity-60">{t("common.receive").toUpperCase()}: </span>
+                          {stage.receive}
                         </p>
                       </div>
                     </li>

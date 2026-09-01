@@ -24,3 +24,28 @@ export const reviewsStatement = {
   en: "We do not publish testimonials we cannot stand behind. Ask us for references and we will give you the names of people we have worked with — directly, not as a quote on a website.",
   pt: "Não publicamos testemunhos que não possamos sustentar. Peça-nos referências e damos-lhe os nomes de pessoas com quem trabalhámos — diretamente, não como uma citação num site.",
 };
+
+/**
+ * Part 2 §6 — published communication standards. Publishing your service
+ * standards and then meeting them is the cheapest durable trust mechanism.
+ */
+export const communicationStandards = {
+  en: [
+    "A substantive reply within two working days.",
+    "A named point of contact for every engagement.",
+    "Scheduled written reports with interpretation, on the agreed cadence.",
+    "Plain-language reporting — no dashboard dumped without a reading.",
+  ],
+  pt: [
+    "Uma resposta substantiva em dois dias úteis.",
+    "Um contacto nomeado para cada projeto.",
+    "Relatórios escritos agendados, com interpretação, na cadência acordada.",
+    "Relatórios em linguagem simples — nunca um painel sem leitura.",
+  ],
+};
+
+/** Real LinkedIn profiles; add URLs when supplied. Rendered only when present. */
+export const linkedinProfiles: { name: string; href: string }[] = [];
+
+/** A real business address; add when supplied. Rendered only when present. */
+export const businessAddress = "";

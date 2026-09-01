@@ -1,7 +1,7 @@
 import MarginRail from "../MarginRail";
 import MobileFolioStrip from "../MobileFolioStrip";
 import { useI18n, type Lang } from "@/lib/i18n";
-import { reviews, reviewSources, reviewsStatement } from "@/data/reviews";
+import { reviews, reviewSources, reviewsStatement, communicationStandards, linkedinProfiles, businessAddress } from "@/data/reviews";
 import { CONTACT_EMAIL } from "@/lib/site";
 
 /**
@@ -78,6 +78,45 @@ export default function ReviewsSection() {
                 </div>
               </div>
             )}
+
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+              <div className="border border-black p-6">
+                <div className="font-mono text-[10.5px] tracking-mono uppercase opacity-60 mb-4">
+                  {lang === "pt" ? "Padrões de comunicação" : "Communication standards"}
+                </div>
+                <ul className="space-y-2.5 text-[14px] leading-[1.6]">
+                  {communicationStandards[L].map((c) => (
+                    <li key={c} className="flex gap-2">
+                      <span aria-hidden="true" className="opacity-50">—</span>
+                      <span>{c}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="border border-black p-6">
+                <div className="font-mono text-[10.5px] tracking-mono uppercase opacity-60 mb-4">
+                  {lang === "pt" ? "Verificação" : "Verification"}
+                </div>
+                {linkedinProfiles.length > 0 ? (
+                  <ul className="space-y-2 text-[14px]">
+                    {linkedinProfiles.map((l) => (
+                      <li key={l.href}>
+                        <a href={l.href} className="underline">{l.name} — LinkedIn</a>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-[14px] leading-[1.6] opacity-85">
+                    {lang === "pt"
+                      ? "Perfis de LinkedIn e morada publicados assim que fornecidos. Referências falam em privado, a pedido sério."
+                      : "LinkedIn profiles and a business address appear here as soon as they are supplied. References speak privately, upon serious inquiry."}
+                  </p>
+                )}
+                {businessAddress && (
+                  <p className="mt-3 font-mono text-[12px] tracking-mono opacity-80">{businessAddress}</p>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>

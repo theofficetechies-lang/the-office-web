@@ -38,7 +38,7 @@ const cases = [
     route: "/",
     must: [
       "We do the work",
-      "Four ways we work with people who publish, sell, and write.",
+      "Five services. One analytical method.",
       "What the work looks like when it is done properly.",
       "Six stages. Then we bend them to fit the brief.",
       "Eight things that are true about how we work.",
@@ -95,9 +95,11 @@ const cases = [
     route: "/work/debut-novel-repositioning",
     must: [
       "Repositioning a debut literary novel for a US trade house",
-      "THE ENGAGEMENT",
-      "HOW IT RAN",
-      "WHAT WAS DELIVERED",
+      "1 / PROBLEM",
+      "2 / STRATEGY",
+      "3 / EXECUTION",
+      "4 / MEASUREMENT",
+      "5 / LEARNING",
       "Engagement pattern",
     ],
     mustNot: ["led the publisher", "Acquired quickly"],
@@ -106,7 +108,7 @@ const cases = [
   { route: "/terms", must: ["Terms of service.", "this website"], mustNot: ["theoffice.studio (the"] },
   {
     route: "/work/not-a-real-engagement",
-    must: ["That engagement is not in the archive.", "/work/not-a-real-engagement"],
+    must: ["That case study is not in the archive."],
     mustNot: [],
   },
   {
@@ -114,7 +116,7 @@ const cases = [
     must: ["This document is not in the archive.", "REQUESTED: /this-does-not-exist"],
     mustNot: [],
   },
-  { route: "/services/book-strategy", must: ["Book Strategy", "WHO IT IS FOR", "YOU END UP WITH"], mustNot: [] },
+  { route: "/services/book-positioning", must: ["Strategic Book Positioning", "WHAT WE ANALYZE", "WHAT YOU RECEIVE"], mustNot: [] },
   { route: "/press", must: ["media kit.", "STUDIO FACTS"], mustNot: [] },
   { route: "/glossary", must: ["The vocabulary of the trade.", "Positioning"], mustNot: [] },
   { route: "/resources/backlist-audit-checklist", must: ["The backlist audit checklist.", "PRINT / SAVE AS PDF"], mustNot: [] },

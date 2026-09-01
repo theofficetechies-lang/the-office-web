@@ -446,3 +446,36 @@ the component clips them to circles. The SSR/DOM suites now assert the three
 portrait paths and their alt text. The source sheet remains at the repo root as
 provenance (it is not served — it is outside `public/`); it can be deleted once
 the crops are confirmed.
+
+---
+
+## 10. Part 2 build (strategic improvement plan)
+
+Implemented the website plan from `erik-stenman-strategic-response.md` Part 2,
+keeping the existing brand (a rebrand to "The Office 360" is a separate,
+unmade decision) and the honesty policy.
+
+- **Services** rebuilt as the five from the plan (`src/data/services.ts`):
+  Strategic Book Positioning, Discoverability Optimization, Author Authority
+  Development, Launch Strategy, Analytics & Reporting — each with the fixed
+  internal structure (what / analyze / actions / receive / measured) and a
+  fixed-scope pricing line. Service pages and the home rows render this.
+- **Methodology** canonicalized to the six stages (Discovery → Analysis →
+  Strategy → Implementation → Measurement → Optimization) with what-happens and
+  what-you-receive per stage, payment-gates copy, and a dedicated `/methodology`
+  page; the homepage strip links to it and uses the same names.
+- **Case studies** reformatted to the five-part structure (Problem / Strategy /
+  Execution / Measurement / Learning) plus a stated attribution policy and a
+  references line. Unverified patterns state method, not invented numbers; the
+  one real result (the downloadable backlist report) is published in full.
+- **Homepage** gained the positioning statement, an audience row, a
+  problem-from-his-side row, a trust block, and a single primary
+  "Request an analysis" CTA.
+- **Trust section** gained published communication standards and slots for
+  LinkedIn profiles and a business address (rendered only when supplied).
+- Contact already described the post-click path ("what happens next"), which
+  Part 2's cross-cutting #5 requires.
+
+Still needs real data (not invented): testimonials, LinkedIn URLs, business
+address, aggregate experience figures, and real case-study numbers beyond the
+one published report.
