@@ -10,8 +10,8 @@ import { checklistItems } from "@/data/checklist";
 import { services } from "@/data/services";
 
 /**
- * Demos & sample work. Everything here is either the real published report or
- * a clearly-labelled sample that shows the *shape* of a deliverable. No sample
+ * Proof / the work. Everything here is either the real published report or a
+ * worked example of the method. No client is named and no result is invented. No
  * is presented as a real client result.
  */
 function SelfAudit() {
@@ -119,7 +119,7 @@ export default function DemosPage() {
   const P = lang === "pt";
 
   useDocumentMeta({
-    title: P ? "Demos e exemplos — THE OFFICE 360" : "Demos & sample work — THE OFFICE 360",
+    title: P ? "Prova — THE OFFICE 360" : "Proof — THE OFFICE 360",
     description: P
       ? "Audite a sua backlist, veja como posicionamos um livro e o que contém o nosso reporting, e descarregue o relatório completo."
       : "Audit your backlist, see how we position a book and what our reporting contains, and download the full report.",
@@ -136,13 +136,13 @@ export default function DemosPage() {
           <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10">
             <MarginRail
               sectionNum="D"
-              sectionLabel="DEMOS / SAMPLE WORK"
-              folio="DEMOS"
+              sectionLabel="PROOF / THE WORK"
+              folio="PROOF"
               note={P ? "O trabalho, às claras." : "The work, in the open."}
             />
             <div className="col-span-12 lg:col-span-10">
-              <MobileFolioStrip sectionNum="D" sectionLabel="DEMOS / SAMPLE WORK" folio="DEMOS" />
-              <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">DEMOS / SAMPLE WORK</div>
+              <MobileFolioStrip sectionNum="D" sectionLabel="PROOF / THE WORK" folio="PROOF" />
+              <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">PROOF / THE WORK</div>
               <h1
                 id="demos-heading"
                 className="font-display tracking-display text-[36px] sm:text-[52px] lg:text-[68px] leading-[0.98] font-light max-w-[20ch] mb-6"
