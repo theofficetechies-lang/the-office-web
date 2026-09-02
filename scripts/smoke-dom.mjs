@@ -568,6 +568,23 @@ console.log("\nPortuguese:");
   check("language note present", document.body.textContent.includes("publicados em inglês"));
 }
 
+console.log("\nDemos interaction:");
+{
+  const { document } = await mount("/demos");
+  const boxes = [...document.querySelectorAll("input[type='checkbox']")];
+  check("self-audit renders 10 checks", boxes.length === 10, `found ${boxes.length}`);
+  const score = () => document.body.textContent.match(/SCORE: (\d+)\/10/)?.[1];
+  check("score starts at 0", score() === "0", `score=${score()}`);
+  // answer 8 yes, leave 2 no -> gaps for the services of those two
+  boxes[0].click(); boxes[1].click();
+  await tick();
+  check("score updates on interaction", score() === "2", `score=${score()}`);
+  check(
+    "gaps map to the right services",
+    document.body.textContent.includes("Discoverability Optimization")
+  );
+}
+
 console.log("\nShipped CSS:");
 {
   const cssFile = readdirSync(path.join(root, "dist/assets")).find((f) => f.endsWith(".css"));

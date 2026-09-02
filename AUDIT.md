@@ -479,3 +479,27 @@ unmade decision) and the honesty policy.
 Still needs real data (not invented): testimonials, LinkedIn URLs, business
 address, aggregate experience figures, and real case-study numbers beyond the
 one published report.
+
+---
+
+## 11. Demos + the Part 2 items that were initially missed
+
+Added after review flagged that not all of Part 2 was implemented:
+
+- **`/demos` page** — "demos and sample work": an interactive 60-second
+  discoverability self-audit (the checklist as a scored tool that maps each gap
+  to the service that addresses it), a clearly-labelled sample positioning
+  document, a clearly-labelled sample report layout, and the one real
+  downloadable report. The self-audit is asserted client-side in the DOM suite
+  (renders 10 checks, score updates, gaps map to the right services).
+- **Homepage service index** — the compact five-item linked index (one line
+  each, linking to the full service page) that Part 2 §1 required; it was
+  previously only the full rows.
+- **Nav / footer / sitemap** — Demos added to navigation and the sitemap (22
+  URLs).
+- The checklist was extracted to `src/data/checklist.ts` and is now shared by
+  the printable page and the demo.
+
+Deliberately still absent (would require real data or would conflict with the
+no-fabrication policy): homepage testimonial excerpts, aggregate experience
+figures, LinkedIn profiles, and a business address. These remain empty slots.

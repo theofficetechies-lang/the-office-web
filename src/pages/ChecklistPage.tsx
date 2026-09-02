@@ -3,6 +3,7 @@ import SiteFooter from "@/components/SiteFooter";
 import SkipLink from "@/components/SkipLink";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useI18n, type Lang } from "@/lib/i18n";
+import { checklistItems } from "@/data/checklist";
 
 /**
  * Second lead magnet: a print-ready backlist audit checklist. Published as a
@@ -22,18 +23,8 @@ export default function ChecklistPage() {
     path: "/resources/backlist-audit-checklist",
   });
 
-  const items: { en: string; pt: string }[] = [
-    { en: "Title and subtitle state the reader and the promise — no keyword stuffing.", pt: "Título e subtítulo indicam o leitor e a promessa — sem enchimento de palavras-chave." },
-    { en: "The 7 backend keyword fields avoid repeating words already in the title.", pt: "Os 7 campos de palavras-chave evitam repetir palavras já no título." },
-    { en: "Backend fields capture latent intent: comp authors, settings, reader queries.", pt: "Os campos capturam intenção latente: autores comparáveis, cenários, perguntas de leitores." },
-    { en: "The book sits in granular browse nodes, not only a crowded top-level category.", pt: "O livro está em nós de navegação granulares, não só numa categoria de topo sobrelotada." },
-    { en: "The description front-loads the hook in the first two lines.", pt: "A descrição apresenta o gancho nas duas primeiras linhas." },
-    { en: "Cover reads at thumbnail size and matches the shelf's genre signals.", pt: "A capa lê-se em miniatura e corresponde aos sinais de género da prateleira." },
-    { en: "Reviews are answered and the most helpful critical review is addressed.", pt: "As avaliações são respondidas e a crítica mais útil é abordada." },
-    { en: "Price is coherent with the comp set and the category's expectations.", pt: "O preço é coerente com os comparáveis e as expectativas da categoria." },
-    { en: "A+ / enhanced content exists and leads with the strongest proof.", pt: "Existe conteúdo A+ / melhorado, a abrir com a prova mais forte." },
-    { en: "You know your grade and visibility trend over the last 8 weeks.", pt: "Conhece a sua nota e a tendência de visibilidade das últimas 8 semanas." },
-  ];
+  const items = checklistItems;
+
 
   return (
     <div className="min-h-screen bg-paper text-charcoal flex flex-col">

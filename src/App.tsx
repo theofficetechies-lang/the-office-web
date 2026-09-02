@@ -20,6 +20,7 @@ import PressPage from "./pages/PressPage";
 import GlossaryPage from "./pages/GlossaryPage";
 import ChecklistPage from "./pages/ChecklistPage";
 import MethodologyPage from "./pages/MethodologyPage";
+import DemosPage from "./pages/DemosPage";
 import { useI18n } from "./lib/i18n";
 import { routeKey, useRoute } from "./lib/router";
 import { useDocumentMeta } from "./hooks/useDocumentMeta";
@@ -61,6 +62,8 @@ export default function App() {
       return <ChecklistPage />;
     case "methodology":
       return <MethodologyPage />;
+    case "demos":
+      return <DemosPage />;
     case "notfound":
       return <NotFound path={route.path} />;
     case "home":
@@ -390,6 +393,19 @@ function HomePage() {
                   sectionLabel="FOUR SERVICES. ONE STUDIO."
                   folio="PORTFOLIO II"
                 />
+                <nav className="mb-8 border-t border-black" aria-label={t("section.services")}>
+                  {services.map((svc) => (
+                    <a
+                      key={svc.slug}
+                      href={`/services/${svc.slug}`}
+                      className="flex items-baseline justify-between gap-6 border-b border-black py-2.5 no-underline text-inherit hover:bg-black hover:text-white transition-colors"
+                    >
+                      <span className="font-display text-[17px] sm:text-[19px] tracking-display">{svc.title}</span>
+                      <span className="font-mono text-[11px] tracking-mono opacity-60 truncate">{svc.tagline}</span>
+                    </a>
+                  ))}
+                </nav>
+
                 <div className="mb-10 sm:mb-14">
                   <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
                     01 / {t("section.services").toUpperCase()}

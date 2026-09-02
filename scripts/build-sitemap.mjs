@@ -35,6 +35,7 @@ const urls = [
   ...serviceSlugs.map((slug) => ({ loc: `/services/${slug}`, changefreq: "monthly", priority: "0.6" })),
   { loc: "/glossary", changefreq: "monthly", priority: "0.5" },
   { loc: "/methodology", changefreq: "monthly", priority: "0.6" },
+  { loc: "/demos", changefreq: "monthly", priority: "0.7" },
   { loc: "/press", changefreq: "yearly", priority: "0.4" },
   { loc: "/resources/backlist-audit-checklist", changefreq: "yearly", priority: "0.5" },
   { loc: "/privacy", changefreq: "yearly", priority: "0.3" },

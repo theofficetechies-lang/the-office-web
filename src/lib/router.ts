@@ -16,6 +16,7 @@ export type Route =
   | { kind: "glossary" }
   | { kind: "checklist" }
   | { kind: "methodology" }
+  | { kind: "demos" }
   | { kind: "notfound"; path: string };
 
 const SLUG = /^([a-z0-9]+(?:-[a-z0-9]+)*)$/;
@@ -31,6 +32,7 @@ export function matchRoute(pathname: string): Route {
   if (p === "/glossary") return { kind: "glossary" };
   if (p === "/resources/backlist-audit-checklist") return { kind: "checklist" };
   if (p === "/methodology") return { kind: "methodology" };
+  if (p === "/demos") return { kind: "demos" };
 
   const note = p.match(/^\/notes\/(.+)$/);
   if (note && SLUG.test(note[1])) return { kind: "note", slug: note[1] };
