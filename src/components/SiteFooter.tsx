@@ -87,7 +87,7 @@ export default function SiteFooter({ mode }: { mode: "home" | "page" }) {
 
       <div className="border-t border-white/15">
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-5 flex flex-col gap-3 font-mono text-[11px] tracking-mono opacity-80 sm:flex-row sm:items-center">
-          <div>© {new Date().getFullYear()} THE OFFICE STUDIO.</div>
+          <div>© {new Date().getFullYear()} THE OFFICE 360.</div>
           <div className="hidden sm:block opacity-50">/</div>
           <nav className="flex items-center gap-4" aria-label="Legal">
             <a href="/privacy" className="opacity-80 hover:opacity-100 underline-offset-2 hover:underline">

@@ -503,3 +503,24 @@ Added after review flagged that not all of Part 2 was implemented:
 Deliberately still absent (would require real data or would conflict with the
 no-fabrication policy): homepage testimonial excerpts, aggregate experience
 figures, LinkedIn profiles, and a business address. These remain empty slots.
+
+---
+
+## 12. Rebrand to The Office 360 + de-labelled demos
+
+Owner direction (this turn): the brand is now **The Office 360**, and the demos
+should be presented as real, inspectable work — not flagged as "demo/sample".
+
+- **Rebrand.** Every visible brand string now reads "THE OFFICE 360" /
+  "The Office 360": header logo, footer, margin rail, page titles/meta, JSON-LD,
+  i18n positioning line, and editorial copy. URLs/canonical stay at the deployed
+  origin until `the-office360.com` is actually live and hosting this build.
+- **De-labelled demos.** `/demos` no longer says "Interactive demo",
+  "Sample — not a real client", "Sample report layout" or "Illustrative".
+  The self-audit is presented as a working tool ("Start here"), the positioning
+  excerpt as "How we position a book", and the report table as "Reporting —
+  from our backlist reporting" with the full PDF linked. No client is named and
+  no result is invented; the report figures are the real published report's.
+- Nav item renamed Demos → **Proof** (PT: Prova).
+
+Verification: tsc + eslint exit 0; smoke:ssr 13, smoke:api 13, smoke:dom 118.

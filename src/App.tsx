@@ -255,7 +255,7 @@ function HomePage() {
   const { t } = useI18n();
 
   useDocumentMeta({
-    title: "THE OFFICE — Book strategy, web, automation, research",
+    title: "THE OFFICE 360 — Book strategy, web, automation, research",
     description:
       "A four-person studio for authors, publishers, and the people who run literary businesses. Book strategy, book research, custom web design, and automation — research, strategy, design and technology on one brief.",
     path: "/",
@@ -274,7 +274,7 @@ function HomePage() {
             <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-10 sm:py-16 lg:py-24">
               <MarginRail
                 sectionNum="00"
-                sectionLabel="THE OFFICE / A STUDIO FOR BOOKS, WEB, AUTOMATION, AND RESEARCH"
+                sectionLabel="THE OFFICE 360 / A STUDIO FOR BOOKS, WEB, AUTOMATION, AND RESEARCH"
                 folio="PORTFOLIO I"
                 note="If you are reading this, the manifest bar above is real time. It is also the only animation on this page."
               />
@@ -735,7 +735,7 @@ function HomePage() {
                 <div className="grid grid-cols-12 gap-x-6 gap-y-8">
                   <div className="col-span-12 lg:col-span-7 space-y-6 text-[16.5px] leading-[1.7]">
                     <p>
-                      THE OFFICE was started in 2021 by people who had spent the
+                      THE OFFICE 360 was started in 2021 by people who had spent the
                       previous decade working inside publishing houses, literary
                       agencies, and product teams. We were tired of the same
                       brief: <em>make it louder</em>.
@@ -890,7 +890,7 @@ function HomePage() {
 
 function NotFound({ path }: { path: string }) {
   useDocumentMeta({
-    title: "Document not found — THE OFFICE",
+    title: "Document not found — THE OFFICE 360",
     description:
       "The requested page is not in the archive. Return to the studio homepage or send us a brief.",
     path,

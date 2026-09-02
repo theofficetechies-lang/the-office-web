@@ -12,7 +12,7 @@ export default function PressPage() {
   const P = lang === "pt";
 
   useDocumentMeta({
-    title: P ? "Imprensa — THE OFFICE" : "Press & media kit — THE OFFICE",
+    title: P ? "Imprensa — THE OFFICE 360" : "Press & media kit — THE OFFICE 360",
     description: P
       ? "Factos do estúdio, logótipos e contactos de imprensa."
       : "Studio facts, logos, the sample deliverable, and press contacts.",
@@ -20,7 +20,7 @@ export default function PressPage() {
   });
 
   const facts = [
-    { k: P ? "Nome" : "Name", v: "THE OFFICE" },
+    { k: P ? "Nome" : "Name", v: "THE OFFICE 360" },
     { k: P ? "Fundado" : "Founded", v: "2021" },
     { k: P ? "Dimensão" : "Size", v: P ? "Quatro pessoas, sem subcontratados" : "Four people, no subcontractors" },
     { k: P ? "Bases" : "Bases", v: P ? "Lisboa & Nova Iorque" : "Lisbon & New York" },

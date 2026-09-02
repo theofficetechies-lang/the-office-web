@@ -119,7 +119,7 @@ const cases = [
   { route: "/services/book-positioning", must: ["Strategic Book Positioning", "WHAT WE ANALYZE", "WHAT YOU RECEIVE"], mustNot: [] },
   { route: "/press", must: ["media kit.", "STUDIO FACTS"], mustNot: [] },
   { route: "/glossary", must: ["The vocabulary of the trade.", "Positioning"], mustNot: [] },
-  { route: "/demos", must: ["See the work, not the promises.", "Interactive demo", "What a report contains"], mustNot: [] },
+  { route: "/demos", must: ["See the work, not the promises.", "Start here", "How we position a book", "What a report contains"], mustNot: [] },
   { route: "/resources/backlist-audit-checklist", must: ["The backlist audit checklist.", "PRINT / SAVE AS PDF"], mustNot: [] },
 ];
 

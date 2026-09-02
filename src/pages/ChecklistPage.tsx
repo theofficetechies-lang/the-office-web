@@ -16,7 +16,7 @@ export default function ChecklistPage() {
   const P = L === "pt";
 
   useDocumentMeta({
-    title: P ? "Checklist de auditoria de backlist — THE OFFICE" : "Backlist audit checklist — THE OFFICE",
+    title: P ? "Checklist de auditoria de backlist — THE OFFICE 360" : "Backlist audit checklist — THE OFFICE 360",
     description: P
       ? "Uma checklist imprimível para auditar a sua listagem na Amazon."
       : "A printable checklist for auditing your Amazon listing.",

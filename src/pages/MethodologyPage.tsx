@@ -16,7 +16,7 @@ export default function MethodologyPage() {
   const P = lang === "pt";
 
   useDocumentMeta({
-    title: P ? "Metodologia — THE OFFICE" : "Methodology — THE OFFICE",
+    title: P ? "Metodologia — THE OFFICE 360" : "Methodology — THE OFFICE 360",
     description: P
       ? "Seis etapas: Discovery, Analysis, Strategy, Implementation, Measurement, Optimization. O que acontece e o que recebe em cada uma."
       : "Six stages: Discovery, Analysis, Strategy, Implementation, Measurement, Optimization. What happens and what you receive at each.",

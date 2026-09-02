@@ -1,5 +1,5 @@
 /**
- * Production-grade API client for THE OFFICE studio.
+ * Production-grade API client for THE OFFICE 360 studio.
  * Direct browser delivery via Web3Forms with automatic backend fallback.
  */
 
@@ -85,7 +85,7 @@ export async function submitBrief(payload: BriefPayload): Promise<BriefResponse>
       body: JSON.stringify({
         access_key: WEB3FORMS_KEY,
         subject: `New Brief from ${payload.name}${payload.org ? ` · ${payload.org}` : ""}`,
-        from_name: "THE OFFICE Studio",
+        from_name: "THE OFFICE 360 Studio",
         name: payload.name,
         email: payload.email,
         organization: payload.org || "None",

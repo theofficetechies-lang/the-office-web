@@ -29,7 +29,7 @@ export const SITE_URL = orFallback(
   "https://the-office-test4.vercel.app"
 ).replace(/\/+$/, "");
 
-export const STUDIO_NAME = "THE OFFICE";
+export const STUDIO_NAME = "THE OFFICE 360";
 export const CONTACT_EMAIL = "theofficetechies@gmail.com";
 
 /**

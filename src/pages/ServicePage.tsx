@@ -37,7 +37,7 @@ export default function ServicePage({ slug }: { slug: string }) {
   const service = services.find((s) => s.slug === slug);
 
   useDocumentMeta({
-    title: service ? `${service.title} — THE OFFICE` : "Service not found — THE OFFICE",
+    title: service ? `${service.title} — THE OFFICE 360` : "Service not found — THE OFFICE 360",
     description: service?.what ?? "The service you were looking for is not in the archive.",
     path: `/services/${slug}`,
     noindex: !service,

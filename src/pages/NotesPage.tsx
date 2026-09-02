@@ -14,10 +14,10 @@ export default function NotesPage() {
   const [query, setQuery] = useState("");
 
   useDocumentMeta({
-    title: P ? "Notas — THE OFFICE" : "Notes — THE OFFICE",
+    title: P ? "Notas — THE OFFICE 360" : "Notes — THE OFFICE 360",
     description: P
       ? "Notas do estúdio sobre posicionamento, web editorial, descoberta algorítmica de livros e sistemas."
-      : "Field notes from THE OFFICE on book positioning, author websites, algorithmic book discovery, and building systems that outlast the season.",
+      : "Field notes from THE OFFICE 360 on book positioning, author websites, algorithmic book discovery, and building systems that outlast the season.",
     path: "/notes",
   });
 
@@ -123,7 +123,7 @@ export default function NotesPage() {
 
               <div className="mt-20 border border-black bg-paper-tint p-8 sm:p-10">
                 <div className="font-mono text-[11px] tracking-mono opacity-60 mb-2">
-                  THE OFFICE / EDITORIAL PRACTICE
+                  THE OFFICE 360 / EDITORIAL PRACTICE
                 </div>
                 <h2 className="font-display text-[24px] sm:text-[30px] tracking-display leading-snug mb-3">
                   {P ? "Tem um manuscrito, catálogo ou sistema digital para discutir?" : "Have a manuscript, backlist, or digital system to discuss?"}

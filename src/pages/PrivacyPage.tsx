@@ -8,9 +8,9 @@ import { CONTACT_EMAIL } from "@/lib/site";
 
 export default function PrivacyPage() {
   useDocumentMeta({
-    title: "Privacy notice — THE OFFICE",
+    title: "Privacy notice — THE OFFICE 360",
     description:
-      "How THE OFFICE collects, uses and stores personal data when you visit this site or submit a project brief. Plain language, no trackers, no ad networks.",
+      "How THE OFFICE 360 collects, uses and stores personal data when you visit this site or submit a project brief. Plain language, no trackers, no ad networks.",
     path: "/privacy",
   });
 
@@ -46,7 +46,7 @@ export default function PrivacyPage() {
                     1. What this notice covers
                   </h2>
                   <p>
-                    This notice explains how THE OFFICE STUDIO collects, uses,
+                    This notice explains how THE OFFICE 360 collects, uses,
                     and stores personal data when you visit this site or submit
                     a project brief. It is written in plain language because
                     privacy notices should be readable.

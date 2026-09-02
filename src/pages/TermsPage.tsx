@@ -8,9 +8,9 @@ import { CONTACT_EMAIL } from "@/lib/site";
 
 export default function TermsPage() {
   useDocumentMeta({
-    title: "Terms of service — THE OFFICE",
+    title: "Terms of service — THE OFFICE 360",
     description:
-      "The terms that govern use of the THE OFFICE website. Professional engagements are covered by separate agreements signed before work begins.",
+      "The terms that govern use of the THE OFFICE 360 website. Professional engagements are covered by separate agreements signed before work begins.",
     path: "/terms",
   });
 
@@ -47,7 +47,7 @@ export default function TermsPage() {
                   </h2>
                   <p>
                     These terms govern your use of this website (the "Site"),
-                    operated by THE OFFICE STUDIO. They do not govern
+                    operated by THE OFFICE 360. They do not govern
                     professional engagements, which are covered by separate
                     agreements signed before work begins.
                   </p>
@@ -59,7 +59,7 @@ export default function TermsPage() {
                   </h2>
                   <p>
                     All content on this site — text, design, code, and imagery —
-                    is the property of THE OFFICE STUDIO unless otherwise
+                    is the property of THE OFFICE 360 unless otherwise
                     stated. You may not reproduce, distribute, or create
                     derivative works without written permission.
                   </p>
@@ -89,7 +89,7 @@ export default function TermsPage() {
                     4. Limitation of liability
                   </h2>
                   <p>
-                    THE OFFICE STUDIO is not liable for any direct, indirect,
+                    THE OFFICE 360 is not liable for any direct, indirect,
                     incidental, or consequential damages arising from your use
                     of the Site or any linked content. This includes but is not
                     limited to loss of data, revenue, or business opportunity.

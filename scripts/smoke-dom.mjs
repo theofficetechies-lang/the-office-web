@@ -182,20 +182,20 @@ function setValue(window, el, value) {
 /* ------------------------------------------------------------------ */
 
 const expectations = {
-  "/": { title: "THE OFFICE — Book strategy, web, automation, research", h1: "We do the work" },
-  "/notes": { title: "Notes — THE OFFICE", h1: "Notes on the work." },
+  "/": { title: "THE OFFICE 360 — Book strategy, web, automation, research", h1: "We do the work" },
+  "/notes": { title: "Notes — THE OFFICE 360", h1: "Notes on the work." },
   "/notes/why-most-author-websites-fail": {
     title: "Why most author websites fail — Notes, THE OFFICE",
     h1: "Why most author websites fail",
   },
   "/work/debut-novel-repositioning": {
-    title: "Repositioning a debut literary novel for a US trade house — THE OFFICE",
+    title: "Repositioning a debut literary novel for a US trade house — THE OFFICE 360",
     h1: "Repositioning a debut literary novel for a US trade house",
   },
-  "/privacy": { title: "Privacy notice — THE OFFICE", h1: "Privacy notice." },
-  "/terms": { title: "Terms of service — THE OFFICE", h1: "Terms of service." },
-  "/work/does-not-exist": { title: "Engagement not found — THE OFFICE", h1: null },
-  "/nowhere": { title: "Document not found — THE OFFICE", h1: null },
+  "/privacy": { title: "Privacy notice — THE OFFICE 360", h1: "Privacy notice." },
+  "/terms": { title: "Terms of service — THE OFFICE 360", h1: "Terms of service." },
+  "/work/does-not-exist": { title: "Engagement not found — THE OFFICE 360", h1: null },
+  "/nowhere": { title: "Document not found — THE OFFICE 360", h1: null },
 };
 
 console.log("Routes:");

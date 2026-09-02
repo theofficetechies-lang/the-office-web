@@ -36,7 +36,7 @@ export default function CaseStudyPage({ slug }: { slug: string }) {
   const project = getProject(slug);
 
   useDocumentMeta({
-    title: project ? `${project.title} — THE OFFICE` : "Case study not found — THE OFFICE",
+    title: project ? `${project.title} — THE OFFICE 360` : "Case study not found — THE OFFICE 360",
     description: project?.summary ?? "The case study you were looking for is not in the archive.",
     path: `/work/${slug}`,
     noindex: !project,

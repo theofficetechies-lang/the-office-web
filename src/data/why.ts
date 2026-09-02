@@ -1,5 +1,5 @@
 /**
- * Phase 7 — positioning. Why THE OFFICE, argued specifically rather than
+ * Phase 7 — positioning. Why THE OFFICE 360, argued specifically rather than
  * boastfully. Each theme is a claim about how the studio works, not a
  * superlative about the studio.
  */

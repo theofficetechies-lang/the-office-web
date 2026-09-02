@@ -71,7 +71,7 @@ export default function NotePage({ slug }: { slug: string }) {
   const { prev, next } = getAdjacentNotes(slug);
 
   useDocumentMeta({
-    title: note ? `${note.title} — Notes, THE OFFICE` : "Note not found — THE OFFICE",
+    title: note ? `${note.title} — Notes, THE OFFICE 360` : "Note not found — THE OFFICE 360",
     description: note?.excerpt ?? "The note you were looking for is not in the archive.",
     path: `/notes/${slug}`,
     noindex: !note,

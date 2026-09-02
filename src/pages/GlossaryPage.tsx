@@ -12,7 +12,7 @@ export default function GlossaryPage() {
   const L: Lang = lang === "pt" ? "pt" : "en";
 
   useDocumentMeta({
-    title: L === "pt" ? "Glossário — THE OFFICE" : "Publishing glossary — THE OFFICE",
+    title: L === "pt" ? "Glossário — THE OFFICE 360" : "Publishing glossary — THE OFFICE 360",
     description:
       L === "pt"
         ? "Termos de edição, posicionamento e sistemas, explicados em linguagem simples."

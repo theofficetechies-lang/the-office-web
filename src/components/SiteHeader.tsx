@@ -111,9 +111,9 @@ export default function SiteHeader({ mode }: { mode: "home" | "page" }) {
           <a
             href={mode === "home" ? "#top" : "/"}
             className="font-display text-[20px] sm:text-[22px] tracking-display-tight font-semibold"
-            aria-label="THE OFFICE — home"
+            aria-label="THE OFFICE 360 — home"
           >
-            THE&nbsp;OFFICE
+            THE&nbsp;OFFICE&nbsp;360
             <span className="font-mono text-[10px] tracking-mono align-top ml-1 opacity-60">®</span>
           </a>
 

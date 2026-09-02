@@ -18,7 +18,7 @@ const en = {
   "nav.about": "About",
   "nav.notes": "Notes",
   "nav.contact": "Contact",
-  "nav.demos": "Demos",
+  "nav.demos": "Proof",
   "nav.faq": "FAQ",
   "nav.startBrief": "Start a brief",
   "nav.menu": "Menu",
@@ -33,7 +33,7 @@ const en = {
   "hero.title2": "behind the book, the",
   "hero.title3": "site, and the automation.",
   "hero.sub":
-    "THE OFFICE is a four-person studio for authors, publishers, and the people who run literary businesses. We write the positioning, build the site, ship the automation, and run the research. We do not pitch, decorate, or staff your project with juniors.",
+    "THE OFFICE 360 is a four-person studio for authors, publishers, and the people who run literary businesses. We write the positioning, build the site, ship the automation, and run the research. We do not pitch, decorate, or staff your project with juniors.",
   "hero.reading": "Currently reading on the brief:",
   "hero.cta": "Send a brief",
 
@@ -93,7 +93,7 @@ const en = {
   "cta.requestAnalysis": "Request an analysis",
   "section.methodology": "Methodology",
   "section.methodologyTitle": "Six stages. Evidence in, strategy out.",
-  "home.positioning": "The Office builds long-term discoverability and authority for authors and publishers through analysis-driven strategy.",
+  "home.positioning": "The Office 360 builds long-term discoverability and authority for authors and publishers through analysis-driven strategy.",
   "home.audience": "Who we help",
   "home.problem": "The problem we solve",
   "common.analyze": "What we analyze",
@@ -121,7 +121,7 @@ const pt: Record<TKey, string> = {
   "nav.about": "Sobre",
   "nav.notes": "Notas",
   "nav.contact": "Contacto",
-  "nav.demos": "Demos",
+  "nav.demos": "Proof",
   "nav.faq": "FAQ",
   "nav.startBrief": "Iniciar um brief",
   "nav.menu": "Menu",
@@ -136,7 +136,7 @@ const pt: Record<TKey, string> = {
   "hero.title2": "por trás do livro, do",
   "hero.title3": "site e da automação.",
   "hero.sub":
-    "THE OFFICE é um estúdio de quatro pessoas para autores, editoras e quem gere negócios literários. Escrevemos o posicionamento, construímos o site, entregamos a automação e fazemos a investigação. Não fazemos pitches, não decoramos, não entregamos o seu projeto a estagiários.",
+    "THE OFFICE 360 é um estúdio de quatro pessoas para autores, editoras e quem gere negócios literários. Escrevemos o posicionamento, construímos o site, entregamos a automação e fazemos a investigação. Não fazemos pitches, não decoramos, não entregamos o seu projeto a estagiários.",
   "hero.reading": "A ler neste momento:",
   "hero.cta": "Enviar um brief",
 
@@ -196,7 +196,7 @@ const pt: Record<TKey, string> = {
   "cta.requestAnalysis": "Pedir uma análise",
   "section.methodology": "Metodologia",
   "section.methodologyTitle": "Seis etapas. Evidência entra, estratégia sai.",
-  "home.positioning": "The Office constrói descobribilidade e autoridade de longo prazo para autores e editoras através de estratégia baseada em análise.",
+  "home.positioning": "The Office 360 constrói descobribilidade e autoridade de longo prazo para autores e editoras através de estratégia baseada em análise.",
   "home.audience": "Quem ajudamos",
   "home.problem": "O problema que resolvemos",
   "common.analyze": "O que analisamos",

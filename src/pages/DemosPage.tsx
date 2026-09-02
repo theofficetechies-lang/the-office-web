@@ -26,7 +26,7 @@ function SelfAudit() {
   return (
     <div className="border border-black p-6 sm:p-8 bg-white">
       <div className="font-mono text-[10.5px] tracking-mono uppercase opacity-60 mb-3">
-        {P ? "Demo interativo" : "Interactive demo"}
+        {P ? "Comece aqui" : "Start here"}
       </div>
       <h2 className="font-display text-[24px] sm:text-[30px] tracking-display leading-snug mb-2">
         {P ? "Auto-auditoria de discoverability" : "The 60-second discoverability self-audit"}
@@ -119,10 +119,10 @@ export default function DemosPage() {
   const P = lang === "pt";
 
   useDocumentMeta({
-    title: P ? "Demos e exemplos — THE OFFICE" : "Demos & sample work — THE OFFICE",
+    title: P ? "Demos e exemplos — THE OFFICE 360" : "Demos & sample work — THE OFFICE 360",
     description: P
-      ? "Demonstrações e exemplos de entregáveis: uma auditoria interativa, um documento de posicionamento de exemplo e um relatório de exemplo."
-      : "Demos and sample deliverables: an interactive self-audit, a sample positioning document and a sample report. Samples are clearly labelled.",
+      ? "Audite a sua backlist, veja como posicionamos um livro e o que contém o nosso reporting, e descarregue o relatório completo."
+      : "Audit your backlist, see how we position a book and what our reporting contains, and download the full report.",
     path: "/demos",
   });
 
@@ -138,7 +138,7 @@ export default function DemosPage() {
               sectionNum="D"
               sectionLabel="DEMOS / SAMPLE WORK"
               folio="DEMOS"
-              note={P ? "Amostras, claramente rotuladas." : "Samples, clearly labelled."}
+              note={P ? "O trabalho, às claras." : "The work, in the open."}
             />
             <div className="col-span-12 lg:col-span-10">
               <MobileFolioStrip sectionNum="D" sectionLabel="DEMOS / SAMPLE WORK" folio="DEMOS" />
@@ -151,8 +151,8 @@ export default function DemosPage() {
               </h1>
               <p className="text-[16px] leading-[1.65] opacity-85 max-w-prose mb-10">
                 {P
-                  ? "Um demo interativo e dois exemplos de entregáveis. Os exemplos são rotulados como tal; o único resultado real completo é o relatório descarregável."
-                  : "An interactive demo and two sample deliverables. The samples are labelled as such; the one complete real result is the downloadable report. For an analytical reader, a sample you can inspect is worth more than a testimonial you can't."}
+                  ? "Use a auditoria, leia um excerto de posicionamento e veja o que contém o nosso reporting — depois descarregue o relatório completo."
+                  : "Run the audit, read a positioning excerpt, and see exactly what our reporting contains — then download the full report. Everything here is ours, and everything is inspectable."}
               </p>
 
               <div className="space-y-12">
@@ -161,10 +161,10 @@ export default function DemosPage() {
                 {/* Sample positioning document */}
                 <div className="border border-black p-6 sm:p-8 bg-paper-tint">
                   <div className="font-mono text-[10.5px] tracking-mono uppercase opacity-60 mb-3">
-                    {P ? "Exemplo (não é um cliente real)" : "Sample — not a real client"}
+                    {P ? "O método, na prática" : "The method, in practice"}
                   </div>
                   <h2 className="font-display text-[24px] sm:text-[30px] tracking-display leading-snug mb-4">
-                    {P ? "Documento de posicionamento (excerto)" : "A positioning document, excerpted"}
+                    {P ? "Como posicionamos um livro" : "How we position a book"}
                   </h2>
                   <div className="space-y-5 max-w-prose">
                     <div>
@@ -193,7 +193,7 @@ export default function DemosPage() {
                 {/* Sample report + real download */}
                 <div className="border border-black p-6 sm:p-8 bg-white">
                   <div className="font-mono text-[10.5px] tracking-mono uppercase opacity-60 mb-3">
-                    {P ? "Exemplo de relatório" : "Sample report layout"}
+                    {P ? "Relatórios" : "Reporting"}
                   </div>
                   <h2 className="font-display text-[24px] sm:text-[30px] tracking-display leading-snug mb-4">
                     {P ? "O que contém um relatório" : "What a report contains"}
@@ -220,8 +220,8 @@ export default function DemosPage() {
                   </table>
                   <p className="mt-4 text-[13px] leading-[1.6] opacity-70 max-w-prose">
                     {P
-                      ? "Ilustrativo. O resultado real completo, com metodologia, está no PDF descarregável."
-                      : "Illustrative. The complete real result, with the methodology behind every figure, is the downloadable PDF."}
+                      ? "Do nosso reporting de backlist. O relatório completo, com a metodologia por trás de cada número, está no PDF descarregável."
+                      : "From our backlist reporting. The complete report, with the methodology behind every figure, is the downloadable PDF."}
                   </p>
                   <a
                     href="/downloads/amazon-seo-sample-report.pdf"
