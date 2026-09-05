@@ -30,7 +30,7 @@ import { services } from "./data/services";
 import { projects, workNote } from "./data/projects";
 import { processStages, processCaveat } from "./data/process";
 import { whyThemes, commitments } from "./data/why";
-import { team, teamNote } from "./data/team";
+import { team } from "./data/team";
 
 /* ------------------------------------------------------------------ */
 /* Router                                                              */
@@ -767,9 +767,6 @@ function HomePage() {
                           <TeamMember key={member.role} member={member} />
                         ))}
                       </div>
-                      <p className="mt-7 pt-5 border-t border-black/15 font-mono text-[11px] tracking-mono leading-[1.6] opacity-70">
-                        {teamNote}
-                      </p>
                     </div>
                   </div>
                 </div>

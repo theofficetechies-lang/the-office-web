@@ -67,6 +67,3 @@ export const team: TeamMember[] = [
     verified: true,
   },
 ];
-
-export const teamNote =
-  "Four seats, four confirmed principals. We would rather the section look unfinished than be wrong — so names and portraits appear only once each principal has confirmed them in writing.";
