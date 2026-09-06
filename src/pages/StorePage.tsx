@@ -8,7 +8,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useI18n, type Lang } from "@/lib/i18n";
 import { useAuth } from "@/lib/auth";
 import { getCatalog, CATALOG_EVENT } from "@/lib/catalog";
-import { payWithPaystack, genReference } from "@/lib/paystack";
+import { payWithPaystack, genReference, paystackMode } from "@/lib/paystack";
 import type { Product } from "@/data/products";
 import { CONTACT_EMAIL } from "@/lib/site";
 
@@ -254,7 +254,15 @@ export default function StorePage({ slug }: { slug?: string }) {
             <div className="col-span-12 lg:col-span-10">
               <MobileFolioStrip sectionNum="S" sectionLabel="STORE" folio="STORE" />
               <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">STORE</div>
-              <h1 id="store-heading" className="font-display tracking-display text-[36px] sm:text-[52px] lg:text-[68px] leading-[0.98] font-light max-w-[20ch] mb-4">{t("store.title")}</h1>
+              <div className="flex items-center gap-3 mb-4">
+                <h1 id="store-heading" className="font-display tracking-display text-[36px] sm:text-[52px] lg:text-[68px] leading-[0.98] font-light max-w-[20ch]">{t("store.title")}</h1>
+                {paystackMode() === "test" && (
+                  <span className="border border-amber-600 text-amber-700 px-2.5 py-1 font-mono text-[10.5px] tracking-mono">TEST MODE · no real charges</span>
+                )}
+                {paystackMode() === "live" && (
+                  <span className="border border-emerald-700 text-emerald-800 px-2.5 py-1 font-mono text-[10.5px] tracking-mono">LIVE</span>
+                )}
+              </div>
               <p className="text-[16px] leading-[1.65] opacity-85 max-w-prose mb-8">{t("store.sub")}</p>
 
               {status === "success" && <p className="mb-8 border border-black bg-paper-tint p-5 text-[14.5px] leading-[1.6] max-w-prose" role="status">{t("store.success")}</p>}

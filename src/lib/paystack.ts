@@ -39,3 +39,10 @@ export async function payWithPaystack({
   });
   return { configured: true };
 }
+
+/** Which Paystack mode the configured public key points at, for transparency. */
+export function paystackMode(): "live" | "test" | null {
+  const key = (import.meta as { env?: Record<string, string> }).env?.VITE_PAYSTACK_PUBLIC_KEY;
+  if (!key) return null;
+  return key.startsWith("pk_live_") ? "live" : "test";
+}
