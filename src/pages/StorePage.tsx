@@ -61,34 +61,38 @@ function SignInForm({ onDone }: { onDone: (email: string) => void }) {
 function BuyButton({ product }: { product: Product }) {
   const { t } = useI18n();
   const { user } = useAuth();
-  const [stage, setStage] = useState<"idle" | "busy" | "unconfigured" | "success">("idle");
+  const [stage, setStage] = useState<"idle" | "busy" | "unconfigured" | "error" | "success">("idle");
 
   const pay = async (email: string) => {
     setStage("busy");
     const reference = genReference();
-    const res = await payWithPaystack({
-      email,
-      amountKobo: Math.round(product.priceUsd * 100),
-      reference,
-      onSuccess: async (ref) => {
-        try {
-          await fetch("/api/paystack", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ reference: ref }),
-          });
-        } catch {
-          // verification optional in preview
-        }
-        setStage("success");
-        window.history.replaceState({}, "", "/store?status=success");
-      },
-      onCancel: () => {
-        setStage("idle");
-        window.history.replaceState({}, "", "/store?status=cancelled");
-      },
-    });
-    if (!res.configured) setStage("unconfigured");
+    try {
+      const res = await payWithPaystack({
+        email,
+        amountKobo: Math.round(product.priceUsd * 100),
+        reference,
+        onSuccess: async (ref) => {
+          try {
+            await fetch("/api/paystack", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ reference: ref }),
+            });
+          } catch {
+            // verification optional in preview
+          }
+          setStage("success");
+          window.history.replaceState({}, "", "/store?status=success");
+        },
+        onCancel: () => {
+          setStage("idle");
+          window.history.replaceState({}, "", "/store?status=cancelled");
+        },
+      });
+      if (!res.configured) setStage("unconfigured");
+    } catch {
+      setStage("error");
+    }
   };
 
   if (stage === "success") {
@@ -113,6 +117,11 @@ function BuyButton({ product }: { product: Product }) {
       >
         {stage === "busy" ? "…" : `${t("store.buy")} · ${price(product)} →`}
       </button>
+      {stage === "error" && (
+        <p className="mt-3 text-[13px] leading-[1.6] opacity-80" role="status">
+          The payment window could not open. Check your connection / pop-up blocker, or email us.
+        </p>
+      )}
       {stage === "unconfigured" && (
         <p className="mt-3 text-[13px] leading-[1.6] opacity-80 max-w-prose" role="status">
           {t("store.notConfigured")}{" "}
