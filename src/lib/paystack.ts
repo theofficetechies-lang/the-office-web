@@ -1,52 +1,45 @@
 /**
- * Paystack checkout (client). Paystack is a Nigerian payments company that
- * accepts local cards, bank transfer and USSD as well as international
- * Visa/Mastercard — i.e. it covers Nigeria and global payments.
+ * Paystack helpers (client).
  *
- * Requires VITE_PAYSTACK_PUBLIC_KEY. Without it, returns {configured:false}
- * and the store shows "payments being set up".
+ * Checkout itself is done via the hosted redirect flow in api/paystack.ts
+ * (no pop-ups, works on any domain). This module only exposes the key mode for
+ * the TEST/LIVE badge.
  */
-export function genReference(): string {
-  return "TO360-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 8);
-}
-
-export interface PayArgs {
-  email: string;
-  amountKobo: number;
-  reference: string;
-  onSuccess: (ref: string) => void;
-  onCancel: () => void;
-}
-
-export async function payWithPaystack({
-  email,
-  amountKobo,
-  reference,
-  onSuccess,
-  onCancel,
-}: PayArgs): Promise<{ configured: boolean }> {
-  const key =
-    (import.meta as { env?: Record<string, string> }).env?.VITE_PAYSTACK_PUBLIC_KEY ??
-    "pk_live_9b503995028b1c601ea0af538154619afbee995e";
-  if (!key) return { configured: false };
-
-  const { default: Paystack } = await import("@paystack/inline-js");
-  const pop = new Paystack(key);
-  pop.newTransaction({
-    reference,
-    email,
-    amount: amountKobo,
-    onSuccess: () => onSuccess(reference),
-    onCancel: () => onCancel(),
-  });
-  return { configured: true };
-}
-
-/** Which Paystack mode the configured public key points at, for transparency. */
 export function paystackMode(): "live" | "test" | null {
-  const key =
-    (import.meta as { env?: Record<string, string> }).env?.VITE_PAYSTACK_PUBLIC_KEY ??
-    "pk_live_9b503995028b1c601ea0af538154619afbee995e";
+  const key = (import.meta as { env?: Record<string, string> }).env?.VITE_PAYSTACK_PUBLIC_KEY;
   if (!key) return null;
   return key.startsWith("pk_live_") ? "live" : "test";
+}
+
+/**
+ * Kick off a hosted Paystack checkout through our server and redirect to it.
+ * Resolves true if a redirect was started; false if payments are unconfigured.
+ */
+export async function startCheckout(slug: string, email: string): Promise<boolean> {
+  const res = await fetch("/api/paystack", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ slug, email }),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (res.ok && data.url) {
+    window.location.href = data.url;
+    return true;
+  }
+  return data.configured !== false; // false => unconfigured; true => other error
+}
+
+/** Verify a returned reference after Paystack redirects back. */
+export async function verifyReference(reference: string): Promise<string | null> {
+  try {
+    const res = await fetch("/api/paystack", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ reference }),
+    });
+    const data = await res.json().catch(() => ({}));
+    return data.status ?? null;
+  } catch {
+    return null;
+  }
 }

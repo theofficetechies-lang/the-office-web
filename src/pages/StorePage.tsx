@@ -8,7 +8,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useI18n, type Lang } from "@/lib/i18n";
 import { useAuth } from "@/lib/auth";
 import { getCatalog, CATALOG_EVENT } from "@/lib/catalog";
-import { payWithPaystack, genReference, paystackMode } from "@/lib/paystack";
+import { startCheckout, verifyReference, paystackMode } from "@/lib/paystack";
 import type { Product } from "@/data/products";
 import { CONTACT_EMAIL } from "@/lib/site";
 
@@ -65,31 +65,11 @@ function BuyButton({ product }: { product: Product }) {
 
   const pay = async (email: string) => {
     setStage("busy");
-    const reference = genReference();
     try {
-      const res = await payWithPaystack({
-        email,
-        amountKobo: Math.round(product.priceUsd * 100),
-        reference,
-        onSuccess: async (ref) => {
-          try {
-            await fetch("/api/paystack", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ reference: ref }),
-            });
-          } catch {
-            // verification optional in preview
-          }
-          setStage("success");
-          window.history.replaceState({}, "", "/store?status=success");
-        },
-        onCancel: () => {
-          setStage("idle");
-          window.history.replaceState({}, "", "/store?status=cancelled");
-        },
-      });
-      if (!res.configured) setStage("unconfigured");
+      // Hosted redirect flow — no pop-ups, works on any domain.
+      const started = await startCheckout(product.slug, email);
+      if (!started) setStage("unconfigured");
+      else setStage("error"); // returned => no redirect happened
     } catch {
       setStage("error");
     }
@@ -156,6 +136,14 @@ export default function StorePage({ slug }: { slug?: string }) {
     path: slug ? `/store/${slug}` : "/store",
     noindex: Boolean(slug) && !product,
   });
+
+  const [payResult, setPayResult] = useState<string | null>(null);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get("reference") || params.get("trxref");
+    if (ref) verifyReference(ref).then((st) => setPayResult(st ?? "unknown"));
+  }, []);
 
   const status = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("status") : null;
 
@@ -274,6 +262,8 @@ export default function StorePage({ slug }: { slug?: string }) {
               </div>
               <p className="text-[16px] leading-[1.65] opacity-85 max-w-prose mb-8">{t("store.sub")}</p>
 
+              {payResult === "success" && <p className="mb-8 border border-black bg-paper-tint p-5 text-[14.5px] leading-[1.6] max-w-prose" role="status">{t("store.success")}</p>}
+              {payResult && payResult !== "success" && payResult !== "unknown" && <p className="mb-8 border border-black/40 p-5 text-[14.5px] leading-[1.6] max-w-prose opacity-80" role="status">Payment status: {payResult}. Nothing was charged unless Paystack confirms success.</p>}
               {status === "success" && <p className="mb-8 border border-black bg-paper-tint p-5 text-[14.5px] leading-[1.6] max-w-prose" role="status">{t("store.success")}</p>}
               {status === "cancelled" && <p className="mb-8 border border-black/40 p-5 text-[14.5px] leading-[1.6] max-w-prose opacity-80" role="status">{t("store.cancelled")}</p>}
 
