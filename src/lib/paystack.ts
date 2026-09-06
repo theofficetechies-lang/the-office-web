@@ -25,7 +25,9 @@ export async function payWithPaystack({
   onSuccess,
   onCancel,
 }: PayArgs): Promise<{ configured: boolean }> {
-  const key = (import.meta as { env?: Record<string, string> }).env?.VITE_PAYSTACK_PUBLIC_KEY;
+  const key =
+    (import.meta as { env?: Record<string, string> }).env?.VITE_PAYSTACK_PUBLIC_KEY ??
+    "pk_live_9b503995028b1c601ea0af538154619afbee995e";
   if (!key) return { configured: false };
 
   const { default: Paystack } = await import("@paystack/inline-js");
@@ -42,7 +44,9 @@ export async function payWithPaystack({
 
 /** Which Paystack mode the configured public key points at, for transparency. */
 export function paystackMode(): "live" | "test" | null {
-  const key = (import.meta as { env?: Record<string, string> }).env?.VITE_PAYSTACK_PUBLIC_KEY;
+  const key =
+    (import.meta as { env?: Record<string, string> }).env?.VITE_PAYSTACK_PUBLIC_KEY ??
+    "pk_live_9b503995028b1c601ea0af538154619afbee995e";
   if (!key) return null;
   return key.startsWith("pk_live_") ? "live" : "test";
 }
