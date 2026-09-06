@@ -1,9 +1,8 @@
 /**
  * Store catalog — digital products & services (no physical fulfillment yet).
  *
- * Prices live here and are used by api/checkout.ts to build a Stripe Checkout
- * session with ad-hoc `price_data`, so no Stripe Price objects need to exist in
- * advance. Adjust `priceUsd` freely; it is a business decision, not code.
+ * Prices live here and are used by the Paystack checkout (client) to set the
+ * amount in kobo. Adjust `priceUsd` freely; it is a business decision, not code.
  */
 export interface Product {
   slug: string;
