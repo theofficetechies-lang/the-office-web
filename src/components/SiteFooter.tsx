@@ -101,6 +101,9 @@ export default function SiteFooter({ mode }: { mode: "home" | "page" }) {
             <a href="/notes" className="opacity-80 hover:opacity-100 underline-offset-2 hover:underline">
               NOTES
             </a>
+            <a href="/admin" className="opacity-60 hover:opacity-100 underline-offset-2 hover:underline">
+              ADMIN
+            </a>
           </nav>
           <div className="sm:ml-auto">
             <a href={mode === "home" ? "#top" : "/"} className="opacity-80 hover:opacity-100">

@@ -11,3 +11,16 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+declare module "@paystack/inline-js" {
+  export default class Paystack {
+    constructor(publicKey: string);
+    newTransaction(opts: {
+      reference: string;
+      email: string;
+      amount: number;
+      onSuccess?: () => void;
+      onCancel?: () => void;
+    }): void;
+  }
+}

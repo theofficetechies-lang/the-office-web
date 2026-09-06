@@ -24,7 +24,7 @@ function devApiPlugin(): Plugin {
           return;
         }
 
-        if (req.url === "/api/checkout" && req.method === "POST") {
+        if ((req.url === "/api/checkout" || req.url === "/api/paystack") && req.method === "POST") {
           res.setHeader("Content-Type", "application/json");
           res.statusCode = 503;
           res.end(JSON.stringify({ configured: false, error: "Payments are not configured in dev." }));
