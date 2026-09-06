@@ -62,6 +62,7 @@ export const NAV_ITEMS: NavItem[] = [
   { label: "Notes", tkey: "nav.notes", anchor: "/notes", href: "/notes" },
   { label: "Contact", tkey: "nav.contact", anchor: "#contact", href: "/#contact" },
   { label: "Demos", tkey: "nav.demos", anchor: "/demos", href: "/demos" },
+  { label: "Store", tkey: "nav.store", anchor: "/store", href: "/store" },
 ];
 
 /** Service choices offered in the brief form, keyed to src/data/services.ts. */

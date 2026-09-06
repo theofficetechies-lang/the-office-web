@@ -17,19 +17,20 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
 
 await build({
-  entryPoints: ["api/brief.ts", "api/health.ts"],
+  entryPoints: ["api/brief.ts", "api/health.ts", "api/checkout.ts"],
   bundle: true,
   platform: "node",
   format: "esm",
   target: "node20",
   outdir: "dist-ssr-api",
-  external: ["resend"],
+  external: ["resend", "stripe"],
   absWorkingDir: root,
   logLevel: "warning",
 });
 
 const brief = (await import(path.join(root, "dist-ssr-api/brief.js"))).default;
 const health = (await import(path.join(root, "dist-ssr-api/health.js"))).default;
+const checkout = (await import(path.join(root, "dist-ssr-api/checkout.js"))).default;
 
 function mockRes() {
   return {
@@ -168,6 +169,16 @@ function check(label, condition, detail = "") {
   const badMethod = mockRes();
   await health({ method: "POST", headers: {} }, badMethod);
   check("Health POST → 405", badMethod.statusCode === 405, `status=${badMethod.statusCode}`);
+}
+
+// Checkout: unconfigured -> 503 {configured:false}; wrong method -> 405
+{
+  const un = mockRes();
+  await checkout({ method: "POST", body: { slug: "the-diagnostic" }, headers: {} }, un);
+  check("checkout without Stripe key -> 503 configured:false", un.statusCode === 503 && un.body.configured === false, `status=${un.statusCode}`);
+  const bad = mockRes();
+  await checkout({ method: "GET", body: {}, headers: {} }, bad);
+  check("checkout GET -> 405", bad.statusCode === 405, `status=${bad.statusCode}`);
 }
 
 if (failures > 0) {

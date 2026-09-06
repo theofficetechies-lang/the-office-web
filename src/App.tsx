@@ -21,6 +21,7 @@ import GlossaryPage from "./pages/GlossaryPage";
 import ChecklistPage from "./pages/ChecklistPage";
 import MethodologyPage from "./pages/MethodologyPage";
 import DemosPage from "./pages/DemosPage";
+import StorePage from "./pages/StorePage";
 import { useI18n } from "./lib/i18n";
 import { routeKey, useRoute } from "./lib/router";
 import { useDocumentMeta } from "./hooks/useDocumentMeta";
@@ -64,6 +65,10 @@ export default function App() {
       return <MethodologyPage />;
     case "demos":
       return <DemosPage />;
+    case "store":
+      return <StorePage />;
+    case "storeProduct":
+      return <StorePage slug={route.slug} />;
     case "notfound":
       return <NotFound path={route.path} />;
     case "home":

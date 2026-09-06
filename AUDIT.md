@@ -524,3 +524,27 @@ should be presented as real, inspectable work — not flagged as "demo/sample".
 - Nav item renamed Demos → **Proof** (PT: Prova).
 
 Verification: tsc + eslint exit 0; smoke:ssr 13, smoke:api 13, smoke:dom 118.
+
+---
+
+## 13. Store with Stripe payments (digital & services first)
+
+Owner chose: digital products & services first, Stripe as the provider.
+
+- `src/data/products.ts` — catalog: Backlist Audit Pack, Positioning Template,
+  Launch Timeline Template, The Diagnostic (fixed-price), 60-min Working
+  Session. Prices live in the file (business decision, easy to change).
+- `api/checkout.ts` — POST `/api/checkout {slug}` creates a Stripe Checkout
+  session using ad-hoc `price_data` (no pre-created Price objects). Card data
+  never touches us. Until `STRIPE_SECRET_KEY` is set it returns
+  `503 {configured:false}` and the store shows "payments being set up, email us"
+  instead of a broken button.
+- `/store` (catalog) + `/store/:slug` (detail) pages, EN/PT, matching the
+  editorial design; success/cancelled messages on return from Stripe.
+- Nav + footer + sitemap (28 URLs) include the store.
+
+To go live: add `STRIPE_SECRET_KEY` in Vercel env. Physical books remain out of
+scope until a fulfillment path (print-on-demand or self-ship) is chosen.
+
+Tests: smoke:ssr 15, smoke:api 15 (incl. checkout 503-unconfigured + 405),
+smoke:dom 118; tsc + eslint 0.

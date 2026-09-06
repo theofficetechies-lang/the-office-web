@@ -107,6 +107,19 @@ const en = {
   "cs.measurement": "Measurement",
   "cs.learning": "Learning",
 
+  "nav.store": "Store",
+  "store.title": "The store.",
+  "store.sub": "Tools and templates we actually use, plus fixed-price ways to work with us. Digital items deliver instantly; services are scheduled.",
+  "store.buy": "Buy",
+  "store.digital": "Digital · instant delivery",
+  "store.service": "Service · scheduled",
+  "store.includes": "What's included",
+  "store.delivery": "Delivery",
+  "store.notConfigured": "Payments are being set up. To order now, email us and we'll invoice you.",
+  "store.success": "Payment received — thank you. Your receipt and download links are in your email.",
+  "store.cancelled": "Checkout cancelled — nothing was charged.",
+  "store.back": "All products",
+
   "lang.note":
     "Long-form notes and engagement write-ups are published in English; the interface is fully translated.",
 } as const;
@@ -209,6 +222,19 @@ const pt: Record<TKey, string> = {
   "cs.execution": "Execução",
   "cs.measurement": "Medição",
   "cs.learning": "Aprendizagem",
+
+  "nav.store": "Loja",
+  "store.title": "A loja.",
+  "store.sub": "Ferramentas e modelos que realmente usamos, além de formas de preço fixo de trabalhar connosco. Os digitais entregam de imediato; os serviços são agendados.",
+  "store.buy": "Comprar",
+  "store.digital": "Digital · entrega imediata",
+  "store.service": "Serviço · agendado",
+  "store.includes": "O que está incluído",
+  "store.delivery": "Entrega",
+  "store.notConfigured": "Os pagamentos estão a ser configurados. Para encomendar já, escreva-nos e emitimos fatura.",
+  "store.success": "Pagamento recebido — obrigado. O recibo e os links estão no seu email.",
+  "store.cancelled": "Checkout cancelado — nada foi cobrado.",
+  "store.back": "Todos os produtos",
 
   "lang.note":
     "As notas longas e os estudos de caso são publicados em inglês; a interface está totalmente traduzida.",

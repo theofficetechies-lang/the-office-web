@@ -120,6 +120,8 @@ const cases = [
   { route: "/press", must: ["media kit.", "STUDIO FACTS"], mustNot: [] },
   { route: "/glossary", must: ["The vocabulary of the trade.", "Positioning"], mustNot: [] },
   { route: "/demos", must: ["See the work, not the promises.", "Start here", "How we position a book", "What a report contains"], mustNot: [] },
+  { route: "/store", must: ["The store.", "The Backlist Audit Pack", "$49"], mustNot: [] },
+  { route: "/store/the-diagnostic", must: ["The Diagnostic (fixed-price analysis)", "$950", "Delivery"], mustNot: [] },
   { route: "/resources/backlist-audit-checklist", must: ["The backlist audit checklist.", "PRINT / SAVE AS PDF"], mustNot: [] },
 ];
 

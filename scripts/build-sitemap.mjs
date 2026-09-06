@@ -24,6 +24,7 @@ function slugsFrom(file, pattern) {
 const noteSlugs = slugsFrom("src/data/notes.ts", /slug:\s*"([^"]+)"/g);
 const projectSlugs = slugsFrom("src/data/projects.ts", /slug:\s*"([^"]+)"/g);
 const serviceSlugs = slugsFrom("src/data/services.ts", /slug:\s*"([^"]+)"/g);
+const productSlugs = slugsFrom("src/data/products.ts", /slug:\s*"([^"]+)"/g);
 
 /* ------------------------- sitemap ------------------------- */
 
@@ -36,6 +37,8 @@ const urls = [
   { loc: "/glossary", changefreq: "monthly", priority: "0.5" },
   { loc: "/methodology", changefreq: "monthly", priority: "0.6" },
   { loc: "/demos", changefreq: "monthly", priority: "0.7" },
+  { loc: "/store", changefreq: "monthly", priority: "0.8" },
+  ...productSlugs.map((slug) => ({ loc: `/store/${slug}`, changefreq: "monthly", priority: "0.5" })),
   { loc: "/press", changefreq: "yearly", priority: "0.4" },
   { loc: "/resources/backlist-audit-checklist", changefreq: "yearly", priority: "0.5" },
   { loc: "/privacy", changefreq: "yearly", priority: "0.3" },
