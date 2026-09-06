@@ -24,6 +24,13 @@ function devApiPlugin(): Plugin {
           return;
         }
 
+        if (req.url === "/api/checkout" && req.method === "POST") {
+          res.setHeader("Content-Type", "application/json");
+          res.statusCode = 503;
+          res.end(JSON.stringify({ configured: false, error: "Payments are not configured in dev." }));
+          return;
+        }
+
         if (req.url === "/api/brief" && req.method === "POST") {
           let body = "";
           req.on("data", (chunk: Buffer) => {
