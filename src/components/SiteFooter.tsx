@@ -41,6 +41,8 @@ export default function SiteFooter({ mode }: { mode: "home" | "page" }) {
                   </a>
                 </li>
               ))}
+              <li><a href="/store" className="opacity-80 hover:opacity-100">STORE</a></li>
+              <li><a href="/demos" className="opacity-80 hover:opacity-100">PROOF</a></li>
               <li><a href="/press" className="opacity-80 hover:opacity-100">PRESS</a></li>
               <li><a href="/glossary" className="opacity-80 hover:opacity-100">GLOSSARY</a></li>
             </ul>

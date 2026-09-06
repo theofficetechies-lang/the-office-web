@@ -127,7 +127,13 @@ export default function SiteHeader({ mode }: { mode: "home" | "page" }) {
               </a>
             ))}
             <LangSwitcher />
-            <a href={target("#contact", "/#contact")} className="ink-block px-3 py-1.5 font-semibold">
+            <a href={target("/demos", "/demos")} className="hover:opacity-60">
+              {t("nav.demos").toUpperCase()}
+            </a>
+            <a href={target("/store", "/store")} className="ink-block px-3 py-1.5 font-semibold">
+              {t("nav.store").toUpperCase()}
+            </a>
+            <a href={target("#contact", "/#contact")} className="border border-black px-3 py-1.5 font-semibold hover:bg-black hover:text-white transition-colors">
               {t("nav.startBrief").toUpperCase()} →
             </a>
           </nav>
@@ -167,6 +173,22 @@ export default function SiteHeader({ mode }: { mode: "home" | "page" }) {
                   <span className="font-mono text-[10px] tracking-mono opacity-50">→</span>
                 </a>
               ))}
+              <a
+                href={target("/demos", "/demos")}
+                onClick={() => setOpen(false)}
+                className="flex items-baseline justify-between gap-4 py-3.5 border-b border-black/10 font-display text-[22px] tracking-display"
+              >
+                {t("nav.demos")}
+                <span className="font-mono text-[10px] tracking-mono opacity-50">→</span>
+              </a>
+              <a
+                href={target("/store", "/store")}
+                onClick={() => setOpen(false)}
+                className="flex items-baseline justify-between gap-4 py-3.5 border-b border-black/10 font-display text-[22px] tracking-display"
+              >
+                {t("nav.store")}
+                <span className="font-mono text-[10px] tracking-mono opacity-50">→</span>
+              </a>
               <a
                 href={target("#contact", "/#contact")}
                 onClick={() => setOpen(false)}

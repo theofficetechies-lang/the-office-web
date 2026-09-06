@@ -11,6 +11,10 @@ export interface Product {
   blurb: { en: string; pt: string };
   priceUsd: number;
   kind: "digital" | "service";
+  /** Cover art shown on the store. */
+  image: string;
+  /** What the buyer receives, e.g. PDF book, template, live session. */
+  format: { en: string; pt: string };
   includes: { en: string[]; pt: string[] };
   delivery: { en: string; pt: string };
 }
@@ -18,6 +22,8 @@ export interface Product {
 export const products: Product[] = [
   {
     slug: "backlist-audit-pack",
+    image: "/products/backlist-audit-pack.jpg",
+    format: { en: "PDF book + templates", pt: "Livro PDF + modelos" },
     name: { en: "The Backlist Audit Pack", pt: "Pacote de Auditoria de Backlist" },
     blurb: {
       en: "The full Amazon SEO report, the interactive audit, and the correction-list template — everything we use to take a title from invisible to discoverable.",
@@ -33,6 +39,8 @@ export const products: Product[] = [
   },
   {
     slug: "positioning-template",
+    image: "/products/positioning-template.jpg",
+    format: { en: "PDF template", pt: "Modelo PDF" },
     name: { en: "Positioning One-Page Template", pt: "Modelo de Posicionamento (1 página)" },
     blurb: {
       en: "The exact one-page structure we use to place a book: the shelf, the comp set, the positioning line, and what not to claim.",
@@ -48,6 +56,8 @@ export const products: Product[] = [
   },
   {
     slug: "launch-timeline-template",
+    image: "/products/launch-timeline-template.jpg",
+    format: { en: "PDF template", pt: "Modelo PDF" },
     name: { en: "Launch Timeline Template", pt: "Modelo de Cronograma de Lançamento" },
     blurb: {
       en: "A launch built backward from the date: staged milestones, channels with budgets and expected outputs, and an advance-review pipeline.",
@@ -63,6 +73,8 @@ export const products: Product[] = [
   },
   {
     slug: "the-diagnostic",
+    image: "/products/the-diagnostic.jpg",
+    format: { en: "Fixed-price service", pt: "Serviço de preço fixo" },
     name: { en: "The Diagnostic (fixed-price analysis)", pt: "O Diagnóstico (análise de preço fixo)" },
     blurb: {
       en: "A fixed-fee, standalone analysis of your book(s): positioning, audience, competitive, search and asset audits. The deliverable is yours to keep whether or not we proceed.",
@@ -78,6 +90,8 @@ export const products: Product[] = [
   },
   {
     slug: "working-session",
+    image: "/products/working-session.jpg",
+    format: { en: "Live session", pt: "Sessão ao vivo" },
     name: { en: "60-Minute Working Session", pt: "Sessão de Trabalho de 60 Minutos" },
     blurb: {
       en: "A focused hour on one specific question — a positioning review, an IA critique, an automation feasibility pass. Not a sales call; a working discussion.",
