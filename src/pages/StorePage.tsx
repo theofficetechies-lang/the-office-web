@@ -62,15 +62,21 @@ function BuyButton({ product }: { product: Product }) {
   const { t } = useI18n();
   const { user } = useAuth();
   const [stage, setStage] = useState<"idle" | "busy" | "unconfigured" | "error" | "success">("idle");
+  const [errMsg, setErrMsg] = useState("");
 
   const pay = async (email: string) => {
     setStage("busy");
     try {
       // Hosted redirect flow — no pop-ups, works on any domain.
-      const started = await startCheckout(product.slug, email);
-      if (!started) setStage("unconfigured");
-      else setStage("error"); // returned => no redirect happened
+      const r = await startCheckout(product.slug, email);
+      if (r.redirected) return;
+      if (!r.configured) setStage("unconfigured");
+      else {
+        setErrMsg(r.error || "");
+        setStage("error");
+      }
     } catch {
+      setErrMsg("Could not reach the payment server.");
       setStage("error");
     }
   };
@@ -99,7 +105,7 @@ function BuyButton({ product }: { product: Product }) {
       </button>
       {stage === "error" && (
         <p className="mt-3 text-[13px] leading-[1.6] opacity-80" role="status">
-          The payment window could not open. Check your connection / pop-up blocker, or email us.
+          Checkout failed{errMsg ? `: ${errMsg}` : ""} If this persists, email us.
         </p>
       )}
       {stage === "unconfigured" && (

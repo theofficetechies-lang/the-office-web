@@ -15,7 +15,13 @@ export function paystackMode(): "live" | "test" | null {
  * Kick off a hosted Paystack checkout through our server and redirect to it.
  * Resolves true if a redirect was started; false if payments are unconfigured.
  */
-export async function startCheckout(slug: string, email: string): Promise<boolean> {
+export interface CheckoutResult {
+  configured: boolean;
+  redirected?: boolean;
+  error?: string;
+}
+
+export async function startCheckout(slug: string, email: string): Promise<CheckoutResult> {
   const res = await fetch("/api/paystack", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -24,9 +30,10 @@ export async function startCheckout(slug: string, email: string): Promise<boolea
   const data = await res.json().catch(() => ({}));
   if (res.ok && data.url) {
     window.location.href = data.url;
-    return true;
+    return { configured: true, redirected: true };
   }
-  return data.configured !== false; // false => unconfigured; true => other error
+  if (data.configured === false) return { configured: false };
+  return { configured: true, error: data.error || data.message || "Checkout failed." };
 }
 
 /** Verify a returned reference after Paystack redirects back. */
