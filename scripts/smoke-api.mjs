@@ -179,6 +179,18 @@ function check(label, condition, detail = "") {
   const bad = mockRes();
   await paystack({ method: "GET", body: {}, headers: {} }, bad);
   check("paystack GET -> 405", bad.statusCode === 405, `status=${bad.statusCode}`);
+
+  // initialize path with a fake secret + mocked fetch must not crash
+  process.env.PAYSTACK_SECRET_KEY = "sk_test_fake";
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = async () => ({
+    json: async () => ({ data: { authorization_url: "https://checkout.paystack.com/xyz" } }),
+  });
+  const init = mockRes();
+  await paystack({ method: "POST", body: { slug: "working-session", email: "a@b.com" }, headers: {} }, init);
+  globalThis.fetch = realFetch;
+  delete process.env.PAYSTACK_SECRET_KEY;
+  check("paystack initialize returns checkout url (no crash)", init.statusCode === 200 && init.body.url?.includes("checkout.paystack.com"), `status=${init.statusCode}`);
 }
 
 if (failures > 0) {
