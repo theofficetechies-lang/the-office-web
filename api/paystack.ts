@@ -1,9 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { getProduct } from "../src/data/products";
 
-// Ensure a modern Node runtime with global fetch.
-export const config = { runtime: "nodejs20.x" };
-
 /**
  * POST /api/paystack
  *   { slug, email }  -> initialize a hosted Paystack checkout, return { url }.
