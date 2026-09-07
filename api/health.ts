@@ -1,4 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { send } from "./_lib/respond.js";
 
 /**
  * GET /api/health
@@ -13,7 +14,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader("Cache-Control", "no-store");
 
   if (req.method !== "GET") {
-    return res.status(405).json({ status: "error", message: "Method not allowed" });
+    return send(res, 405, { status: "error", message: "Method not allowed" });
   }
 
   const checks = {
@@ -27,7 +28,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
   const canDeliver = checks.web3FormsServer || checks.resend;
   const healthy = canDeliver && checks.toEmail;
 
-  return res.status(healthy ? 200 : 503).json({
+  return send(res, healthy ? 200 : 503, {
     status: healthy ? "ok" : "degraded",
     timestamp: new Date().toISOString(),
     environment: process.env.VERCEL_ENV ?? "development",

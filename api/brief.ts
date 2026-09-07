@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { Resend } from "resend";
 import { rateLimit } from "./_lib/rate-limit.js";
+import { send, noContent } from "./_lib/respond.js";
 import { briefSchema, sanitizeText } from "./_lib/validate.js";
 
 const apiKey = process.env.RESEND_API_KEY;
@@ -53,16 +54,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   setSecurityHeaders(res);
 
   if (req.method === "OPTIONS") {
-    return res.status(204).end();
+    return noContent(res);
   }
 
   if (req.method !== "POST") {
-    return res.status(405).json({ success: false, error: "Method not allowed" });
+    return send(res, 405, { success: false, error: "Method not allowed" });
   }
 
   const origin = req.headers.origin as string | undefined;
   if (origin && !originAllowed(origin)) {
-    return res.status(403).json({ success: false, error: "Origin not allowed" });
+    return send(res, 403, { success: false, error: "Origin not allowed" });
   }
 
   // Rate limiting
@@ -72,7 +73,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader("X-RateLimit-Reset", String(limit.reset));
 
   if (!limit.success) {
-    return res.status(429).json({
+    return send(res, 429, {
       success: false,
       error: "Too many requests. Please try again in 15 minutes.",
     });
@@ -82,7 +83,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const rawBody = req.body ?? {};
   if (rawBody.company_website && String(rawBody.company_website).trim().length > 0) {
     // Silently accept so bots don't retry
-    return res.status(200).json({
+    return send(res, 200, {
       success: true,
       message: "Brief received. We reply within two working days.",
     });
@@ -95,7 +96,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       path: i.path.join("."),
       message: i.message,
     }));
-    return res.status(400).json({ success: false, error: "Validation failed", issues });
+    return send(res, 400, { success: false, error: "Validation failed", issues });
   }
 
   const data = parse.data;
@@ -134,7 +135,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       const json = await response.json();
       if (json.success) {
-        return res.status(200).json({
+        return send(res, 200, {
           success: true,
           message: "Brief received. We reply within two working days.",
         });
@@ -181,20 +182,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       if (result.error) {
         console.error("[Brief API] Resend returned error:", result.error);
-        return res.status(502).json({
+        return send(res, 502, {
           success: false,
           error: "Email provider rejected the message.",
         });
       }
 
-      return res.status(200).json({
+      return send(res, 200, {
         success: true,
         message: "Brief received. We reply within two working days.",
         messageId: result.data?.id,
       });
     } catch (err) {
       console.error("[Brief API] Email send error:", err);
-      return res.status(502).json({
+      return send(res, 502, {
         success: false,
         error: "Email delivery failed. Please email us directly.",
       });
@@ -208,7 +209,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     service: safeService,
   });
 
-  return res.status(503).json({
+  return send(res, 503, {
     success: false,
     error:
       "Brief delivery is not configured on this deployment. Please email theofficetechies@gmail.com directly.",
