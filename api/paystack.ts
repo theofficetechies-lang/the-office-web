@@ -1,4 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { getProduct } from "../src/data/products";
 
 /** Raw Node response helper — Vercel's res has no .status/.json. */
 function send(res: VercelResponse, code: number, obj: unknown) {
@@ -56,7 +57,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const slug = typeof body.slug === "string" ? body.slug : "";
     const email = typeof body.email === "string" ? body.email : "";
-    const { getProduct } = await import("../src/data/products");
     const product = getProduct(slug);
     if (!product || !email) return send(res, 400, { error: "Missing product or email." });
 
