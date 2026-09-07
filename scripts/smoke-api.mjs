@@ -49,7 +49,10 @@ function mockRes() {
       this.body = o;
       return this;
     },
-    end() {
+    end(x) {
+      if (typeof x === "string") {
+        try { this.body = JSON.parse(x); } catch { this.body = x; }
+      }
       return this;
     },
   };
