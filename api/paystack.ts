@@ -1,23 +1,33 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { getProduct } from "../src/data/products";
 
 /**
  * POST /api/paystack
  *   { slug, email }  -> initialize a hosted Paystack checkout, return { url }.
  *   { reference }    -> verify a transaction, return its status.
+ * GET /api/paystack  -> diagnostics (proves the function loads; shows runtime).
  *
- * Fully wrapped so any failure returns a readable JSON error instead of an
- * unhandled crash (which Vercel reports as FUNCTION_INVOCATION_FAILED).
+ * The product catalog is imported lazily inside the handler so module load has
+ * no dependencies that could crash (Vercel FUNCTION_INVOCATION_FAILED). Every
+ * failure path returns readable JSON.
  */
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader("Content-Type", "application/json");
+
+  if (req.method === "GET") {
+    return res.status(200).json({
+      ok: true,
+      node: process.version,
+      hasFetch: typeof fetch === "function",
+      hasSecret: Boolean(process.env.PAYSTACK_SECRET_KEY),
+    });
+  }
+
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
   const secret = process.env.PAYSTACK_SECRET_KEY;
   if (!secret) return res.status(503).json({ configured: false, error: "Payments not configured." });
 
   try {
-    // Body may arrive as an object (Vercel) or a JSON string.
     let body: Record<string, unknown> = {};
     if (typeof req.body === "string") {
       try {
@@ -44,6 +54,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // ---- initialize ----
     const slug = typeof body.slug === "string" ? body.slug : "";
     const email = typeof body.email === "string" ? body.email : "";
+    const { getProduct } = await import("../src/data/products");
     const product = getProduct(slug);
     if (!product || !email) return res.status(400).json({ error: "Missing product or email." });
 

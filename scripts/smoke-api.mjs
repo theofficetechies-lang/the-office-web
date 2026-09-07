@@ -176,9 +176,9 @@ function check(label, condition, detail = "") {
   const un = mockRes();
   await paystack({ method: "POST", body: { reference: "x" }, headers: {} }, un);
   check("paystack verify without secret -> 503 configured:false", un.statusCode === 503 && un.body.configured === false, `status=${un.statusCode}`);
-  const bad = mockRes();
-  await paystack({ method: "GET", body: {}, headers: {} }, bad);
-  check("paystack GET -> 405", bad.statusCode === 405, `status=${bad.statusCode}`);
+  const diag = mockRes();
+  await paystack({ method: "GET", body: {}, headers: {} }, diag);
+  check("paystack GET -> diagnostics", diag.statusCode === 200 && diag.body.ok === true, `status=${diag.statusCode}`);
 
   // initialize path with a fake secret + mocked fetch must not crash
   process.env.PAYSTACK_SECRET_KEY = "sk_test_fake";
