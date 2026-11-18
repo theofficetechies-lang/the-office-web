@@ -120,6 +120,18 @@ Fraunces/Inter Tight/JetBrains Mono, hairline rules, `ink-block`, 12-col grid, `
 
 ## 2. The strategic decision the brief forces
 
+### 2.0 The totals, stated once
+
+- **167** entries in `serviceCatalog.ts`: **40 flagship** (own page) + **127 catalogue** (anchored on a division hub).
+- **5** published services with dedicated pages that predate the catalogue and are deliberately not duplicated in it.
+- **172** total offered (`TOTAL_SERVICES`), which is 167 + 5.
+- **45** pages under `/services/<slug>`: 40 flagship + 5 published.
+- **96** prerendered routes in total: 45 + 6 division hubs + `/services` + `/industries` + 20 sectors + the editorial pages.
+
+These disagree with each other only if you confuse "catalogue entries" with "everything
+the studio offers", which is an easy mistake and has been made in this project's own
+summaries. The site derives every number it displays from data for exactly that reason.
+
 ### 2.1 167 service pages is the wrong number, by the brief's own rules
 
 The brief asks for 167 services *and* forbids "empty, duplicate or superficial service pages merely to
@@ -142,7 +154,7 @@ existing positioning warn against.
 **~66 carry substantive original content**. That satisfies "comprehensive" without doorways, and it can
 be delivered to a standard the studio can defend.
 
-The full machine-readable map is in **`docs/360/service-catalog.json`** — 167 services, each with a
+The full machine-readable map is in **`docs/360/service-catalog.json`** — 167 catalogue services, each with a
 stable slug, its division, and its tier. **No proposed slug collides with the five live URLs**
 (`book-positioning`, `discoverability`, `author-authority`, `launch-strategy`, `analytics-reporting`),
 verified programmatically, so existing rankings are not put at risk.

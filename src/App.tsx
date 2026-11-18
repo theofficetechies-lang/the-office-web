@@ -32,6 +32,8 @@ import { useI18n } from "./lib/i18n";
 import { routeKey, useRoute } from "./lib/router";
 import { getServiceDetail } from "./data/serviceDetailIndex";
 import { getInquiryType, DEFAULT_INQUIRY_TYPE } from "./data/inquiryTypes";
+import { divisions } from "./data/divisions";
+import { TOTAL_SERVICES } from "./data/serviceCatalog";
 import { useDocumentMeta } from "./hooks/useDocumentMeta";
 import { useReveal } from "./hooks/useReveal";
 import { CONTACT_EMAIL } from "./lib/site";
@@ -438,7 +440,7 @@ function HomePage() {
             <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-14 sm:py-20">
               <MarginRail
                 sectionNum="01"
-                sectionLabel="FOUR SERVICES. ONE STUDIO."
+                sectionLabel="THE CORE PRACTICE. ONE STUDIO."
                 folio="PORTFOLIO II"
                 note="These are not packages. We scope each engagement against the brief."
               />
@@ -446,7 +448,7 @@ function HomePage() {
               <div className="col-span-12 lg:col-span-10 reveal">
                 <MobileFolioStrip
                   sectionNum="01"
-                  sectionLabel="FOUR SERVICES. ONE STUDIO."
+                  sectionLabel="THE CORE PRACTICE. ONE STUDIO."
                   folio="PORTFOLIO II"
                 />
                 <nav className="mb-8 border-t border-black" aria-label={t("section.services")}>
@@ -482,6 +484,27 @@ function HomePage() {
                   Engagements typically run 4–14 weeks. We work with a small
                   number of clients at a time and turn down more than we take.
                 </p>
+
+                {/*
+                  The five above are the practice the studio was built on. The rest
+                  of what it offers — six divisions, {TOTAL_SERVICES} services — lives
+                  on the services index. Without this the homepage still read as a
+                  one-division studio, which is what the expansion was for.
+                */}
+                <div className="mt-8 border-t border-black pt-6">
+                  <p className="text-[14px] leading-[1.7] max-w-prose mb-4">
+                    These five are the core practice. The same method runs across{" "}
+                    {divisions.length} divisions and {TOTAL_SERVICES} services — web and
+                    digital architecture, AI and automation, growth, brand, publishing and
+                    technology consulting.
+                  </p>
+                  <a
+                    href="/services"
+                    className="inline-block border border-black px-4 py-2.5 font-mono text-[11px] tracking-mono font-semibold hover:bg-black hover:text-white transition-colors"
+                  >
+                    ALL {TOTAL_SERVICES} SERVICES →
+                  </a>
+                </div>
               </div>
             </div>
           </div>
