@@ -1097,6 +1097,18 @@ console.log("\nShipped CSS:");
   const caretRule = css.match(/\.caret:{1,2}after\{[^}]*\}/)?.[0] ?? "";
   check("typewriter caret is pure black", caretRule.includes("background:#000"), caretRule || "rule missing");
   check("warm paper token shipped", css.includes("#f4f3ef"));
+  /*
+   * The brief lists "no horizontal overflow" as a release condition. Nothing in the
+   * layout should overflow -- it is built on max-width containers -- but one long
+   * unbroken string in editorial copy is enough to scroll a narrow viewport
+   * sideways, and that swipes every fixed element with it. The guard is global, so
+   * assert it is present rather than trusting the prose above it.
+   */
+  check(
+    "horizontal overflow is clipped globally",
+    /overflow-x:\s*clip/.test(css),
+    "body has no overflow-x guard"
+  );
 }
 
 if (failures > 0) {

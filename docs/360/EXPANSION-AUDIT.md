@@ -355,7 +355,7 @@ evidence.
 
 ---
 
-## 4d. Performance: what the bundle split actually bought
+## 4e. Performance: what the bundle split actually bought
 
 The audit measured 191 KB of gzipped JavaScript on every route. Most of it was not
 application logic — it was page content that only some routes render: 150 kB of

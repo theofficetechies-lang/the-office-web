@@ -39,6 +39,24 @@
     font-variant-numeric: tabular-nums;
   }
 
+  /*
+   * Last-resort horizontal overflow guard.
+   *
+   * The layout is built on max-w-[1400px] containers and grid columns, so nothing
+   * is *supposed* to overflow — but a long unbroken string in editorial copy (a URL,
+   * an email, a slug) can still push a narrow viewport sideways, and once a page
+   * scrolls horizontally every fixed element slides with it. `clip` rather than
+   * `hidden` because `hidden` on the body would make it a scroll container and break
+   * position: sticky in the header.
+   *
+   * Deliberately not `overflow-x: hidden` on <html>: that disables the browser's own
+   * scroll anchoring on some engines. This clips; it does not hide content behind a
+   * scrollbar the visitor cannot see.
+   */
+  body {
+    overflow-x: clip;
+  }
+
   ::selection {
     background: #000;
     color: #fff;
