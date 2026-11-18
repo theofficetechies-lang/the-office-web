@@ -79,6 +79,11 @@ const KNOWN = [
   "/demos",
   "/store",
   "/admin",
+  "/services",
+  "/industries",
+  "/services/web",
+  "/services/ai",
+  "/industries/real-estate",
   "/resources/backlist-audit-checklist",
   ...slugsFrom("src/data/notes.ts").map((s) => `/notes/${s}`),
   ...slugsFrom("src/data/projects.ts").map((s) => `/work/${s}`),
@@ -206,6 +211,18 @@ const expectations = {
   "/privacy": { title: "Privacy notice — THE OFFICE 360", h1: "Privacy notice." },
   "/terms": { title: "Terms of service — THE OFFICE 360", h1: "Terms of service." },
   "/work/does-not-exist": { title: "Case study not found — THE OFFICE 360", h1: null },
+  /*
+   * Phase 1 added servicesIndex / division / industriesIndex / industry to the
+   * router; their pages land in Phase 2. Until then they must render the 404 and
+   * NOT fall through to the switch's HomePage default, which would serve the
+   * homepage at /services — a soft 404 and the doorway pattern the brief forbids.
+   * These assertions start failing the moment Phase 2 renders real pages, at
+   * which point they should be updated to the real titles.
+   */
+  "/services": { title: "Document not found — THE OFFICE 360", h1: null },
+  "/industries": { title: "Document not found — THE OFFICE 360", h1: null },
+  "/services/web": { title: "Document not found — THE OFFICE 360", h1: null },
+  "/industries/real-estate": { title: "Document not found — THE OFFICE 360", h1: null },
   "/nowhere": { title: "Document not found — THE OFFICE 360", h1: null },
 };
 

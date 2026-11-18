@@ -90,6 +90,15 @@ export default defineConfig({
   server: {
     host: "0.0.0.0",
     allowedHosts: true,
+    /**
+     * Pin the port. Without `strictPort`, a second `npm run dev` silently takes
+     * 5174 and the preview URL — which is built from 5173 — keeps showing
+     * whichever server grabbed it first. That is how a stale dev server (started
+     * before the codebase was swapped) ended up serving the preview while a
+     * correct one ran one port over. Failing loudly is better than drifting.
+     */
+    port: 5173,
+    strictPort: true,
   },
   build: {
     // Production sourcemaps expose the full source tree and add ~1 MB to every

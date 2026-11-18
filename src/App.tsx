@@ -72,6 +72,18 @@ export default function App() {
       return <StorePage slug={route.slug} />;
     case "admin":
       return <AdminPage />;
+    /*
+     * Phase 1 added these four route kinds to the router so the architecture is
+     * in place, but their pages arrive in Phase 2. Until then they must resolve
+     * to a real 404 rather than falling through to `default` — the switch's
+     * default renders HomePage, which would serve the homepage at /services and
+     * /industries: a soft 404, and exactly the doorway pattern the brief forbids.
+     */
+    case "servicesIndex":
+    case "division":
+    case "industriesIndex":
+    case "industry":
+      return <NotFound path={window.location.pathname} />;
     case "notfound":
       return <NotFound path={route.path} />;
     case "home":
