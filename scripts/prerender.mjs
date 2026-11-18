@@ -210,6 +210,13 @@ for (const route of paths) {
    * that describes a different page.
    */
   document.documentElement.setAttribute("data-prerendered", route);
+  /*
+   * The prerendered copy is English. Recording that lets src/main.tsx decide
+   * whether hydration is even possible: a visitor whose stored language is
+   * Portuguese is holding markup in a language the client will not render, so
+   * hydrating it must fail by definition.
+   */
+  document.documentElement.setAttribute("data-prerendered-lang", "en");
 
   /* Everything from <head> through the open mount node, then React's bytes, then the tail. */
   const serialized = dom.serialize();

@@ -942,8 +942,30 @@ console.log("\nReduced motion:");
 
 console.log("\nPortuguese:");
 {
-  const { document } = await mount("/", { presetLang: "pt" });
+  const { document, errors } = await mount("/", { presetLang: "pt" });
   await new Promise((r) => setTimeout(r, 80));
+  /*
+   * The prerendered document is English. A visitor who previously chose Portuguese
+   * therefore hydrates English markup with Portuguese content, which is exactly the
+   * shape of a hydration mismatch — and the assertions below would all still pass,
+   * because they check what is on screen, not what React did to get there.
+   */
+  check(
+    "a returning Portuguese visitor mounts without a hydration mismatch",
+    errors.length === 0,
+    errors.join(" | ").slice(0, 1200)
+  );
+  /*
+   * Prove the mechanism, not just the outcome. The document declares English, so a
+   * Portuguese visitor must take the create path; if hydration started succeeding
+   * here it would mean the guard had silently stopped applying.
+   */
+  const stampedLang = document.documentElement.getAttribute("data-prerendered-lang");
+  check(
+    "the prerendered document declares the language it shipped in",
+    stampedLang === "en",
+    `stamp ${stampedLang || "(none)"}`
+  );
   check("html lang switches to pt", document.documentElement.lang === "pt", `lang=${document.documentElement.lang}`);
   check("hero sub is Portuguese", document.body.textContent.includes("um estúdio de quatro pessoas"));
   check("nav Services is Serviços", document.body.textContent.includes("SERVIÇOS"));

@@ -101,6 +101,30 @@
     />
 
     <title>THE OFFICE 360 — Book strategy, web, automation, research</title>
+
+    <!--
+      Language, resolved before first paint.
+
+      Prerendered markup is English. A visitor who previously chose Portuguese
+      would otherwise hydrate English HTML with Portuguese copy, and React would
+      discard the server DOM (“hydration failed”) on every page and re-render from
+      scratch. Applying the stored choice here — blocking, before the bundle — makes
+      the client's first render agree with the document.
+
+      Deliberately tiny and dependency-free: it runs before anything else and must
+      never throw. If storage is unavailable it does nothing and English stands.
+    -->
+    <script>
+      (function () {
+        try {
+          if (localStorage.getItem("the-office:lang") === "pt") {
+            document.documentElement.lang = "pt";
+          }
+        } catch (e) {
+          /* storage blocked — leave lang="en" */
+        }
+      })();
+    </script>
   </head>
   <body>
     <!--

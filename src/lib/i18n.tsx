@@ -250,15 +250,31 @@ interface I18nValue {
 
 const I18nContext = createContext<I18nValue | null>(null);
 
+/**
+ * Read the stored language before React ever renders.
+ *
+ * The prerendered HTML is English. A visitor who previously chose Portuguese
+ * therefore mounts a provider whose state disagrees with the markup on the page,
+ * and React reports a hydration mismatch and throws the server DOM away — a flash
+ * and a full re-render on every page for those visitors.
+ *
+ * index.html runs a tiny blocking script in <head> that reads this same key and
+ * writes it to documentElement.lang before the bundle loads, so the provider's
+ * initial state agrees with the document by the time it renders. Reading storage
+ * here also covers the dev path, where no such script has run.
+ */
+function initialLang(): Lang {
+  if (typeof window === "undefined") return "en";
+  try {
+    if (window.localStorage.getItem("the-office:lang") === "pt") return "pt";
+  } catch {
+    /* storage unavailable — fall through */
+  }
+  return "en";
+}
+
 export function I18nProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLangState] = useState<Lang>(() => {
-    if (typeof window === "undefined") return "en";
-    try {
-      return window.localStorage.getItem("the-office:lang") === "pt" ? "pt" : "en";
-    } catch {
-      return "en";
-    }
-  });
+  const [lang, setLangState] = useState<Lang>(initialLang);
 
   const setLang = (l: Lang) => {
     setLangState(l);

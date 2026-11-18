@@ -58,7 +58,28 @@ function normalizePath(p: string) {
 const stamped = document.documentElement.getAttribute("data-prerendered");
 const matches = stamped !== null && normalizePath(stamped) === normalizePath(window.location.pathname);
 
-if (container.childElementCount > 0 && matches) {
+/*
+ * Language has to match too.
+ *
+ * The prerendered copy is English (stamped data-prerendered-lang="en"). A visitor
+ * who chose Portuguese on a previous visit gets Portuguese from the first render,
+ * so against English markup hydration is guaranteed to fail — React would log an
+ * error on every page and re-render the whole tree anyway. Creating instead is the
+ * same outcome without the failure, and it is the truthful description of what is
+ * happening: the server's copy is not the one this visitor asked for.
+ *
+ * When translated routes exist, this is the seam where they get hydrated.
+ */
+const stampedLang = document.documentElement.getAttribute("data-prerendered-lang");
+let storedLang = "en";
+try {
+  if (window.localStorage.getItem("the-office:lang") === "pt") storedLang = "pt";
+} catch {
+  /* storage blocked — English stands */
+}
+const languageMatches = stampedLang === null || stampedLang === storedLang;
+
+if (container.childElementCount > 0 && matches && languageMatches) {
   hydrateRoot(container, tree);
 } else {
   createRoot(container).render(tree);
