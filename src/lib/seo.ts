@@ -281,12 +281,34 @@ export function headFor(path: string): HeadMeta {
     case "work": {
       const project = projects.find((p) => p.slug === route.slug);
       if (!project) return notFound;
+      /*
+       * `Article`, not `CaseStudy`.
+       *
+       * Every entry in projects.ts is an unverified engagement *pattern* — the
+       * file says so, no client is named and no result is claimed unless
+       * `verified` is true, and all five are currently false. Typing these as
+       * case studies would assert a client relationship to a machine reader that
+       * the page itself refuses to assert to a human one.
+       */
       return {
         title: `${project.title} — THE OFFICE 360`,
         description: truncate(project.summary ?? project.title),
         url: `${SITE_URL}/work/${project.slug}`,
         noindex: false,
-        jsonLd: [],
+        jsonLd: [
+          breadcrumb(project.title, `/work/${project.slug}`, [
+            { name: "Work", path: "/#work" },
+          ]),
+          {
+            "@type": "Article",
+            headline: project.title,
+            url: `${SITE_URL}/work/${project.slug}`,
+            description: project.summary,
+            about: project.sector,
+            ...(project.verified ? {} : { disambiguatingDescription: "Engagement pattern; no client identified and no result claimed." }),
+            publisher: { "@id": `${SITE_URL}/#organization` },
+          },
+        ],
       };
     }
 

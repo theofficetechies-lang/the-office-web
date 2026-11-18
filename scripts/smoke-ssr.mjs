@@ -308,6 +308,111 @@ if (typeof seoGlobal.prerenderPaths === "function" && typeof render === "functio
 }
 
 /* ------------------------------------------------------------------ */
+/* Structured data validity                                            */
+/* ------------------------------------------------------------------ */
+/*
+ * D12 was "no breadcrumb/Service/FAQ schema". Schema now exists on every page, but
+ * emitting it unvalidated is barely better than not emitting it: a typo in a
+ * required property is silently ignored by crawlers, and breadcrumb positions that
+ * do not run 1..n are a common way to have a valid-looking graph rejected.
+ *
+ * This checks what a validator checks — parseable JSON, required properties per
+ * type, breadcrumb position and absolute URLs, FAQ answers that exist — against
+ * the shipped files, so it covers every route rather than a sample.
+ */
+{
+  const REQUIRED = {
+    BreadcrumbList: ["itemListElement"],
+    ListItem: ["position", "name"],
+    Service: ["name"],
+    FAQPage: ["mainEntity"],
+    Question: ["name", "acceptedAnswer"],
+    Answer: ["text"],
+    Article: ["headline"],
+    CollectionPage: ["name"],
+    ProfessionalService: ["name"],
+    WebSite: ["url"],
+  };
+
+  const problems = [];
+  const seen = new Map();
+  let blocks = 0;
+
+  const files = [];
+  const collect = (dir) => {
+    for (const entry of readdirSync(dir)) {
+      const full = path.join(dir, entry);
+      if (statSync(full).isDirectory()) {
+        if (entry === "assets" || entry === "dist-ssr") continue;
+        collect(full);
+      } else if (entry === "index.html") files.push(full);
+    }
+  };
+  collect(path.join(root, "dist"));
+
+  for (const file of files) {
+    const route = "/" + path.relative(path.join(root, "dist"), path.dirname(file)).replace(/\\/g, "/");
+    const html = readFileSync(file, "utf8");
+    const re = /<script type="application\/ld\+json">([\s\S]*?)<\/script>/g;
+    let m;
+    while ((m = re.exec(html))) {
+      blocks++;
+      let data;
+      try {
+        data = JSON.parse(m[1]);
+      } catch (err) {
+        problems.push(`${route}: unparseable JSON-LD (${err.message.slice(0, 60)})`);
+        continue;
+      }
+      if (!data["@context"]) problems.push(`${route}: JSON-LD without @context`);
+      const graph = Array.isArray(data["@graph"]) ? data["@graph"] : [data];
+      for (const node of graph) {
+        const types = Array.isArray(node["@type"]) ? node["@type"] : [node["@type"]];
+        for (const t of types) {
+          seen.set(t, (seen.get(t) ?? 0) + 1);
+          for (const req of REQUIRED[t] ?? []) {
+            const v = node[req];
+            if (v === undefined || v === null || v === "" || (Array.isArray(v) && v.length === 0)) {
+              problems.push(`${route}: ${t} missing ${req}`);
+            }
+          }
+        }
+        if (types.includes("BreadcrumbList")) {
+          const els = node.itemListElement ?? [];
+          if (els.length < 2) problems.push(`${route}: breadcrumb has ${els.length} item(s)`);
+          els.forEach((el, i) => {
+            if (el.position !== i + 1) {
+              problems.push(`${route}: breadcrumb position ${el.position} at index ${i + 1}`);
+            }
+            if (typeof el.item === "string" && !el.item.startsWith("https://")) {
+              problems.push(`${route}: breadcrumb item not absolute (${el.item})`);
+            }
+          });
+        }
+        if (types.includes("FAQPage")) {
+          for (const q of node.mainEntity ?? []) {
+            if (!q?.acceptedAnswer?.text) problems.push(`${route}: FAQ question with no answer text`);
+          }
+        }
+      }
+    }
+  }
+
+  if (problems.length === 0) {
+    const summary = [...seen.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5)
+      .map(([t, n]) => `${t}×${n}`)
+      .join(" ");
+    console.log(`✓ ${blocks} JSON-LD blocks valid across ${files.length} pages (${summary})`);
+  } else {
+    failures++;
+    console.error(`✗ ${problems.length} structured-data problem(s)`);
+    problems.slice(0, 8).forEach((p) => console.error(`    ${p}`));
+  }
+}
+
+/* ------------------------------------------------------------------ */
 /* Crawlability: every page reachable from the homepage                */
 /* ------------------------------------------------------------------ */
 /*
