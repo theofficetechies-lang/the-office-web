@@ -314,6 +314,35 @@ this is the single thing standing between the branch and review.
 
 ---
 
+## 4d. Prerendering: what it found
+
+Adding prerendering (Phase 6) exposed a defect class that was invisible while the
+site was a pure SPA, because there was no server render to disagree with.
+
+| Finding | Severity | Status |
+|---|---|---|
+| All 60 new routes served the homepage's title, canonical and `index, follow` with an empty body | Critical | Fixed — 96 routes prerendered |
+| Every flagship page titled itself from its URL slug, not its service name | High | Fixed |
+| Unknown URLs answered 200 with the homepage | High | Fixed — prerendered noindex 404 |
+| `<noscript>` put a second `<h1>` ("JavaScript is off.") in all 97 documents | Medium | Fixed |
+| A retained Portuguese visitor hit a hydration failure on every page | High | Fixed — language resolved pre-paint; hydration gated on language |
+| The prerenderer dropped the mount node's closing `</div>` in all 96 files | High | Fixed + gated |
+| `/services/intelligence` was absent from the DOM suite's route list | Medium | Fixed — sweep covers every shipped document |
+
+**New gates, all negative-tested:** 96 routes re-render byte-identically to what
+shipped; 97 documents are structurally balanced; every shipped internal link
+resolves; every catalogue anchor exists; no default credential ships in a bundle;
+the 404 is noindex and unstamped.
+
+**A recurring lesson worth writing down:** four of my own checks were wrong before
+they were right — a silently skipped check, a slice boundary that produced 96
+false failures, a scan one directory deep covering 12 of 97 files, and a negative
+test that patched a file the rebuild then replaced. Each initially reported
+success or nonsense. A green check that has never been seen to fail is not
+evidence.
+
+---
+
 ## 4c. Decisions still needed from the client
 
 Two things are deliberately not decided by me, because they are positioning and
