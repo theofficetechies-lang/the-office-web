@@ -1,0 +1,238 @@
+/**
+ * The full service catalogue — 167 services across six divisions.
+ *
+ * Two tiers, because a small studio cannot honestly publish 167 distinct pages
+ * (and the brief forbids doorway pages):
+ *
+ *   flagship  → a standalone page at /services/<slug>
+ *   catalogue → an anchored entry on its division hub at /services/<division>#<slug>
+ *
+ * The five services the studio has already published (book-positioning,
+ * discoverability, author-authority, launch-strategy, analytics-reporting) are
+ * NOT duplicated here — they keep their own pages, sit in the `publishing`
+ * division in the UI, and are referenced by `PUBLISHED_SERVICES` below.
+ *
+ * GENERATED from docs/360/service-catalog.json. To change the catalogue, edit
+ * that map (or its generator) and regenerate; do not hand-edit the list.
+ * `slug` is a public URL — changing one is a URL change.
+ */
+export type ServiceTier = "flagship" | "catalogue";
+
+export interface CatalogService {
+  slug: string;
+  title: string;
+  /** Division id — matches src/data/divisions.ts */
+  division: string;
+  tier: ServiceTier;
+}
+
+/** The five live services with dedicated pages, kept exactly as published. */
+export const PUBLISHED_SERVICES = [
+  "book-positioning",
+  "discoverability",
+  "author-authority",
+  "launch-strategy",
+  "analytics-reporting",
+] as const;
+
+export const serviceCatalog: CatalogService[] = [
+  // ---- web: 30 services, 8 flagship ----
+  { slug: "corporate-website-development", title: "Corporate Website Development", division: "web", tier: "flagship" },
+  { slug: "business-website-design", title: "Business Website Design", division: "web", tier: "catalogue" },
+  { slug: "enterprise-website-development", title: "Enterprise Website Development", division: "web", tier: "catalogue" },
+  { slug: "custom-website-development", title: "Custom Website Development", division: "web", tier: "catalogue" },
+  { slug: "e-commerce-development", title: "E-commerce Development", division: "web", tier: "flagship" },
+  { slug: "wordpress-development", title: "WordPress Development", division: "web", tier: "catalogue" },
+  { slug: "web-application-development", title: "Web Application Development", division: "web", tier: "flagship" },
+  { slug: "custom-portal-development", title: "Custom Portal Development", division: "web", tier: "flagship" },
+  { slug: "landing-page-development", title: "Landing Page Development", division: "web", tier: "catalogue" },
+  { slug: "website-redesign-services", title: "Website Redesign Services", division: "web", tier: "catalogue" },
+  { slug: "website-maintenance", title: "Website Maintenance", division: "web", tier: "catalogue" },
+  { slug: "website-performance-optimization", title: "Website Performance Optimization", division: "web", tier: "flagship" },
+  { slug: "website-security-audits", title: "Website Security Audits", division: "web", tier: "flagship" },
+  { slug: "website-migration", title: "Website Migration", division: "web", tier: "catalogue" },
+  { slug: "website-hosting-consultancy", title: "Website Hosting Consultancy", division: "web", tier: "catalogue" },
+  { slug: "website-architecture-planning", title: "Website Architecture Planning", division: "web", tier: "catalogue" },
+  { slug: "headless-cms-development", title: "Headless CMS Development", division: "web", tier: "flagship" },
+  { slug: "api-integration", title: "API Integration", division: "web", tier: "catalogue" },
+  { slug: "customer-portal-development", title: "Customer Portal Development", division: "web", tier: "catalogue" },
+  { slug: "membership-website-development", title: "Membership Website Development", division: "web", tier: "catalogue" },
+  { slug: "booking-and-reservation-systems", title: "Booking and Reservation Systems", division: "web", tier: "catalogue" },
+  { slug: "educational-website-development", title: "Educational Website Development", division: "web", tier: "catalogue" },
+  { slug: "corporate-intranet-development", title: "Corporate Intranet Development", division: "web", tier: "catalogue" },
+  { slug: "real-estate-website-development", title: "Real Estate Website Development", division: "web", tier: "catalogue" },
+  { slug: "portfolio-website-development", title: "Portfolio Website Development", division: "web", tier: "catalogue" },
+  { slug: "custom-business-platforms", title: "Custom Business Platforms", division: "web", tier: "catalogue" },
+  { slug: "workflow-based-web-applications", title: "Workflow-Based Web Applications", division: "web", tier: "catalogue" },
+  { slug: "interactive-website-development", title: "Interactive Website Development", division: "web", tier: "catalogue" },
+  { slug: "website-accessibility-improvement", title: "Website Accessibility Improvement", division: "web", tier: "flagship" },
+  { slug: "website-technical-support", title: "Website Technical Support", division: "web", tier: "catalogue" },
+  // ---- ai: 30 services, 8 flagship ----
+  { slug: "ai-business-automation", title: "AI Business Automation", division: "ai", tier: "flagship" },
+  { slug: "ai-customer-support-systems", title: "AI Customer Support Systems", division: "ai", tier: "catalogue" },
+  { slug: "ai-chatbot-development", title: "AI Chatbot Development", division: "ai", tier: "flagship" },
+  { slug: "ai-virtual-assistants", title: "AI Virtual Assistants", division: "ai", tier: "catalogue" },
+  { slug: "whatsapp-business-automation", title: "WhatsApp Business Automation", division: "ai", tier: "flagship" },
+  { slug: "automated-lead-generation", title: "Automated Lead Generation", division: "ai", tier: "catalogue" },
+  { slug: "automated-email-systems", title: "Automated Email Systems", division: "ai", tier: "catalogue" },
+  { slug: "crm-automation", title: "CRM Automation", division: "ai", tier: "flagship" },
+  { slug: "sales-pipeline-automation", title: "Sales Pipeline Automation", division: "ai", tier: "catalogue" },
+  { slug: "appointment-scheduling-automation", title: "Appointment Scheduling Automation", division: "ai", tier: "catalogue" },
+  { slug: "document-processing-automation", title: "Document Processing Automation", division: "ai", tier: "flagship" },
+  { slug: "ai-powered-knowledge-bases", title: "AI-Powered Knowledge Bases", division: "ai", tier: "flagship" },
+  { slug: "ai-business-workflow-consulting", title: "AI Business Workflow Consulting", division: "ai", tier: "catalogue" },
+  { slug: "business-process-automation", title: "Business Process Automation", division: "ai", tier: "catalogue" },
+  { slug: "automated-reporting-systems", title: "Automated Reporting Systems", division: "ai", tier: "catalogue" },
+  { slug: "customer-relationship-automation", title: "Customer Relationship Automation", division: "ai", tier: "catalogue" },
+  { slug: "ai-content-workflows", title: "AI Content Workflows", division: "ai", tier: "catalogue" },
+  { slug: "intelligent-customer-onboarding", title: "Intelligent Customer Onboarding", division: "ai", tier: "catalogue" },
+  { slug: "internal-business-automation", title: "Internal Business Automation", division: "ai", tier: "catalogue" },
+  { slug: "custom-ai-agent-development", title: "Custom AI Agent Development", division: "ai", tier: "flagship" },
+  { slug: "ai-powered-data-processing", title: "AI-Powered Data Processing", division: "ai", tier: "catalogue" },
+  { slug: "automated-customer-follow-up", title: "Automated Customer Follow-Up", division: "ai", tier: "catalogue" },
+  { slug: "business-task-automation", title: "Business Task Automation", division: "ai", tier: "catalogue" },
+  { slug: "workflow-integration", title: "Workflow Integration", division: "ai", tier: "catalogue" },
+  { slug: "ai-business-assistant-implementation", title: "AI Business Assistant Implementation", division: "ai", tier: "catalogue" },
+  { slug: "ai-research-workflows", title: "AI Research Workflows", division: "ai", tier: "catalogue" },
+  { slug: "ai-powered-business-search", title: "AI-Powered Business Search", division: "ai", tier: "catalogue" },
+  { slug: "intelligent-internal-tools", title: "Intelligent Internal Tools", division: "ai", tier: "catalogue" },
+  { slug: "ai-integration-consulting", title: "AI Integration Consulting", division: "ai", tier: "catalogue" },
+  { slug: "automation-opportunity-assessment", title: "Automation Opportunity Assessment", division: "ai", tier: "flagship" },
+  // ---- growth: 30 services, 8 flagship ----
+  { slug: "search-engine-optimization-seo", title: "Search Engine Optimization (SEO)", division: "growth", tier: "flagship" },
+  { slug: "technical-seo", title: "Technical SEO", division: "growth", tier: "flagship" },
+  { slug: "local-seo", title: "Local SEO", division: "growth", tier: "flagship" },
+  { slug: "international-seo", title: "International SEO", division: "growth", tier: "catalogue" },
+  { slug: "e-commerce-seo", title: "E-commerce SEO", division: "growth", tier: "catalogue" },
+  { slug: "ai-search-optimization", title: "AI Search Optimization", division: "growth", tier: "flagship" },
+  { slug: "generative-engine-optimization-geo", title: "Generative Engine Optimization (GEO)", division: "growth", tier: "flagship" },
+  { slug: "content-marketing", title: "Content Marketing", division: "growth", tier: "catalogue" },
+  { slug: "digital-marketing-strategy", title: "Digital Marketing Strategy", division: "growth", tier: "catalogue" },
+  { slug: "google-ads-management", title: "Google Ads Management", division: "growth", tier: "catalogue" },
+  { slug: "social-media-marketing", title: "Social Media Marketing", division: "growth", tier: "catalogue" },
+  { slug: "social-media-management", title: "Social Media Management", division: "growth", tier: "catalogue" },
+  { slug: "paid-advertising-campaigns", title: "Paid Advertising Campaigns", division: "growth", tier: "catalogue" },
+  { slug: "conversion-rate-optimization", title: "Conversion Rate Optimization", division: "growth", tier: "flagship" },
+  { slug: "email-marketing", title: "Email Marketing", division: "growth", tier: "catalogue" },
+  { slug: "marketing-automation", title: "Marketing Automation", division: "growth", tier: "catalogue" },
+  { slug: "lead-generation-campaigns", title: "Lead Generation Campaigns", division: "growth", tier: "catalogue" },
+  { slug: "brand-awareness-campaigns", title: "Brand Awareness Campaigns", division: "growth", tier: "catalogue" },
+  { slug: "reputation-management", title: "Reputation Management", division: "growth", tier: "catalogue" },
+  { slug: "digital-marketing-audits", title: "Digital Marketing Audits", division: "growth", tier: "flagship" },
+  { slug: "competitor-analysis", title: "Competitor Analysis", division: "growth", tier: "catalogue" },
+  { slug: "keyword-research", title: "Keyword Research", division: "growth", tier: "catalogue" },
+  { slug: "content-strategy", title: "Content Strategy", division: "growth", tier: "flagship" },
+  { slug: "search-performance-optimization", title: "Search Performance Optimization", division: "growth", tier: "catalogue" },
+  { slug: "marketing-funnel-development", title: "Marketing Funnel Development", division: "growth", tier: "catalogue" },
+  { slug: "digital-campaign-management", title: "Digital Campaign Management", division: "growth", tier: "catalogue" },
+  { slug: "audience-research", title: "Audience Research", division: "growth", tier: "catalogue" },
+  { slug: "customer-acquisition-strategy", title: "Customer Acquisition Strategy", division: "growth", tier: "catalogue" },
+  { slug: "website-conversion-optimization", title: "Website Conversion Optimization", division: "growth", tier: "catalogue" },
+  { slug: "digital-growth-consulting", title: "Digital Growth Consulting", division: "growth", tier: "catalogue" },
+  // ---- brand: 25 services, 5 flagship ----
+  { slug: "brand-identity-design", title: "Brand Identity Design", division: "brand", tier: "flagship" },
+  { slug: "logo-design", title: "Logo Design", division: "brand", tier: "catalogue" },
+  { slug: "corporate-branding", title: "Corporate Branding", division: "brand", tier: "catalogue" },
+  { slug: "brand-strategy", title: "Brand Strategy", division: "brand", tier: "flagship" },
+  { slug: "brand-guidelines", title: "Brand Guidelines", division: "brand", tier: "flagship" },
+  { slug: "ui-ux-design", title: "UI/UX Design", division: "brand", tier: "flagship" },
+  { slug: "mobile-app-interface-design", title: "Mobile App Interface Design", division: "brand", tier: "catalogue" },
+  { slug: "website-interface-design", title: "Website Interface Design", division: "brand", tier: "catalogue" },
+  { slug: "graphic-design", title: "Graphic Design", division: "brand", tier: "catalogue" },
+  { slug: "social-media-graphics", title: "Social Media Graphics", division: "brand", tier: "catalogue" },
+  { slug: "presentation-design", title: "Presentation Design", division: "brand", tier: "catalogue" },
+  { slug: "corporate-profile-design", title: "Corporate Profile Design", division: "brand", tier: "catalogue" },
+  { slug: "marketing-collateral", title: "Marketing Collateral", division: "brand", tier: "catalogue" },
+  { slug: "packaging-design", title: "Packaging Design", division: "brand", tier: "catalogue" },
+  { slug: "infographics", title: "Infographics", division: "brand", tier: "catalogue" },
+  { slug: "motion-graphics", title: "Motion Graphics", division: "brand", tier: "flagship" },
+  { slug: "explainer-videos", title: "Explainer Videos", division: "brand", tier: "catalogue" },
+  { slug: "video-editing", title: "Video Editing", division: "brand", tier: "catalogue" },
+  { slug: "creative-campaign-development", title: "Creative Campaign Development", division: "brand", tier: "catalogue" },
+  { slug: "visual-communication-strategy", title: "Visual Communication Strategy", division: "brand", tier: "catalogue" },
+  { slug: "digital-illustration", title: "Digital Illustration", division: "brand", tier: "catalogue" },
+  { slug: "advertising-creative-design", title: "Advertising Creative Design", division: "brand", tier: "catalogue" },
+  { slug: "business-documents-design", title: "Business Documents Design", division: "brand", tier: "catalogue" },
+  { slug: "product-visual-design", title: "Product Visual Design", division: "brand", tier: "catalogue" },
+  { slug: "brand-refresh-services", title: "Brand Refresh Services", division: "brand", tier: "catalogue" },
+  // ---- publishing: 26 services, 6 flagship ----
+  { slug: "author-website-development", title: "Author Website Development", division: "publishing", tier: "flagship" },
+  { slug: "book-landing-pages", title: "Book Landing Pages", division: "publishing", tier: "catalogue" },
+  { slug: "author-branding", title: "Author Branding", division: "publishing", tier: "flagship" },
+  { slug: "book-seo", title: "Book SEO", division: "publishing", tier: "flagship" },
+  { slug: "book-discoverability-strategy", title: "Book Discoverability Strategy", division: "publishing", tier: "flagship" },
+  { slug: "amazon-author-profile-optimization", title: "Amazon Author Profile Optimization", division: "publishing", tier: "catalogue" },
+  { slug: "publishing-website-development", title: "Publishing Website Development", division: "publishing", tier: "catalogue" },
+  { slug: "digital-book-catalogues", title: "Digital Book Catalogues", division: "publishing", tier: "catalogue" },
+  { slug: "book-marketing-strategy", title: "Book Marketing Strategy", division: "publishing", tier: "catalogue" },
+  { slug: "author-email-marketing", title: "Author Email Marketing", division: "publishing", tier: "catalogue" },
+  { slug: "book-launch-campaigns", title: "Book Launch Campaigns", division: "publishing", tier: "flagship" },
+  { slug: "reader-acquisition-funnels", title: "Reader Acquisition Funnels", division: "publishing", tier: "catalogue" },
+  { slug: "book-metadata-optimization", title: "Book Metadata Optimization", division: "publishing", tier: "catalogue" },
+  { slug: "publisher-websites", title: "Publisher Websites", division: "publishing", tier: "catalogue" },
+  { slug: "digital-publishing-consulting", title: "Digital Publishing Consulting", division: "publishing", tier: "catalogue" },
+  { slug: "author-crm-systems", title: "Author CRM Systems", division: "publishing", tier: "catalogue" },
+  { slug: "book-sales-funnel-development", title: "Book Sales Funnel Development", division: "publishing", tier: "catalogue" },
+  { slug: "book-portfolio-websites", title: "Book Portfolio Websites", division: "publishing", tier: "catalogue" },
+  { slug: "publishing-automation", title: "Publishing Automation", division: "publishing", tier: "flagship" },
+  { slug: "author-digital-transformation", title: "Author Digital Transformation", division: "publishing", tier: "catalogue" },
+  { slug: "book-promotion-websites", title: "Book Promotion Websites", division: "publishing", tier: "catalogue" },
+  { slug: "author-content-strategy", title: "Author Content Strategy", division: "publishing", tier: "catalogue" },
+  { slug: "publishing-business-automation", title: "Publishing Business Automation", division: "publishing", tier: "catalogue" },
+  { slug: "reader-engagement-systems", title: "Reader Engagement Systems", division: "publishing", tier: "catalogue" },
+  { slug: "publishing-analytics", title: "Publishing Analytics", division: "publishing", tier: "catalogue" },
+  { slug: "author-digital-presence-management", title: "Author Digital Presence Management", division: "publishing", tier: "catalogue" },
+  // ---- intelligence: 26 services, 5 flagship ----
+  { slug: "digital-transformation-consulting", title: "Digital Transformation Consulting", division: "intelligence", tier: "flagship" },
+  { slug: "business-technology-audits", title: "Business Technology Audits", division: "intelligence", tier: "flagship" },
+  { slug: "it-strategy-consulting", title: "IT Strategy Consulting", division: "intelligence", tier: "catalogue" },
+  { slug: "technology-infrastructure-planning", title: "Technology Infrastructure Planning", division: "intelligence", tier: "catalogue" },
+  { slug: "digital-operations-consulting", title: "Digital Operations Consulting", division: "intelligence", tier: "catalogue" },
+  { slug: "business-intelligence-dashboards", title: "Business Intelligence Dashboards", division: "intelligence", tier: "flagship" },
+  { slug: "data-analytics", title: "Data Analytics", division: "intelligence", tier: "catalogue" },
+  { slug: "competitor-intelligence", title: "Competitor Intelligence", division: "intelligence", tier: "catalogue" },
+  { slug: "market-research", title: "Market Research", division: "intelligence", tier: "catalogue" },
+  { slug: "digital-opportunity-analysis", title: "Digital Opportunity Analysis", division: "intelligence", tier: "catalogue" },
+  { slug: "technology-stack-assessment", title: "Technology Stack Assessment", division: "intelligence", tier: "flagship" },
+  { slug: "enterprise-workflow-optimization", title: "Enterprise Workflow Optimization", division: "intelligence", tier: "catalogue" },
+  { slug: "digital-process-mapping", title: "Digital Process Mapping", division: "intelligence", tier: "catalogue" },
+  { slug: "technology-procurement-advisory", title: "Technology Procurement Advisory", division: "intelligence", tier: "catalogue" },
+  { slug: "business-systems-integration", title: "Business Systems Integration", division: "intelligence", tier: "catalogue" },
+  { slug: "digital-growth-roadmaps", title: "Digital Growth Roadmaps", division: "intelligence", tier: "flagship" },
+  { slug: "it-project-management", title: "IT Project Management", division: "intelligence", tier: "catalogue" },
+  { slug: "technology-risk-assessment", title: "Technology Risk Assessment", division: "intelligence", tier: "catalogue" },
+  { slug: "digital-performance-audits", title: "Digital Performance Audits", division: "intelligence", tier: "catalogue" },
+  { slug: "strategic-technology-advisory", title: "Strategic Technology Advisory", division: "intelligence", tier: "catalogue" },
+  { slug: "business-process-analysis", title: "Business Process Analysis", division: "intelligence", tier: "catalogue" },
+  { slug: "operational-efficiency-consulting", title: "Operational Efficiency Consulting", division: "intelligence", tier: "catalogue" },
+  { slug: "digital-readiness-assessment", title: "Digital Readiness Assessment", division: "intelligence", tier: "catalogue" },
+  { slug: "business-systems-evaluation", title: "Business Systems Evaluation", division: "intelligence", tier: "catalogue" },
+  { slug: "technology-implementation-planning", title: "Technology Implementation Planning", division: "intelligence", tier: "catalogue" },
+  { slug: "digital-business-strategy", title: "Digital Business Strategy", division: "intelligence", tier: "catalogue" },
+];
+
+const bySlug = new Map(serviceCatalog.map((s) => [s.slug, s]));
+
+export function getCatalogService(slug: string): CatalogService | undefined {
+  return bySlug.get(slug);
+}
+
+export function flagshipServices(): CatalogService[] {
+  return serviceCatalog.filter((s) => s.tier === "flagship");
+}
+
+export function servicesInDivision(divisionId: string): CatalogService[] {
+  return serviceCatalog.filter((s) => s.division === divisionId);
+}
+
+export function flagshipInDivision(divisionId: string): CatalogService[] {
+  return serviceCatalog.filter((s) => s.division === divisionId && s.tier === "flagship");
+}
+
+export function catalogueInDivision(divisionId: string): CatalogService[] {
+  return serviceCatalog.filter((s) => s.division === divisionId && s.tier === "catalogue");
+}
+
+/** Everything offered, including the five already-published pages. */
+export const TOTAL_SERVICES = serviceCatalog.length + PUBLISHED_SERVICES.length;
+

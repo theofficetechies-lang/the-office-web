@@ -63,19 +63,19 @@
       "slug": "business-website-design",
       "title": "Business Website Design",
       "division": "web",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "enterprise-website-development",
       "title": "Enterprise Website Development",
       "division": "web",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "custom-website-development",
       "title": "Custom Website Development",
       "division": "web",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "e-commerce-development",
@@ -87,7 +87,7 @@
       "slug": "wordpress-development",
       "title": "WordPress Development",
       "division": "web",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "web-application-development",
@@ -105,19 +105,19 @@
       "slug": "landing-page-development",
       "title": "Landing Page Development",
       "division": "web",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "website-redesign-services",
       "title": "Website Redesign Services",
       "division": "web",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "website-maintenance",
       "title": "Website Maintenance",
       "division": "web",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "website-performance-optimization",
@@ -135,19 +135,19 @@
       "slug": "website-migration",
       "title": "Website Migration",
       "division": "web",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "website-hosting-consultancy",
       "title": "Website Hosting Consultancy",
       "division": "web",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "website-architecture-planning",
       "title": "Website Architecture Planning",
       "division": "web",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "headless-cms-development",
@@ -159,67 +159,67 @@
       "slug": "api-integration",
       "title": "API Integration",
       "division": "web",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "customer-portal-development",
       "title": "Customer Portal Development",
       "division": "web",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "membership-website-development",
       "title": "Membership Website Development",
       "division": "web",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "booking-and-reservation-systems",
       "title": "Booking and Reservation Systems",
       "division": "web",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "educational-website-development",
       "title": "Educational Website Development",
       "division": "web",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "corporate-intranet-development",
       "title": "Corporate Intranet Development",
       "division": "web",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "real-estate-website-development",
       "title": "Real Estate Website Development",
       "division": "web",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "portfolio-website-development",
       "title": "Portfolio Website Development",
       "division": "web",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "custom-business-platforms",
       "title": "Custom Business Platforms",
       "division": "web",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "workflow-based-web-applications",
       "title": "Workflow-Based Web Applications",
       "division": "web",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "interactive-website-development",
       "title": "Interactive Website Development",
       "division": "web",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "website-accessibility-improvement",
@@ -231,7 +231,7 @@
       "slug": "website-technical-support",
       "title": "Website Technical Support",
       "division": "web",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "ai-business-automation",
@@ -243,7 +243,7 @@
       "slug": "ai-customer-support-systems",
       "title": "AI Customer Support Systems",
       "division": "ai",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "ai-chatbot-development",
@@ -255,7 +255,7 @@
       "slug": "ai-virtual-assistants",
       "title": "AI Virtual Assistants",
       "division": "ai",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "whatsapp-business-automation",
@@ -267,13 +267,13 @@
       "slug": "automated-lead-generation",
       "title": "Automated Lead Generation",
       "division": "ai",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "automated-email-systems",
       "title": "Automated Email Systems",
       "division": "ai",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "crm-automation",
@@ -285,13 +285,13 @@
       "slug": "sales-pipeline-automation",
       "title": "Sales Pipeline Automation",
       "division": "ai",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "appointment-scheduling-automation",
       "title": "Appointment Scheduling Automation",
       "division": "ai",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "document-processing-automation",
@@ -309,43 +309,43 @@
       "slug": "ai-business-workflow-consulting",
       "title": "AI Business Workflow Consulting",
       "division": "ai",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "business-process-automation",
       "title": "Business Process Automation",
       "division": "ai",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "automated-reporting-systems",
       "title": "Automated Reporting Systems",
       "division": "ai",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "customer-relationship-automation",
       "title": "Customer Relationship Automation",
       "division": "ai",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "ai-content-workflows",
       "title": "AI Content Workflows",
       "division": "ai",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "intelligent-customer-onboarding",
       "title": "Intelligent Customer Onboarding",
       "division": "ai",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "internal-business-automation",
       "title": "Internal Business Automation",
       "division": "ai",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "custom-ai-agent-development",
@@ -357,55 +357,55 @@
       "slug": "ai-powered-data-processing",
       "title": "AI-Powered Data Processing",
       "division": "ai",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "automated-customer-follow-up",
       "title": "Automated Customer Follow-Up",
       "division": "ai",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "business-task-automation",
       "title": "Business Task Automation",
       "division": "ai",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "workflow-integration",
       "title": "Workflow Integration",
       "division": "ai",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "ai-business-assistant-implementation",
       "title": "AI Business Assistant Implementation",
       "division": "ai",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "ai-research-workflows",
       "title": "AI Research Workflows",
       "division": "ai",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "ai-powered-business-search",
       "title": "AI-Powered Business Search",
       "division": "ai",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "intelligent-internal-tools",
       "title": "Intelligent Internal Tools",
       "division": "ai",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "ai-integration-consulting",
       "title": "AI Integration Consulting",
       "division": "ai",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "automation-opportunity-assessment",
@@ -435,13 +435,13 @@
       "slug": "international-seo",
       "title": "International SEO",
       "division": "growth",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "e-commerce-seo",
       "title": "E-commerce SEO",
       "division": "growth",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "ai-search-optimization",
@@ -459,37 +459,37 @@
       "slug": "content-marketing",
       "title": "Content Marketing",
       "division": "growth",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "digital-marketing-strategy",
       "title": "Digital Marketing Strategy",
       "division": "growth",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "google-ads-management",
       "title": "Google Ads Management",
       "division": "growth",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "social-media-marketing",
       "title": "Social Media Marketing",
       "division": "growth",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "social-media-management",
       "title": "Social Media Management",
       "division": "growth",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "paid-advertising-campaigns",
       "title": "Paid Advertising Campaigns",
       "division": "growth",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "conversion-rate-optimization",
@@ -501,31 +501,31 @@
       "slug": "email-marketing",
       "title": "Email Marketing",
       "division": "growth",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "marketing-automation",
       "title": "Marketing Automation",
       "division": "growth",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "lead-generation-campaigns",
       "title": "Lead Generation Campaigns",
       "division": "growth",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "brand-awareness-campaigns",
       "title": "Brand Awareness Campaigns",
       "division": "growth",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "reputation-management",
       "title": "Reputation Management",
       "division": "growth",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "digital-marketing-audits",
@@ -537,13 +537,13 @@
       "slug": "competitor-analysis",
       "title": "Competitor Analysis",
       "division": "growth",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "keyword-research",
       "title": "Keyword Research",
       "division": "growth",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "content-strategy",
@@ -555,43 +555,43 @@
       "slug": "search-performance-optimization",
       "title": "Search Performance Optimization",
       "division": "growth",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "marketing-funnel-development",
       "title": "Marketing Funnel Development",
       "division": "growth",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "digital-campaign-management",
       "title": "Digital Campaign Management",
       "division": "growth",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "audience-research",
       "title": "Audience Research",
       "division": "growth",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "customer-acquisition-strategy",
       "title": "Customer Acquisition Strategy",
       "division": "growth",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "website-conversion-optimization",
       "title": "Website Conversion Optimization",
       "division": "growth",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "digital-growth-consulting",
       "title": "Digital Growth Consulting",
       "division": "growth",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "brand-identity-design",
@@ -603,13 +603,13 @@
       "slug": "logo-design",
       "title": "Logo Design",
       "division": "brand",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "corporate-branding",
       "title": "Corporate Branding",
       "division": "brand",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "brand-strategy",
@@ -633,55 +633,55 @@
       "slug": "mobile-app-interface-design",
       "title": "Mobile App Interface Design",
       "division": "brand",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "website-interface-design",
       "title": "Website Interface Design",
       "division": "brand",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "graphic-design",
       "title": "Graphic Design",
       "division": "brand",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "social-media-graphics",
       "title": "Social Media Graphics",
       "division": "brand",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "presentation-design",
       "title": "Presentation Design",
       "division": "brand",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "corporate-profile-design",
       "title": "Corporate Profile Design",
       "division": "brand",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "marketing-collateral",
       "title": "Marketing Collateral",
       "division": "brand",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "packaging-design",
       "title": "Packaging Design",
       "division": "brand",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "infographics",
       "title": "Infographics",
       "division": "brand",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "motion-graphics",
@@ -693,55 +693,55 @@
       "slug": "explainer-videos",
       "title": "Explainer Videos",
       "division": "brand",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "video-editing",
       "title": "Video Editing",
       "division": "brand",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "creative-campaign-development",
       "title": "Creative Campaign Development",
       "division": "brand",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "visual-communication-strategy",
       "title": "Visual Communication Strategy",
       "division": "brand",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "digital-illustration",
       "title": "Digital Illustration",
       "division": "brand",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "advertising-creative-design",
       "title": "Advertising Creative Design",
       "division": "brand",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "business-documents-design",
       "title": "Business Documents Design",
       "division": "brand",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "product-visual-design",
       "title": "Product Visual Design",
       "division": "brand",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "brand-refresh-services",
       "title": "Brand Refresh Services",
       "division": "brand",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "author-website-development",
@@ -753,7 +753,7 @@
       "slug": "book-landing-pages",
       "title": "Book Landing Pages",
       "division": "publishing",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "author-branding",
@@ -777,31 +777,31 @@
       "slug": "amazon-author-profile-optimization",
       "title": "Amazon Author Profile Optimization",
       "division": "publishing",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "publishing-website-development",
       "title": "Publishing Website Development",
       "division": "publishing",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "digital-book-catalogues",
       "title": "Digital Book Catalogues",
       "division": "publishing",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "book-marketing-strategy",
       "title": "Book Marketing Strategy",
       "division": "publishing",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "author-email-marketing",
       "title": "Author Email Marketing",
       "division": "publishing",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "book-launch-campaigns",
@@ -813,43 +813,43 @@
       "slug": "reader-acquisition-funnels",
       "title": "Reader Acquisition Funnels",
       "division": "publishing",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "book-metadata-optimization",
       "title": "Book Metadata Optimization",
       "division": "publishing",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "publisher-websites",
       "title": "Publisher Websites",
       "division": "publishing",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "digital-publishing-consulting",
       "title": "Digital Publishing Consulting",
       "division": "publishing",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "author-crm-systems",
       "title": "Author CRM Systems",
       "division": "publishing",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "book-sales-funnel-development",
       "title": "Book Sales Funnel Development",
       "division": "publishing",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "book-portfolio-websites",
       "title": "Book Portfolio Websites",
       "division": "publishing",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "publishing-automation",
@@ -861,43 +861,43 @@
       "slug": "author-digital-transformation",
       "title": "Author Digital Transformation",
       "division": "publishing",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "book-promotion-websites",
       "title": "Book Promotion Websites",
       "division": "publishing",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "author-content-strategy",
       "title": "Author Content Strategy",
       "division": "publishing",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "publishing-business-automation",
       "title": "Publishing Business Automation",
       "division": "publishing",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "reader-engagement-systems",
       "title": "Reader Engagement Systems",
       "division": "publishing",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "publishing-analytics",
       "title": "Publishing Analytics",
       "division": "publishing",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "author-digital-presence-management",
       "title": "Author Digital Presence Management",
       "division": "publishing",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "digital-transformation-consulting",
@@ -915,19 +915,19 @@
       "slug": "it-strategy-consulting",
       "title": "IT Strategy Consulting",
       "division": "intelligence",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "technology-infrastructure-planning",
       "title": "Technology Infrastructure Planning",
       "division": "intelligence",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "digital-operations-consulting",
       "title": "Digital Operations Consulting",
       "division": "intelligence",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "business-intelligence-dashboards",
@@ -939,25 +939,25 @@
       "slug": "data-analytics",
       "title": "Data Analytics",
       "division": "intelligence",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "competitor-intelligence",
       "title": "Competitor Intelligence",
       "division": "intelligence",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "market-research",
       "title": "Market Research",
       "division": "intelligence",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "digital-opportunity-analysis",
       "title": "Digital Opportunity Analysis",
       "division": "intelligence",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "technology-stack-assessment",
@@ -969,25 +969,25 @@
       "slug": "enterprise-workflow-optimization",
       "title": "Enterprise Workflow Optimization",
       "division": "intelligence",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "digital-process-mapping",
       "title": "Digital Process Mapping",
       "division": "intelligence",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "technology-procurement-advisory",
       "title": "Technology Procurement Advisory",
       "division": "intelligence",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "business-systems-integration",
       "title": "Business Systems Integration",
       "division": "intelligence",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "digital-growth-roadmaps",
@@ -999,61 +999,61 @@
       "slug": "it-project-management",
       "title": "IT Project Management",
       "division": "intelligence",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "technology-risk-assessment",
       "title": "Technology Risk Assessment",
       "division": "intelligence",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "digital-performance-audits",
       "title": "Digital Performance Audits",
       "division": "intelligence",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "strategic-technology-advisory",
       "title": "Strategic Technology Advisory",
       "division": "intelligence",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "business-process-analysis",
       "title": "Business Process Analysis",
       "division": "intelligence",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "operational-efficiency-consulting",
       "title": "Operational Efficiency Consulting",
       "division": "intelligence",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "digital-readiness-assessment",
       "title": "Digital Readiness Assessment",
       "division": "intelligence",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "business-systems-evaluation",
       "title": "Business Systems Evaluation",
       "division": "intelligence",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "technology-implementation-planning",
       "title": "Technology Implementation Planning",
       "division": "intelligence",
-      "tier": "catalog"
+      "tier": "catalogue"
     },
     {
       "slug": "digital-business-strategy",
       "title": "Digital Business Strategy",
       "division": "intelligence",
-      "tier": "catalog"
+      "tier": "catalogue"
     }
   ],
   "industries": [
@@ -1161,7 +1161,7 @@
   "totals": {
     "services": 167,
     "flagship": 40,
-    "catalog": 127,
+    "catalogue": 127,
     "industries": 20
   }
 }

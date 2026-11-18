@@ -1,4 +1,8 @@
 import { useEffect, useState } from "react";
+import { divisionIds } from "@/data/divisions";
+
+/** Division ids are matched from data, so adding a division needs no router edit. */
+const DIVISION_IDS: readonly string[] = divisionIds;
 
 /**
  * Minimal pathname router. The site is static; every route below is also
@@ -12,6 +16,10 @@ export type Route =
   | { kind: "note"; slug: string }
   | { kind: "work"; slug: string }
   | { kind: "service"; slug: string }
+  | { kind: "servicesIndex" }
+  | { kind: "division"; id: string }
+  | { kind: "industriesIndex" }
+  | { kind: "industry"; slug: string }
   | { kind: "press" }
   | { kind: "glossary" }
   | { kind: "checklist" }
@@ -37,6 +45,8 @@ export function matchRoute(pathname: string): Route {
   if (p === "/methodology") return { kind: "methodology" };
   if (p === "/demos") return { kind: "demos" };
   if (p === "/store") return { kind: "store" };
+  if (p === "/services") return { kind: "servicesIndex" };
+  if (p === "/industries") return { kind: "industriesIndex" };
 
   if (p === "/admin") return { kind: "admin" };
 
@@ -49,14 +59,29 @@ export function matchRoute(pathname: string): Route {
   const work = p.match(/^\/work\/(.+)$/);
   if (work && SLUG.test(work[1])) return { kind: "work", slug: work[1] };
 
+  /**
+   * Division hubs share the /services/ prefix. They are matched first so that
+   * /services/web resolves to the Web Development hub rather than 404-ing as an
+   * unknown service slug.
+   */
+  const division = p.match(/^\/services\/([a-z]+)$/);
+  if (division && DIVISION_IDS.includes(division[1])) {
+    return { kind: "division", id: division[1] };
+  }
+
   const service = p.match(/^\/services\/(.+)$/);
   if (service && SLUG.test(service[1])) return { kind: "service", slug: service[1] };
+
+  const industry = p.match(/^\/industries\/([a-z0-9-]+)$/);
+  if (industry && SLUG.test(industry[1])) return { kind: "industry", slug: industry[1] };
 
   return { kind: "notfound", path: p };
 }
 
 export function routeKey(route: Route): string {
-  return "slug" in route ? `${route.kind}:${route.slug}` : route.kind;
+  if ("slug" in route) return `${route.kind}:${route.slug}`;
+  if ("id" in route) return `${route.kind}:${route.id}`;
+  return route.kind;
 }
 
 export function useRoute(): Route {
