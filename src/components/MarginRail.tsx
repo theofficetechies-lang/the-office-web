@@ -50,7 +50,7 @@ export default function MarginRail({
         )}
 
         <div className="mt-auto pt-10 opacity-40 leading-tight">
-          <div>THE OFFICE</div>
+          <div>THE OFFICE 360</div>
           <div>EST. 2021</div>
           <div>LISBON · NYC</div>
         </div>

@@ -62,3 +62,16 @@ export const notesData: NoteItem[] = [
       "Treat Amazon as an index to be optimized rather than a shelf to be stocked. Metadata discipline drives organic discovery.",
   },
 ];
+
+export function getNote(slug: string): NoteItem | undefined {
+  return notesData.find((n) => n.slug === slug);
+}
+
+export function getAdjacentNotes(slug: string): {
+  prev?: NoteItem;
+  next?: NoteItem;
+} {
+  const i = notesData.findIndex((n) => n.slug === slug);
+  if (i === -1) return {};
+  return { prev: notesData[i - 1], next: notesData[i + 1] };
+}

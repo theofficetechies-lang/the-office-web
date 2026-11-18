@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://theoffice.studio/sitemap.xml
+Sitemap: https://the-office-test4.vercel.app/sitemap.xml

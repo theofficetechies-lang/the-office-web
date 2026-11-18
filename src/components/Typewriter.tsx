@@ -1,52 +1,50 @@
 import { useEffect, useState } from "react";
+import { prefersReducedMotion } from "@/utils/motion";
 
 /**
  * The other half of the signature element:
  * a single line that types itself out on load, then resolves.
  * Specific to a studio that works with prose.
+ *
+ * Purely decorative — nothing else on the page waits on it. The full line is
+ * exposed to assistive tech immediately via aria-label, and with reduced
+ * motion it is rendered complete on the first paint.
+ *
+ * Both the start timeout and the typing interval are cleaned up on unmount;
+ * an earlier version only cleared the timeout and left the interval running
+ * against an unmounted component.
  */
 type Props = {
   text: string;
   speed?: number;
   className?: string;
-  onDone?: () => void;
   startDelay?: number;
 };
 
-export default function Typewriter({
-  text,
-  speed = 38,
-  className,
-  onDone,
-  startDelay = 600,
-}: Props) {
-  const [i, setI] = useState(0);
+export default function Typewriter({ text, speed = 38, className, startDelay = 600 }: Props) {
+  const [i, setI] = useState(() => (prefersReducedMotion() ? text.length : 0));
 
   useEffect(() => {
-    // Check reduced motion: render full text instantly
-    const reduce = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    if (reduce) {
-      setI(text.length);
-      onDone?.();
-      return;
-    }
+    if (prefersReducedMotion()) return;
+
+    let t: ReturnType<typeof setInterval> | undefined;
     const start = setTimeout(() => {
-      const t = setInterval(() => {
+      t = setInterval(() => {
         setI((prev) => {
           if (prev >= text.length) {
-            clearInterval(t);
-            onDone?.();
+            if (t) clearInterval(t);
             return prev;
           }
           return prev + 1;
         });
       }, speed);
     }, startDelay);
-    return () => clearTimeout(start);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
+    return () => {
+      clearTimeout(start);
+      if (t) clearInterval(t);
+    };
+  }, [text, speed, startDelay]);
 
   const done = i >= text.length;
   return (

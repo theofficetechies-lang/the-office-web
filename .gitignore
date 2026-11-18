@@ -6,6 +6,8 @@ node_modules
 # Build outputs
 dist
 dist-ssr
+dist-ssr-api
+dist-test
 *.local
 
 # Vercel
@@ -35,3 +37,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+
+# Audit/planning artefacts for the 360 expansion are documentation, not build output.
+# Large media uploads at the repo root that no route serves.
+/ChatGPT Image*.png
+/IMG-*.jpg

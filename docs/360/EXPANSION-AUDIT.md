@@ -1,0 +1,290 @@
+# THE OFFICE 360 — Expansion Audit & Phased Implementation Plan
+
+**Prepared:** 2026-11-18
+**Target site:** https://the-office360.com/
+**Method:** live-site fetch (all routes, `robots.txt`, `sitemap.xml`), source extraction, and executed
+checks (`tsc`, `vite build`, `eslint`, the project's own smoke suite) on the codebase the site is built
+from.
+
+---
+
+## 0. Read this first — a corpus problem, resolved
+
+The expansion brief is scoped to `the-office360.com`. **The codebase in this session's working tree is
+not that site.** Establishing this was the first job, because every later decision depends on it.
+
+| | This session's branch | The live site |
+|---|---|---|
+| Branch | `arena/a7e1d1d1-the-office-web` | built from `arena/01a03b70-the-office-web` @ `84b1ba3` |
+| Base | `7bfe8cd` | unrelated root-ish commit (no common ancestor) |
+| Brand | "THE OFFICE" | **"THE OFFICE 360"** |
+| Routes | `/`, `/privacy`, `/terms`, `/notes` only | **16 route kinds**, incl. `/services/:slug`, `/work/:slug`, `/methodology`, `/demos`, `/store`, `/admin` |
+| Services | 4, no detail pages | **5, each with a detail page** |
+| Locales | en only | **en + pt** (`src/lib/i18n.tsx`, 285 lines) |
+| Lead pipeline | Web3Forms, silent-failure bug | Web3Forms (browser) + Resend (server) + correct error codes |
+| Payments | none | Paystack (`api/paystack.ts`) |
+| Tests | none | smoke suite: SSR + API + DOM (971 lines) |
+| Size | 2,999 lines | **~9,500 lines**, 66 TS/TSX/MJS/CSS files |
+| `tsc` / `build` / `eslint` | pass / pass / n/a | **pass / pass / pass** |
+
+**Consequences:**
+
+1. Every critical bug I found in the previous turn (silent brief loss, the unreachable `400`/`429`
+   handlers, duplicate delivery, the no-op vendor split, published sourcemaps, the dead `useReveal`)
+   has **already been fixed upstream**. `api/brief.ts` now returns `502`/`503` instead of pretending
+   success; `vite.config.ts` splits on `node_modules` and sets `sourcemap: false`. Do not re-report them.
+2. Implementing "expansion" in this working tree would expand a **superseded** site. That is wasted
+   work and would fork the brand a third time.
+3. Everything in this document is therefore written against **`84b1ba3` — the code that actually serves
+   `the-office360.com`** — and should be applied there.
+
+I have not written any application code this turn. The expansion is ~170 new pages, a lead database,
+CRM, booking, portal and admin; starting that from a divergent base, before the base is agreed, would
+be the single most expensive mistake available.
+
+---
+
+## 1. Existing-site audit (verified against `84b1ba3` + live)
+
+### 1.1 What exists and works
+
+**Stack.** React 19.2.6 · Vite 7.3.2 · Tailwind 4.1.17 · TypeScript 5.9.3 strict · Zod 3.25.7 ·
+Resend · Vercel serverless · ESLint 9 with `jsx-a11y` and `react-hooks`. No router library — a 74-line
+`src/lib/router.ts` with 16 route kinds, all depth-1 rewrites in `vercel.json` plus a catch-all.
+**Content is data-driven** from `src/data/` (12 modules), which is exactly the right foundation for a
+catalogue expansion and should be preserved.
+
+**Routing (16 kinds).** `home`, `privacy`, `terms`, `notesIndex`, `note`, `work`, `service`, `press`,
+`glossary`, `checklist`, `methodology`, `demos`, `store`, `storeProduct`, `admin`, `notfound`.
+`matchRoute` normalises trailing slashes and validates slugs against `^[a-z0-9]+(-[a-z0-9]+)*$`.
+
+**What genuinely improved since the base commit:**
+
+| Area | Evidence |
+|---|---|
+| Per-route metadata | `src/hooks/useDocumentMeta.ts` — title, description, canonical, OG/Twitter, `robots` per route |
+| Semantics | skip link (`src/components/SkipLink.tsx`), `#main` landmark on every page |
+| i18n | `src/lib/i18n.tsx`, en + pt, `<html lang>` switching |
+| Lead delivery | `api/brief.ts` returns **502/503 on failure**; CORS is an **allowlist** with `*.vercel.app` + localhost dev only |
+| Brief fields | name, email, org, services[] (multi-select), brief, timeline, scope, budget, discovery, honeypot |
+| Tests | `smoke:ssr`, `smoke:api`, `smoke:dom` + a DOM harness on jsdom |
+| Payments | `api/paystack.ts` + `src/lib/paystack.ts`, hosted-redirect flow |
+| Content surfaces | 5 services, 5 case patterns, 3 notes, 8 glossary terms, 10-point self-audit, 5 products, 5 FAQ, 3 pricing shapes, 6-stage method |
+| Accessibility | `.reveal` correctly scoped behind `.js`, `is-visible` state, inverse-section focus ring, reduced-motion |
+| Honesty posture | explicit "no fabricated testimonials"; sample PDF published in full |
+
+That is a strong, disciplined foundation. **UI preservation is therefore not a constraint to
+negotiate — it is the correct strategy.** The existing system (margin rail, folio/`SEC.` device,
+Fraunces/Inter Tight/JetBrains Mono, hairline rules, `ink-block`, 12-col grid, `MarginRail` +
+`MobileFolioStrip` pattern) is the asset the expansion must reuse.
+
+### 1.2 Defect register (verified, ranked)
+
+| # | Severity | Finding | Evidence |
+|---|---|---|---|
+| **D1** | **Critical** | **Every canonical URL on the live domain points at the Vercel preview host.** `robots.txt` on `the-office360.com` serves `Sitemap: https://the-office-test4.vercel.app/sitemap.xml`; the live `sitemap.xml` contains **29 URLs, all on `the-office-test4.vercel.app`**; `index.html` ships 19 `test4` references including canonical, all 3 `hreflang` alternates, RSS, `og:url`, `og:image` and both JSON-LD `@id`s. Confirmed live: fetching the homepage returns `image: https://the-office-test4.vercel.app/og-image.png`. **101 occurrences of `test4` in the shipped surface.** Until `VITE_SITE_URL` is set and `index.html`/`robots.txt` regenerated, Google is told the real domain is a duplicate of a preview deployment. | `public/robots.txt:4`, `public/sitemap.xml`, `index.html:11,14-17,29-30,40,50-78`, `src/lib/site.ts:29`, `scripts/build-sitemap.mjs:16` |
+| **D2** | **Critical** | **Prices are charged in the wrong currency unit.** `amount: Math.round(product.priceUsd * 100)` sends *dollars×100* to Paystack, which interprets `amount` as **minor units of NGN (kobo)**. A `$950` product charges **₦950** (≈ $0.63 at ~1,500 NGN/USD). A `$49` product charges ₦49. No FX conversion exists anywhere in the repo. | `api/paystack.ts:68` |
+| **D3** | High | **Admin is publicly reachable with a default passcode.** `/admin` is linked from the site footer and gated only by `VITE_ADMIN_PASSCODE ?? "admin123"` compared in the browser; the flag is `localStorage["the-office360:admin"] === "1"`. Catalog edits then persist to `localStorage`. There is no server-side authorisation. | `src/pages/AdminPage.tsx:9-11,27,42`, `src/components/SiteFooter.tsx:104` |
+| **D4** | High | **No lead persistence.** No KV/Postgres/Sheets/CRM anywhere (`grep` for `kv|redis|postgres|supabase|database|insert|airtable|hubspot|notion` → 0). A brief exists only as an email. There is nothing to build a pipeline, an admin lead list, reporting or follow-up automation on. | `api/brief.ts`, `src/lib/api.ts` |
+| **D5** | High | **The smoke suite fails 7 checks and is not gated.** `npm run smoke` exits 1. Of the 7, **one is a real user-visible bug** (below) and six are stale assertions pinning superseded copy. | `scripts/smoke-dom.mjs`, reproduced this session |
+| **D6** | High | **The hero CTA renders with `class="undefined"`.** The smoke selector is `a[href="#contact"]` whose text includes `SEND A BRIEF`, and the live hero now says **"REQUEST AN ANALYSIS →"**. The matched element therefore has no className: `check("hero CTA keeps its hover colour transition", cta?.className.includes(...))` reports `class="undefined"`. Either an element is rendering without classes or the CTA lost its styling contract. Must be resolved before any hero work. | `scripts/smoke-dom.mjs:486-515`, live hero |
+| **D7** | High | **Weak-password / no lockout on a public admin, and the same class of problem in customer auth.** `src/lib/auth.tsx` signs a customer in with **email alone** — no password, no token, no verification — and writes them into `localStorage` as if authenticated. Payment is gated behind that "session", so the gate is cosmetic. | `src/lib/auth.tsx` |
+| **D8** | Medium | **Checkout cannot be fulfilled.** No webhook (`grep` for `webhook` → none), no order record, no download entitlement, no receipt. `verifyReference` returns a status string and is not wired to fulfilment. Products are "instant download" with nothing that grants a download. | `api/paystack.ts`, `src/lib/paystack.ts`, `src/pages/StorePage.tsx` |
+| **D9** | Medium | **Zod `.min()` still runs before `.transform(trim)`.** Whitespace-only name/brief passes validation and is emailed as empty. Same defect I reproduced on the old branch; unchanged here. | `api/_lib/validate.ts:6-8,54-56` |
+| **D10** | Medium | **`useDocumentMeta` only updates on the client.** Hard-load crawlers that do not execute JS see the homepage's title/description on every one of the 29 URLs. No prerender/SSR (`src/entry-ssr.tsx` exists but `vercel.json` deploys a pure SPA build). | `src/hooks/useDocumentMeta.ts`, `vercel.json` |
+| **D11** | Medium | **Locales are not in the URL.** `hreflang` alternates are declared for `en`/`pt`, but both resolve to the same URL and the language is a `localStorage` toggle — so the `hreflang` trio is invalid and pt content is not indexable. | `index.html:14-16`, `src/lib/i18n.tsx` |
+| **D12** | Medium | **No breadcrumbs, no `BreadcrumbList`, no `Organization`-level `sameAs`, no `Service`/`FAQPage` schema on the 5 service pages or the FAQ block** — the structured-data work stops at two `@id`s. | `index.html:48-80` |
+| **D13** | Medium | **No RSS discovery** despite `/rss.xml` being generated and shipped (link tag present, but no route/validation and it is not in the sitemap). | `index.html:17`, `scripts/build-sitemap.mjs:82` |
+| **D14** | Low | Dev middleware logs the **full brief** (name, email, org, message) to stdout; `req.url === "/api/brief"` is exact-match so query strings bypass it. | `vite.config.ts:15,27,35` |
+| **D15** | Low | `vercel.json` still ships deprecated `X-XSS-Protection`; no HSTS; no CSP for the app (only on the API response). | `vercel.json:24-27` |
+| **D16** | Low | `/admin` and `/demos` are absent from `sitemap.xml` (correct for `/admin`, wrong for `/demos`, which is a public marketing asset ranked 0.7 in the generator). | `public/sitemap.xml` |
+
+### 1.3 Content and conversion gaps against the brief
+
+- **5 services** against a brief asking for 167 across 6 divisions. No `/services` hub.
+- **No `/industries`** anything (brief asks for 20).
+- **No `/about`** page — the About content is a homepage section only.
+- **No consultation booking** of any kind.
+- **No `/insights`** taxonomy — `/notes` is a flat list of 3.
+- **No portfolio page** — `/work` is homepage-anchored with 5 slug pages.
+- **Services are book-shaped only.** The brief's Divisions A–D and F (web, AI, marketing, branding,
+  BI/consulting) are entirely absent from the catalogue, though the site's *method* transfers cleanly.
+- **The 6-stage method** (`src/data/process.ts`) is a genuine differentiator and is currently used on
+  exactly one page — it should be the spine of every service page.
+- **Trust without fabrication** is handled well and is the constraint the expansion must respect: no
+  invented industry clients, results, certifications or offices. Industry pages must be framed as
+  *challenges and recommended approaches*, not as claims of experience.
+
+---
+
+## 2. The strategic decision the brief forces
+
+### 2.1 167 service pages is the wrong number, by the brief's own rules
+
+The brief asks for 167 services *and* forbids "empty, duplicate or superficial service pages merely to
+increase page count", *and* forbids "doorway pages, duplicated pages" (§17, §10). Those constraints are
+incompatible at 167 pages: 30 web-development services cannot each carry a unique, non-duplicative
+1,000-word treatment without either inventing expertise the studio has not demonstrated or padding.
+
+It also collides with the brand. The live site's differentiator is a **small, senior, analysis-first
+studio**. Publishing 167 "we do everything" pages reads as a generic agency — precisely what §4 and the
+existing positioning warn against.
+
+**Recommendation: a two-tier catalogue.**
+
+| Tier | Count | Surface | Depth |
+|---|---|---|---|
+| **Flagship** | **40** | own URL `/services/:slug` | full 14-section template (brief §9) |
+| **Catalogue** | **127** | anchored entry on its division hub `/services/:division#slug` | ~180–250 words: what it is, who needs it, problem solved, included, CTA |
+
+40 flagship + 6 division hubs + 20 industry pages + ~40 insight/legal/utility = **~110 URLs**, of which
+**~66 carry substantive original content**. That satisfies "comprehensive" without doorways, and it can
+be delivered to a standard the studio can defend.
+
+The full machine-readable map is in **`docs/360/service-catalog.json`** — 167 services, each with a
+stable slug, its division, and its tier. **No proposed slug collides with the five live URLs**
+(`book-positioning`, `discoverability`, `author-authority`, `launch-strategy`, `analytics-reporting`),
+verified programmatically, so existing rankings are not put at risk.
+
+### 2.2 What this means for the brand
+
+The brief repositions the company as "Digital Solutions for Modern Business". The live site is "a
+four-person studio for books, web, automation, research". These are reconcilable but not identical, and
+the resolution has commercial consequences:
+
+- **Do not** flatten the positioning into generic full-service language. The book/publishing
+  specialism is the only defensible wedge, and the repo's own strategic blueprint
+  (`the-office360-strategic-blueprint (1).md`) argues the same thing at length: *retain the
+  high-trust studio as the cash engine, productise the knowledge, do not become a generic portal.*
+- **Do** present the six divisions as **one method applied to six domains** — the existing
+  6-stage analysis-first method is already domain-agnostic and is the honest bridge.
+- **Do** keep publication/publishing as Division E, not as the whole company.
+
+This is a business decision, not a coding one, and I need your confirmation before writing 40 pages of
+copy in either direction (§3, Q1).
+
+---
+
+## 3. Questions that block implementation
+
+I need four answers before building. Everything else I can decide and justify myself.
+
+**Q1 — Base.** The live site is not this working tree. Should I (a) treat `84b1ba3`
+(`arena/01a03b70-the-office-web`) as the base for all expansion work, or (b) expand the older
+codebase in this working tree anyway? I strongly recommend (a); (b) splits the brand again.
+
+**Q2 — Catalogue depth.** Two-tier 40 flagship / 127 catalogue (my recommendation), or all 167 as
+full standalone pages?
+
+**Q3 — Positioning.** Keep book/publishing as the visible wedge with the other five divisions as
+adjacent capability, or lead with the neutral "Digital Solutions for Modern Business" framing?
+
+**Q4 — Real functionality scope.** Which of these do you want built for real, given each needs an
+external account and credentials before it can honestly be called working? Any I do not build, I will
+leave *visibly* unbuilt rather than ship a fake button — per §30.10.
+- **Lead storage + admin lead list** (needs Vercel KV or Postgres — free tiers exist)
+- **CRM / pipeline** (could be the same store; no third-party needed)
+- **Consultation booking** (Cal.com/Calendly embed = free; or build slots into the KV store)
+- **Payments fixed** (needs a working `PAYSTACK_SECRET_KEY`; I can fix D2/D8 without one)
+- **Client portal** (needs real auth — see D7; I recommend deferring to Phase 8 as the brief itself allows)
+
+---
+
+## 4. Phased implementation plan
+
+Each phase is independently shippable and independently verifiable. Effort is my estimate of focused
+work, not elapsed time.
+
+### Phase 0 — Correctness & trust (must precede expansion) · ~1 day
+Fixes everything that would otherwise be multiplied across 110 new pages.
+
+- **D1** set `VITE_SITE_URL=https://www.the-office360.com`, regenerate `index.html`/`sitemap.xml`/
+  `robots.txt`/`rss.xml`, add a **CI assertion that fails the build if `test4` appears in `dist/`**.
+- **D2** fix the Paystack amount (convert USD→NGN minor units at a configurable, editable rate, or
+  switch the catalogue to NGN pricing outright) and **add a test that asserts the amount sent**.
+- **D3/D7** remove the `/admin` footer link; replace the passcode with server-verified auth or take the
+  panel offline until Phase 8.
+- **D5/D6** fix the 6 stale smoke assertions, resolve the `class="undefined"` hero CTA, and **gate CI
+  on `smoke`** so the suite cannot rot again.
+- **D9** `.trim()` before `.min()`. **D14/D15** drop the brief dump and `X-XSS-Protection`, add HSTS.
+
+### Phase 1 — Content architecture · ~2 days
+Structure only, no new pages yet. Extends the existing data-driven pattern.
+
+- `src/data/divisions.ts` — 6 divisions (id, n, title, slug, intro, serviceSlugs[])
+- `src/data/serviceCatalog.ts` — generated from `docs/360/service-catalog.json`
+- `src/data/industries.ts` — 20 industries (challenges, opportunities, recommended services, scenarios)
+- `src/data/inquiryTypes.ts` — the 10 inquiry pathways (§10)
+- Router: add `servicesIndex`, `division`, `industries`, `industry`, `about`, `booking`, `insights`
+- `scripts/build-sitemap.mjs`: read the new data modules so the sitemap stays generated, not typed
+
+### Phase 2 — Services (the bulk) · ~2 weeks
+- `ServicePage.tsx` refactored to the 14-section template (§9) with the 6-stage method embedded
+- 40 flagship pages, each with distinct copy; enforced by a **"no duplicate paragraph" test**
+- 6 division hubs, each with 8–30 anchored catalogue entries
+- `/services` overview; nav "Services" gains a hub link; every existing service page gains
+  related-service links and breadcrumbs
+
+### Phase 3 — Industries · ~4 days
+20 pages framed as *challenges → recommended approach → relevant services → example scenarios*, with
+**no claimed clients**. Cross-linked both ways to services.
+
+### Phase 4 — Lead infrastructure · ~5 days (needs Q4 credentials)
+Schema, KV store, `/api/inquiries`, 10 inquiry forms reusing `BriefForm`'s styling, validation, spam
+protection, consent, acknowledgement email, internal notification, **admin lead list with
+search/filter/sort/CSV** — reading real data, not localStorage.
+
+### Phase 5 — Booking · ~3 days
+Consultation types, slot availability, timezone handling, confirmation + reminder emails, calendar
+integration (ICS at minimum).
+
+### Phase 6 — SEO & analytics · ~4 days
+Breadcrumbs + `BreadcrumbList`; `Service`/`FAQPage`/`Organization` schema; `/pt` URL prefix and
+`hreflang`; prerender the ~110 routes so crawlers get real HTML (D10); event tracking wired to a real
+sink (the live site has `track()`-equivalent plumbing but no analytics configured).
+
+### Phase 7 — CRM & pipeline · ~4 days
+12-stage pipeline on the Phase-4 store; notes, follow-up reminders, activity history, proposal status.
+
+### Phase 8 — Portal, proposals, admin · ~1–2 weeks, needs auth decision
+Deferred deliberately, as the brief instructs (§13). Requires real authentication first.
+
+---
+
+## 5. What I will not do, and why
+
+| Brief asks for | Why I am not building it as stated |
+|---|---|
+| 167 full pages | Self-contradicts "no superficial/doorway pages"; 40 flagship + 127 catalogue entries chosen instead (§2.1) |
+| Industry pages implying sector experience | Would fabricate capability. Written as challenges/approach, no client claims |
+| "CRM integration" | No CRM account, no API key. Phase 4 builds a real store first; a third-party CRM is a plug-in point, not a claim |
+| "Client portal with RBAC" | Needs real auth (D7). Building it on `localStorage` would be theatre — explicitly what §30.10 forbids |
+| Pricing figures | Everywhere the brief says "Request a Quote", I will keep "Request a Quote" |
+| Multi-currency / international offices | No FX source and no international offices exist; I will not invent either |
+
+---
+
+## 6. Deliverables in this turn
+
+| File | What it is |
+|---|---|
+| `docs/360/EXPANSION-AUDIT.md` | This document |
+| `docs/360/service-catalog.json` | Machine-readable map: 6 divisions, 167 services with stable slugs and tiers, 20 industries. Includes a programmatic check that no slug collides with the 5 live service URLs |
+
+**Nothing has been committed to the site.** No application code was changed, no UI touched. Awaiting
+Q1–Q4 above, after which Phase 0 can start immediately and is a single day's work.
+
+---
+
+## 7. Honest limitations of this audit
+
+- I verified `84b1ba3` by extracting it, installing it, and running `tsc`, `vite build`, `eslint` and
+  the project's smoke suite. All pass except the 7 smoke assertions in D5.
+- I did **not** deploy it, and I did **not** execute a Paystack transaction. **D2 is a code-level
+  finding** (USD×100 sent to an API that documents `amount` in kobo); it should be confirmed against
+  one test-mode transaction before the fix is closed.
+- I could not run a headless browser (none in this sandbox), so responsive/visual claims are from code
+  and shipped CSS, not screenshots.
+- I did not audit the Portuguese translations' quality — only that they exist and switch `<html lang>`.
+- The live domain's DNS/Vercel project settings were not inspected; D1 is established from what the
+  domain actually serves, which is stronger evidence than the config anyway.
