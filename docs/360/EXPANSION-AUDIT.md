@@ -700,8 +700,13 @@ Q1–Q4 above, after which Phase 0 can start immediately and is a single day's w
 - I did **not** deploy it, and I did **not** execute a Paystack transaction. **D2 is a code-level
   finding** (USD×100 sent to an API that documents `amount` in kobo); it should be confirmed against
   one test-mode transaction before the fix is closed.
-- I could not run a headless browser (none in this sandbox), so responsive/visual claims are from code
-  and shipped CSS, not screenshots.
+- **No headless browser, and this is now a measured limit rather than a shrug.** There is no browser
+  in this sandbox and none can be fetched: `registry.npmjs.org` is reachable, so `playwright-core`
+  installs, but the browser binaries come from `cdn.playwright.dev` / `storage.googleapis.com` and
+  every one of those hosts resets the connection. So contrast, touch-target size and Core Web Vitals
+  are the three things this environment structurally cannot check. Everything checkable without
+  layout *is* checked — axe-core over all 96 documents, plus the regex gate — and the two were kept
+  deliberately separate so the jsdom pass is never read as a real-browser pass.
 - I did not audit the Portuguese translations' quality — only that they exist and switch `<html lang>`.
 - The live domain's DNS/Vercel project settings were not inspected; D1 is established from what the
   domain actually serves, which is stronger evidence than the config anyway.
