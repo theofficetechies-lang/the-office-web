@@ -170,7 +170,7 @@ for (const c of cases) {
   globalThis.window.location.pathname = c.route;
   let html = "";
   try {
-    html = render();
+    html = await render();
   } catch (err) {
     console.error(`✗ ${c.route} — render threw: ${err.message}`);
     failures++;
@@ -240,7 +240,7 @@ if (typeof seoGlobal.prerenderPaths === "function" && typeof render === "functio
 
     let fresh = "";
     try {
-      fresh = render();
+      fresh = await render();
     } catch (err) {
       drifted.push(`${route}: render threw ${err.message}`);
       continue;

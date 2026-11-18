@@ -230,7 +230,42 @@ async function mount(route, { reducedMotion = false, presetLang } = {}) {
   };
 
   window.eval(bundle);
-  await new Promise((r) => setTimeout(r, 60));
+
+  /*
+   * Wait for the page, not for a stopwatch.
+   *
+   * Two different things can happen after the bundle runs, and a fixed sleep got
+   * both wrong:
+   *
+   *  • The document is stamped `data-prerendered="<route>"`, so src/main.tsx
+   *    hydrates it in place. The markup was already there before eval, which is the
+   *    point of prerendering — two ticks is all hydration needs.
+   *  • Any other pairing (an unknown URL, or the shared 404 document) makes
+   *    src/main.tsx *create* the tree. createRoot then throws the served markup
+   *    away and renders asynchronously, and a lazy route page (src/App.tsx) only
+   *    resolves once its chunk loads — measured at ~360 ms here. The root looked
+   *    non-empty the whole time because the discarded markup was still in it, so
+   *    the wait has to watch for the *replacement*, not for emptiness.
+   */
+  const rootEl = window.document.getElementById("root");
+  const stampedFor = window.document.documentElement.getAttribute("data-prerendered");
+  const normalise = (p) => (p.replace(/\/+$/, "") === "" ? "/" : p.replace(/\/+$/, ""));
+  const hydrating = stampedFor !== null && normalise(stampedFor) === normalise(route);
+  const markupBeforeEval = rootEl.innerHTML;
+  const servedTitle = shellFor(route).match(/<title>([^<]*)<\/title>/)?.[1] ?? "";
+
+  if (!hydrating) {
+    const startedAt = Date.now();
+    while (Date.now() - startedAt < 8000) {
+      const replaced =
+        rootEl.childElementCount > 0 && rootEl.innerHTML !== markupBeforeEval;
+      const retitled = window.document.title !== servedTitle;
+      if (replaced || retitled) break;
+      await new Promise((r) => setTimeout(r, 20));
+    }
+  }
+  /* Then let the page's own effects (title, canonical) settle against the new tree. */
+  await new Promise((r) => setTimeout(r, 80));
 
   return { window, document: window.document, errors, calls, resizeToDesktop };
 }

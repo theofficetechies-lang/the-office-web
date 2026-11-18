@@ -355,6 +355,49 @@ evidence.
 
 ---
 
+## 4d. Performance: what the bundle split actually bought
+
+The audit measured 191 KB of gzipped JavaScript on every route. Most of it was not
+application logic — it was page content that only some routes render: 150 kB of
+service detail copy, and the industry list. Every visitor parsed all of it to read
+the homepage.
+
+Five content-heavy pages are now loaded on demand (`src/App.tsx`), and
+`src/data/serviceSlugs.ts` answers "does this slug have a detail page?" from the
+catalogue so the entry bundle never pulls the detail index for that one bit.
+
+| | Raw | Gzipped |
+|---|---|---|
+| **Before** — every route | 635,544 | 183,326 |
+| Homepage, and any route without detail copy | 443,149 | 127,101 |
+| Industry page (+ industry data) | 463,309 | 134,296 |
+| Flagship service page (+ 137 kB of detail copy) | 590,409 | 174,911 |
+
+The homepage is **30% smaller**; a flagship service page pays 45% less than before
+because it no longer carries the other 39 pages' copy.
+
+Two things this exposed, both now fixed and gated:
+
+1. **Prerendering broke silently.** `renderToString` aborts the whole tree when it
+   meets a lazy boundary and emits only the fallback, so 68 routes shipped as empty
+   shells while the build still printed "96 routes prerendered". The SSR entry now
+   uses `renderToPipeableStream` and waits for every boundary to settle.
+   `smoke-ssr.mjs` had the failure in hand the moment it ran — the build's own
+   success message was the misleading part.
+2. **The extra `<Suspense>` cost hydration.** Wrapping the whole routed tree in a
+   boundary looked harmless, but during hydration React defers a served boundary's
+   contents to a later task. The reveal effect then wrote `is-visible` onto
+   un-hydrated nodes, React discarded the server tree on every page, and the
+   forms, typewriter and score all failed. The boundary now wraps only the lazy
+   pages, and a hydration-mismatch assertion is what caught it.
+
+**Cost of the split:** an industry page needs the lazy chunk before it is
+interactive — ~360 ms in jsdom, which is the figure the DOM suite now waits on
+rather than a fixed sleep. The markup itself is prerendered, so first paint is
+unaffected; only interactivity waits.
+
+---
+
 ## 4c. Decisions still needed from the client
 
 Two things are deliberately not decided by me, because they are positioning and

@@ -170,7 +170,7 @@ for (const route of paths) {
 
   let html;
   try {
-    html = render();
+    html = await render();
   } catch (err) {
     failures.push(`${route}: ${err.message}`);
     continue;
@@ -262,7 +262,7 @@ if (failures.length > 0) {
   globalThis.window.location.pathname = probe;
   globalThis.window.location.href = `https://www.the-office360.com${probe}`;
   try {
-    const notFoundHtml = render();
+    const notFoundHtml = await render();
     const dom = new JSDOM(shell);
     const document = dom.window.document;
     document.getElementById("root").innerHTML = notFoundHtml;

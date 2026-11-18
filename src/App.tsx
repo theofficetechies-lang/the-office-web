@@ -16,11 +16,22 @@ import NotesPage from "./pages/NotesPage";
 import NotePage from "./pages/NotePage";
 import CaseStudyPage from "./pages/CaseStudyPage";
 import ServicePage from "./pages/ServicePage";
-import ServiceDetailPage from "./pages/ServiceDetailPage";
-import ServicesIndexPage from "./pages/ServicesIndexPage";
-import DivisionPage from "./pages/DivisionPage";
-import IndustriesIndexPage from "./pages/IndustriesIndexPage";
-import IndustryPage from "./pages/IndustryPage";
+import { lazy, Suspense } from "react";
+
+/*
+ * Content-heavy pages are split out of the entry bundle.
+ *
+ * The 40 service pages, 6 division hubs, 20 industry pages and their data are
+ * ~150 kB of the shipped JavaScript, and before splitting every visitor parsed all
+ * of it to read the homepage. Each lazy page below is wrapped at its route (see
+ * lazyRoute). The five published services (ServicePage) stay eager: they are the
+ * original practice and the first thing a returning reader is likely to open.
+ */
+const ServiceDetailPage = lazy(() => import("./pages/ServiceDetailPage"));
+const ServicesIndexPage = lazy(() => import("./pages/ServicesIndexPage"));
+const DivisionPage = lazy(() => import("./pages/DivisionPage"));
+const IndustriesIndexPage = lazy(() => import("./pages/IndustriesIndexPage"));
+const IndustryPage = lazy(() => import("./pages/IndustryPage"));
 import PressPage from "./pages/PressPage";
 import GlossaryPage from "./pages/GlossaryPage";
 import ChecklistPage from "./pages/ChecklistPage";
@@ -30,7 +41,8 @@ import StorePage from "./pages/StorePage";
 import AdminPage from "./pages/AdminPage";
 import { useI18n } from "./lib/i18n";
 import { routeKey, useRoute } from "./lib/router";
-import { getServiceDetail } from "./data/serviceDetailIndex";
+import type { Route } from "./lib/router";
+import { hasServiceDetail } from "./data/serviceSlugs";
 import { getInquiryType, DEFAULT_INQUIRY_TYPE } from "./data/inquiryTypes";
 import { divisions } from "./data/divisions";
 import { TOTAL_SERVICES } from "./data/serviceCatalog";
@@ -52,6 +64,32 @@ export default function App() {
   const key = routeKey(route);
   useReveal(key);
 
+  /*
+   * The <Suspense> boundary lives inside renderRoute, around the lazy pages only.
+   *
+   * It was originally here, around the whole routed tree, and that looked harmless
+   * and was not. During hydration React defers the contents of a served boundary to
+   * a later task, so effects on the parent — useReveal — ran while the boundary's
+   * DOM was still un-hydrated. Adding `is-visible` to those nodes first made React
+   * compare a mismatched className and discard the server tree on every page, which
+   * broke the reveal, the forms and the typewriter at once. One boundary per lazy
+   * route keeps hydration synchronous with the rest of the document.
+   */
+  return renderRoute(route);
+}
+
+/**
+ * Wrap a lazily-loaded page in the boundary it needs.
+ *
+ * No fallback text: the route is prerendered, so its markup is already painted and
+ * a spinner would replace a finished page with a loading state on slow connections.
+ * Eager routes do not pass through here at all — see the note in App().
+ */
+function lazyRoute(node: React.ReactNode) {
+  return <Suspense fallback={null}>{node}</Suspense>;
+}
+
+function renderRoute(route: Route): React.ReactNode {
   switch (route.kind) {
     case "privacy":
       return <PrivacyPage />;
@@ -72,8 +110,8 @@ export default function App() {
        * A slug with written detail takes the new page; everything else falls back
        * to the original ServicePage, which already 404s on an unknown slug.
        */
-      return getServiceDetail(route.slug) ? (
-        <ServiceDetailPage slug={route.slug} />
+      return hasServiceDetail(route.slug) ? (
+        lazyRoute(<ServiceDetailPage slug={route.slug} />)
       ) : (
         <ServicePage slug={route.slug} />
       );
@@ -101,13 +139,13 @@ export default function App() {
      * /industries: a soft 404, and exactly the doorway pattern the brief forbids.
      */
     case "servicesIndex":
-      return <ServicesIndexPage />;
+      return lazyRoute(<ServicesIndexPage />);
     case "division":
-      return <DivisionPage id={route.id} />;
+      return lazyRoute(<DivisionPage id={route.id} />);
     case "industriesIndex":
-      return <IndustriesIndexPage />;
+      return lazyRoute(<IndustriesIndexPage />);
     case "industry":
-      return <IndustryPage slug={route.slug} />;
+      return lazyRoute(<IndustryPage slug={route.slug} />);
     case "notfound":
       return <NotFound path={route.path} />;
     case "home":

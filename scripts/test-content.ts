@@ -23,6 +23,7 @@ import { divisions } from "../src/data/divisions.ts";
 import { industries } from "../src/data/industries.ts";
 import { inquiryTypes } from "../src/data/inquiryTypes.ts";
 import { resolveRelated } from "../src/data/serviceDetailIndex.ts";
+import { DETAIL_SLUGS } from "../src/data/serviceSlugs.ts";
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = "") {
@@ -331,6 +332,26 @@ console.log("\nCatalogue tier:");
       missing.slice(0, 8).join(", ")
     );
   }
+}
+
+/*
+ * serviceSlugs.ts decides which catalogue entries get a /services/<slug> page
+ * without importing the 150 KB detail copy, and App.tsx routes on it. If it ever
+ * disagrees with the detail index, a flagship page silently 404s (or a detail
+ * block goes unreachable) with no build error anywhere. Both directions asserted.
+ */
+{
+  const detailSlugs = new Set(serviceDetails.map((d) => d.slug));
+  const claimed = new Set(DETAIL_SLUGS);
+
+  const missingDetail = [...claimed].filter((s) => !detailSlugs.has(s));
+  const unreachable = [...detailSlugs].filter((s) => !claimed.has(s));
+
+  check(
+    `DETAIL_SLUGS matches the detail index (${claimed.size} slugs, both directions)`,
+    missingDetail.length === 0 && unreachable.length === 0,
+    `routed but no copy: ${missingDetail.join(", ") || "none"} | copy but unroutable: ${unreachable.join(", ") || "none"}`
+  );
 }
 
 if (failures > 0) {
