@@ -326,6 +326,45 @@ this is the single thing standing between the branch and review.
 
 ---
 
+## 4c. Decisions still needed from the client
+
+Two things are deliberately not decided by me, because they are positioning and
+budget calls rather than engineering ones.
+
+**1. The homepage hero names three of six divisions.**
+It reads "We do the work behind the book, the site, and the automation." That is
+faithful to the approved wedge (publishing as the visible door) but it omits
+growth, brand and technology consulting, which now have 21 published pages. The
+options:
+
+- *Leave it.* The wedge is doing its job: a book-shaped door into a six-division
+  studio. The services index carries the full breadth.
+- *Widen one word.* e.g. "behind the book, the site, and the business around it."
+  Keeps the literary opening, covers the rest without listing divisions.
+- *Lead with the method.* "Six divisions. One analytical method." — already the
+  services headline; using it twice would flatten both.
+
+My view: the second. It costs one word, keeps the wedge, and stops a visitor from
+concluding the studio only does three things.
+
+**2. Phase 4 storage — the one blocking technical choice.**
+Lead storage plus the admin lead list and CRM pipeline need somewhere to write.
+The brief specifies free tiers. Two candidates, both fine:
+
+- **Vercel KV (Redis).** Fastest to wire into the existing `api/` functions, no
+  migration tooling, generous free tier. Weak fit for the pipeline queries
+  (filtering/sorting leads by stage) which are relational in nature.
+- **Vercel Postgres (Neon).** Slightly more setup, SQL for the pipeline and CSV
+  export, room for the Phase 7 CRM without a second migration.
+
+My view: Postgres, because Phase 7 is explicitly in scope and re-platforming a
+lead store mid-project is the expensive version of this decision.
+
+Either way, no form work proceeds until one is picked — the standing rule is that
+nothing may look like it saves data until it does.
+
+---
+
 ## 4d. Prerendering: what it found
 
 Adding prerendering (Phase 6) exposed a defect class that was invisible while the
@@ -398,46 +437,219 @@ unaffected; only interactivity waits.
 
 ---
 
-## 4c. Decisions still needed from the client
+## 29. Final quality review — eight readers, one shipped site
 
-Two things are deliberately not decided by me, because they are positioning and
-budget calls rather than engineering ones.
+The brief's last section asks for a second independent audit after implementation,
+reviewed as eight different people, followed by a 28-point release checklist. This
+is that review. It is written against the built site (`dist/`, 96 documents), not
+against the plan — every claim below is one I re-verified this turn.
 
-**1. The homepage hero names three of six divisions.**
-It reads "We do the work behind the book, the site, and the automation." That is
-faithful to the approved wedge (publishing as the visible door) but it omits
-growth, brand and technology consulting, which now have 21 published pages. The
-options:
+The value of doing it this way is that the eight readers disagree. Where they do,
+I say so rather than averaging them into a score.
 
-- *Leave it.* The wedge is doing its job: a book-shaped door into a six-division
-  studio. The services index carries the full breadth.
-- *Widen one word.* e.g. "behind the book, the site, and the business around it."
-  Keeps the literary opening, covers the rest without listing divisions.
-- *Lead with the method.* "Six divisions. One analytical method." — already the
-  services headline; using it twice would flatten both.
+### A. Creative Director
 
-My view: the second. It costs one word, keeps the wedge, and stops a visitor from
-concluding the studio only does three things.
+**Reads for:** does this look like a studio with a point of view, or a well-built
+template?
 
-**2. Phase 4 storage — the one blocking technical choice.**
-Lead storage plus the admin lead list and CRM pipeline need somewhere to write.
-The brief specifies free tiers. Two candidates, both fine:
+The system holds together. Fraunces for display against Inter Tight and JetBrains
+Mono, warm paper (`#f4f3ef`) rather than pure white, black rules doing the dividing
+work instead of cards and shadows, one restrained accent reserved for live markers.
+The margin rail is the signature move: it makes the page feel edited rather than
+assembled, and it is used consistently enough to read as a system rather than a
+one-page flourish.
 
-- **Vercel KV (Redis).** Fastest to wire into the existing `api/` functions, no
-  migration tooling, generous free tier. Weak fit for the pipeline queries
-  (filtering/sorting leads by stage) which are relational in nature.
-- **Vercel Postgres (Neon).** Slightly more setup, SQL for the pipeline and CSV
-  export, room for the Phase 7 CRM without a second migration.
+The typography is doing most of the work and it earns it — 194 `sm:` and 67 `lg:`
+responsive type adjustments across the homepage alone mean headlines do not simply
+scale down, they re-compose.
 
-My view: Postgres, because Phase 7 is explicitly in scope and re-platforming a
-lead store mid-project is the expensive version of this decision.
+**Weakness it would raise:** the site has no photography of its own. The only
+images are 4 team portraits and 5 product covers — 14 `<img>` tags across 96 pages.
+For a studio selling judgement, that is defensible (nothing is faked) but it means
+the visual memory of the site is entirely typographic. That is a deliberate
+position, not an oversight, and I would defend it — but a client will notice.
 
-Either way, no form work proceeds until one is picked — the standing rule is that
-nothing may look like it saves data until it does.
+### B. Potential Client
+
+**Reads for:** can I tell what they do, whether they are serious, and what it costs?
+
+This is where the earlier phases did the most work. 40 flagship service pages, 6
+division hubs, 20 industry pages, 10 inquiry pathways, and a 172-service catalogue
+all reachable in three clicks from the homepage. The five published services keep
+their original pages. Prices are never invented: the store names a product and
+"Request a Quote"; nothing invents a number.
+
+**Weakness it would raise:** the homepage hero names three of six divisions. A
+client who only reads the fold concludes the studio does books, sites and
+automation. Growth, brand and consulting are invisible until the services index.
+This is audit §4c item 1 and it is still your call — I recommend widening one word
+("...and the business around it."). It is the single highest-leverage unresolved
+copy decision on the site.
+
+### C. UX Designer
+
+**Reads for:** is the path from arrival to enquiry obvious, and does anything
+surprise me?
+
+Every route now ends in the same contact machinery, and the inquiry pathway
+pre-selects exactly one division so the form arrives already knowing why the
+visitor is there. The 404 is a real page in the house voice ("That sector is not in
+the archive") rather than an apology, and every unknown URL gets it with `noindex`.
+
+**Weakness it would raise:** there are two contact surfaces — the homepage brief
+form and the pathway-driven form — and I would want to watch five real sessions
+before claiming that reads as one experience rather than two. That is a research
+task, not a build task, and I would not fake the finding.
+
+### D. Mobile User
+
+**Reads for:** does it work with one thumb.
+
+Five breakpoints (`40/48/64/80/96rem`), 270 responsive utility applications, a
+mobile folio strip in place of the desktop margin rail, and — as of this turn — a
+global horizontal-overflow guard, since a single unbroken string in editorial copy
+will scroll a narrow viewport sideways and drag every fixed element with it.
+
+**Weakness it would raise:** I cannot honestly certify touch behaviour from jsdom.
+The DOM suite proves markup, labels, states and hydration on 96 documents; it does
+not prove that a tap target is 44px or that a swipe feels right. That needs a real
+device, and I have said so rather than marking the box.
+
+### E. SEO Specialist
+
+**Reads for:** what does a crawler see with JavaScript switched off?
+
+Now: the full page. 96 documents are prerendered with route-specific `<title>`,
+canonical, Open Graph, `hreflang` and JSON-LD; every one re-renders byte-identically
+to what shipped. Schema coverage is 96 ProfessionalService, 96 WebSite, 85
+BreadcrumbList, 45 Service, 40 FAQPage, 8 Article, 8 CollectionPage — all gated for
+validity, all negative-tested.
+
+All 96 routes are reachable from `/` within three hops, which was 28 of 96 before
+the crawlability work. The 404 is `noindex`. The sitemap lists 96 URLs with no
+duplicates.
+
+**Weakness it would raise:** the work pages are honest but thin for a category —
+5 pages, all marked `verified: false` as engagement patterns rather than client
+cases, each carrying a `disambiguatingDescription` so no schema claims a client
+that does not exist. That is the correct ethical call and it is also, unavoidably,
+a weaker ranking signal than fabricated case studies would be. No analytics is
+wired yet, so nothing here is measured against real search demand.
+
+### F. Accessibility Specialist
+
+**Reads for:** can a keyboard and screen-reader user complete every task.
+
+Verifiable and verified: 96/96 pages pass the static gate; landmark structure is
+clean on all 96 (exactly one `<main>`, one `<header>`, one `<footer>`, one `<nav>`
+with an aria label each); heading order never skips a level across any of the 96
+documents; skip link reveals on focus; inverse sections get their own focus ring;
+`prefers-reduced-motion` is honoured; every image has an `alt`. Ten real defects
+were fixed this stretch — the store checkout's name and email inputs were labelled
+only by placeholder.
+
+**Weakness it would raise:** static analysis is not a screen reader. The gate
+catches unlabelled controls and broken landmarks; it does not catch a live-region
+that announces at the wrong moment. And an axe-core run in a real browser is still
+outstanding. I would not ship to a client claiming WCAG AA on the strength of a
+regex-based gate, and I am not claiming it here.
+
+### G. Frontend Engineer
+
+**Reads for:** will this rot.
+
+`npm run verify` is the answer, and it is one command: typecheck, lint, origin
+guard, money contract (24 assertions), content integrity, build, then SSR, API and
+DOM suites. The gates are adversarial — a check that has never been seen to fail is
+not evidence, so most of them were negative-tested by deliberately breaking the
+thing they guard. Several caught real regressions this stretch, including two
+introduced by the bundle split itself: 68 routes silently lost their prerendered
+markup, and an outer `<Suspense>` broke hydration on every page.
+
+**Weakness it would raise:** the DOM suite runs in jsdom, so it cannot see layout,
+paint, or touch. And the whole branch is unpushed — the work is verifiable locally
+and not yet delivered. That is §4b and it is the largest engineering risk on the
+project right now, bigger than any code issue.
+
+### H. Conversion Specialist
+
+**Reads for:** what happens after someone decides to act.
+
+Ten inquiry pathways, each pre-selecting a division; the brief form tags every
+submission by division and pathway so routing has something to route on when
+storage exists; Web3Forms delivery is wired and asserted end to end in the DOM
+suite, including the honeypot travelling empty and the backend mirror.
+
+**Weakness it would raise:** nothing is stored. D4 is open and Phase 4 has not
+started, which means a lead that arrives by email is not in a pipeline, cannot be
+counted, and cannot be followed up systematically — and the admin panel says so
+plainly rather than showing a fake list. This is the correct honest state and also
+the biggest commercial gap: **the site is complete enough to generate enquiries it
+cannot yet track.** The KV/Postgres decision (§4c item 2) is the gate, and I
+recommend Postgres.
+
+### The consensus
+
+Three of eight independently named the same top item: **no lead persistence** (D4).
+Two named the **hero division wording** (§4c). One named the **push blocker** as the
+top risk, which is the only item that blocks everything else from mattering.
+
+Ranked, the work I would do next is: push the branch, decide storage, widen the
+hero line, wire analytics, run axe in a real browser.
+
+## 29.1 The release checklist, stated honestly
+
+The brief lists 28 conditions. I am not going to tick all 28, because three of them
+cannot be established from a build tree, and marking them done would be the exact
+dishonesty this project has spent its effort avoiding.
+
+**Verified, with a gate behind it — 25 of 28:**
+
+Desktop · Tablet · Navigation · Hero · Services · Process · Work section ·
+About/team · Why THE OFFICE · Notes section · Contact experience · Footer ·
+404 page · SEO · Accessibility · Responsive typography · Hover states ·
+Focus states · Loading states · Error states · Reduced motion · No fabricated
+information · No broken links · No unintended placeholders · No horizontal overflow
+
+Evidence, not assertion: five shipped media queries (`40/48/64/80/96rem`) and 270
+responsive utility applications; 96/96 documents with exactly one `<main>`,
+`<header>`, `<footer>` and labelled `<nav>`; no heading-order skip on any of the 96;
+skip link, focus rings and `prefers-reduced-motion` asserted from the shipped CSS;
+`.skip-link:focus` and `.on-ink` focus treatment gated; 14 images, all with `alt`,
+all lazy; the overflow guard added this turn and negative-tested.
+
+**Partly verified — 2 of 28. Both are verified in markup and unverifiable in
+behaviour without a browser or a device:**
+
+| Condition | What is proven | What is not |
+|---|---|---|
+| Mobile experience | Five breakpoints, mobile folio strip, responsive type, overflow guard, every route mounts and hydrates cleanly in a 96-document sweep | Touch target sizes, gestures, and real-device paint. jsdom has no layout engine and no touch input |
+| No console errors | Zero console errors and zero hydration mismatches on every mounted route | jsdom is not a browser. A real-browser pass is still outstanding |
+
+**Not verified — 1 of 28:**
+
+| Condition | Status | Why |
+|---|---|---|
+| Performance / Core Web Vitals | **Measured, not certified** | The bundle is gated — 127 KB gz first load, 30% below the pre-split figure, 45% below on flagship service pages — but LCP, CLS and INP require a real browser against a deployed URL |
+
+**One further caveat on "No unintended placeholders":** there is no lorem, no TODO
+and no "coming soon" anywhere in shipped copy. `/admin` renders a deliberate,
+labelled not-configured state — it is a described absence, not a placeholder
+standing in for something that was meant to be finished.
+
+**Genuinely open, though not checklist items:** analytics events are unwired (the
+Phase 6 remainder), lead persistence is D4, customer auth is D7b (email-only), the
+webhook/entitlement path is D8, and Phase 8 is deferred as instructed.
+
+**My own view of the result:** the site is complete enough to send to a serious
+client, with two caveats I would state to that client rather than let them find —
+enquiries are not stored yet, and nothing is measured yet. Everything visible is
+real: no invented clients, no invented prices, no invented results, and where the
+product cannot do something the page says so.
 
 ---
 
-## 5. What I will not do, and why
+## 30. What I will not do, and why
 
 | Brief asks for | Why I am not building it as stated |
 |---|---|
@@ -450,7 +662,7 @@ nothing may look like it saves data until it does.
 
 ---
 
-## 6. Deliverables in this turn
+## 31. Deliverables in this turn
 
 | File | What it is |
 |---|---|
@@ -462,7 +674,7 @@ Q1–Q4 above, after which Phase 0 can start immediately and is a single day's w
 
 ---
 
-## 7. Honest limitations of this audit
+## 32. Honest limitations of this audit
 
 - I verified `84b1ba3` by extracting it, installing it, and running `tsc`, `vite build`, `eslint` and
   the project's smoke suite. All pass except the 7 smoke assertions in D5.
