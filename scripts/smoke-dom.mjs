@@ -68,6 +68,22 @@ function slugsFrom(file, re = /slug:\s*"([^"]+)"/g) {
   return [...src.matchAll(re)].map((m) => m[1]);
 }
 
+/**
+ * The 40 flagship services, read from the catalogue rather than from
+ * divisions.ts (whose flagshipSlugs are bare array strings). Every catalogue
+ * entry is one line, so the tier and the slug are matched together.
+ */
+function flagshipSlugs() {
+  const src = readFileSync(path.join(root, "src/data/serviceCatalog.ts"), "utf8");
+  return [...src.matchAll(/slug:\s*"([^"]+)"[^\n]*tier:\s*"flagship"/g)].map((m) => m[1]);
+}
+
+/** The six division ids, read from divisions.ts. */
+function divisionIds() {
+  const src = readFileSync(path.join(root, "src/data/divisions.ts"), "utf8");
+  return [...src.matchAll(/^\s*id:\s*"([^"]+)"/gm)].map((m) => m[1]);
+}
+
 const KNOWN = [
   "/",
   "/notes",
@@ -83,8 +99,16 @@ const KNOWN = [
   "/industries",
   "/services/web",
   "/services/ai",
-  "/industries/real-estate",
   "/resources/backlist-audit-checklist",
+  ...slugsFrom("src/data/industries.ts").map((s) => `/industries/${s}`),
+  /*
+   * Division hubs and the 40 flagship service pages. Both are derived from
+   * src/data/divisions.ts rather than hand-listed: flagshipSlugs is exactly the
+   * set the app serves from ServiceDetailPage, and adding a flagship must not
+   * require editing this test.
+   */
+  ...divisionIds().map((s) => `/services/${s}`),
+  ...flagshipSlugs().map((s) => `/services/${s}`),
   ...slugsFrom("src/data/notes.ts").map((s) => `/notes/${s}`),
   ...slugsFrom("src/data/projects.ts").map((s) => `/work/${s}`),
   ...slugsFrom("src/data/services.ts").map((s) => `/services/${s}`),
@@ -223,10 +247,23 @@ const expectations = {
     title: "A site that answers the questions that lose you the deal — corporate website development — THE OFFICE 360",
     h1: "A site that answers the questions that lose you the deal.",
   },
-  "/services": { title: "Document not found — THE OFFICE 360", h1: null },
-  "/industries": { title: "Document not found — THE OFFICE 360", h1: null },
-  "/services/web": { title: "Document not found — THE OFFICE 360", h1: null },
-  "/industries/real-estate": { title: "Document not found — THE OFFICE 360", h1: null },
+  "/services": {
+    title: "Services — web, AI & automation, growth, brand, publishing, consulting — THE OFFICE 360",
+    h1: "Six divisions. One analytical method.",
+  },
+  "/services/web": {
+    title: "Web Development & Digital Architecture — Services — THE OFFICE 360",
+    h1: "Web Development & Digital Architecture",
+  },
+  "/industries": {
+    title: "Industries — where the method is applied — THE OFFICE 360",
+    h1: "Applied to your sector.",
+  },
+  "/industries/real-estate": {
+    title: "Real Estate — Industries — THE OFFICE 360",
+    h1: "Real Estate",
+  },
+  "/industries/does-not-exist": { title: "Industry not found — THE OFFICE 360", h1: "That sector is not in the archive." },
   "/nowhere": { title: "Document not found — THE OFFICE 360", h1: null },
 };
 

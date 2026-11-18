@@ -1,5 +1,10 @@
 import type { ServiceDetail } from "./serviceDetailTypes.ts";
 import { webServiceDetails } from "./serviceDetails/web.ts";
+import { aiServiceDetails } from "./serviceDetails/ai.ts";
+import { growthServiceDetails } from "./serviceDetails/growth.ts";
+import { brandServiceDetails } from "./serviceDetails/brand.ts";
+import { publishingServiceDetails } from "./serviceDetails/publishing.ts";
+import { intelligenceServiceDetails } from "./serviceDetails/intelligence.ts";
 import { getCatalogService } from "./serviceCatalog.ts";
 import { services as publishedServices } from "./services.ts";
 
@@ -11,7 +16,7 @@ import { services as publishedServices } from "./services.ts";
  * with no entry here is a bug: `scripts/test-content.ts` fails the build rather
  * than letting a half-written page ship.
  */
-export const serviceDetails: ServiceDetail[] = [...webServiceDetails];
+export const serviceDetails: ServiceDetail[] = [...webServiceDetails, ...aiServiceDetails, ...growthServiceDetails, ...brandServiceDetails, ...publishingServiceDetails, ...intelligenceServiceDetails];
 
 const bySlug = new Map(serviceDetails.map((d) => [d.slug, d]));
 

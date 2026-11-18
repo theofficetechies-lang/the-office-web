@@ -17,6 +17,10 @@ import NotePage from "./pages/NotePage";
 import CaseStudyPage from "./pages/CaseStudyPage";
 import ServicePage from "./pages/ServicePage";
 import ServiceDetailPage from "./pages/ServiceDetailPage";
+import ServicesIndexPage from "./pages/ServicesIndexPage";
+import DivisionPage from "./pages/DivisionPage";
+import IndustriesIndexPage from "./pages/IndustriesIndexPage";
+import IndustryPage from "./pages/IndustryPage";
 import PressPage from "./pages/PressPage";
 import GlossaryPage from "./pages/GlossaryPage";
 import ChecklistPage from "./pages/ChecklistPage";
@@ -94,10 +98,13 @@ export default function App() {
      * /industries: a soft 404, and exactly the doorway pattern the brief forbids.
      */
     case "servicesIndex":
+      return <ServicesIndexPage />;
     case "division":
+      return <DivisionPage id={route.id} />;
     case "industriesIndex":
+      return <IndustriesIndexPage />;
     case "industry":
-      return <NotFound path={window.location.pathname} />;
+      return <IndustryPage slug={route.slug} />;
     case "notfound":
       return <NotFound path={route.path} />;
     case "home":

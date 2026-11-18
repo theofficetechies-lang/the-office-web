@@ -25,6 +25,18 @@ const noteSlugs = slugsFrom("src/data/notes.ts", /slug:\s*"([^"]+)"/g);
 const projectSlugs = slugsFrom("src/data/projects.ts", /slug:\s*"([^"]+)"/g);
 const serviceSlugs = slugsFrom("src/data/services.ts", /slug:\s*"([^"]+)"/g);
 const productSlugs = slugsFrom("src/data/products.ts", /slug:\s*"([^"]+)"/g);
+const industrySlugs = slugsFrom("src/data/industries.ts", /slug:\s*"([^"]+)"/g);
+const divisionSlugs = slugsFrom("src/data/divisions.ts", /^\s*id:\s*"([^"]+)"/gm);
+
+/*
+ * The 40 flagship services are read from the catalogue. Catalogue-tier services
+ * are deliberately absent: they are anchored entries on a division hub, not URLs,
+ * and listing /services/<catalogue-slug> here would advertise 127 pages that are
+ * served as 404. test-content.ts enforces the two lists stay in agreement.
+ */
+const flagshipSlugs = [...readFileSync(path.join(root, "src/data/serviceCatalog.ts"), "utf8").matchAll(
+  /slug:\s*"([^"]+)"[^\n]*tier:\s*"flagship"/g
+)].map((m) => m[1]);
 
 /* ------------------------- sitemap ------------------------- */
 
@@ -33,7 +45,12 @@ const urls = [
   { loc: "/notes", changefreq: "weekly", priority: "0.8" },
   ...noteSlugs.map((slug) => ({ loc: `/notes/${slug}`, changefreq: "monthly", priority: "0.6" })),
   ...projectSlugs.map((slug) => ({ loc: `/work/${slug}`, changefreq: "monthly", priority: "0.6" })),
+  { loc: "/services", changefreq: "monthly", priority: "0.9" },
+  ...divisionSlugs.map((slug) => ({ loc: `/services/${slug}`, changefreq: "monthly", priority: "0.8" })),
+  ...flagshipSlugs.map((slug) => ({ loc: `/services/${slug}`, changefreq: "monthly", priority: "0.7" })),
   ...serviceSlugs.map((slug) => ({ loc: `/services/${slug}`, changefreq: "monthly", priority: "0.6" })),
+  { loc: "/industries", changefreq: "monthly", priority: "0.8" },
+  ...industrySlugs.map((slug) => ({ loc: `/industries/${slug}`, changefreq: "monthly", priority: "0.6" })),
   { loc: "/glossary", changefreq: "monthly", priority: "0.5" },
   { loc: "/methodology", changefreq: "monthly", priority: "0.6" },
   { loc: "/demos", changefreq: "monthly", priority: "0.7" },

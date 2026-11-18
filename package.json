@@ -19,7 +19,7 @@
     "predeploy": "node scripts/check-origin.mjs",
     "vercel:dev": "vercel dev",
     "test:money": "node --experimental-strip-types scripts/test-money.ts",
-    "verify": "npm run lint && npm run eslint && npm run check:origin && npm run test:money && npm run smoke && npm run build",
+    "verify": "npm run lint && npm run eslint && npm run check:origin && npm run test:money && npm run test:content && npm run smoke && npm run build",
     "test:content": "node --experimental-strip-types scripts/test-content.ts"
   },
   "dependencies": {
