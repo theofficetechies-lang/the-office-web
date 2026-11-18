@@ -219,6 +219,10 @@ const expectations = {
    * These assertions start failing the moment Phase 2 renders real pages, at
    * which point they should be updated to the real titles.
    */
+  "/services/corporate-website-development": {
+    title: "A site that answers the questions that lose you the deal — corporate website development — THE OFFICE 360",
+    h1: "A site that answers the questions that lose you the deal.",
+  },
   "/services": { title: "Document not found — THE OFFICE 360", h1: null },
   "/industries": { title: "Document not found — THE OFFICE 360", h1: null },
   "/services/web": { title: "Document not found — THE OFFICE 360", h1: null },

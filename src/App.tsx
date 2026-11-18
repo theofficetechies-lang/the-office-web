@@ -16,6 +16,7 @@ import NotesPage from "./pages/NotesPage";
 import NotePage from "./pages/NotePage";
 import CaseStudyPage from "./pages/CaseStudyPage";
 import ServicePage from "./pages/ServicePage";
+import ServiceDetailPage from "./pages/ServiceDetailPage";
 import PressPage from "./pages/PressPage";
 import GlossaryPage from "./pages/GlossaryPage";
 import ChecklistPage from "./pages/ChecklistPage";
@@ -25,6 +26,7 @@ import StorePage from "./pages/StorePage";
 import AdminPage from "./pages/AdminPage";
 import { useI18n } from "./lib/i18n";
 import { routeKey, useRoute } from "./lib/router";
+import { getServiceDetail } from "./data/serviceDetailIndex";
 import { useDocumentMeta } from "./hooks/useDocumentMeta";
 import { useReveal } from "./hooks/useReveal";
 import { CONTACT_EMAIL } from "./lib/site";
@@ -55,7 +57,19 @@ export default function App() {
     case "work":
       return <CaseStudyPage slug={route.slug} />;
     case "service":
-      return <ServicePage slug={route.slug} />;
+      /*
+       * Two kinds of service URL share this route:
+       *   • the five published services (book-positioning, discoverability, …)
+       *     keep their original page — unchanged, ranking intact;
+       *   • flagship catalogue services use the newer, content-rich template.
+       * A slug with written detail takes the new page; everything else falls back
+       * to the original ServicePage, which already 404s on an unknown slug.
+       */
+      return getServiceDetail(route.slug) ? (
+        <ServiceDetailPage slug={route.slug} />
+      ) : (
+        <ServicePage slug={route.slug} />
+      );
     case "press":
       return <PressPage />;
     case "glossary":
