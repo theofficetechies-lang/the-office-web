@@ -1,0 +1,32 @@
+name: Verify
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - run: npm ci
+
+      # Typecheck, lint, SEO-origin guard, money conversion, the three smoke
+      # suites, then a production build with the origin guard as prebuild.
+      #
+      # These checks all existed in the repo but nothing ran them: the smoke
+      # suite shipped failing for several releases (7 broken assertions, mostly
+      # stale test expectations, one real security finding) and the site shipped
+      # with a Vercel preview host in 101 canonical/SEO locations. A check that
+      # is not gated is not a check.
+      - name: Verify
+        run: npm run verify
+        env:
+          CI: "true"
