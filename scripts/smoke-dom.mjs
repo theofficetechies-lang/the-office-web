@@ -384,6 +384,23 @@ for (const [route, exp] of Object.entries(expectations)) {
     document.title === exp.title,
     `got "${document.title}"`
   );
+
+  /*
+   * The served title and the post-mount title must be the same string.
+   *
+   * Two modules write titles: src/lib/seo.ts (build time) and useDocumentMeta (on
+   * mount). They are deliberately separate — one runs in Node, one in the browser —
+   * so they can drift, and the symptom would be invisible: the browser tab would
+   * silently change a moment after paint. This is the assertion that keeps the two
+   * in agreement without merging them.
+   */
+  if (!isErrorRoute) {
+    check(
+      `${route} does not rewrite its title after mount`,
+      unescape(servedTitle) === document.title,
+      `served "${unescape(servedTitle)}" → mounted "${document.title}"`
+    );
+  }
   check(
     `${route} sets its own canonical`,
     canonical === `${ORIGIN}${route}`,
@@ -465,6 +482,34 @@ console.log("\nPrerender sweep (every shipped document):");
   }
 
   check("every prerendered page is complete and self-describing", problems.length === 0, problems.slice(0, 8).join(" | "));
+
+  /*
+   * Two modules write titles — src/lib/seo.ts at build time, useDocumentMeta on
+   * mount — and they are deliberately separate (one is Node, one is the browser).
+   * If they disagree the browser tab changes a moment after paint, which is
+   * invisible unless something compares the two. This mounts EVERY prerendered
+   * route and requires the mounted title to equal the served one.
+   *
+   * The per-route checks above cover 11 routes; /industries/real-estate was not
+   * among them, which is how a deliberately broken client title went undetected.
+   */
+  const titleDrift = [];
+  for (const route of pages) {
+    const file = route === "/" ? path.join(root, "dist/index.html") : path.join(root, "dist", route, "index.html");
+    const served = readFileSync(file, "utf8").match(/<title>([^<]*)<\/title>/)?.[1] ?? "";
+    const unescapeHtml = (t) =>
+      t.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+    const { document } = await mount(route);
+    const mounted = document.title;
+    if (mounted !== unescapeHtml(served)) {
+      titleDrift.push(`${route}: served "${unescapeHtml(served)}" → mounted "${mounted}"`);
+    }
+  }
+  check(
+    "no page rewrites its title after mount",
+    titleDrift.length === 0,
+    titleDrift.slice(0, 4).join(" | ")
+  );
 
   /*
    * The 404 document is the one page that must NOT be indexable: every unmatched

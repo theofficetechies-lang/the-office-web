@@ -68,6 +68,18 @@ const breadcrumb = (name: string, path: string, trail: { name: string; path: str
  * Resolve the head for a path. Unknown paths deliberately return the 404 head
  * with noindex — never a fallback that advertises a page that does not exist.
  */
+/*
+ * NOTE ON DRIFT
+ * -------------
+ * Several pages own their title in useDocumentMeta and some of them are bilingual
+ * (the Portuguese string differs). Those titles are copied here so the prerendered
+ * head matches what mounts a moment later. The DOM suite mounts EVERY prerendered
+ * route and fails if the mounted title differs from the served one, so this copy
+ * cannot silently rot — it fails the build instead.
+ *
+ * Where a page's title is generated (services, industries, notes), it is resolved
+ * from the same data here rather than copied.
+ */
 export function headFor(path: string): HeadMeta {
   const route = matchRoute(path);
   const notFound: HeadMeta = {
@@ -164,7 +176,11 @@ export function headFor(path: string): HeadMeta {
       // One of the five originally published services (kept as live URLs).
       if (published) {
         return {
-          title: `${published.title} — ${published.tagline} — THE OFFICE 360`,
+          /*
+           * ServicePage (the five pre-existing pages) titles itself with the name
+           * only; the tagline is the h1. Matching it here avoids a rewrite on mount.
+           */
+          title: `${published.title} — THE OFFICE 360`,
           description: truncate(published.what ?? published.tagline),
           url: `${SITE_URL}/services/${route.slug}`,
           noindex: false,
@@ -277,7 +293,8 @@ export function headFor(path: string): HeadMeta {
     /* ------------------------------------------------------------ store */
     case "store":
       return {
-        title: "The store — analysis you can buy without a call — THE OFFICE 360",
+        /* StorePage owns this title and uses the mixed-case studio name. */
+        title: "Store — The Office 360",
         description: truncate(
           "Fixed-price diagnostic products and templates from THE OFFICE 360. Priced in USD, settled in NGN."
         ),
@@ -290,7 +307,7 @@ export function headFor(path: string): HeadMeta {
       const product = products.find((p) => p.slug === route.slug);
       if (!product) return notFound;
       return {
-        title: `${product.name.en} — Store — THE OFFICE 360`,
+        title: `${product.name.en} — The Office 360`,
         description: truncate(product.blurb.en),
         url: `${SITE_URL}/store/${product.slug}`,
         noindex: false,
@@ -312,7 +329,7 @@ export function headFor(path: string): HeadMeta {
 
     case "glossary":
       return {
-        title: "Glossary — The vocabulary of the trade — THE OFFICE 360",
+        title: "Publishing glossary — THE OFFICE 360",
         description: truncate(
           "The terms this studio uses precisely, and what they mean here: positioning, discoverability, authority, comp set, measurement window."
         ),
@@ -323,7 +340,7 @@ export function headFor(path: string): HeadMeta {
 
     case "press":
       return {
-        title: "Press — THE OFFICE 360",
+        title: "Press & media kit — THE OFFICE 360",
         description: truncate("Studio facts and a media kit. Boilerplate, team, and what we will and will not claim."),
         url: `${SITE_URL}/press`,
         noindex: false,
@@ -332,7 +349,7 @@ export function headFor(path: string): HeadMeta {
 
     case "demos":
       return {
-        title: "Demos — See the work, not the promises — THE OFFICE 360",
+        title: "Proof — THE OFFICE 360",
         description: truncate(
           "Interactive demonstrations of the analysis: how we position a book, what a report contains, and the self-audit."
         ),
@@ -343,7 +360,7 @@ export function headFor(path: string): HeadMeta {
 
     case "checklist":
       return {
-        title: "The backlist audit checklist — THE OFFICE 360",
+        title: "Backlist audit checklist — THE OFFICE 360",
         description: truncate(
           "A printable checklist for auditing a backlist: metadata, categories, description architecture and the discovery paths that break."
         ),
