@@ -94,10 +94,10 @@ Fraunces/Inter Tight/JetBrains Mono, hairline rules, `ink-block`, 12-col grid, `
 | **D10** | Medium | **`useDocumentMeta` only updates on the client.** Hard-load crawlers that do not execute JS see the homepage's title/description on every one of the 29 URLs. No prerender/SSR (`src/entry-ssr.tsx` exists but `vercel.json` deploys a pure SPA build). | `src/hooks/useDocumentMeta.ts`, `vercel.json` |
 | **D11** | Medium | **Locales are not in the URL.** `hreflang` alternates are declared for `en`/`pt`, but both resolve to the same URL and the language is a `localStorage` toggle — so the `hreflang` trio is invalid and pt content is not indexable. | `index.html:14-16`, `src/lib/i18n.tsx` |
 | **D12** | Medium | **No breadcrumbs, no `BreadcrumbList`, no `Organization`-level `sameAs`, no `Service`/`FAQPage` schema on the 5 service pages or the FAQ block** — the structured-data work stops at two `@id`s. | `index.html:48-80` |
-| **D13** | Medium | **No RSS discovery** despite `/rss.xml` being generated and shipped (link tag present, but no route/validation and it is not in the sitemap). | `index.html:17`, `scripts/build-sitemap.mjs:82` |
+| ~~**D13**~~ | ~~Medium~~ | **Closed — my original reading was wrong.** `/rss.xml` ships and a `rel="alternate"` link tag is present in the generated HTML on every page, verified in `dist/index.html` and in all 96 prerendered documents. Not a defect. | `index.html`, `dist/**/index.html` |
 | **D14** | Low | Dev middleware logs the **full brief** (name, email, org, message) to stdout; `req.url === "/api/brief"` is exact-match so query strings bypass it. | `vite.config.ts:15,27,35` |
 | **D15** | Low | `vercel.json` still ships deprecated `X-XSS-Protection`; no HSTS; no CSP for the app (only on the API response). | `vercel.json:24-27` |
-| **D16** | Low | `/admin` and `/demos` are absent from `sitemap.xml` (correct for `/admin`, wrong for `/demos`, which is a public marketing asset ranked 0.7 in the generator). | `public/sitemap.xml` |
+| ~~**D16**~~ | ~~Low~~ | **Closed — `/demos` is in the sitemap** (ranked 0.7 as intended); only `/admin` is absent, which is correct. Verified in `dist/sitemap.xml`. | `dist/sitemap.xml` |
 
 ### 1.3 Content and conversion gaps against the brief
 
