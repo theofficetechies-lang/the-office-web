@@ -308,6 +308,80 @@ if (typeof seoGlobal.prerenderPaths === "function" && typeof render === "functio
 }
 
 /* ------------------------------------------------------------------ */
+/* Structural validity of every shipped document                       */
+/* ------------------------------------------------------------------ */
+/*
+ * Browsers recover from malformed HTML, and that recovery is what hid a dropped
+ * </div> in all 96 documents: the page rendered correctly, so nothing complained.
+ * A stack-based checker is not a full HTML5 parser, but it catches the class of
+ * error a string-splicing prerenderer actually produces — unbalanced tags and
+ * stray closers — and it runs over everything that ships.
+ */
+{
+  const VOID = new Set(["area","base","br","col","embed","hr","img","input","link","meta","param","source","track","wbr"]);
+  const OPTIONAL = new Set(["p","li","td","th","tr","option","dt","dd"]);
+
+  function checkBalance(html) {
+    const stack = [];
+    const errors = [];
+    const tagRe = /<(\/?)([a-zA-Z][a-zA-Z0-9-]*)([^>]*?)(\/?)>/g;
+    /* Skip the contents of <script> and comments, which contain angle brackets. */
+    const cleaned = html
+      .replace(/<script[\s\S]*?<\/script>/gi, "<script></script>")
+      .replace(/<!--[\s\S]*?-->/g, "");
+    let m;
+    while ((m = tagRe.exec(cleaned))) {
+      const [, closing, rawTag, , selfClose] = m;
+      const tag = rawTag.toLowerCase();
+      if (VOID.has(tag) || selfClose) continue;
+      if (!closing) {
+        stack.push(tag);
+      } else if (stack.length === 0) {
+        errors.push(`stray </${tag}>`);
+      } else if (stack[stack.length - 1] === tag) {
+        stack.pop();
+      } else if (OPTIONAL.has(tag) && stack.includes(tag)) {
+        while (stack.length && stack[stack.length - 1] !== tag) stack.pop();
+        stack.pop();
+      } else {
+        errors.push(`</${tag}> closes <${stack[stack.length - 1]}>`);
+      }
+    }
+    const leftover = stack.filter((t) => t !== "html" && t !== "body");
+    if (leftover.length) errors.push(`unclosed ${leftover.slice(0, 3).join(", ")}`);
+    return errors;
+  }
+
+  const docs = [];
+  const collect = (dir) => {
+    for (const entry of readdirSync(dir)) {
+      const full = path.join(dir, entry);
+      if (statSync(full).isDirectory()) {
+        if (entry === "assets" || entry === "dist-ssr") continue;
+        collect(full);
+      } else if (entry === "index.html" || entry === "404.html") {
+        docs.push(full);
+      }
+    }
+  };
+  collect(path.join(root, "dist"));
+
+  const broken = [];
+  for (const file of docs) {
+    const errs = checkBalance(readFileSync(file, "utf8"));
+    if (errs.length) broken.push(`${path.relative(path.join(root, "dist"), file)}: ${errs[0]}`);
+  }
+
+  if (broken.length === 0) {
+    console.log(`✓ ${docs.length} shipped documents are structurally balanced`);
+  } else {
+    failures++;
+    console.error(`✗ ${broken.length} malformed document(s)`);
+    broken.slice(0, 6).forEach((b) => console.error(`    ${b}`));
+  }
+}
+
+/* ------------------------------------------------------------------ */
 /* No shipped default credentials                                      */
 /* ------------------------------------------------------------------ */
 /*
