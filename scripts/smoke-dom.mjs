@@ -52,7 +52,27 @@ await build({
 });
 
 const bundle = readFileSync(path.join(root, "dist-test/app.js"), "utf8");
-const shell = readFileSync(path.join(root, "dist/index.html"), "utf8");
+const fallbackShell = readFileSync(path.join(root, "dist/index.html"), "utf8");
+
+/**
+ * The document a static host would serve for `route`.
+ *
+ * Production is prerendered (scripts/prerender.mjs), so each known route has its
+ * own `dist<route>/index.html` with route-specific head and markup; everything
+ * else falls back to the root index.html, exactly as vercel.json's rewrite does.
+ * Mounting each route against its own document is what makes hydration tested
+ * rather than assumed — bundling main.tsx against the homepage shell used to
+ * throw on every route the moment hydration was introduced.
+ */
+function shellFor(route) {
+  const clean = route.split("#")[0].split("?")[0];
+  if (clean === "/" || clean === "") return fallbackShell;
+  const file = path.join(root, "dist", clean.replace(/^\//, ""), "index.html");
+  if (existsSync(file)) return readFileSync(file, "utf8");
+  /* Unmatched paths are routed to 404.html by vercel.json, not to index.html. */
+  const notFound = path.join(root, "dist/404.html");
+  return existsSync(notFound) ? readFileSync(notFound, "utf8") : fallbackShell;
+}
 
 const ORIGIN = "https://www.the-office360.com";
 /**
@@ -146,7 +166,7 @@ async function mount(route, { reducedMotion = false, presetLang } = {}) {
   vc.on("jsdomError", (e) => errors.push(`jsdomError: ${e.message}`));
   vc.on("error", (...a) => errors.push(`console.error: ${a.join(" ")}`));
 
-  const dom = new JSDOM(shell, {
+  const dom = new JSDOM(shellFor(route), {
     url: `${ORIGIN}${route}`,
     runScripts: "dangerously",
     pretendToBeVisual: true,
@@ -234,7 +254,7 @@ const expectations = {
   },
   "/privacy": { title: "Privacy notice — THE OFFICE 360", h1: "Privacy notice." },
   "/terms": { title: "Terms of service — THE OFFICE 360", h1: "Terms of service." },
-  "/work/does-not-exist": { title: "Case study not found — THE OFFICE 360", h1: null },
+  "/work/does-not-exist": { title: "Case study not found — THE OFFICE 360", servedTitle: "Document not found — THE OFFICE 360", h1: null },
   /*
    * Phase 1 added servicesIndex / division / industriesIndex / industry to the
    * router; their pages land in Phase 2. Until then they must render the 404 and
@@ -244,7 +264,7 @@ const expectations = {
    * which point they should be updated to the real titles.
    */
   "/services/corporate-website-development": {
-    title: "A site that answers the questions that lose you the deal — corporate website development — THE OFFICE 360",
+    title: "Corporate Website Development — Services — THE OFFICE 360",
     h1: "A site that answers the questions that lose you the deal.",
   },
   "/services": {
@@ -263,7 +283,12 @@ const expectations = {
     title: "Real Estate — Industries — THE OFFICE 360",
     h1: "Real Estate",
   },
-  "/industries/does-not-exist": { title: "Industry not found — THE OFFICE 360", h1: "That sector is not in the archive." },
+  /*
+   * Unknown URLs are served dist/404.html by vercel.json's filesystem-then-404
+   * routes, so the fallback document itself must carry an error head rather than
+   * the homepage's — otherwise a missing page answers as the homepage.
+   */
+  "/industries/does-not-exist": { title: "Industry not found — THE OFFICE 360", servedTitle: "Document not found — THE OFFICE 360", h1: "That sector is not in the archive." },
   "/nowhere": { title: "Document not found — THE OFFICE 360", h1: null },
 };
 
@@ -275,6 +300,73 @@ for (const [route, exp] of Object.entries(expectations)) {
   const robots = document.querySelector('meta[name="robots"]')?.content;
 
   check(`${route} mounts with no console error`, errors.length === 0, errors.join(" | "));
+
+  /*
+   * Prerender correctness, checked on the document the host actually serves.
+   *
+   * The client also writes a title in an effect, so asserting `document.title`
+   * after mounting passed even when every route shipped the homepage's head and
+   * an empty mount node — a crawler or a link unfurler sees the served document,
+   * not the driven one. This reads the raw file.
+   */
+  const servedHead = shellFor(route);
+  const servedTitle = servedHead.match(/<title>([^<]*)<\/title>/)?.[1] ?? "";
+  const unescape = (t) =>
+    t.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+  /*
+   * `servedTitle` overrides the expectation for error routes: the shared 404
+   * document says "Document not found", and the page component refines it to
+   * "Industry not found" etc. after hydration. Both are correct; the served one is
+   * what a crawler sees, so it is asserted explicitly rather than assumed equal.
+   */
+  const expectedServed = exp.servedTitle ?? exp.title;
+  check(
+    `${route} is prerendered with ${exp.servedTitle ? "its own" : "the right"} title`,
+    unescape(servedTitle) === expectedServed,
+    `served "${unescape(servedTitle) || "(none)"}"`
+  );
+  /*
+   * Error routes share the single 404 document, so a per-route canonical and a
+   * hydration stamp do not apply: it must be noindex, and it must carry no stamp
+   * (src/main.tsx creates rather than hydrates when the stamp is absent).
+   */
+  const isErrorRoute = servedHead === (existsSync(path.join(root, "dist/404.html"))
+    ? readFileSync(path.join(root, "dist/404.html"), "utf8")
+    : "");
+
+  if (isErrorRoute) {
+    check(
+      `${route} serves the noindex 404 document`,
+      /name="robots" content="noindex/.test(servedHead),
+      "404 document is indexable"
+    );
+  } else {
+    const servedCanonical = servedHead.match(/<link rel="canonical" href="([^"]*)"/)?.[1] ?? "";
+    check(
+      `${route} is prerendered with its own canonical`,
+      servedCanonical === `${ORIGIN}${route}`,
+      `served ${servedCanonical || "(none)"}`
+    );
+    const stamp = servedHead.match(/data-prerendered="([^"]*)"/)?.[1] ?? "";
+    check(
+      `${route} document is stamped for hydration`,
+      stamp === route,
+      `stamp "${stamp}"`
+    );
+  }
+
+  /*
+   * Exactly one <h1> in the SERVED document, not just after mounting. The former
+   * <noscript> fallback contained its own <h1>, so every page shipped two and a
+   * crawler without JS saw "JavaScript is off." as the heading.
+   */
+  const servedH1s = servedHead.slice(servedHead.indexOf('<div id="root">')).match(/<h1[\s>]/g) ?? [];
+  check(
+    `${route} ships exactly one h1 in its HTML`,
+    servedH1s.length === 1,
+    `found ${servedH1s.length}`
+  );
+
   check(
     `${route} sets its own title`,
     document.title === exp.title,
@@ -304,6 +396,78 @@ for (const [route, exp] of Object.entries(expectations)) {
 /* ------------------------------------------------------------------ */
 /* 2. No broken internal links, no unlabelled images                   */
 /* ------------------------------------------------------------------ */
+
+/* ------------------------------------------------------------------ */
+/* Prerender sweep — every shipped document                            */
+/* ------------------------------------------------------------------ */
+/*
+ * The per-route assertions above cover a chosen 15 routes. The expansion ships
+ * 96 prerendered documents plus a 404, and a route can regress without being in
+ * that list — /services/intelligence did exactly that: it was silently missing
+ * from the expectations, so its head was never checked.
+ *
+ * This walks what is actually in dist/, derives nothing from app code, and
+ * asserts the properties that make prerendering worth doing at all.
+ */
+console.log("\nPrerender sweep (every shipped document):");
+{
+  const titles = new Map();
+  const problems = [];
+
+  const walk = (dir, prefix = "") => {
+    const out = [];
+    for (const entry of readdirSync(dir)) {
+      const full = path.join(dir, entry);
+      if (statSync(full).isDirectory()) {
+        if (entry === "assets" || entry.startsWith("dist-ssr")) continue;
+        out.push(...walk(full, `${prefix}/${entry}`));
+      } else if (entry === "index.html") {
+        out.push(prefix === "" ? "/" : prefix);
+      }
+    }
+    return out;
+  };
+
+  const pages = walk(path.join(root, "dist"));
+  check("build produced prerendered documents", pages.length > 90, `found ${pages.length}`);
+
+  for (const route of pages) {
+    const file = route === "/" ? path.join(root, "dist/index.html") : path.join(root, "dist", route, "index.html");
+    const html = readFileSync(file, "utf8");
+    const body = html.slice(html.indexOf('<div id="root">'));
+
+    const title = html.match(/<title>([^<]*)<\/title>/)?.[1] ?? "";
+    const canonical = html.match(/<link rel="canonical" href="([^"]*)"/)?.[1] ?? "";
+    const robots = html.match(/<meta name="robots" content="([^"]*)"/)?.[1] ?? "";
+    const h1s = body.match(/<h1[\s>]/g) ?? [];
+    const textWords = body.replace(/<script[\s\S]*?<\/script>/g, " ").replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
+
+    if (!title) problems.push(`${route}: no title`);
+    if (h1s.length !== 1) problems.push(`${route}: ${h1s.length} h1 elements`);
+    if (textWords < 40) problems.push(`${route}: only ${textWords} words of real markup`);
+    if (!robots.includes("index")) problems.push(`${route}: not indexable (${robots || "no robots"})`);
+    if (canonical !== `${ORIGIN}${route}`) problems.push(`${route}: canonical ${canonical || "(none)"}`);
+
+    if (titles.has(title)) problems.push(`${route}: same title as ${titles.get(title)}`);
+    else titles.set(title, route);
+  }
+
+  check("every prerendered page is complete and self-describing", problems.length === 0, problems.slice(0, 8).join(" | "));
+
+  /*
+   * The 404 document is the one page that must NOT be indexable: every unmatched
+   * URL is routed to it, so indexing it would put an error page in the index.
+   */
+  const notFoundPath = path.join(root, "dist/404.html");
+  const nf = existsSync(notFoundPath) ? readFileSync(notFoundPath, "utf8") : "";
+  check("a 404 document exists", nf.length > 0);
+  check(
+    "the 404 document is noindex",
+    /name="robots" content="noindex/.test(nf),
+    "the 404 fallback is indexable"
+  );
+  check("the 404 document is not stamped for hydration", !/data-prerendered=/.test(nf));
+}
 
 console.log("\nLink and image hygiene:");
 {

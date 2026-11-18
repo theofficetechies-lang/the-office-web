@@ -104,20 +104,15 @@
   </head>
   <body>
     <!--
-      Noscript fallback: this is a client-rendered React app. Without
-      JS, the document body is empty. Give visitors (and crawlers
-      without JS) a real, in-voice message + a mailto.
-    -->
-    <noscript>
-      <div style="font-family: Georgia, serif; max-width: 640px; margin: 4rem auto; padding: 0 1.5rem; color: #000; background: #fff;">
-        <p style="font-size: 11px; letter-spacing: 0.1em; font-family: monospace; text-transform: uppercase; opacity: 0.6; margin: 0 0 0.5rem 0;">THE OFFICE 360</p>
-        <h1 style="font-size: 2.5rem; line-height: 1; margin: 0 0 1.5rem 0; font-weight: 300;">JavaScript is off.</h1>
-        <p style="font-size: 1rem; line-height: 1.6; margin: 0 0 1rem 0;">This page is a small client-rendered site. With scripting disabled you are seeing the fallback. The short version of who we are: a four-person studio for book strategy, web design, automation, and book research.</p>
-        <p style="font-size: 1rem; line-height: 1.6; margin: 0 0 1rem 0;">The best way to reach us is by email:</p>
-        <p style="font-size: 1.1rem; margin: 0;"><a href="mailto:theofficetechies@gmail.com" style="color: #000; border-bottom: 1px solid #000; text-decoration: none;">theofficetechies@gmail.com</a></p>
-      </div>
-    </noscript>
+      The mount node is filled by scripts/prerender.mjs at build time with real
+      server-rendered markup, so this document is already the page. The former
+      <noscript> fallback ("JavaScript is off.") was removed: with prerendering
+      it was redundant, and it put a second <h1> plus stale "client-rendered
+      site" copy into all 97 shipped documents.
 
+      In `vite dev` this node stays empty and src/main.tsx creates the tree; in
+      the prerendered build it hydrates instead.
+    -->
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

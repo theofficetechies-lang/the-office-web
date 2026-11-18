@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "npm run sitemap && tsc && vite build && npm run build:ssr && node scripts/prerender.mjs",
     "prebuild": "node scripts/check-origin.mjs",
     "preview": "vite preview",
     "lint": "tsc --noEmit",
@@ -20,7 +20,8 @@
     "vercel:dev": "vercel dev",
     "test:money": "node --experimental-strip-types scripts/test-money.ts",
     "verify": "npm run lint && npm run eslint && npm run check:origin && npm run test:money && npm run test:content && npm run build && npm run smoke",
-    "test:content": "node --experimental-strip-types scripts/test-content.ts"
+    "test:content": "node --experimental-strip-types scripts/test-content.ts",
+    "build:ssr": "vite build --ssr src/entry-ssr.tsx --outDir dist/dist-ssr --emptyOutDir --logLevel warn && vite build --ssr src/lib/seo.ts --outDir dist/dist-ssr --emptyOutDir=false --logLevel warn"
   },
   "dependencies": {
     "clsx": "2.1.1",

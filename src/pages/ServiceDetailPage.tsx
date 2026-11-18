@@ -9,6 +9,7 @@ import { useI18n } from "@/lib/i18n";
 import { processStages } from "@/data/process";
 import { divisions } from "@/data/divisions";
 import { getServiceDetail, resolveRelated } from "@/data/serviceDetailIndex";
+import { getCatalogService } from "@/data/serviceCatalog";
 import type { ServiceDetail } from "@/data/serviceDetailTypes";
 
 /**
@@ -175,9 +176,17 @@ export default function ServiceDetailPage({ slug }: { slug: string }) {
     ? divisions.find((d) => d.flagshipSlugs.includes(service.slug) || d.id === "web")
     : undefined;
 
+  /*
+   * The title used the slug ("corporate website development") rather than the
+   * service's name, so every one of the 40 flagship pages shipped a lowercase
+   * keyword string as its title. The name comes from the catalogue; the tagline
+   * is already the h1, so repeating it in the title only wastes the space.
+   */
+  const serviceName = getCatalogService(slug)?.title;
+
   useDocumentMeta({
     title: service
-      ? `${service.tagline.replace(/\.$/, "")} — ${service.slug.replace(/-/g, " ")} — THE OFFICE 360`
+      ? `${serviceName ?? service.tagline.replace(/\.$/, "")} — Services — THE OFFICE 360`
       : "Service not found — THE OFFICE 360",
     description: service?.summary ?? "The service you were looking for is not in the archive.",
     path: `/services/${slug}`,
