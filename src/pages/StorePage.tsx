@@ -38,19 +38,37 @@ function SignInForm({ onDone }: { onDone: (email: string) => void }) {
         Sign in to continue to payment
       </div>
       <div className="grid grid-cols-1 gap-3 mb-3">
-        <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Your name"
-          className="w-full bg-white border border-black/40 px-3 py-2 text-[14px] outline-none focus:border-black"
-        />
-        <input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          type="email"
-          placeholder="you@example.com"
-          className="w-full bg-white border border-black/40 px-3 py-2 text-[14px] outline-none focus:border-black"
-        />
+        {/*
+          Visible labels, not placeholders. A placeholder disappears as soon as
+          someone types and is not reliably announced by a screen reader, so these
+          two fields previously had no accessible name at all — on the payment step,
+          where getting the email wrong matters most.
+        */}
+        <label htmlFor="checkout-name" className="font-mono text-[10.5px] tracking-mono opacity-60">
+          NAME
+          <input
+            id="checkout-name"
+            name="name"
+            autoComplete="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Your name"
+            className="mt-1 w-full bg-white border border-black/40 px-3 py-2 text-[14px] outline-none focus:border-black font-sans tracking-normal opacity-100"
+          />
+        </label>
+        <label htmlFor="checkout-email" className="font-mono text-[10.5px] tracking-mono opacity-60">
+          EMAIL
+          <input
+            id="checkout-email"
+            name="email"
+            autoComplete="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            placeholder="you@example.com"
+            className="mt-1 w-full bg-white border border-black/40 px-3 py-2 text-[14px] outline-none focus:border-black font-sans tracking-normal opacity-100"
+          />
+        </label>
       </div>
       {err && <p className="text-[12px] text-red-600 mb-2">{err}</p>}
       <button type="submit" className="bg-black text-white px-4 py-2.5 font-mono text-[11px] tracking-mono font-semibold hover:bg-black/85 cursor-pointer">

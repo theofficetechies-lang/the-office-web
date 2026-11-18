@@ -308,6 +308,84 @@ if (typeof seoGlobal.prerenderPaths === "function" && typeof render === "functio
 }
 
 /* ------------------------------------------------------------------ */
+/* Accessibility of the shipped markup                                 */
+/* ------------------------------------------------------------------ */
+/*
+ * These are the checks that can be made from the HTML alone. They are not a
+ * substitute for a screen reader or a keyboard, neither of which exists in this
+ * sandbox — but they catch the failures that matter most and recur most:
+ * controls with no accessible name, images with no alt, a missing landmark, and a
+ * clickable div that no keyboard can reach.
+ *
+ * Real findings when added: the store checkout inputs relied on placeholder text
+ * for their names, so the name and email fields on the PAYMENT step had no
+ * accessible name. Tickets fixed; this keeps them fixed.
+ */
+{
+  const issues = [];
+  const files = [];
+  const collect = (dir) => {
+    for (const entry of readdirSync(dir)) {
+      const full = path.join(dir, entry);
+      if (statSync(full).isDirectory()) {
+        if (entry === "assets" || entry === "dist-ssr") continue;
+        collect(full);
+      } else if (entry === "index.html") files.push(full);
+    }
+  };
+  collect(path.join(root, "dist"));
+
+  for (const file of files) {
+    const route = "/" + path.relative(path.join(root, "dist"), path.dirname(file)).replace(/\\/g, "/");
+    const html = readFileSync(file, "utf8");
+    const body = html.slice(html.indexOf('<div id="root">'));
+
+    if (!body.includes('id="main"')) issues.push(`${route}: no #main landmark`);
+    if ((body.match(/id="main"/g) ?? []).length > 1) issues.push(`${route}: more than one #main`);
+
+    /* A control must have a name from aria, an id, or an enclosing <label>. */
+    const insideLabel = (pos) => {
+      const before = body.slice(0, pos);
+      const opens = (before.match(/<label\b/g) ?? []).length;
+      const closes = (before.match(/<\/label>/g) ?? []).length;
+      return opens > closes;
+    };
+    for (const m of body.matchAll(/<input\b([^>]*)>/g)) {
+      const attrs = m[1];
+      if (attrs.includes('type="hidden"')) continue;
+      const named =
+        attrs.includes("aria-label") ||
+        attrs.includes("aria-labelledby") ||
+        /\bid="/.test(attrs) ||
+        insideLabel(m.index);
+      if (!named) issues.push(`${route}: input with no accessible name`);
+    }
+
+    for (const m of body.matchAll(/<img\b([^>]*)>/g)) {
+      if (!/\balt=/.test(m[1])) issues.push(`${route}: img without alt`);
+    }
+
+    for (const m of body.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)) {
+      const text = m[2].replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").trim();
+      const attrs = m[1];
+      if (!text && !attrs.includes("aria-label") && !attrs.includes("aria-labelledby")) {
+        issues.push(`${route}: link with no accessible name`);
+      }
+    }
+
+    if (/<div[^>]*onclick=/i.test(body)) issues.push(`${route}: clickable div (unreachable by keyboard)`);
+  }
+
+  if (issues.length === 0) {
+    console.log(`✓ ${files.length} pages pass the static accessibility checks`);
+  } else {
+    failures++;
+    console.error(`✗ ${issues.length} accessibility issue(s)`);
+    [...new Set(issues)].slice(0, 8).forEach((i) => console.error(`    ${i}`));
+  }
+}
+
+/* ------------------------------------------------------------------ */
 /* Structured data validity                                            */
 /* ------------------------------------------------------------------ */
 /*
