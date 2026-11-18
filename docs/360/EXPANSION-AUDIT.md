@@ -285,6 +285,34 @@ a division that exists and is selectable.
 
 ---
 
+## 4b. Open blocker — the branch cannot be pushed
+
+`git push origin arena/a7e1d1d1-the-office-web` is rejected:
+
+```
+refusing to allow a GitHub App to create or update workflow
+`.github/workflows/verify.yml` without `workflows` permission
+```
+
+`.github/workflows/verify.yml` does not exist in the live tree (`84b1ba3`), on
+`origin/main`, or in this branch's base (`7bfe8cd`). It was added in Phase 0, so
+every commit since then carries it and GitHub refuses the whole branch — not just
+that file. Nine commits and ~8,400 lines are currently local only.
+
+Options, in order of preference:
+
+1. **Grant the GitHub App `workflows` permission** for this repository, then push.
+   The CI file is worth having: it is what stops the gate going stale again.
+2. **Keep the workflow out of the branch.** Drop `.github/workflows/verify.yml`
+   from the history (`git rebase` / filter) and commit it separately once the App
+   can accept it. `npm run verify` still works locally and is unchanged.
+3. Push through a credentialed account with workflow scope.
+
+Until one of these happens the work is verifiable locally but not delivered, and
+this is the single thing standing between the branch and review.
+
+---
+
 ## 5. What I will not do, and why
 
 | Brief asks for | Why I am not building it as stated |
