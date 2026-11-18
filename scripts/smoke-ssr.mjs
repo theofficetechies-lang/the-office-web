@@ -7,7 +7,7 @@
  *   npm run smoke
  */
 import { execSync } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync, statSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
@@ -123,7 +123,17 @@ const cases = [
   { route: "/demos", must: ["See the work, not the promises.", "Start here", "How we position a book", "What a report contains"], mustNot: [] },
   { route: "/store", must: ["The store.", "The Backlist Audit Pack", "$49"], mustNot: [] },
   { route: "/store/the-diagnostic", must: ["The Diagnostic (fixed-price analysis)", "$950", "DELIVERY"], mustNot: [] },
-  { route: "/admin", must: ["Store admin", "Passcode"], mustNot: [] },
+  {
+    route: "/admin",
+    /*
+     * Unconfigured is the shipped default (VITE_ADMIN_PASSCODE is empty in the
+     * build), so the panel must state that it is not configured rather than render
+     * a login form. The old assertion required the word "Passcode", which was
+     * satisfied by a form no visitor could use as a real gate.
+     */
+    must: ["Store admin is not configured", "not a login"],
+    mustNot: ["admin123", "Default preview passcode"],
+  },
   { route: "/resources/backlist-audit-checklist", must: ["The backlist audit checklist.", "PRINT / SAVE AS PDF"], mustNot: [] },
   { route: "/services", must: ["Six divisions.", "One analytical method."], mustNot: ["Document not found"] },
   {
@@ -169,6 +179,33 @@ for (const c of cases) {
     console.error(`✗ ${c.route}`);
     missing.forEach((m) => console.error(`    missing:  ${m}`));
     forbidden.forEach((f) => console.error(`    present:  ${f}`));
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* No shipped default credentials                                      */
+/* ------------------------------------------------------------------ */
+/*
+ * This literal shipped in the public bundle and was printed on the admin screen.
+ * A build-time passcode cannot be secret, so the only safe default is none.
+ */
+{
+  const bundles = [];
+  const walk = (dir) => {
+    for (const entry of readdirSync(dir)) {
+      const full = path.join(dir, entry);
+      if (statSync(full).isDirectory()) walk(full);
+      else if (entry.endsWith(".js")) bundles.push(full);
+    }
+  };
+  walk(path.join(root, "dist/assets"));
+  const offenders = bundles.filter((f) => readFileSync(f, "utf8").includes("admin123"));
+  if (offenders.length === 0) {
+    console.log(`✓ no default credential in ${bundles.length} shipped bundles`);
+  } else {
+    failures++;
+    console.error("✗ a default credential ships in the client bundle");
+    offenders.forEach((f) => console.error(`    ${path.relative(root, f)}`));
   }
 }
 
