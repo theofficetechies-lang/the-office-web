@@ -264,7 +264,7 @@ verified by a gate, not by inspection.
 | 3 — Industries | **Done** | `/industries` + 20 sector pages, no claimed clients |
 | 4 — Lead infrastructure | **Not started** | Needs the KV/Postgres decision. The form now tags leads by division and pathway so routing has something to route on |
 | 5 — Booking | **Rejected** | Not one of the four selected capabilities; will not be faked |
-| 6 — SEO & analytics | **Partly done** | Sitemap covers 96 URLs including all new routes; breadcrumb/Service/FAQ JSON-LD, hreflang collapse (D11) and internal-link depth still open |
+| 6 — SEO & analytics | **Done (D10/D11/D12)** | All 96 routes prerendered with unique head + JSON-LD; 404 noindex; hreflang collapsed to `en`; sitemap 96 URLs. Analytics events still open |
 | 7 — CRM & pipeline | **Not started** | Follows Phase 4 storage |
 | 8 — Portal/proposals/admin | **Deferred** | As instructed |
 
