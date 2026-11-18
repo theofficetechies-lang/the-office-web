@@ -548,11 +548,15 @@ documents; skip link reveals on focus; inverse sections get their own focus ring
 were fixed this stretch — the store checkout's name and email inputs were labelled
 only by placeholder.
 
-**Weakness it would raise:** static analysis is not a screen reader. The gate
-catches unlabelled controls and broken landmarks; it does not catch a live-region
-that announces at the wrong moment. And an axe-core run in a real browser is still
-outstanding. I would not ship to a client claiming WCAG AA on the strength of a
-regex-based gate, and I am not claiming it here.
+**Weakness it would raise:** analysis is not a screen reader. axe-core now runs
+over all 96 documents and found two real defects that regexes missed — a prohibited
+`aria-label` that left the hero line with no accessible name, and duplicate `<nav>`
+labels — which is exactly the class of bug a rule engine catches and a pattern match
+does not. But axe in jsdom has no layout, so contrast and target size are excluded
+by name rather than passing, and neither a rule engine nor a static pass can tell you
+whether a live region announces at the wrong moment. I would not ship to a client
+claiming WCAG AA on the strength of automated checks alone, and I am not claiming it
+here.
 
 ### G. Frontend Engineer
 
@@ -595,7 +599,8 @@ Two named the **hero division wording** (§4c). One named the **push blocker** a
 top risk, which is the only item that blocks everything else from mattering.
 
 Ranked, the work I would do next is: push the branch, decide storage, widen the
-hero line, wire analytics, run axe in a real browser.
+hero line, wire analytics, then a real-browser pass for contrast, touch targets and
+Core Web Vitals — the three things jsdom structurally cannot see.
 
 ## 29.1 The release checklist, stated honestly
 
@@ -618,6 +623,14 @@ skip link, focus rings and `prefers-reduced-motion` asserted from the shipped CS
 `.skip-link:focus` and `.on-ink` focus treatment gated; 14 images, all with `alt`,
 all lazy; the overflow guard added this turn and negative-tested.
 
+Accessibility is now checked twice. A regex pass covers the cheap invariants, and
+**axe-core runs over all 96 shipped documents** with zero violations. That second
+pass earns its place: it immediately found two defects the regexes could not see —
+an `aria-label` on a role-less `<span>` in the hero typewriter (prohibited, so
+silently ignored; the line had no accessible name at all) and two `<nav>` landmarks
+both labelled "Services". Both are fixed, and both were reintroduced deliberately to
+prove the gate fails on them.
+
 **Partly verified — 2 of 28. Both are verified in markup and unverifiable in
 behaviour without a browser or a device:**
 
@@ -631,6 +644,12 @@ behaviour without a browser or a device:**
 | Condition | Status | Why |
 |---|---|---|
 | Performance / Core Web Vitals | **Measured, not certified** | The bundle is gated — 127 KB gz first load, 30% below the pre-split figure, 45% below on flagship service pages — but LCP, CLS and INP require a real browser against a deployed URL |
+
+**On axe specifically:** it runs in jsdom, which has no layout engine, so
+`color-contrast` and `target-size` report *incomplete* rather than clean. Those are
+excluded by name in the gate so the pass cannot be read as broader than it is.
+Contrast and touch targets still need a real browser, and that is stated here rather
+than buried.
 
 **One further caveat on "No unintended placeholders":** there is no lorem, no TODO
 and no "coming soon" anywhere in shipped copy. `/admin` renders a deliberate,

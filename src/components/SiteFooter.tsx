@@ -53,7 +53,7 @@ export default function SiteFooter({ mode }: { mode: "home" | "page" }) {
             </ul>
           </nav>
 
-          <nav className="col-span-6 sm:col-span-4 lg:col-span-2" aria-label="Services">
+          <nav className="col-span-6 sm:col-span-4 lg:col-span-2" aria-label="Service divisions">
             <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-4">{t("footer.services").toUpperCase()}</div>
             <ul className="space-y-2.5 font-mono text-[12px] tracking-mono">
               {/*

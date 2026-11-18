@@ -933,12 +933,28 @@ console.log("\nInquiry pathway deep link:");
 console.log("\nTyping animation:");
 {
   const { document } = await mount("/");
+  /*
+   * The line is located by its own text, not by an attribute.
+   *
+   * The component used to expose the finished sentence through aria-label on a
+   * role-less <span>; axe flags that as prohibited (the attribute is ignored, so
+   * the line had no accessible name) and it now ships a visually-hidden copy
+   * instead. These assertions follow that change: find the element by content, read
+   * the *animated* span for progress, and require the accessible text to be complete
+   * from the first paint regardless of how far the animation has run.
+   */
+  const TW_TEXT = "A working class of letters";
   const line = () => {
-    const tw = document.querySelector('[aria-label^="\u201cA working class"]');
+    const tw = [...document.querySelectorAll("span")].find(
+      (el) => el.querySelector(".sr-only")?.textContent.includes(TW_TEXT)
+    );
+    const animated = tw?.querySelector('[aria-hidden="true"]');
+    const spoken = tw?.querySelector(".sr-only")?.textContent ?? "";
     return {
       el: tw,
-      typed: tw ? tw.querySelector("span").textContent.length : -1,
+      typed: animated ? animated.textContent.length : -1,
       caret: document.querySelectorAll(".caret").length,
+      spoken,
     };
   };
   /**
@@ -959,7 +975,12 @@ console.log("\nTyping animation:");
   check("line starts empty with a caret", line().typed === 0 && line().caret === 1);
   check(
     "full line is exposed to assistive tech immediately",
-    line().el?.getAttribute("aria-label").includes("A working class of letters"),
+    line().spoken.includes(TW_TEXT),
+    `accessible text="${line().spoken}"`
+  );
+  check(
+    "the exposed line is not hidden behind a prohibited attribute",
+    !line().el?.getAttribute("aria-label"),
     `aria-label="${line().el?.getAttribute("aria-label")}"`
   );
   check(
@@ -1008,11 +1029,14 @@ console.log("\nTyping animation:");
 console.log("\nReduced motion:");
 {
   const { document } = await mount("/", { reducedMotion: true });
-  const tw = document.querySelector('[aria-label^="\u201cA working class"]');
+  const tw = [...document.querySelectorAll("span")].find((el) =>
+    el.querySelector(".sr-only")?.textContent.includes("A working class of letters")
+  );
+  const painted = tw?.querySelector('[aria-hidden="true"]')?.textContent.length ?? -1;
   check(
     "full line is present on the first paint",
-    tw?.querySelector("span").textContent.length === 66,
-    `typed=${tw?.querySelector("span").textContent.length}`
+    painted === 66,
+    `typed=${painted}`
   );
   check(
     "no blinking caret is rendered",

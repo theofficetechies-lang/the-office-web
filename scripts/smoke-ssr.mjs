@@ -10,9 +10,18 @@ import { execSync } from "node:child_process";
 import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { JSDOM, VirtualConsole } from "jsdom";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
+
+/* axe-core ships as a browser bundle; read it once and eval it into each jsdom. */
+let axeSrc = null;
+try {
+  axeSrc = readFileSync(path.join(root, "node_modules/axe-core/axe.min.js"), "utf8");
+} catch {
+  console.warn("! axe-core not installed - skipping the rule-engine accessibility pass");
+}
 
 execSync("npx vite build --ssr src/entry-ssr.tsx --outDir dist-ssr --logLevel warn", {
   cwd: root,
@@ -382,6 +391,71 @@ if (typeof seoGlobal.prerenderPaths === "function" && typeof render === "functio
     failures++;
     console.error(`✗ ${issues.length} accessibility issue(s)`);
     [...new Set(issues)].slice(0, 8).forEach((i) => console.error(`    ${i}`));
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Real accessibility rules (axe-core)                                 */
+/* ------------------------------------------------------------------ */
+/*
+ * The static checks above are regexes, and regexes cannot see ARIA semantics. Two
+ * genuine defects survived them on this site: an aria-label on a role-less <span>
+ * (prohibited, so silently ignored - the typewriter had no accessible name at all)
+ * and two <nav> landmarks sharing the label "Services". Both are invisible to a
+ * pattern match and immediate to a rule engine.
+ *
+ * axe-core runs happily against jsdom, so this costs no browser and no new
+ * dependency. It is not a substitute for axe in a real browser - jsdom has no
+ * layout, so contrast and target-size checks report "incomplete" rather than
+ * passing or failing - and it is treated that way here: violations fail, and the
+ * checks that need layout are namespaced out rather than counted as clean.
+ */
+if (typeof axeSrc === "string") {
+  const layoutOnly = new Set(["color-contrast", "target-size", "scrollable-region-focusable"]);
+  const axeIssues = [];
+
+  const axeRoutes = [];
+  const gather = (dir) => {
+    for (const entry of readdirSync(dir)) {
+      const full = path.join(dir, entry);
+      if (statSync(full).isDirectory()) {
+        if (entry === "assets" || entry === "dist-ssr") continue;
+        gather(full);
+      } else if (entry === "index.html") {
+        const rel = path.relative(path.join(root, "dist"), path.dirname(full)).replace(/\\/g, "/");
+        axeRoutes.push(rel === "" ? "/" : `/${rel}`);
+      }
+    }
+  };
+  gather(path.join(root, "dist"));
+
+  for (const route of axeRoutes) {
+    const file = route === "/" ? path.join(root, "dist", "index.html") : path.join(root, "dist", route.slice(1), "index.html");
+    const dom = new JSDOM(readFileSync(file, "utf8"), {
+      url: `https://www.the-office360.com${route}`,
+      runScripts: "outside-only",
+      pretendToBeVisual: true,
+      virtualConsole: new VirtualConsole(),
+    });
+    const win = dom.window;
+    try {
+      win.eval(axeSrc);
+      const result = await win.axe.run(win.document, { resultTypes: ["violations"] });
+      for (const v of result.violations) {
+        if (layoutOnly.has(v.id)) continue;
+        axeIssues.push(`${route}: ${v.id} (${v.impact}) - ${v.nodes[0]?.html?.slice(0, 90) ?? ""}`);
+      }
+    } finally {
+      win.close();
+    }
+  }
+
+  if (axeIssues.length === 0) {
+    console.log(`✓ all ${axeRoutes.length} pages pass axe-core (WCAG A/AA rules that do not need layout)`);
+  } else {
+    failures++;
+    console.error(`✗ ${axeIssues.length} axe-core violation(s)`);
+    [...new Set(axeIssues)].slice(0, 8).forEach((i) => console.error(`    ${i}`));
   }
 }
 
