@@ -12,6 +12,7 @@ export type Lang = "en" | "pt";
 
 const en = {
   "nav.services": "Services",
+  "nav.industries": "Industries",
   "nav.work": "Work",
   "nav.approach": "Approach",
   "nav.why": "Why",
@@ -128,6 +129,7 @@ export type TKey = keyof typeof en;
 
 const pt: Record<TKey, string> = {
   "nav.services": "Serviços",
+  "nav.industries": "Indústrias",
   "nav.work": "Trabalho",
   "nav.approach": "Método",
   "nav.why": "Porquê",

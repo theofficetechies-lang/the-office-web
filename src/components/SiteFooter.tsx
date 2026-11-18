@@ -45,22 +45,34 @@ export default function SiteFooter({ mode }: { mode: "home" | "page" }) {
               <li><a href="/demos" className="opacity-80 hover:opacity-100">PROOF</a></li>
               <li><a href="/press" className="opacity-80 hover:opacity-100">PRESS</a></li>
               <li><a href="/glossary" className="opacity-80 hover:opacity-100">GLOSSARY</a></li>
+              <li>
+                <a href="/resources/backlist-audit-checklist" className="opacity-80 hover:opacity-100">
+                  BACKLIST CHECKLIST
+                </a>
+              </li>
             </ul>
           </nav>
 
           <nav className="col-span-6 sm:col-span-4 lg:col-span-2" aria-label="Services">
             <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-4">{t("footer.services").toUpperCase()}</div>
             <ul className="space-y-2.5 font-mono text-[12px] tracking-mono">
+              {/*
+                Each service links to its own page. Every one of these used to point
+                at the homepage's #services anchor, so five links collapsed into one
+                destination and no service page had a footer entry.
+              */}
               {services.map((s) => (
                 <li key={s.slug}>
-                  <a
-                    href={href("#services", "/#services")}
-                    className="opacity-80 hover:opacity-100"
-                  >
+                  <a href={`/services/${s.slug}`} className="opacity-80 hover:opacity-100">
                     {s.title.toUpperCase()}
                   </a>
                 </li>
               ))}
+              <li>
+                <a href="/services" className="opacity-80 hover:opacity-100">
+                  ALL SERVICES →
+                </a>
+              </li>
             </ul>
           </nav>
 

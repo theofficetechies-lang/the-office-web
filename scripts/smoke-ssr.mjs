@@ -308,6 +308,73 @@ if (typeof seoGlobal.prerenderPaths === "function" && typeof render === "functio
 }
 
 /* ------------------------------------------------------------------ */
+/* Crawlability: every page reachable from the homepage                */
+/* ------------------------------------------------------------------ */
+/*
+ * Prerendering 96 pages with a sitemap is not the same as making them findable.
+ * This site previously had "Services" in the navigation pointing at /#services —
+ * the homepage section — so /services, the six division hubs, the 40 flagship
+ * pages and the 20 industry pages had no inbound link from the site chrome at all.
+ * 68 of 96 pages were orphaned while being listed in the sitemap, which is the
+ * shape of a site that is technically published and practically invisible.
+ */
+{
+  const dist = path.join(root, "dist");
+  const pages = new Map();
+  const collect = (dir, prefix = "") => {
+    for (const entry of readdirSync(dir)) {
+      const full = path.join(dir, entry);
+      if (statSync(full).isDirectory()) {
+        if (entry === "assets" || entry === "dist-ssr") continue;
+        collect(full, `${prefix}/${entry}`);
+      } else if (entry === "index.html" && prefix !== "") {
+        pages.set(prefix, full);
+      }
+    }
+  };
+  pages.set("/", path.join(dist, "index.html"));
+  collect(dist);
+
+  const links = new Map();
+  for (const [route, file] of pages) {
+    const html = readFileSync(file, "utf8");
+    const body = html.slice(html.indexOf('<div id="root">'));
+    const targets = new Set();
+    for (const m of body.matchAll(/href="(\/[^"#?]*)"/g)) {
+      const t = m[1].replace(/\/$/, "") || "/";
+      if (pages.has(t)) targets.add(t);
+    }
+    links.set(route, targets);
+  }
+
+  const depth = new Map([["/", 0]]);
+  const queue = ["/"];
+  while (queue.length) {
+    const route = queue.shift();
+    for (const target of links.get(route) ?? []) {
+      if (!depth.has(target)) {
+        depth.set(target, depth.get(route) + 1);
+        queue.push(target);
+      }
+    }
+  }
+
+  const unreachable = [...pages.keys()].filter((r) => !depth.has(r)).sort();
+  if (unreachable.length === 0) {
+    const maxDepth = Math.max(...depth.values());
+    console.log(`✓ all ${pages.size} pages reachable from / (max depth ${maxDepth})`);
+    if (maxDepth > 4) {
+      failures++;
+      console.error("✗ pages are more than 4 clicks from the homepage");
+    }
+  } else {
+    failures++;
+    console.error(`✗ ${unreachable.length} page(s) unreachable from /`);
+    unreachable.slice(0, 8).forEach((u) => console.error(`    ${u}`));
+  }
+}
+
+/* ------------------------------------------------------------------ */
 /* Structural validity of every shipped document                       */
 /* ------------------------------------------------------------------ */
 /*

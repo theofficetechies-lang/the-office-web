@@ -163,7 +163,18 @@ const tick = () => new Promise((r) => setTimeout(r, 30));
 async function mount(route, { reducedMotion = false, presetLang } = {}) {
   const errors = [];
   const vc = new VirtualConsole();
-  vc.on("jsdomError", (e) => errors.push(`jsdomError: ${e.message}`));
+  /*
+   * jsdom implements no document navigation. The mobile-menu test clicks the first
+   * panel link, which used to be a same-page anchor (/#services) and is now a real
+   * route (/services), so the click asks for a navigation jsdom cannot perform and
+   * reports "Not implemented". That is a harness gap, not an app fault, and mixing
+   * it into `errors` would make a genuine console error on the same route
+   * indistinguishable from this noise.
+   */
+  vc.on("jsdomError", (e) => {
+    if (/Not implemented: navigation/i.test(e.message)) return;
+    errors.push(`jsdomError: ${e.message}`);
+  });
   vc.on("error", (...a) => errors.push(`console.error: ${a.join(" ")}`));
 
   const dom = new JSDOM(shellFor(route), {
@@ -177,6 +188,7 @@ async function mount(route, { reducedMotion = false, presetLang } = {}) {
   // jsdom gaps that are not app bugs: no layout-driven scroll, no matchMedia.
   // The stub records change listeners so a viewport change can be simulated.
   window.scrollTo = () => {};
+
   const media = { desktop: false, listeners: new Set() };
   window.matchMedia = (query) => ({
     get matches() {
