@@ -189,24 +189,45 @@ for (const route of paths) {
     failures.push("shell has no #root");
     break;
   }
+  /*
+   * The body is React's own output, spliced in verbatim.
+   *
+   * jsdom's serialiser round-trips text through the DOM, which re-encodes literal
+   * non-breaking spaces as `&nbsp;` entities. That is equivalent in a browser but
+   * it is not the byte sequence React produced, and hydration compares against
+   * what actually shipped — so the one thing we do not want is a serialiser
+   * "helpfully" editing the markup. Only the <head> goes through the DOM, where
+   * its multi-line JSON-LD and nested quotes need real parsing rather than regex.
+   */
   rootEl.innerHTML = html;
   withHead(document, headFor(route));
 
   /*
    * Stamp which route this document belongs to. src/main.tsx hydrates only when
-   * the stamp matches the URL it is running on; anything else (a 404 URL served
-   * this fallback document, a stale deploy, a hand-edited path) is created fresh
-   * instead of hydrated, which avoids a guaranteed React mismatch on markup that
-   * describes a different page.
+   * the stamp matches the URL it is running on; anything else (an unmatched URL
+   * served the fallback document, a stale deploy, a hand-edited path) is created
+   * fresh instead of hydrated, which avoids a guaranteed React mismatch on markup
+   * that describes a different page.
    */
   document.documentElement.setAttribute("data-prerendered", route);
 
-  /* Inline the single entry script's modulepreload/preload stays as built. */
-  const out = dom.serialize();
+  /* Everything from <head> through the open mount node, then React's bytes, then the tail. */
+  const serialized = dom.serialize();
+  const SENTINEL = '<div id="root">';
+  const headEnd = serialized.indexOf(SENTINEL);
+  const bodyStart = serialized.indexOf("</body>");
+  const routed =
+    headEnd === -1 || bodyStart === -1
+      ? serialized
+      : serialized.slice(0, headEnd + SENTINEL.length) +
+        html +
+        /* The mount node's own closing tag. Without it the document is malformed. */
+        "</div>" +
+        serialized.slice(bodyStart);
 
   const dir = route === "/" ? dist : path.join(dist, route);
   mkdirSync(dir, { recursive: true });
-  writeFileSync(path.join(dir, "index.html"), out);
+  writeFileSync(path.join(dir, "index.html"), routed);
   written++;
 }
 

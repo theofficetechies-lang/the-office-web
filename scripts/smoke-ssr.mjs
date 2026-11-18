@@ -7,7 +7,7 @@
  *   npm run smoke
  */
 import { execSync } from "node:child_process";
-import { readFileSync, readdirSync, statSync } from "node:fs";
+import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
@@ -33,6 +33,14 @@ globalThis.window = {
 };
 
 const { render } = await import(path.join(root, "dist-ssr/entry-ssr.js"));
+
+/*
+ * The same head resolver the prerenderer uses. Imported rather than reimplemented
+ * so a change to one cannot drift from a change to the other.
+ */
+const seoPath = path.join(root, "dist/dist-ssr/seo.js");
+const hasSeo = existsSync(seoPath);
+const seoGlobal = hasSeo ? await import(seoPath) : {};
 
 const cases = [
   {
@@ -179,6 +187,123 @@ for (const c of cases) {
     console.error(`✗ ${c.route}`);
     missing.forEach((m) => console.error(`    missing:  ${m}`));
     forbidden.forEach((f) => console.error(`    present:  ${f}`));
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Deterministic render ↔ shipped document                             */
+/* ------------------------------------------------------------------ */
+/*
+ * The strongest hydration check available without a browser.
+ *
+ * React hydration compares the client's render to the markup in the document. If
+ * a component's server render is not deterministic — a timestamp, Math.random, a
+ * locale-dependent number format, anything read from the clock at render time —
+ * the two disagree and React silently throws the markup away and re-renders.
+ * That failure is invisible in the "route mounts" checks, because the page still
+ * works; it just stops being a prerendered page.
+ *
+ * So: render every route again, right now, and compare byte-for-byte with what
+ * the build wrote. 96 routes also means every component in every state the build
+ * visits is covered, rather than the handful in the fixed case list.
+ */
+if (!hasSeo) {
+  /*
+   * A skipped check is not a passing check. The first version of this silently did
+   * nothing because prerender deletes its intermediate bundles, which is the same
+   * class of mistake as the smoke suite that "passed" for several releases.
+   * Build seo.js here if it is absent so the check always runs.
+   */
+  execSync("npx vite build --ssr src/lib/seo.ts --outDir dist-ssr --logLevel warn", {
+    cwd: root,
+    stdio: "inherit",
+  });
+  const built = await import(path.join(root, "dist-ssr/seo.js"));
+  Object.assign(seoGlobal, built);
+}
+
+if (typeof seoGlobal.prerenderPaths === "function" && typeof render === "function") {
+  const failuresBefore = failures;
+  const routes = seoGlobal.prerenderPaths();
+  const drifted = [];
+  const missing = [];
+
+  const sentinel = "<div id=\"root\">";
+  for (const route of routes) {
+    const file = route === "/" ? path.join(root, "dist/index.html") : path.join(root, "dist", route, "index.html");
+    if (!existsSync(file)) {
+      missing.push(route);
+      continue;
+    }
+    globalThis.window.location.pathname = route;
+    globalThis.window.location.href = `https://www.the-office360.com${route}`;
+
+    let fresh = "";
+    try {
+      fresh = render();
+    } catch (err) {
+      drifted.push(`${route}: render threw ${err.message}`);
+      continue;
+    }
+
+    const shipped = readFileSync(file, "utf8");
+    /*
+     * The mount node's content runs from <div id="root"> to </body>.
+     *
+     * Both "first script tag" and "last script tag" are wrong here: Vite hoists
+     * modulepreload AND the module script above #root in this build, so either
+     * marker produced an empty slice and 96 false "drifted" reports. </body> is the
+     * only boundary that is downstream of the markup.
+     */
+    const startAt = shipped.indexOf(sentinel) + sentinel.length;
+    const endAt = shipped.indexOf("</body>");
+    /*
+     * Strip the mount node's own closing </div>, which sits just before </body>
+     * when the renderer's output ends in an element root.
+     */
+    const shippedRoot = shipped.slice(startAt, endAt).replace(/\s*<\/div>\s*$/, "");
+
+    /* The root content ends at the script tag; trim the closing div it leaves. */
+    if (shippedRoot.trim() !== fresh.trim()) {
+      /*
+       * Report where they first differ — a byte count alone sends you hunting.
+       */
+      let i = 0;
+      while (i < Math.min(shippedRoot.length, fresh.length) && shippedRoot[i] === fresh[i]) i++;
+      drifted.push(
+        `${route}: differs at ${i} — shipped …"${shippedRoot.slice(Math.max(0, i - 20), i + 40)}" vs fresh …"${fresh.slice(Math.max(0, i - 20), i + 40)}" (shipped ${shippedRoot.length}B, fresh ${fresh.length}B)`
+      );
+    }
+
+    /* The head the prerenderer would write must match the head that shipped. */
+    try {
+      const expected = seoGlobal.headFor(route);
+      const escaped = expected.title.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      const shippedTitle = shipped.match(/<title>([^<]*)<\/title>/)?.[1] ?? "";
+      if (shippedTitle !== escaped) {
+        drifted.push(`${route}: title "${shippedTitle}" vs resolver "${escaped}"`);
+      }
+      const shippedCanonical = shipped.match(/<link rel="canonical" href="([^"]*)"/)?.[1] ?? "";
+      if (shippedCanonical !== expected.url) {
+        drifted.push(`${route}: canonical "${shippedCanonical}" vs resolver "${expected.url}"`);
+      }
+    } catch (err) {
+      drifted.push(`${route}: headFor threw ${err.message}`);
+    }
+  }
+
+  if (missing.length > 0) {
+    failures++;
+    console.error(`✗ ${missing.length} prerendered route(s) missing from dist`);
+    missing.slice(0, 6).forEach((m) => console.error(`    ${m}`));
+  }
+  if (drifted.length > 0) {
+    failures++;
+    console.error(`✗ every route re-renders identically (${drifted.length} drifted)`);
+    drifted.slice(0, 6).forEach((d) => console.error(`    ${d}`));
+  }
+  if (failures === failuresBefore) {
+    console.log(`✓ ${routes.length} routes re-render byte-identically to what shipped, head included`);
   }
 }
 
