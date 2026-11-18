@@ -31,6 +31,7 @@ import AdminPage from "./pages/AdminPage";
 import { useI18n } from "./lib/i18n";
 import { routeKey, useRoute } from "./lib/router";
 import { getServiceDetail } from "./data/serviceDetailIndex";
+import { getInquiryType, DEFAULT_INQUIRY_TYPE } from "./data/inquiryTypes";
 import { useDocumentMeta } from "./hooks/useDocumentMeta";
 import { useReveal } from "./hooks/useReveal";
 import { CONTACT_EMAIL } from "./lib/site";
@@ -294,6 +295,20 @@ function TeamMember({ member }: { member: (typeof team)[number] }) {
 
 function HomePage() {
   const { t } = useI18n();
+
+  /*
+   * A pathway link (e.g. /#contact?type=website-audit) preselects the brief form's
+   * division and shows the pathway's hint. Read once on mount: the hash is not a
+   * router state, and re-reading it on every render would fight the user's own
+   * selections. Unknown or absent ids fall back to the default pathway, so a
+   * hand-edited URL cannot put the form into a state it cannot render.
+   */
+  const [inquiryType] = useState<string>(() => {
+    if (typeof window === "undefined") return DEFAULT_INQUIRY_TYPE;
+    const raw = (window.location?.href ?? "").split("?")[1]?.split("#")[0] ?? "";
+    const id = new URLSearchParams(raw).get("type") ?? "";
+    return getInquiryType(id) ? id : DEFAULT_INQUIRY_TYPE;
+  });
 
   useDocumentMeta({
     title: "THE OFFICE 360 — Book strategy, web, automation, research",
@@ -908,7 +923,7 @@ function HomePage() {
                     </div>
                   </div>
 
-                  <BriefForm />
+                  <BriefForm inquiryType={inquiryType} />
                 </div>
               </div>
             </div>

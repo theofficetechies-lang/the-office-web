@@ -14,10 +14,12 @@
  *
  *   npm run test:content
  */
+import { readFileSync } from "node:fs";
 import { serviceDetails } from "../src/data/serviceDetailIndex.ts";
 import { serviceCatalog, PUBLISHED_SERVICES } from "../src/data/serviceCatalog.ts";
 import { divisions } from "../src/data/divisions.ts";
 import { industries } from "../src/data/industries.ts";
+import { inquiryTypes } from "../src/data/inquiryTypes.ts";
 import { resolveRelated } from "../src/data/serviceDetailIndex.ts";
 
 let failures = 0;
@@ -211,6 +213,73 @@ console.log("\nIndustries:");
 
   const dupIndustrySlugs = industries.map((i) => i.slug).filter((s, i, a) => a.indexOf(s) !== i);
   check("no duplicate industry slugs", dupIndustrySlugs.length === 0, dupIndustrySlugs.join(", "));
+}
+
+/* ------------------------------------------------------------ lead pathways */
+/*
+ * The brief form is the only place a visitor can convert, so drift between it and
+ * the catalogue is a revenue defect, not a tidiness one. It previously offered the
+ * five published publishing services and nothing else while the site advertised
+ * six divisions — a visitor wanting a website had no honest option.
+ */
+console.log("\nLead pathways:");
+{
+  // SERVICE_CHOICES is a `as const` array in a .tsx-free module, so read it as text.
+  const siteSrc = readFileSync(new URL("../src/lib/site.ts", import.meta.url), "utf8");
+  const block = siteSrc.split("SERVICE_CHOICES")[1]?.split("] as const")[0] ?? "";
+  const choices = [...block.matchAll(/value:\s*"([^"]+)"[^}]*?division:\s*"([^"]*)"/g)].map((m) => ({
+    value: m[1],
+    division: m[2],
+  }));
+
+  const uncovered = divisions
+    .filter((d) => !choices.some((c) => c.division === d.id))
+    .map((d) => d.id);
+  check(
+    "every division has a service choice in the brief form",
+    uncovered.length === 0,
+    `no box for: ${uncovered.join(", ")}`
+  );
+
+  const ghostDivisions = choices
+    .filter((c) => c.division && !divisions.some((d) => d.id === c.division))
+    .map((c) => `${c.value}:${c.division}`);
+  check("no service choice names a division that does not exist", ghostDivisions.length === 0, ghostDivisions.join(", "));
+
+  const dupValues = choices.map((c) => c.value).filter((v, i, a) => a.indexOf(v) !== i);
+  check("no duplicate service choice values", dupValues.length === 0, dupValues.join(", "));
+
+  // Every pathway tag must be unique and non-empty: tags are what leads carry.
+  const missingTag = inquiryTypes.filter((t) => !t.tag || !t.tag.trim()).map((t) => t.id);
+  check("every inquiry pathway has a routing tag", missingTag.length === 0, missingTag.join(", "));
+
+  const dupTags = inquiryTypes.map((t) => t.tag).filter((t, i, a) => a.indexOf(t) !== i);
+  check("no two inquiry pathways share a routing tag", dupTags.length === 0, dupTags.join(", "));
+
+  /*
+   * A pathway may preselect a division, and that division must (a) exist and
+   * (b) have a box in the form. The old `services` field named individual form
+   * labels that were renamed twice; this catches the same drift before it ships.
+   */
+  const ghostPathwayDivisions = inquiryTypes
+    .filter((t) => t.division)
+    .filter((t) => !divisions.some((d) => d.id === t.division))
+    .map((t) => `${t.id}:${t.division}`);
+  check(
+    "every pathway's preselected division exists",
+    ghostPathwayDivisions.length === 0,
+    ghostPathwayDivisions.join(", ")
+  );
+
+  const unselectable = inquiryTypes
+    .filter((t) => t.division)
+    .filter((t) => !choices.some((c) => c.division === t.division))
+    .map((t) => `${t.id}:${t.division}`);
+  check(
+    "every pathway's division can actually be preselected in the form",
+    unselectable.length === 0,
+    unselectable.join(", ")
+  );
 }
 
 if (failures > 0) {

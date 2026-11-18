@@ -5,8 +5,9 @@
  * an enquiry can be routed and reported on without parsing free text. The value
  * is stable and must not change once leads reference it.
  *
- * `service` pre-selects the matching box(es) in the brief form; `division` is the
- * catalogue division the pathway belongs to (optional).
+ * `division` pre-selects the matching division box in the brief form, and is what
+ * the form reads. It is optional: the general, proposal and brief pathways have
+ * no division, and start with nothing ticked.
  */
 export interface InquiryType {
   id: string;
@@ -14,8 +15,8 @@ export interface InquiryType {
   label: string;
   /** One line under the heading explaining what to include. */
   hint: string;
-  /** Pre-selected service label(s) in the form's services checkboxes. */
-  services?: string[];
+  /** Division pre-selected in the brief form (matches src/data/divisions.ts). */
+  division?: string;
   /** How the internal notification should be tagged. */
   tag: string;
 }
@@ -31,42 +32,42 @@ export const inquiryTypes: InquiryType[] = [
     id: "website-development",
     label: "Website development",
     hint: "What the site has to do, and what it currently does instead. Include any deadline that is fixed.",
-    services: ["Corporate Website Development"],
+    division: "web",
     tag: "web",
   },
   {
     id: "ai-automation",
     label: "AI & automation",
     hint: "The workflow you would like to stop doing by hand, and how often it recurs.",
-    services: ["AI Business Automation"],
+    division: "ai",
     tag: "ai",
   },
   {
     id: "seo-consultation",
     label: "SEO consultation",
     hint: "The site or titles involved, and whether any measurement baseline already exists.",
-    services: ["Search Engine Optimization (SEO)"],
+    division: "growth",
     tag: "growth",
   },
   {
     id: "branding",
     label: "Branding & design",
     hint: "What exists already — name, mark, any guidelines — and what has triggered the review.",
-    services: ["Brand Identity Design"],
+    division: "brand",
     tag: "brand",
   },
   {
     id: "publishing",
     label: "Publishing services",
     hint: "The book(s), the format, the publication timeline, and what has already been tried.",
-    services: ["Strategic Book Positioning"],
+    division: "publishing",
     tag: "publishing",
   },
   {
     id: "technology-consultation",
     label: "Business technology consultation",
     hint: "The systems involved and the decision you are trying to make. Advisory engagements can be short.",
-    services: ["Digital Transformation Consulting"],
+    division: "intelligence",
     tag: "intelligence",
   },
   {
@@ -79,7 +80,7 @@ export const inquiryTypes: InquiryType[] = [
     id: "website-audit",
     label: "Request a website audit",
     hint: "The URL. An audit covers performance, accessibility, search and security, with prioritised findings.",
-    services: ["Technical SEO", "Website Performance Optimization"],
+    division: "growth",
     tag: "audit",
   },
   {

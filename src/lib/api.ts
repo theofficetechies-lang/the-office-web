@@ -61,6 +61,8 @@ export interface BriefPayload {
   scope?: string;
   budget?: string;
   discovery?: string;
+  /** Stable inquiry-pathway id (src/data/inquiryTypes.ts), for lead routing. */
+  interest?: string;
   brief: string;
   company_website?: string;
 }
@@ -94,6 +96,7 @@ export async function submitBrief(payload: BriefPayload): Promise<BriefResponse>
         scope: payload.scope || "Not specified",
         budget: payload.budget || "Not specified",
         discovery: payload.discovery || "Not specified",
+        interest: payload.interest || "",
         message: payload.brief,
       }),
       timeout: DEFAULT_TIMEOUT,

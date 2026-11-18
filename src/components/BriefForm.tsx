@@ -11,6 +11,7 @@ import {
   SERVICE_CHOICES,
   TIMELINE_CHOICES,
 } from "@/lib/site";
+import { getInquiryType } from "@/data/inquiryTypes";
 
 /* ------------------------------------------------------------------ */
 /* Phase 11 — the inquiry experience                                   */
@@ -46,10 +47,32 @@ const initial: BriefFormState = {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export default function BriefForm() {
+/**
+ * @param inquiryType  Optional pathway id from src/data/inquiryTypes.ts. When a
+ *   visitor arrives from a specific pathway, the matching division is
+ *   pre-selected so they do not have to re-state what the link already told us,
+ *   and the pathway's hint is shown above the fields. The id travels with the
+ *   lead as `interest`, which is what makes routing possible without parsing the
+ *   free-text brief.
+ */
+export default function BriefForm({ inquiryType }: { inquiryType?: string }) {
   const { addToast } = useToast();
   const { t } = useI18n();
-  const [data, setData] = useState<BriefFormState>(initial);
+  const pathway = inquiryType ? getInquiryType(inquiryType) : undefined;
+
+  /*
+   * Pre-select the pathway's division, not its individual service: the form now
+   * offers one box per division, and the divisions are what the visitor actually
+   * recognises. A pathway with no division (general, proposal, brief) starts empty.
+   */
+  const fromPathway = (): BriefFormState => {
+    const division = pathway?.division;
+    if (!division) return initial;
+    const match = SERVICE_CHOICES.find((c) => "division" in c && c.division === division);
+    return match ? { ...initial, services: [match.value] } : initial;
+  };
+
+  const [data, setData] = useState<BriefFormState>(fromPathway);
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -139,6 +162,7 @@ export default function BriefForm() {
       budget: BUDGET_CHOICES.find((c) => c.value === data.budget)?.label ?? "",
       discovery:
         DISCOVERY_CHOICES.find((c) => c.value === data.discovery)?.label ?? "",
+      interest: pathway?.tag ?? "",
       company_website: data.company_website.trim(),
     };
 
@@ -149,7 +173,7 @@ export default function BriefForm() {
         response.message ?? "Brief received. We reply within two working days.",
         "success"
       );
-      setData(initial);
+      setData(fromPathway());
       setErrors({});
       window.setTimeout(() => setStatus("idle"), 8000);
     } catch (err) {
@@ -201,6 +225,15 @@ export default function BriefForm() {
       aria-label="Project brief"
       noValidate
     >
+      {pathway && pathway.id !== "project-brief" && (
+        <div className="col-span-2 border border-white/25 px-4 py-3">
+          <div className="font-mono text-[10px] tracking-mono opacity-60 mb-1">
+            {pathway.label.toUpperCase()}
+          </div>
+          <p className="text-[13px] leading-[1.55] opacity-85">{pathway.hint}</p>
+        </div>
+      )}
+
       <Field
         id="name"
         label={t("form.name").toUpperCase()}

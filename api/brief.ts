@@ -129,6 +129,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           scope: safeScope || "Not specified",
           budget: data.budget || "Not specified",
           discovery: data.discovery || "Not specified",
+          interest: data.interest || "",
           message: safeBrief,
         }),
       });
@@ -159,6 +160,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         safeScope ? `Scope: ${safeScope}` : null,
         data.budget ? `Budget: ${data.budget}` : null,
         data.discovery ? `Discovery: ${data.discovery}` : null,
+        data.interest ? `Interest: ${data.interest}` : null,
         ``,
         `---`,
         ``,
@@ -207,6 +209,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     name: safeName,
     email: data.email,
     service: safeService,
+    interest: data.interest || "",
   });
 
   return send(res, 503, {

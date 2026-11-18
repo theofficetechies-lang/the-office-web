@@ -42,6 +42,9 @@ export const briefSchema = z.object({
 
   discovery: optionalText(100, "Discovery source is too long"),
 
+  /** Stable inquiry-pathway id, e.g. "website-development". Never display text. */
+  interest: optionalText(60, "Interest tag is too long"),
+
   brief: trimmedString()
     .max(5000, "Brief must be under 5000 characters")
     .min(3, "Brief must be at least 3 characters"),

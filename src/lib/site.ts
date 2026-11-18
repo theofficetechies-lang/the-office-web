@@ -84,14 +84,26 @@ export const NAV_ITEMS: NavItem[] = [
   { label: "Contact", tkey: "nav.contact", anchor: "#contact", href: "/#contact" },
 ];
 
-/** Service choices offered in the brief form, keyed to src/data/services.ts. */
+/**
+ * Service choices offered in the brief form, grouped by the six divisions.
+ *
+ * These were the five published publishing services plus "Not sure yet" — the
+ * form was still selling the old one-division site. A visitor who wanted a
+ * website, an automation or an audit had no honest box to tick, and would tick
+ * the nearest publishing service instead, which mis-tagged the lead on arrival.
+ *
+ * `value` is the stable lead tag. Do not change an existing one: leads already
+ * reference them. `service` in the payload is the human label, so the inbox stays
+ * readable without a lookup.
+ */
 export const SERVICE_CHOICES = [
-  { value: "book-positioning", label: "Strategic Book Positioning" },
-  { value: "discoverability", label: "Discoverability Optimization" },
-  { value: "author-authority", label: "Author Authority Development" },
-  { value: "launch-strategy", label: "Launch Strategy" },
-  { value: "analytics-reporting", label: "Analytics & Reporting" },
-  { value: "not-sure", label: "Not sure yet" },
+  { value: "web", label: "Websites & platforms", division: "web" },
+  { value: "ai-automation", label: "AI & automation", division: "ai" },
+  { value: "growth", label: "SEO & digital growth", division: "growth" },
+  { value: "brand", label: "Branding & design", division: "brand" },
+  { value: "publishing", label: "Publishing & author services", division: "publishing" },
+  { value: "consulting", label: "Technology consulting", division: "intelligence" },
+  { value: "not-sure", label: "Not sure yet", division: "" },
 ] as const;
 
 export const TIMELINE_CHOICES = [

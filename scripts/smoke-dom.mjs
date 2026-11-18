@@ -546,6 +546,16 @@ console.log("\nBrief payload wiring:");
     "honeypot travels empty",
     w3?.body?.company_website === undefined || w3.body.company_website === ""
   );
+  /*
+   * The default pathway is "project-brief". A lead with no pathway tag is fine,
+   * but a lead tagged with a pathway the data file does not define means the form
+   * read an id it should not have accepted.
+   */
+  check(
+    "default pathway sends a known tag",
+    w3?.body?.interest === "brief",
+    `got "${w3?.body?.interest}"`
+  );
   check(
     "backend mirror is also called",
     calls.some((c) => c.url === "/api/brief")
@@ -553,6 +563,79 @@ console.log("\nBrief payload wiring:");
   check(
     "success state is shown",
     document.body.textContent.includes("RECEIVED")
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* 4b. Pathway deep link                                               */
+/* ------------------------------------------------------------------ */
+
+console.log("\nInquiry pathway deep link:");
+{
+  /*
+   * A pathway link (/...?type=ai-automation) must preselect the division box and
+   * show the pathway's hint, and the tag must reach the payload. This is the only
+   * thing that makes the 10 pathways in src/data/inquiryTypes.ts observable: if
+   * the preselect silently stops working, leads quietly lose their routing tag
+   * and nothing else in the suite would notice.
+   */
+  const { document, window, calls } = await mount("/?type=ai-automation");
+  await tick();
+
+  /*
+   * Match the hint sentence, not the pathway label: the label is rendered
+   * uppercase and also appears as a service checkbox, so it cannot distinguish
+   * "the hint rendered" from "a checkbox rendered". Read the expected string from
+   * the data file so a reworded hint does not break this test.
+   */
+  const inquirySrc = readFileSync(path.join(root, "src/data/inquiryTypes.ts"), "utf8");
+  const aiHint = inquirySrc.split('id: "ai-automation"')[1]?.match(/hint:\s*"([^"]+)"/)?.[1] ?? "";
+  check(
+    "pathway hint is shown on the form",
+    Boolean(aiHint) && document.body.textContent.includes(aiHint),
+    "hint text not found on the form"
+  );
+
+  const checked = [...document.querySelectorAll("input[name='services']")].filter((b) => b.checked);
+  check(
+    "pathway preselects exactly one division box",
+    checked.length === 1 && checked[0].value === "ai-automation",
+    `checked: ${checked.map((b) => b.value).join(", ") || "none"}`
+  );
+
+  setValue(window, document.getElementById("name"), "Pathway Tester");
+  setValue(window, document.getElementById("email"), "pathway@example.com");
+  setValue(window, document.getElementById("brief"), "We want to automate invoice entry.");
+  setValue(window, document.getElementById("timeline"), "immediately");
+  setValue(window, document.getElementById("scope"), "advisory");
+
+  const form = document.querySelector("form[aria-label='Project brief']");
+  form.dispatchEvent(new window.Event("submit", { bubbles: true, cancelable: true }));
+  await new Promise((r) => setTimeout(r, 120));
+
+  const w3 = calls.find(
+    (c) => c.url === "https://api.web3forms.com/submit" && c.body?.email === "pathway@example.com"
+  );
+  check("pathway submission is delivered", Boolean(w3));
+  check(
+    "pathway tag reaches the payload",
+    w3?.body?.interest === "ai",
+    `got "${w3?.body?.interest}"`
+  );
+
+  /*
+   * An id that is not in inquiryTypes must fall back rather than leave the form
+   * in an unknown state. `getInquiryType` is the guard; this proves it is used.
+   */
+  const bogus = await mount("/?type=not-a-real-pathway");
+  await bogus.tick?.();
+  const bogusChecked = [...bogus.document.querySelectorAll("input[name='services']")].filter(
+    (b) => b.checked
+  );
+  check(
+    "an unknown pathway id preselects nothing",
+    bogusChecked.length === 0,
+    `checked: ${bogusChecked.map((b) => b.value).join(", ")}`
   );
 }
 
