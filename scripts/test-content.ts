@@ -14,7 +14,9 @@
  *
  *   npm run test:content
  */
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
 import { serviceDetails } from "../src/data/serviceDetailIndex.ts";
 import { serviceCatalog, PUBLISHED_SERVICES } from "../src/data/serviceCatalog.ts";
 import { divisions } from "../src/data/divisions.ts";
@@ -280,6 +282,55 @@ console.log("\nLead pathways:");
     unselectable.length === 0,
     unselectable.join(", ")
   );
+}
+
+/* ------------------------------------------------------- catalogue tier */
+/*
+ * The two-tier architecture only works if the second tier actually resolves:
+ * every catalogue-tier service is advertised as an anchored entry on its
+ * division hub, so a missing id is a dead link that no other check would catch —
+ * the sitemap does not list anchors, and the DOM suite skips same-page fragments.
+ *
+ * This reads the shipped HTML, not the source, so it fails if the hub stops
+ * rendering an entry even though the data still declares it.
+ */
+console.log("\nCatalogue tier:");
+{
+  const distDir = fileURLToPath(new URL("../dist", import.meta.url));
+  const hasBuild = existsSync(path.join(distDir, "index.html"));
+
+  if (!hasBuild) {
+    console.log("  – skipped (no dist/ — run `npm run build` first)");
+  } else {
+    const catalogueByDivision = new Map<string, string[]>();
+    for (const s of serviceCatalog) {
+      if (s.tier !== "catalogue") continue;
+      const list = catalogueByDivision.get(s.division) ?? [];
+      list.push(s.slug);
+      catalogueByDivision.set(s.division, list);
+    }
+
+    const missing: string[] = [];
+    for (const [division, slugs] of catalogueByDivision) {
+      const file = path.join(distDir, "services", division, "index.html");
+      if (!existsSync(file)) {
+        missing.push(`${division}: hub not prerendered`);
+        continue;
+      }
+      const html = readFileSync(file, "utf8");
+      const ids = new Set([...html.matchAll(/id="([^"]+)"/g)].map((m) => m[1]));
+      for (const slug of slugs) {
+        if (!ids.has(slug)) missing.push(`${division}#${slug}`);
+      }
+    }
+
+    const total = [...catalogueByDivision.values()].reduce((n, l) => n + l.length, 0);
+    check(
+      `all ${total} catalogue entries are anchored on their division hub`,
+      missing.length === 0,
+      missing.slice(0, 8).join(", ")
+    );
+  }
 }
 
 if (failures > 0) {

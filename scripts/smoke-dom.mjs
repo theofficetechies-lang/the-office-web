@@ -467,6 +467,37 @@ console.log("\nPrerender sweep (every shipped document):");
     "the 404 fallback is indexable"
   );
   check("the 404 document is not stamped for hydration", !/data-prerendered=/.test(nf));
+
+  /*
+   * Static link integrity across what is actually shipped.
+   *
+   * The link check further down walks a mounted DOM for a fixed set of routes and
+   * skips fragments and query strings. This walks every shipped file instead, so a
+   * link to a route that was never prerendered is caught even when that page is
+   * not in the mounted set — which is how /services/intelligence slipped through.
+   */
+  const servable = new Set(pages.map((r) => r.replace(/\/$/, "") || "/"));
+  for (const entry of listPublic(path.join(root, "dist"))) servable.add(entry);
+
+  const dead = [];
+  for (const route of pages) {
+    const file = route === "/" ? path.join(root, "dist/index.html") : path.join(root, "dist", route, "index.html");
+    const html = readFileSync(file, "utf8");
+    for (const m of html.matchAll(/href="(\/[^"#?]*)"/g)) {
+      const href = m[1];
+      if (href.startsWith("//") || href === "/") continue;
+      const target = href.replace(/\/$/, "");
+      if (servable.has(target) || servable.has(href)) continue;
+      /* file paths (assets, images, pdfs) are served as-is; routes need a document */
+      if (/\.[a-z0-9]{2,5}$/i.test(target) && STATIC_ASSETS.has(target)) continue;
+      dead.push(`${route} → ${href}`);
+    }
+  }
+  check(
+    "no shipped page links to a route that was never built",
+    dead.length === 0,
+    [...new Set(dead)].slice(0, 6).join(", ")
+  );
 }
 
 console.log("\nLink and image hygiene:");
