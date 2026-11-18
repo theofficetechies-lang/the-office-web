@@ -17,7 +17,7 @@ const ENV = process.env.VERCEL_ENV ?? "development";
  * origins; Vercel preview deployments (*.vercel.app) and local development are
  * permitted so previews and `vercel dev` work without extra configuration.
  */
-const ALLOWED_ORIGINS = (process.env.CORS_ORIGIN ?? "https://the-office-test4.vercel.app")
+const ALLOWED_ORIGINS = (process.env.CORS_ORIGIN ?? "https://www.the-office360.com")
   .split(",")
   .map((s) => s.trim())
   .filter(Boolean);

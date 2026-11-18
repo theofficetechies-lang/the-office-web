@@ -10,9 +10,11 @@ import { useAuth } from "@/lib/auth";
 import { getCatalog, CATALOG_EVENT } from "@/lib/catalog";
 import { startCheckout, verifyReference, paystackMode } from "@/lib/paystack";
 import type { Product } from "@/data/products";
+import { formatUsd, chargeSummary } from "@/lib/money";
+import { NGN_PER_USD } from "@/lib/site";
 import { CONTACT_EMAIL } from "@/lib/site";
 
-const price = (p: { priceUsd: number }) => `$${p.priceUsd}`;
+const price = (p: { priceUsd: number }) => formatUsd(p.priceUsd);
 
 function SignInForm({ onDone }: { onDone: (email: string) => void }) {
   const { signIn } = useAuth();
@@ -103,6 +105,14 @@ function BuyButton({ product }: { product: Product }) {
       >
         {stage === "busy" ? "…" : `${t("store.buy")} · ${price(product)} →`}
       </button>
+      {/*
+        The store advertises USD but Paystack settles in NGN. Stating the actual
+        charge here — before the button is pressed — is the difference between a
+        transparent checkout and a surprise on the payment page.
+      */}
+      <p className="mt-2 font-mono text-[10.5px] tracking-mono opacity-60">
+        {chargeSummary(product.priceUsd, NGN_PER_USD)}
+      </p>
       {stage === "error" && (
         <p className="mt-3 text-[13px] leading-[1.6] opacity-80" role="status">
           Checkout failed{errMsg ? `: ${errMsg}` : ""} If this persists, email us.

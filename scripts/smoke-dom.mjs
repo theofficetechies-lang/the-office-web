@@ -41,8 +41,11 @@ await build({
     "import.meta.env.DEV": "false",
     "import.meta.env.PROD": "true",
     "import.meta.env.VITE_API_URL": '""',
-    "import.meta.env.VITE_SITE_URL": '"https://the-office-test4.vercel.app"',
+    "import.meta.env.VITE_SITE_URL": '"https://www.the-office360.com"',
     "import.meta.env.VITE_WEB3FORMS_KEY": '""',
+    "import.meta.env.VITE_NGN_PER_USD": '""',
+    "import.meta.env.VITE_ADMIN_PASSCODE": '""',
+    "import.meta.env.VITE_PAYSTACK_PUBLIC_KEY": '""',
   },
   absWorkingDir: root,
   logLevel: "warning",
@@ -51,28 +54,36 @@ await build({
 const bundle = readFileSync(path.join(root, "dist-test/app.js"), "utf8");
 const shell = readFileSync(path.join(root, "dist/index.html"), "utf8");
 
-const ORIGIN = "https://the-office-test4.vercel.app";
+const ORIGIN = "https://www.the-office360.com";
+/**
+ * Known routes, derived from the same data modules the app renders from.
+ *
+ * These lists used to be hand-maintained and drifted: four service slugs that
+ * had been renamed were still listed, and /demos, /store and /admin were missing,
+ * so 57 perfectly valid links were reported as broken. Adding a service or a note
+ * must never require editing this test.
+ */
+function slugsFrom(file, re = /slug:\s*"([^"]+)"/g) {
+  const src = readFileSync(path.join(root, file), "utf8");
+  return [...src.matchAll(re)].map((m) => m[1]);
+}
+
 const KNOWN = [
   "/",
   "/notes",
   "/privacy",
   "/terms",
-  "/notes/what-book-positioning-actually-means",
-  "/notes/why-most-author-websites-fail",
-  "/notes/how-to-audit-your-own-amazon-listing",
-  "/work/debut-novel-repositioning",
-  "/work/discoverability-backlist-audit",
-  "/work/author-authority-technical",
-  "/work/launch-strategy-thriller",
-  "/work/analytics-reporting-press",
   "/methodology",
-  "/services/book-strategy",
-  "/services/web-design",
-  "/services/automation",
-  "/services/book-research",
   "/press",
   "/glossary",
+  "/demos",
+  "/store",
+  "/admin",
   "/resources/backlist-audit-checklist",
+  ...slugsFrom("src/data/notes.ts").map((s) => `/notes/${s}`),
+  ...slugsFrom("src/data/projects.ts").map((s) => `/work/${s}`),
+  ...slugsFrom("src/data/services.ts").map((s) => `/services/${s}`),
+  ...slugsFrom("src/data/products.ts").map((s) => `/store/${s}`),
 ];
 
 /** Every path served from public/, so the link check can verify assets exist. */
@@ -185,7 +196,7 @@ const expectations = {
   "/": { title: "THE OFFICE 360 — Book strategy, web, automation, research", h1: "We do the work" },
   "/notes": { title: "Notes — THE OFFICE 360", h1: "Notes on the work." },
   "/notes/why-most-author-websites-fail": {
-    title: "Why most author websites fail — Notes, THE OFFICE",
+    title: "Why most author websites fail — Notes, THE OFFICE 360",
     h1: "Why most author websites fail",
   },
   "/work/debut-novel-repositioning": {
@@ -194,7 +205,7 @@ const expectations = {
   },
   "/privacy": { title: "Privacy notice — THE OFFICE 360", h1: "Privacy notice." },
   "/terms": { title: "Terms of service — THE OFFICE 360", h1: "Terms of service." },
-  "/work/does-not-exist": { title: "Engagement not found — THE OFFICE 360", h1: null },
+  "/work/does-not-exist": { title: "Case study not found — THE OFFICE 360", h1: null },
   "/nowhere": { title: "Document not found — THE OFFICE 360", h1: null },
 };
 
@@ -255,6 +266,11 @@ console.log("\nLink and image hygiene:");
     }
   }
   check("every internal link resolves to a real route", broken.size === 0, [...broken].join(", "));
+  check(
+    "the admin panel is not linked from public pages",
+    ![...broken].length || ![...broken].some((b) => b.includes("/admin")),
+    "a public page links to /admin"
+  );
   check("every image has alt text", noAlt.length === 0, noAlt.join(", "));
 }
 
@@ -424,10 +440,24 @@ console.log("\nBrief payload wiring:");
   setValue(window, document.getElementById("budget"), "15k-40k");
   setValue(window, document.getElementById("discovery"), "referral");
 
+  /**
+   * Expectations come from src/lib/site.ts, not a copy of it. The previous
+   * hardcoded "five choices" and the literal label string silently went stale
+   * when a sixth ("Not sure yet") option and renamed services shipped.
+   */
+  const siteSrc = readFileSync(path.join(root, "src/lib/site.ts"), "utf8");
+  const choiceBlock = siteSrc.split("SERVICE_CHOICES")[1]?.split("] as const")[0] ?? "";
+  const choices = [...choiceBlock.matchAll(/label:\s*"([^"]+)"/g)].map((m) => m[1]);
+  const serviceBoxes = choices.filter((c) => c.toLowerCase() !== "not sure yet");
+
   const boxes = [...document.querySelectorAll("input[name='services']")];
-  check("five service choices offered", boxes.length === 5, `found ${boxes.length}`);
-  boxes[0].click(); // Book Strategy
-  boxes[2].click(); // Web Design
+  check(
+    "service choices match SERVICE_CHOICES",
+    boxes.length === choices.length,
+    `form has ${boxes.length}, site.ts declares ${choices.length}`
+  );
+  boxes[0].click();
+  boxes[2].click();
   await tick();
 
   const form = document.querySelector("form[aria-label='Project brief']");
@@ -439,8 +469,8 @@ console.log("\nBrief payload wiring:");
   check("carries an access key", Boolean(w3?.body?.access_key));
   check(
     "service list is comma-joined labels",
-    w3?.body?.service === "Book Strategy, Web Design",
-    `got "${w3?.body?.service}"`
+    w3?.body?.service === `${serviceBoxes[0]}, ${serviceBoxes[2]}`,
+    `expected "${serviceBoxes[0]}, ${serviceBoxes[2]}" — got "${w3?.body?.service}"`
   );
   check("timeline is a human label", w3?.body?.timeline === "1–3 months", `got "${w3?.body?.timeline}"`);
   check(
@@ -483,10 +513,21 @@ console.log("\nTyping animation:");
       caret: document.querySelectorAll(".caret").length,
     };
   };
+  /**
+   * The hero CTA label comes from i18n (cta.requestAnalysis) and reads
+   * "REQUEST AN ANALYSIS →" in English. Matching the old literal "SEND A BRIEF"
+   * matched nothing, so `className` was undefined and two assertions failed with
+   * class="undefined" — which looked like a styling bug in the app and was not.
+   */
   const cta = [...document.querySelectorAll('a[href="#contact"]')].find((a) =>
-    a.textContent.includes("SEND A BRIEF")
+    a.textContent.trim().toUpperCase().startsWith("REQUEST AN ANALYSIS")
   );
 
+  check(
+    "hero CTA found",
+    Boolean(cta),
+    "no #contact anchor labelled REQUEST AN ANALYSIS in the hero"
+  );
   check("line starts empty with a caret", line().typed === 0 && line().caret === 1);
   check(
     "full line is exposed to assistive tech immediately",
@@ -501,7 +542,14 @@ console.log("\nTyping animation:");
   check("FAQ section renders", document.body.textContent.includes("Questions we actually get."));
   check("Pricing section renders", document.body.textContent.includes("Three shapes of engagement."));
   check("Reviews honesty block renders", document.body.textContent.includes("ASK FOR REFERENCES"));
-  check("service page links present", Boolean(document.querySelector('a[href="/services/book-strategy"]')));
+  {
+    const firstService = slugsFrom("src/data/services.ts")[0];
+    check(
+      "service page links present",
+      Boolean(document.querySelector(`a[href="/services/${firstService}"]`)),
+      `no link to /services/${firstService}`
+    );
+  }
   check("footer exposes press + glossary", Boolean(document.querySelector('a[href="/press"]')) && Boolean(document.querySelector('a[href="/glossary"]')));
   check(
     "hero CTA is never invisible-but-clickable",
@@ -543,7 +591,7 @@ console.log("\nReduced motion:");
     document.querySelectorAll(".caret").length === 0
   );
   const cta = [...document.querySelectorAll('a[href="#contact"]')].find((a) =>
-    a.textContent.includes("SEND A BRIEF")
+    a.textContent.trim().toUpperCase().startsWith("REQUEST AN ANALYSIS")
   );
   check(
     "hero CTA is visible",

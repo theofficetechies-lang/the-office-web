@@ -6,15 +6,20 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "prebuild": "node scripts/check-origin.mjs",
     "preview": "vite preview",
     "lint": "tsc --noEmit",
     "eslint": "eslint .",
+    "check:origin": "node scripts/check-origin.mjs",
     "smoke": "npm run smoke:ssr && npm run smoke:api && npm run smoke:dom",
     "smoke:ssr": "node scripts/smoke-ssr.mjs",
     "smoke:api": "node scripts/smoke-api.mjs",
     "smoke:dom": "node scripts/smoke-dom.mjs",
     "sitemap": "node scripts/build-sitemap.mjs",
-    "vercel:dev": "vercel dev"
+    "predeploy": "node scripts/check-origin.mjs",
+    "vercel:dev": "vercel dev",
+    "test:money": "node --experimental-strip-types scripts/test-money.ts",
+    "verify": "npm run lint && npm run eslint && npm run check:origin && npm run test:money && npm run smoke && npm run build"
   },
   "dependencies": {
     "clsx": "2.1.1",

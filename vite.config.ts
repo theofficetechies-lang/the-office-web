@@ -12,7 +12,9 @@ function devApiPlugin(): Plugin {
     name: "dev-api-middleware",
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
-        if (req.url === "/api/health" && req.method === "GET") {
+        const url = (req.url ?? "").split("?")[0];
+
+        if (url === "/api/health" && req.method === "GET") {
           res.setHeader("Content-Type", "application/json");
           res.end(
             JSON.stringify({
@@ -24,14 +26,14 @@ function devApiPlugin(): Plugin {
           return;
         }
 
-        if ((req.url === "/api/checkout" || req.url === "/api/paystack") && req.method === "POST") {
+        if ((url === "/api/checkout" || url === "/api/paystack") && req.method === "POST") {
           res.setHeader("Content-Type", "application/json");
           res.statusCode = 503;
           res.end(JSON.stringify({ configured: false, error: "Payments are not configured in dev." }));
           return;
         }
 
-        if (req.url === "/api/brief" && req.method === "POST") {
+        if (url === "/api/brief" && req.method === "POST") {
           let body = "";
           req.on("data", (chunk: Buffer) => {
             body += chunk.toString();
@@ -39,7 +41,18 @@ function devApiPlugin(): Plugin {
           req.on("end", () => {
             try {
               const data = JSON.parse(body || "{}");
-              console.log("[Dev Server] Brief received:", data);
+              // Log shape, never contents: a brief carries a name, an email and
+              // whatever the sender chose to disclose. Terminal scrollback and
+              // captured CI logs are not a safe place for that.
+              console.log(
+                "[Dev Server] Brief received:",
+                JSON.stringify({
+                  name: data?.name ? "***" : undefined,
+                  email: data?.email ? "***" : undefined,
+                  service: data?.service,
+                  briefChars: typeof data?.brief === "string" ? data.brief.length : 0,
+                })
+              );
               res.setHeader("Content-Type", "application/json");
               res.end(
                 JSON.stringify({

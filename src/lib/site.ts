@@ -16,18 +16,39 @@ function orFallback(value: string | undefined, fallback: string): string {
 
 const envSiteUrl = import.meta.env.VITE_SITE_URL;
 const envWeb3FormsKey = import.meta.env.VITE_WEB3FORMS_KEY;
+const envNgnPerUsd = import.meta.env.VITE_NGN_PER_USD;
 
 /**
  * Single source of truth for site-wide constants.
  *
  * SITE_URL is the canonical origin used by index.html, the sitemap, robots.txt
  * and every per-route <link rel="canonical"> written by useDocumentMeta.
- * Override at build time with VITE_SITE_URL when the custom domain goes live.
+ * Override at build time with VITE_SITE_URL. The fallback is the live custom
+ * domain: every canonical, hreflang, OG url and sitemap entry is derived from
+ * this value, so a stale fallback silently tells search engines the production
+ * domain is a duplicate of a preview deployment.
  */
 export const SITE_URL = orFallback(
   envSiteUrl,
-  "https://the-office-test4.vercel.app"
+  "https://www.the-office360.com"
 ).replace(/\/+$/, "");
+
+/**
+ * NGN per USD, as shown to the customer at checkout.
+ *
+ * Mirrors the server's `NGN_PER_USD` (read in api/paystack.ts). The server is the
+ * authority for the amount actually charged; this value only drives the
+ * "US$49 — charged as ₦75,950" line, so a mismatch degrades a display, never a
+ * payment. Set both, or neither.
+ */
+export const NGN_PER_USD = parseRate(envNgnPerUsd);
+
+function parseRate(value: string | undefined): number {
+  const raw = typeof value === "string" ? value.trim() : "";
+  const parsed = Number(raw);
+  if (!raw || !Number.isFinite(parsed) || parsed < 100 || parsed > 10_000) return 1550;
+  return parsed;
+}
 
 export const STUDIO_NAME = "THE OFFICE 360";
 export const CONTACT_EMAIL = "theofficetechies@gmail.com";

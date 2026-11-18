@@ -13,7 +13,7 @@ import path from "node:path";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
-const SITE_URL = (process.env.SITE_URL ?? "https://the-office-test4.vercel.app").replace(/\/+$/, "");
+const SITE_URL = (process.env.SITE_URL ?? "https://www.the-office360.com").replace(/\/+$/, "");
 const today = new Date().toISOString().slice(0, 10);
 
 function slugsFrom(file, pattern) {

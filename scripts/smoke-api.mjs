@@ -94,8 +94,8 @@ function check(label, condition, detail = "") {
 // 1. Preflight
 {
   const res = mockRes();
-  await brief(req({ method: "OPTIONS", origin: "https://the-office-test4.vercel.app" }), res);
-  check("OPTIONS → 204 with CORS header", res.statusCode === 204 && res.headers["access-control-allow-origin"] === "https://the-office-test4.vercel.app", `status=${res.statusCode} acao=${res.headers["access-control-allow-origin"]}`);
+  await brief(req({ method: "OPTIONS", origin: "https://www.the-office360.com" }), res);
+  check("OPTIONS → 204 with CORS header", res.statusCode === 204 && res.headers["access-control-allow-origin"] === "https://www.the-office360.com", `status=${res.statusCode} acao=${res.headers["access-control-allow-origin"]}`);
 }
 
 // 2. Disallowed origin
