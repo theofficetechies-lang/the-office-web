@@ -314,6 +314,45 @@ this is the single thing standing between the branch and review.
 
 ---
 
+## 4c. Decisions still needed from the client
+
+Two things are deliberately not decided by me, because they are positioning and
+budget calls rather than engineering ones.
+
+**1. The homepage hero names three of six divisions.**
+It reads "We do the work behind the book, the site, and the automation." That is
+faithful to the approved wedge (publishing as the visible door) but it omits
+growth, brand and technology consulting, which now have 21 published pages. The
+options:
+
+- *Leave it.* The wedge is doing its job: a book-shaped door into a six-division
+  studio. The services index carries the full breadth.
+- *Widen one word.* e.g. "behind the book, the site, and the business around it."
+  Keeps the literary opening, covers the rest without listing divisions.
+- *Lead with the method.* "Six divisions. One analytical method." — already the
+  services headline; using it twice would flatten both.
+
+My view: the second. It costs one word, keeps the wedge, and stops a visitor from
+concluding the studio only does three things.
+
+**2. Phase 4 storage — the one blocking technical choice.**
+Lead storage plus the admin lead list and CRM pipeline need somewhere to write.
+The brief specifies free tiers. Two candidates, both fine:
+
+- **Vercel KV (Redis).** Fastest to wire into the existing `api/` functions, no
+  migration tooling, generous free tier. Weak fit for the pipeline queries
+  (filtering/sorting leads by stage) which are relational in nature.
+- **Vercel Postgres (Neon).** Slightly more setup, SQL for the pipeline and CSV
+  export, room for the Phase 7 CRM without a second migration.
+
+My view: Postgres, because Phase 7 is explicitly in scope and re-platforming a
+lead store mid-project is the expensive version of this decision.
+
+Either way, no form work proceeds until one is picked — the standing rule is that
+nothing may look like it saves data until it does.
+
+---
+
 ## 5. What I will not do, and why
 
 | Brief asks for | Why I am not building it as stated |
