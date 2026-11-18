@@ -6,7 +6,6 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/" />
   </url>
   <url>
     <loc>https://www.the-office360.com/notes</loc>
@@ -14,7 +13,6 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/notes" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/notes" />
   </url>
   <url>
     <loc>https://www.the-office360.com/notes/what-book-positioning-actually-means</loc>
@@ -22,7 +20,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/notes/what-book-positioning-actually-means" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/notes/what-book-positioning-actually-means" />
   </url>
   <url>
     <loc>https://www.the-office360.com/notes/why-most-author-websites-fail</loc>
@@ -30,7 +27,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/notes/why-most-author-websites-fail" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/notes/why-most-author-websites-fail" />
   </url>
   <url>
     <loc>https://www.the-office360.com/notes/how-to-audit-your-own-amazon-listing</loc>
@@ -38,7 +34,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/notes/how-to-audit-your-own-amazon-listing" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/notes/how-to-audit-your-own-amazon-listing" />
   </url>
   <url>
     <loc>https://www.the-office360.com/work/debut-novel-repositioning</loc>
@@ -46,7 +41,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/work/debut-novel-repositioning" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/work/debut-novel-repositioning" />
   </url>
   <url>
     <loc>https://www.the-office360.com/work/discoverability-backlist-audit</loc>
@@ -54,7 +48,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/work/discoverability-backlist-audit" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/work/discoverability-backlist-audit" />
   </url>
   <url>
     <loc>https://www.the-office360.com/work/author-authority-technical</loc>
@@ -62,7 +55,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/work/author-authority-technical" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/work/author-authority-technical" />
   </url>
   <url>
     <loc>https://www.the-office360.com/work/launch-strategy-thriller</loc>
@@ -70,7 +62,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/work/launch-strategy-thriller" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/work/launch-strategy-thriller" />
   </url>
   <url>
     <loc>https://www.the-office360.com/work/analytics-reporting-press</loc>
@@ -78,7 +69,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/work/analytics-reporting-press" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/work/analytics-reporting-press" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services</loc>
@@ -86,7 +76,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/web</loc>
@@ -94,7 +83,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/web" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/web" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/ai</loc>
@@ -102,7 +90,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/ai" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/ai" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/growth</loc>
@@ -110,7 +97,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/growth" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/growth" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/brand</loc>
@@ -118,7 +104,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/brand" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/brand" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/publishing</loc>
@@ -126,7 +111,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/publishing" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/publishing" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/intelligence</loc>
@@ -134,7 +118,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/intelligence" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/intelligence" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/corporate-website-development</loc>
@@ -142,7 +125,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/corporate-website-development" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/corporate-website-development" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/e-commerce-development</loc>
@@ -150,7 +132,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/e-commerce-development" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/e-commerce-development" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/web-application-development</loc>
@@ -158,7 +139,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/web-application-development" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/web-application-development" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/custom-portal-development</loc>
@@ -166,7 +146,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/custom-portal-development" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/custom-portal-development" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/website-performance-optimization</loc>
@@ -174,7 +153,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/website-performance-optimization" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/website-performance-optimization" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/website-security-audits</loc>
@@ -182,7 +160,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/website-security-audits" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/website-security-audits" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/headless-cms-development</loc>
@@ -190,7 +167,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/headless-cms-development" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/headless-cms-development" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/website-accessibility-improvement</loc>
@@ -198,7 +174,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/website-accessibility-improvement" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/website-accessibility-improvement" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/ai-business-automation</loc>
@@ -206,7 +181,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/ai-business-automation" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/ai-business-automation" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/ai-chatbot-development</loc>
@@ -214,7 +188,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/ai-chatbot-development" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/ai-chatbot-development" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/whatsapp-business-automation</loc>
@@ -222,7 +195,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/whatsapp-business-automation" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/whatsapp-business-automation" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/crm-automation</loc>
@@ -230,7 +202,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/crm-automation" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/crm-automation" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/document-processing-automation</loc>
@@ -238,7 +209,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/document-processing-automation" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/document-processing-automation" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/ai-powered-knowledge-bases</loc>
@@ -246,7 +216,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/ai-powered-knowledge-bases" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/ai-powered-knowledge-bases" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/custom-ai-agent-development</loc>
@@ -254,7 +223,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/custom-ai-agent-development" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/custom-ai-agent-development" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/automation-opportunity-assessment</loc>
@@ -262,7 +230,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/automation-opportunity-assessment" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/automation-opportunity-assessment" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/search-engine-optimization-seo</loc>
@@ -270,7 +237,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/search-engine-optimization-seo" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/search-engine-optimization-seo" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/technical-seo</loc>
@@ -278,7 +244,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/technical-seo" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/technical-seo" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/local-seo</loc>
@@ -286,7 +251,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/local-seo" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/local-seo" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/ai-search-optimization</loc>
@@ -294,7 +258,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/ai-search-optimization" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/ai-search-optimization" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/generative-engine-optimization-geo</loc>
@@ -302,7 +265,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/generative-engine-optimization-geo" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/generative-engine-optimization-geo" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/conversion-rate-optimization</loc>
@@ -310,7 +272,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/conversion-rate-optimization" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/conversion-rate-optimization" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/digital-marketing-audits</loc>
@@ -318,7 +279,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/digital-marketing-audits" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/digital-marketing-audits" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/content-strategy</loc>
@@ -326,7 +286,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/content-strategy" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/content-strategy" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/brand-identity-design</loc>
@@ -334,7 +293,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/brand-identity-design" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/brand-identity-design" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/brand-strategy</loc>
@@ -342,7 +300,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/brand-strategy" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/brand-strategy" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/brand-guidelines</loc>
@@ -350,7 +307,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/brand-guidelines" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/brand-guidelines" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/ui-ux-design</loc>
@@ -358,7 +314,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/ui-ux-design" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/ui-ux-design" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/motion-graphics</loc>
@@ -366,7 +321,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/motion-graphics" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/motion-graphics" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/author-website-development</loc>
@@ -374,7 +328,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/author-website-development" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/author-website-development" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/author-branding</loc>
@@ -382,7 +335,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/author-branding" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/author-branding" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/book-seo</loc>
@@ -390,7 +342,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/book-seo" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/book-seo" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/book-discoverability-strategy</loc>
@@ -398,7 +349,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/book-discoverability-strategy" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/book-discoverability-strategy" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/book-launch-campaigns</loc>
@@ -406,7 +356,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/book-launch-campaigns" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/book-launch-campaigns" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/publishing-automation</loc>
@@ -414,7 +363,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/publishing-automation" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/publishing-automation" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/digital-transformation-consulting</loc>
@@ -422,7 +370,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/digital-transformation-consulting" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/digital-transformation-consulting" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/business-technology-audits</loc>
@@ -430,7 +377,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/business-technology-audits" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/business-technology-audits" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/business-intelligence-dashboards</loc>
@@ -438,7 +384,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/business-intelligence-dashboards" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/business-intelligence-dashboards" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/technology-stack-assessment</loc>
@@ -446,7 +391,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/technology-stack-assessment" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/technology-stack-assessment" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/digital-growth-roadmaps</loc>
@@ -454,7 +398,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/digital-growth-roadmaps" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/digital-growth-roadmaps" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/book-positioning</loc>
@@ -462,7 +405,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/book-positioning" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/book-positioning" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/discoverability</loc>
@@ -470,7 +412,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/discoverability" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/discoverability" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/author-authority</loc>
@@ -478,7 +419,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/author-authority" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/author-authority" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/launch-strategy</loc>
@@ -486,7 +426,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/launch-strategy" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/launch-strategy" />
   </url>
   <url>
     <loc>https://www.the-office360.com/services/analytics-reporting</loc>
@@ -494,7 +433,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/services/analytics-reporting" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/services/analytics-reporting" />
   </url>
   <url>
     <loc>https://www.the-office360.com/industries</loc>
@@ -502,7 +440,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/industries" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/industries" />
   </url>
   <url>
     <loc>https://www.the-office360.com/industries/real-estate</loc>
@@ -510,7 +447,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/industries/real-estate" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/industries/real-estate" />
   </url>
   <url>
     <loc>https://www.the-office360.com/industries/healthcare</loc>
@@ -518,7 +454,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/industries/healthcare" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/industries/healthcare" />
   </url>
   <url>
     <loc>https://www.the-office360.com/industries/education</loc>
@@ -526,7 +461,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/industries/education" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/industries/education" />
   </url>
   <url>
     <loc>https://www.the-office360.com/industries/professional-services</loc>
@@ -534,7 +468,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/industries/professional-services" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/industries/professional-services" />
   </url>
   <url>
     <loc>https://www.the-office360.com/industries/financial-services</loc>
@@ -542,7 +475,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/industries/financial-services" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/industries/financial-services" />
   </url>
   <url>
     <loc>https://www.the-office360.com/industries/hospitality</loc>
@@ -550,7 +482,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/industries/hospitality" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/industries/hospitality" />
   </url>
   <url>
     <loc>https://www.the-office360.com/industries/retail</loc>
@@ -558,7 +489,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/industries/retail" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/industries/retail" />
   </url>
   <url>
     <loc>https://www.the-office360.com/industries/e-commerce</loc>
@@ -566,7 +496,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/industries/e-commerce" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/industries/e-commerce" />
   </url>
   <url>
     <loc>https://www.the-office360.com/industries/manufacturing</loc>
@@ -574,7 +503,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/industries/manufacturing" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/industries/manufacturing" />
   </url>
   <url>
     <loc>https://www.the-office360.com/industries/logistics</loc>
@@ -582,7 +510,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/industries/logistics" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/industries/logistics" />
   </url>
   <url>
     <loc>https://www.the-office360.com/industries/construction</loc>
@@ -590,7 +517,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/industries/construction" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/industries/construction" />
   </url>
   <url>
     <loc>https://www.the-office360.com/industries/legal-services</loc>
@@ -598,7 +524,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/industries/legal-services" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/industries/legal-services" />
   </url>
   <url>
     <loc>https://www.the-office360.com/industries/nonprofit-organizations</loc>
@@ -606,7 +531,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/industries/nonprofit-organizations" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/industries/nonprofit-organizations" />
   </url>
   <url>
     <loc>https://www.the-office360.com/industries/religious-organizations</loc>
@@ -614,7 +538,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/industries/religious-organizations" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/industries/religious-organizations" />
   </url>
   <url>
     <loc>https://www.the-office360.com/industries/publishing</loc>
@@ -622,7 +545,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/industries/publishing" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/industries/publishing" />
   </url>
   <url>
     <loc>https://www.the-office360.com/industries/media-companies</loc>
@@ -630,7 +552,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/industries/media-companies" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/industries/media-companies" />
   </url>
   <url>
     <loc>https://www.the-office360.com/industries/startups</loc>
@@ -638,7 +559,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/industries/startups" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/industries/startups" />
   </url>
   <url>
     <loc>https://www.the-office360.com/industries/small-and-medium-enterprises</loc>
@@ -646,7 +566,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/industries/small-and-medium-enterprises" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/industries/small-and-medium-enterprises" />
   </url>
   <url>
     <loc>https://www.the-office360.com/industries/enterprise-organizations</loc>
@@ -654,7 +573,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/industries/enterprise-organizations" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/industries/enterprise-organizations" />
   </url>
   <url>
     <loc>https://www.the-office360.com/industries/consulting-companies</loc>
@@ -662,7 +580,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/industries/consulting-companies" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/industries/consulting-companies" />
   </url>
   <url>
     <loc>https://www.the-office360.com/glossary</loc>
@@ -670,7 +587,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/glossary" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/glossary" />
   </url>
   <url>
     <loc>https://www.the-office360.com/methodology</loc>
@@ -678,7 +594,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/methodology" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/methodology" />
   </url>
   <url>
     <loc>https://www.the-office360.com/demos</loc>
@@ -686,7 +601,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/demos" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/demos" />
   </url>
   <url>
     <loc>https://www.the-office360.com/store</loc>
@@ -694,7 +608,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/store" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/store" />
   </url>
   <url>
     <loc>https://www.the-office360.com/store/backlist-audit-pack</loc>
@@ -702,7 +615,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/store/backlist-audit-pack" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/store/backlist-audit-pack" />
   </url>
   <url>
     <loc>https://www.the-office360.com/store/positioning-template</loc>
@@ -710,7 +622,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/store/positioning-template" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/store/positioning-template" />
   </url>
   <url>
     <loc>https://www.the-office360.com/store/launch-timeline-template</loc>
@@ -718,7 +629,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/store/launch-timeline-template" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/store/launch-timeline-template" />
   </url>
   <url>
     <loc>https://www.the-office360.com/store/the-diagnostic</loc>
@@ -726,7 +636,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/store/the-diagnostic" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/store/the-diagnostic" />
   </url>
   <url>
     <loc>https://www.the-office360.com/store/working-session</loc>
@@ -734,7 +643,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/store/working-session" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/store/working-session" />
   </url>
   <url>
     <loc>https://www.the-office360.com/press</loc>
@@ -742,7 +650,6 @@
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/press" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/press" />
   </url>
   <url>
     <loc>https://www.the-office360.com/resources/backlist-audit-checklist</loc>
@@ -750,7 +657,6 @@
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/resources/backlist-audit-checklist" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/resources/backlist-audit-checklist" />
   </url>
   <url>
     <loc>https://www.the-office360.com/privacy</loc>
@@ -758,7 +664,6 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/privacy" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/privacy" />
   </url>
   <url>
     <loc>https://www.the-office360.com/terms</loc>
@@ -766,6 +671,5 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.the-office360.com/terms" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.the-office360.com/terms" />
   </url>
 </urlset>

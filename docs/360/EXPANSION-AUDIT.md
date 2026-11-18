@@ -251,6 +251,40 @@ Deferred deliberately, as the brief instructs (§13). Requires real authenticati
 
 ---
 
+## 4a. Build status (updated as work lands)
+
+Kept here so the plan and the repository cannot drift apart. Each line below was
+verified by a gate, not by inspection.
+
+| Phase | Status | Evidence |
+|---|---|---|
+| 0 — Correctness & trust | **Done** | D1/D3/D5/D6/D9/D14/D15 fixed; origin guard, money test (24 assertions) and smoke suite gated in `npm run verify` |
+| 1 — Content architecture | **Done** | 167-service catalogue, 6 divisions, 20 industries, 10 pathways, 4 route kinds |
+| 2 — Services | **Done** | 40/40 flagship pages, 6 division hubs, `/services`; content gate green and promoted into `verify` |
+| 3 — Industries | **Done** | `/industries` + 20 sector pages, no claimed clients |
+| 4 — Lead infrastructure | **Not started** | Needs the KV/Postgres decision. The form now tags leads by division and pathway so routing has something to route on |
+| 5 — Booking | **Rejected** | Not one of the four selected capabilities; will not be faked |
+| 6 — SEO & analytics | **Partly done** | Sitemap covers 96 URLs including all new routes; breadcrumb/Service/FAQ JSON-LD, hreflang collapse (D11) and internal-link depth still open |
+| 7 — CRM & pipeline | **Not started** | Follows Phase 4 storage |
+| 8 — Portal/proposals/admin | **Deferred** | As instructed |
+
+**Content gate** (`npm run test:content`) now enforces 40/40 coverage, substance,
+cross-page sentence duplication, related-link resolution, slug safety,
+division↔catalogue agreement, industry integrity, and — added with the form work —
+that every division has a brief-form checkbox and every inquiry pathway preselects
+a division that exists and is selectable.
+
+**Two gate defects found and fixed while doing Phase 2/3:**
+
+1. `verify` ran `smoke` before `build` while `dist/` is gitignored, so a fresh CI
+   checkout died at `dist/index.html not found`. It now builds first.
+2. `KNOWN` in the DOM suite is derived from data, but the division and flagship
+   routes had no source entry — adding 69 routes without updating it produced 70
+   false "broken link" reports. Both are now read from the catalogue's tier field
+   and the division ids.
+
+---
+
 ## 5. What I will not do, and why
 
 | Brief asks for | Why I am not building it as stated |

@@ -7,6 +7,7 @@
  *   npm run smoke
  */
 import { execSync } from "node:child_process";
+import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
@@ -124,6 +125,25 @@ const cases = [
   { route: "/store/the-diagnostic", must: ["The Diagnostic (fixed-price analysis)", "$950", "DELIVERY"], mustNot: [] },
   { route: "/admin", must: ["Store admin", "Passcode"], mustNot: [] },
   { route: "/resources/backlist-audit-checklist", must: ["The backlist audit checklist.", "PRINT / SAVE AS PDF"], mustNot: [] },
+  { route: "/services", must: ["Six divisions.", "One analytical method."], mustNot: ["Document not found"] },
+  {
+    // SSR output escapes ampersands, so assert around them rather than through.
+    route: "/services/web",
+    must: ["Web Development", "Digital Architecture"],
+    mustNot: ["Document not found"],
+  },
+  {
+    route: "/services/intelligence",
+    must: ["Business Intelligence", "Technology Consulting"],
+    mustNot: ["Document not found"],
+  },
+  {
+    route: "/services/digital-transformation-consulting",
+    must: ["Decide what to change, in what order", "Request a quote"],
+    mustNot: ["Document not found"],
+  },
+  { route: "/industries", must: ["Applied to", "your sector.", "A NOTE ON WHAT IS NOT HERE"], mustNot: ["Document not found"] },
+  { route: "/industries/real-estate", must: ["Real Estate", "ILLUSTRATIVE", "Illustrative, not client work"], mustNot: ["Document not found"] },
 ];
 
 let failures = 0;
@@ -152,8 +172,48 @@ for (const c of cases) {
   }
 }
 
+/* ------------------------------------------------------------------ */
+/* Sitemap integrity                                                   */
+/* ------------------------------------------------------------------ */
+/*
+ * The sitemap is generated, so these are guards on the generator rather than on
+ * hand-written XML. The hreflang check exists because the sitemap used to declare
+ * a Portuguese alternate on every URL while the language toggle only swaps copy
+ * in place: the alternate pointed at an English page, which is a false signal.
+ */
+{
+  const sitemap = readFileSync(path.join(root, "public/sitemap.xml"), "utf8");
+  const locs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+  const unique = new Set(locs);
+  const dupes = locs.filter((l, i) => locs.indexOf(l) !== i);
+
+  const problems = [];
+  if (locs.length === 0) problems.push("no URLs");
+  if (dupes.length > 0) problems.push(`duplicate URLs: ${[...new Set(dupes)].join(", ")}`);
+  if (unique.size !== locs.length) problems.push("duplicate loc entries");
+
+  const badHreflang = [...sitemap.matchAll(/hreflang="([^"]+)"/g)]
+    .map((m) => m[1])
+    .filter((l) => l !== "en");
+  if (badHreflang.length > 0)
+    problems.push(`non-English hreflang without a translated URL: ${[...new Set(badHreflang)].join(", ")}`);
+
+  /* The new tiers must be discoverable, not merely served. */
+  for (const required of ["/services", "/industries"]) {
+    if (!locs.some((l) => l.endsWith(required))) problems.push(`missing ${required}`);
+  }
+
+  if (problems.length === 0) {
+    console.log(`✓ sitemap — ${locs.length} URLs, no duplicates, hreflang consistent`);
+  } else {
+    failures++;
+    console.error("✗ sitemap");
+    problems.forEach((p) => console.error(`    ${p}`));
+  }
+}
+
 if (failures > 0) {
-  console.error(`\n${failures} route(s) failed.`);
+  console.error(`\n${failures} check(s) failed.`);
   process.exit(1);
 }
 console.log(`\nAll ${cases.length} routes rendered and asserted.`);

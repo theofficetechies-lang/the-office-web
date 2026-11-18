@@ -62,6 +62,16 @@ const urls = [
   { loc: "/terms", changefreq: "yearly", priority: "0.3" },
 ];
 
+/*
+ * hreflang: only "en" is declared.
+ *
+ * This previously emitted a `pt` alternate pointing at the same URL for all 96
+ * pages. The language toggle (src/lib/i18n.tsx) switches copy in place via
+ * document.documentElement.lang — it does not produce a /pt URL — so the pt
+ * alternate pointed at English content. Hreflang must name a URL whose content
+ * is actually in that language, so the honest set is one language. If translated
+ * routes are built later, emit both and add them here.
+ */
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${urls
@@ -72,7 +82,6 @@ ${urls
     <changefreq>${u.changefreq}</changefreq>
     <priority>${u.priority}</priority>
     <xhtml:link rel="alternate" hreflang="en" href="${SITE_URL}${u.loc}" />
-    <xhtml:link rel="alternate" hreflang="pt" href="${SITE_URL}${u.loc}" />
   </url>`
   )
   .join("\n")}
