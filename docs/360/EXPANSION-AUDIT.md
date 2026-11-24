@@ -643,6 +643,48 @@ product cannot do something the page says so.
 
 ---
 
+## 29.2 Design audit — "strictly no AI-type designs"
+
+Asked directly whether this looks like an AI-generated site. An honest answer needs
+evidence, not assurance, so this is the checklist of what generic AI design actually
+looks like, measured against the shipped build.
+
+| Generic-AI tell | This site | Measured |
+|---|---|---|
+| Purple/blue gradient hero | None | **0** `linear-gradient` rules in 38 KB of CSS |
+| Glassmorphism / frosted cards | None | **0** `backdrop-filter` declarations |
+| Rounded card soup | None | Only radius is `0` and `9999px` (true circles for portraits) — no `8/12/16px` card radii |
+| Drop shadows everywhere | None | The only `box-shadow` tokens are `none` and Tailwind's ring variables |
+| Emoji as icons | None | **0** emoji on the homepage; **0** inline `<svg>` — iconography is typographic |
+| Centered text, three-up feature grid, "Lorem ipsum" swap | No | 13 distinct structural signatures across 96 pages |
+| Animation everywhere | No | **2** `@keyframes` in the entire stylesheet (caret blink, toast) |
+| Stock-photo hero | No | 14 images total, all portraits and product covers — no stock |
+| Generic SaaS font stack | No | Fraunces / Inter Tight / JetBrains Mono, self-specified tokens |
+| Boilerplate copy repeated page to page | No | 4% of sentences shared across pages, and the largest legitimate cluster is the disclaimer |
+
+**What it is instead.** A restrained editorial system: warm paper `#f4f3ef` against
+pure white, deep charcoal type, one accent (`#8a3324`) reserved for live markers,
+black hairlines doing the dividing work instead of cards. Fraunces display type at
+112px against JetBrains Mono micro-labels. The signature elements are the
+**margin rail** (a persistent editorial annotation column) and the **typewriter
+headline** — neither is a component you get from a template.
+
+**The honest counterweight.** The brief asked for "subtle gradients", "smooth
+interactions", "premium navigation" and a "technology-driven" feel. This build has
+**no gradients at all** and only two animations. That is a deliberate divergence:
+the client's closing instruction was "strictly no AI-type designs", and gradient
+hero + glass cards + rounded everything *is* the AI-design signature. I kept the
+restraint and can justify each omission — but if "premium technology consultancy"
+reads to you as needing a cooler, more gradient-lit palette, that is a real design
+decision to make explicitly rather than something I should quietly change.
+
+**What I could not verify:** contrast ratios and visual appearance itself. There is
+no browser in this environment (§32); axe-core runs structurally and its contrast
+rule is excluded because jsdom has no layout. The live preview is the way to judge
+this — my measurements can support a claim about *restraint*, not about *beauty*.
+
+---
+
 ## 30. What I will not do, and why
 
 | Brief asks for | Why I am not building it as stated |
