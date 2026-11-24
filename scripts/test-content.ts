@@ -335,6 +335,29 @@ console.log("\nCatalogue tier:");
 }
 
 /*
+ * The leads DDL exists twice: api/_lib/leads.ts (used by the API at runtime) and
+ * scripts/db-migrate.ts (used by the migration, which cannot import the API module
+ * under Node's type stripping). Duplication is the honest trade — but silent drift
+ * between them would mean the migration creates a table the API does not match.
+ */
+{
+  const read = (f: string) => readFileSync(path.join(process.cwd(), f), "utf8");
+  const of = (src: string, marker: string) => {
+    const i = src.indexOf(marker);
+    const j = src.indexOf("`;", i);
+    return i >= 0 && j > i ? src.slice(i + marker.length, j) : "";
+  };
+  const fromApi = of(read("api/_lib/leads.ts"), "export const LEADS_TABLE_SQL = `");
+  const fromScript = of(read("scripts/db-migrate.ts"), "const LEADS_TABLE_SQL = `");
+  const norm = (q: string) => q.replace(/\s+/g, " ").trim();
+  check(
+    "the leads DDL in the migration matches the one the API expects",
+    fromApi.length > 100 && norm(fromApi) === norm(fromScript),
+    fromApi.length <= 100 ? "could not locate LEADS_TABLE_SQL in api/_lib/leads.ts" : "the two copies have drifted"
+  );
+}
+
+/*
  * serviceSlugs.ts decides which catalogue entries get a /services/<slug> page
  * without importing the 150 KB detail copy, and App.tsx routes on it. If it ever
  * disagrees with the detail index, a flagship page silently 404s (or a detail

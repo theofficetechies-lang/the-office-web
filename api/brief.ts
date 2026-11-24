@@ -3,10 +3,20 @@ import { Resend } from "resend";
 import { rateLimit } from "./_lib/rate-limit.js";
 import { send, noContent } from "./_lib/respond.js";
 import { briefSchema, sanitizeText } from "./_lib/validate.js";
+import { resolveLeadStore, persistLead, toLeadRow } from "./_lib/leads.js";
 
 const apiKey = process.env.RESEND_API_KEY;
 const resend = apiKey ? new Resend(apiKey) : null;
-const web3FormsKey =
+/*
+ * Read per request, not once at module load.
+ *
+ * A top-level `const` freezes the value at import, which made the suite unable to
+ * exercise the delivery path at all: tests that set WEB3FORMS_KEY after import were
+ * silently testing the "no provider" branch and passing for the wrong reason. It
+ * also means a key added in the Vercel dashboard takes effect without needing a
+ * cold start to pick it up.
+ */
+const web3FormsKeyNow = () =>
   process.env.WEB3FORMS_KEY || process.env.WEB3FORMS_ACCESS_KEY || "";
 const TO_EMAIL = process.env.TO_EMAIL ?? "theofficetechies@gmail.com";
 const FROM_EMAIL = process.env.FROM_EMAIL ?? "onboarding@resend.dev";
@@ -101,6 +111,31 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const data = parse.data;
 
+  /*
+   * Persist first, deliver second.
+   *
+   * A stored lead is the durable record; an email is a notification about it. Doing
+   * this in the other order means a provider outage loses the enquiry entirely,
+   * which is exactly how leads were being lost before this existed. The result is
+   * kept so the response can tell the truth about what happened to the row.
+   *
+   * `source` records the pathway the visitor used, so attribution survives even if
+   * the email is never read.
+   */
+  const store = resolveLeadStore();
+  const sourceHeader = req.headers["x-lead-source"];
+  const lead = toLeadRow(data, typeof sourceHeader === "string" ? sourceHeader : "brief-form");
+  const persistence = await persistLead(store, lead);
+
+  if (persistence.status === "failed") {
+    console.error("[Brief API] Lead persistence failed:", persistence.reason);
+  }
+
+  const storedNote =
+    persistence.status === "stored" ? { stored: true, leadId: persistence.id } :
+    persistence.status === "not_configured" ? { stored: false } :
+    { stored: false };
+
   // Sanitize
   const safeName = sanitizeText(data.name);
   const safeOrg = data.org ? sanitizeText(data.org) : undefined;
@@ -109,7 +144,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const safeScope = data.scope ? sanitizeText(data.scope) : "";
 
   // 1. Web3Forms — delivers straight to the inbox without a verified domain.
-  if (web3FormsKey) {
+  if (web3FormsKeyNow()) {
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
@@ -118,7 +153,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           Accept: "application/json",
         },
         body: JSON.stringify({
-          access_key: web3FormsKey,
+          access_key: web3FormsKeyNow(),
           subject: `Brief from ${safeName}${safeOrg ? ` · ${safeOrg}` : ""}`,
           from_name: "THE OFFICE Studio Web",
           name: safeName,
@@ -139,6 +174,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return send(res, 200, {
           success: true,
           message: "Brief received. We reply within two working days.",
+          ...storedNote,
         });
       }
       console.error("[Brief API] Web3Forms rejected the submission:", json);
@@ -184,6 +220,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       if (result.error) {
         console.error("[Brief API] Resend returned error:", result.error);
+        /*
+         * If the row is already in the database the enquiry is safe: it is not lost,
+         * only the notification failed, and telling the visitor "that failed" would
+         * make them send it again. Report a success they can trust and log the
+         * delivery failure for us to act on.
+         */
+        if (persistence.status === "stored") {
+          return send(res, 200, {
+            success: true,
+            message: "Brief received. We reply within two working days.",
+            ...storedNote,
+          });
+        }
         return send(res, 502, {
           success: false,
           error: "Email provider rejected the message.",
@@ -194,6 +243,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         success: true,
         message: "Brief received. We reply within two working days.",
         messageId: result.data?.id,
+        ...storedNote,
       });
     } catch (err) {
       console.error("[Brief API] Email send error:", err);
@@ -204,7 +254,28 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
   }
 
-  // No provider configured — surface it instead of pretending success.
+  /*
+   * No delivery provider configured.
+   *
+   * With a database the brief is not dropped at all — it is stored and will appear
+   * in the admin list, so the honest answer is "received", plus a smaller caveat
+   * that the notification email did not go out. Without a database, nothing has
+   * been kept, and saying "received" would be a lie: the visitor is told to email
+   * directly.
+   */
+  if (persistence.status === "stored") {
+    console.warn("[Brief API] No delivery provider configured; lead stored only.", {
+      leadId: persistence.id,
+      interest: data.interest || "",
+    });
+    return send(res, 200, {
+      success: true,
+      message:
+        "Brief received. Your details are saved and we reply within two working days.",
+      ...storedNote,
+    });
+  }
+
   console.error("[Brief API] No delivery provider configured. Brief dropped:", {
     name: safeName,
     email: data.email,

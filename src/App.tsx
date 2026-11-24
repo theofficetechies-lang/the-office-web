@@ -39,6 +39,7 @@ import MethodologyPage from "./pages/MethodologyPage";
 import DemosPage from "./pages/DemosPage";
 import StorePage from "./pages/StorePage";
 import AdminPage from "./pages/AdminPage";
+import AdminLeadsPage from "./pages/AdminLeadsPage";
 import { useI18n } from "./lib/i18n";
 import { routeKey, useRoute } from "./lib/router";
 import type { Route } from "./lib/router";
@@ -131,6 +132,8 @@ function renderRoute(route: Route): React.ReactNode {
       return <StorePage slug={route.slug} />;
     case "admin":
       return <AdminPage />;
+    case "adminLeads":
+      return <AdminLeadsPage />;
     /*
      * Phase 1 added these four route kinds to the router so the architecture is
      * in place, but their pages arrive in Phase 2. Until then they must resolve

@@ -409,7 +409,16 @@ export function headFor(path: string): HeadMeta {
         jsonLd: [],
       };
 
-    /* The admin panel is not a public page and must never be indexed. */
+    /* Admin pages are never public and must never be indexed. */
+    case "adminLeads":
+      return {
+        title: "Leads — THE OFFICE 360",
+        description: "Internal.",
+        url: `${SITE_URL}/admin/leads`,
+        noindex: true,
+        jsonLd: [],
+      };
+
     case "admin":
       return {
         title: "Store admin — THE OFFICE 360",

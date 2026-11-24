@@ -28,6 +28,7 @@ export type Route =
   | { kind: "store" }
   | { kind: "storeProduct"; slug: string }
   | { kind: "admin" }
+  | { kind: "adminLeads" }
   | { kind: "notfound"; path: string };
 
 const SLUG = /^([a-z0-9]+(?:-[a-z0-9]+)*)$/;
@@ -49,6 +50,7 @@ export function matchRoute(pathname: string): Route {
   if (p === "/industries") return { kind: "industriesIndex" };
 
   if (p === "/admin") return { kind: "admin" };
+  if (p === "/admin/leads") return { kind: "adminLeads" };
 
   const store = p.match(/^\/store\/(.+)$/);
   if (store && SLUG.test(store[1])) return { kind: "storeProduct", slug: store[1] };

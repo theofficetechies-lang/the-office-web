@@ -275,7 +275,7 @@ verified by a gate, not by inspection.
 | 1 — Content architecture | **Done** | 167-service catalogue, 6 divisions, 20 industries, 10 pathways, 4 route kinds |
 | 2 — Services | **Done** | 40/40 flagship pages, 6 division hubs, `/services`; content gate green and promoted into `verify` |
 | 3 — Industries | **Done** | `/industries` + 20 sector pages, no claimed clients |
-| 4 — Lead infrastructure | **Unblocked, not started** | Postgres chosen (§4c.2). The form already tags leads by division and pathway, so routing has something to route on |
+| 4 — Lead infrastructure | **Built, needs a database to activate** | Postgres chosen (§4c.2); `api/_lib/leads.ts`, `api/leads.ts`, `/admin/leads` and `npm run db:migrate` all land and pass the API suite. Set `DATABASE_URL` + `ADMIN_PASSCODE` to switch on |
 | 5 — Booking | **Rejected** | Not one of the four selected capabilities; will not be faked |
 | 6 — SEO & analytics | **Done (D10/D11/D12)** | All 96 routes prerendered with unique head + JSON-LD; 404 noindex; hreflang collapsed to `en`; sitemap 96 URLs. Analytics events still open |
 | 7 — CRM & pipeline | **Not started** | Follows Phase 4 storage |
@@ -342,6 +342,53 @@ mid-project is the expensive version of this decision.
 **Phase 4 is therefore unblocked.** D4 (no lead persistence) is the next thing to
 build, and the standing rule still holds: no form may look like it saves data until
 it does.
+
+### 4c.3 Lead persistence — what was built, and the rule it enforces
+
+D4 was the top item in the §29 review. It is now implemented, and one rule runs
+through the whole design: **a brief may never be reported as saved unless it was.**
+
+That sounds obvious and it is the thing most lead forms get wrong. Before this, a
+brief was emailed and forgotten — not counted, not filterable, not exportable, lost
+the moment the inbox was tidied. Now:
+
+- **Persist first, deliver second.** The row is the durable record; the email is a
+  notification about it. The old order meant a provider outage lost the enquiry.
+- **Email failure after a successful write is a success.** The enquiry is safe, only
+  the notification failed. Telling the visitor it failed would make them send it
+  again and create a duplicate. The failure is logged for us instead.
+- **No database means `stored: false`, not a hopeful `true`.** The response carries
+  the distinction and the API suite asserts both directions — a handler that always
+  claims success fails the suite, which it did not before I tightened the test.
+- **Parameterised SQL, sanitised on the way in.** A brief containing
+  `<script>alert(1)</script>` is stored as text and comes back without the tag.
+
+**Storage** is Postgres (Neon) over HTTP rather than a socket driver, because a
+connection pool in a serverless function is a cold-start liability. Values are
+`$1..$n`; the connection string is sent as a header, never interpolated into a URL
+that could be logged.
+
+**Access** is a server-side `ADMIN_PASSCODE`, compared in constant time over
+SHA-256 digests so timing does not leak length. It is deliberately *not* the
+`VITE_`-prefixed variable the store admin uses: that one is compiled into the public
+bundle and is a door on a public room, which is fine for hiding a preview UI and
+useless for protecting a database. With `ADMIN_PASSCODE` unset, `/api/leads` returns
+503 and serves nothing — it never falls open and has no default.
+
+**A bug this found in my own tests, worth recording.** The API suite sets
+`process.env.WEB3FORMS_KEY` after importing the handler, but `brief.ts` captured
+that value in a top-level `const` — so every "delivery" test was silently exercising
+the *no provider* branch and passing for the wrong reason. The key is now read per
+request. The suite only caught this because `stored:false` appeared where
+`stored:true` was expected. Two of the three success paths were also missing the
+flag entirely; both are fixed and asserted.
+
+**Still required to go live:** a Neon database, `DATABASE_URL`, `ADMIN_PASSCODE`,
+and `npm run db:migrate` (idempotent, verifies the table afterwards). None of that
+is a subscription I can create, so this is "built and tested, awaiting credentials"
+rather than "done".
+
+---
 
 ## 4d. Prerendering: what it found
 
