@@ -32,7 +32,7 @@ const en = {
   "hero.kicker4": "Lisbon & New York.",
   "hero.title1": "We do the work",
   "hero.title2": "behind the book, the",
-  "hero.title3": "site, and the automation.",
+  "hero.title3": "site, and the business around it.",
   "hero.sub":
     "THE OFFICE 360 is a four-person studio for authors, publishers, and the people who run literary businesses. We write the positioning, build the site, ship the automation, and run the research. We do not pitch, decorate, or staff your project with juniors.",
   "hero.reading": "Currently reading on the brief:",
@@ -149,7 +149,7 @@ const pt: Record<TKey, string> = {
   "hero.kicker4": "Lisboa e Nova Iorque.",
   "hero.title1": "Fazemos o trabalho",
   "hero.title2": "por trás do livro, do",
-  "hero.title3": "site e da automação.",
+  "hero.title3": "site e do negócio à volta disso.",
   "hero.sub":
     "THE OFFICE 360 é um estúdio de quatro pessoas para autores, editoras e quem gere negócios literários. Escrevemos o posicionamento, construímos o site, entregamos a automação e fazemos a investigação. Não fazemos pitches, não decoramos, não entregamos o seu projeto a estagiários.",
   "hero.reading": "A ler neste momento:",

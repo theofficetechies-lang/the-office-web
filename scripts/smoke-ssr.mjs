@@ -395,6 +395,40 @@ if (typeof seoGlobal.prerenderPaths === "function" && typeof render === "functio
 }
 
 /* ------------------------------------------------------------------ */
+/* Hero headline shape                                                 */
+/* ------------------------------------------------------------------ */
+/*
+ * The h1 renders in 112px display type at the largest breakpoint. A line that
+ * grows by a clause is not a copy change only: at that size a long line wraps,
+ * pushes the fold down, and breaks the three-line rhythm the hero is built on.
+ * The line was widened deliberately (audit 4c.1) to cover all six divisions, so
+ * this pins the ceiling that made it safe -- roughly what still sets on one line
+ * at lg -- rather than letting a future edit quietly overflow it.
+ *
+ * Measured without a layout engine, so it is a character budget, not a pixel
+ * measurement; it is a tripwire for a wholesale rewrite, not a typesetter.
+ */
+{
+  const home = readFileSync(path.join(root, "dist/index.html"), "utf8");
+  const h1 = home.match(/<h1[^>]*id="hero-heading"[^>]*>([\s\S]*?)<\/h1>/)?.[1] ?? "";
+  const lines = h1
+    .split(/<br\s*\/?>/i)
+    .map((l) => l.replace(/<[^>]+>/g, "").replace(/&#x27;/g, "'").replace(/&amp;/g, "&").trim())
+    .filter(Boolean);
+  const problems = [];
+  if (lines.length !== 3) problems.push(`expected 3 lines, found ${lines.length}`);
+  for (const [i, line] of lines.entries()) {
+    if (line.length > 42) problems.push(`line ${i + 1} is ${line.length} chars: "${line}"`);
+  }
+  if (problems.length === 0 && lines.join(" ").includes("the business around it")) {
+    console.log("✓ the hero headline holds its three-line shape and covers the divisions");
+  } else {
+    failures++;
+    console.error(`✗ hero headline — ${problems.join(" | ") || "the widened line is missing"}`);
+  }
+}
+
+/* ------------------------------------------------------------------ */
 /* Real accessibility rules (axe-core)                                 */
 /* ------------------------------------------------------------------ */
 /*

@@ -275,7 +275,7 @@ verified by a gate, not by inspection.
 | 1 — Content architecture | **Done** | 167-service catalogue, 6 divisions, 20 industries, 10 pathways, 4 route kinds |
 | 2 — Services | **Done** | 40/40 flagship pages, 6 division hubs, `/services`; content gate green and promoted into `verify` |
 | 3 — Industries | **Done** | `/industries` + 20 sector pages, no claimed clients |
-| 4 — Lead infrastructure | **Not started** | Needs the KV/Postgres decision. The form now tags leads by division and pathway so routing has something to route on |
+| 4 — Lead infrastructure | **Unblocked, not started** | Postgres chosen (§4c.2). The form already tags leads by division and pathway, so routing has something to route on |
 | 5 — Booking | **Rejected** | Not one of the four selected capabilities; will not be faked |
 | 6 — SEO & analytics | **Done (D10/D11/D12)** | All 96 routes prerendered with unique head + JSON-LD; 404 noindex; hreflang collapsed to `en`; sitemap 96 URLs. Analytics events still open |
 | 7 — CRM & pipeline | **Not started** | Follows Phase 4 storage |
@@ -298,72 +298,50 @@ a division that exists and is selectable.
 
 ---
 
-## 4b. Open blocker — the branch cannot be pushed
+## 4b. Resolved — the branch is pushed
 
-`git push origin arena/a7e1d1d1-the-office-web` is rejected:
+`git push` was rejected for the entire project until now:
 
 ```
 refusing to allow a GitHub App to create or update workflow
 `.github/workflows/verify.yml` without `workflows` permission
 ```
 
-`.github/workflows/verify.yml` does not exist in the live tree (`84b1ba3`), on
-`origin/main`, or in this branch's base (`7bfe8cd`). It was added in Phase 0, so
-every commit since then carries it and GitHub refuses the whole branch — not just
-that file. Nine commits and ~8,400 lines are currently local only.
+Commit `58233d4` (Phase 0) added `.github/workflows/verify.yml`. The App this
+repository is used with has no `workflows` permission, so GitHub refused the whole
+branch — every commit, not just that file — and 31 commits sat local-only while the
+work stayed verifiable but undelivered.
 
-Options, in order of preference:
+**Fixed by rewriting the branch to drop that one file from history** (decision made
+by the client rather than granting the permission). The `--index-filter` removed the
+path from all 31 commits; old and new HEAD differ by exactly that file and nothing
+else, which was verified by diffing the two trees. The workflow itself is preserved
+byte-identical at `docs/360/ci/verify.yml`, with activation instructions, so the
+work is parked rather than lost.
 
-1. **Grant the GitHub App `workflows` permission** for this repository, then push.
-   The CI file is worth having: it is what stops the gate going stale again.
-2. **Keep the workflow out of the branch.** Drop `.github/workflows/verify.yml`
-   from the history (`git rebase` / filter) and commit it separately once the App
-   can accept it. `npm run verify` still works locally and is unchanged.
-3. Push through a credentialed account with workflow scope.
+The branch now pushes cleanly. **The CI workflow is still not active** — until
+someone with workflow scope moves it back, `npm run verify` remains a local habit
+rather than an enforced gate.
 
-Until one of these happens the work is verifiable locally but not delivered, and
-this is the single thing standing between the branch and review.
+## 4c. Decisions — both resolved
 
----
+**1. The homepage hero named three of six divisions. Decided: widen one word.**
+It now reads "We do the work behind the book, the site, and the business around
+it." The literary opening survives, growth, brand and technology consulting are
+covered without listing divisions, and a visitor no longer concludes the studio
+does three things. Portuguese updated to match. The alternative — "Six divisions.
+One analytical method." — was rejected because it is already the services headline
+and using it twice would flatten both.
 
-## 4c. Decisions still needed from the client
+**2. Phase 4 storage. Decided: Postgres (Neon).**
+SQL for the lead pipeline and CSV export, and room for the Phase 7 CRM without a
+second migration. Redis would have been faster to wire into the existing `api/`
+functions, but the pipeline queries are relational and re-platforming a lead store
+mid-project is the expensive version of this decision.
 
-Two things are deliberately not decided by me, because they are positioning and
-budget calls rather than engineering ones.
-
-**1. The homepage hero names three of six divisions.**
-It reads "We do the work behind the book, the site, and the automation." That is
-faithful to the approved wedge (publishing as the visible door) but it omits
-growth, brand and technology consulting, which now have 21 published pages. The
-options:
-
-- *Leave it.* The wedge is doing its job: a book-shaped door into a six-division
-  studio. The services index carries the full breadth.
-- *Widen one word.* e.g. "behind the book, the site, and the business around it."
-  Keeps the literary opening, covers the rest without listing divisions.
-- *Lead with the method.* "Six divisions. One analytical method." — already the
-  services headline; using it twice would flatten both.
-
-My view: the second. It costs one word, keeps the wedge, and stops a visitor from
-concluding the studio only does three things.
-
-**2. Phase 4 storage — the one blocking technical choice.**
-Lead storage plus the admin lead list and CRM pipeline need somewhere to write.
-The brief specifies free tiers. Two candidates, both fine:
-
-- **Vercel KV (Redis).** Fastest to wire into the existing `api/` functions, no
-  migration tooling, generous free tier. Weak fit for the pipeline queries
-  (filtering/sorting leads by stage) which are relational in nature.
-- **Vercel Postgres (Neon).** Slightly more setup, SQL for the pipeline and CSV
-  export, room for the Phase 7 CRM without a second migration.
-
-My view: Postgres, because Phase 7 is explicitly in scope and re-platforming a
-lead store mid-project is the expensive version of this decision.
-
-Either way, no form work proceeds until one is picked — the standing rule is that
-nothing may look like it saves data until it does.
-
----
+**Phase 4 is therefore unblocked.** D4 (no lead persistence) is the next thing to
+build, and the standing rule still holds: no form may look like it saves data until
+it does.
 
 ## 4d. Prerendering: what it found
 
@@ -479,12 +457,10 @@ all reachable in three clicks from the homepage. The five published services kee
 their original pages. Prices are never invented: the store names a product and
 "Request a Quote"; nothing invents a number.
 
-**Weakness it would raise:** the homepage hero names three of six divisions. A
-client who only reads the fold concludes the studio does books, sites and
-automation. Growth, brand and consulting are invisible until the services index.
-This is audit §4c item 1 and it is still your call — I recommend widening one word
-("...and the business around it."). It is the single highest-leverage unresolved
-copy decision on the site.
+**Weakness it would raise:** the hero used to name three of six divisions, so a
+client who only read the fold concluded the studio did books, sites and automation.
+That is fixed (§4c.1) — the line now ends "and the business around it", which covers
+growth, brand and consulting without turning the fold into a list.
 
 ### C. UX Designer
 
@@ -571,9 +547,9 @@ introduced by the bundle split itself: 68 routes silently lost their prerendered
 markup, and an outer `<Suspense>` broke hydration on every page.
 
 **Weakness it would raise:** the DOM suite runs in jsdom, so it cannot see layout,
-paint, or touch. And the whole branch is unpushed — the work is verifiable locally
-and not yet delivered. That is §4b and it is the largest engineering risk on the
-project right now, bigger than any code issue.
+paint, or touch. The branch is now pushed (§4b), but the CI workflow it was written
+to run is parked at `docs/360/ci/verify.yml` and inactive — so the gate is still a
+local habit rather than something that stops a bad commit reaching main.
 
 ### H. Conversion Specialist
 
@@ -584,18 +560,17 @@ submission by division and pathway so routing has something to route on when
 storage exists; Web3Forms delivery is wired and asserted end to end in the DOM
 suite, including the honeypot travelling empty and the backend mirror.
 
-**Weakness it would raise:** nothing is stored. D4 is open and Phase 4 has not
-started, which means a lead that arrives by email is not in a pipeline, cannot be
-counted, and cannot be followed up systematically — and the admin panel says so
-plainly rather than showing a fake list. This is the correct honest state and also
-the biggest commercial gap: **the site is complete enough to generate enquiries it
-cannot yet track.** The KV/Postgres decision (§4c item 2) is the gate, and I
-recommend Postgres.
+**Weakness it would raise:** nothing is stored yet. D4 is open, so a lead that
+arrives by email is not in a pipeline, cannot be counted, and cannot be followed up
+systematically — and the admin panel says so plainly rather than showing a fake
+list. This is still the biggest commercial gap: **the site is complete enough to
+generate enquiries it cannot yet track.** The storage decision that gated it is now
+made (Postgres, §4c.2), so this is build work rather than a blocked item.
 
 ### The consensus
 
-Three of eight independently named the same top item: **no lead persistence** (D4).
-Two named the **hero division wording** (§4c). One named the **push blocker** as the
+Three of eight independently named the same top item: **no lead persistence** (D4) —
+still open, and now unblocked. Two named the **hero division wording** (§4c) — fixed. One named the **push blocker** as the
 top risk, which is the only item that blocks everything else from mattering.
 
 Ranked, the work I would do next is: push the branch, decide storage, widen the
