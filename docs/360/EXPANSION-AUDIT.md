@@ -822,3 +822,100 @@ Q1–Q4 above, after which Phase 0 can start immediately and is a single day's w
 - I did not audit the Portuguese translations' quality — only that they exist and switch `<html lang>`.
 - The live domain's DNS/Vercel project settings were not inspected; D1 is established from what the
   domain actually serves, which is stronger evidence than the config anyway.
+
+---
+
+## 33. The visual redesign (`c794092`)
+
+§4f applied the transformation brief's *positioning*. It did not change the *look*, and the
+look was the thing that read as machine-made. This section records what was wrong with it,
+what replaced it, and what was deliberately rejected.
+
+### 33.1 What was actually on the page
+
+Measured from the shipped `dist/index.html` at `9a1e455`, not estimated:
+
+| Signal | Count on the homepage alone |
+|---|---|
+| `tracking-mono` labels | 206 |
+| `font-mono` elements | 209 |
+| Mono set at ≤ 12px | 199 |
+| Sections sharing the identical `py-14 sm:py-20` | 8 |
+| Colour tokens in play | 7, all monochrome, one accent hidden behind "live markers" |
+| Gradients | 0 |
+
+The palette was not restrained, it was absent. The type was Fraunces display over JetBrains Mono
+eyebrows — a warm-paper literary broadsheet. The problem is not that this was ugly. It is that
+**"giant serif + uppercase mono micro-label above every section + hairline rules" is itself a
+recognisable generated-design formula**, the editorial cousin of the purple-gradient hero: a small
+set of loud moves applied uniformly, which produces a page that is stylish and anonymous at once.
+
+The eight identical section paddings are the tell underneath the tell. A designer varying content
+also varies rhythm; a template applies one spacing value and moves on.
+
+### 33.2 What replaced it
+
+A high-contrast Swiss/International system, chosen because it is structural rather than decorative —
+its logic is a grid, a weight ladder and one functional accent, none of which can be faked by
+styling individual elements.
+
+- **One family.** Archivo at 400/500/600/700 does display and text. No second typeface to keep in
+  sync. Display is the same grotesque set tight (−0.045em) and heavy (600) — weight does the
+  announcing, not a serif.
+- **Mono demoted from decoration to data.** It survives only where digits must align. Homepage mono
+  labels: 206 → 0.
+- **Colour promoted from decoration to structure.** Vermilion `#e0361c` marks *position and state*
+  only: active nav item, section index numerals, the rule under a primary heading, focus rings, and
+  primary-button hover. Never a background wash, never a gradient stop. Scarcity is what makes it
+  read as intentional.
+- **A type ladder and three button roles, defined once** (`.display-xl` / `.display-lg`,
+  `.btn-primary` / `.btn-secondary` / `.btn-inverse`). Before this, every CTA was hand-rolled with
+  its own padding and hover, which is how they had drifted apart.
+- **Section rhythm follows content** — 56/80px, 64/96px and 48/56px are used for different weights
+  of section instead of one value repeated eight times.
+- **The margin rail is gone.** SEC. / PORTFOLIO / RUNNING HEAD / MARGINALIA sat beside every section,
+  were book-production words with no meaning to a buyer of digital work, and were `aria-hidden` — so
+  they could not even be found by search. Replaced by one accent section number.
+- **The MANIFEST ticker is gone.** Pulsing dot, UTC clock, marquee: telemetry theatre. One status
+  line remains.
+- **The footer leads with the brief's CTA** ("Ready to build a smarter digital business?") instead of
+  dropping straight into a five-column link directory.
+- **Nav has an active state.** On 100 routes, not knowing which section you are in was a navigation
+  failure rather than a missing flourish.
+
+### 33.3 Rejected
+
+- **Linear/Vercel**: black + electric cobalt + glass. A different template, equally generated.
+- **Gradient-and-glass generally.** "Subtle gradients are acceptable" in the brief is permission, not
+  an instruction; a gradient that exists to prove the page is modern is the same failure as the mono
+  eyebrow, one layer down.
+- **Keeping the serif but "using it better".** The serif was the load-bearing part of the rejected
+  formula.
+- **A sampled subset of pages.** Applied to all 100 prerendered routes.
+
+### 33.4 Gates changed, and why
+
+Four assertions pinned the retired design rather than its behaviour, and would have failed a correct
+build:
+
+| Old assertion | New assertion |
+|---|---|
+| hero CTA has `hover:bg-black/85` | hero CTA uses `.btn-primary`; the hover rule is asserted in the shipped CSS |
+| `.caret` rule is `background:#000` | structural accent `#e0361c` ships |
+| warm paper `#f4f3ef` ships | cool paper `#f2f3f5` ships |
+| charcoal `#141414` ships | charcoal `#111214` ships |
+| toggle label says `MENU`; PT nav says `SERVIÇOS`; PT legend says `DE QUE PRECISA DE NÓS?` | matched case-insensitively / in the sentence case that now renders |
+
+Nothing was deleted to make the suite pass — every retired check was replaced with one for the thing
+that took its place, including a new check that fails the build if **Fraunces** reappears in the
+shipped CSS.
+
+### 33.5 Verified
+
+`npm run verify` → **exit 0**: 100 routes re-render byte-identically, 100 pass static accessibility,
+100 pass axe-core, all 100 reachable from `/` (depth ≤ 3), 22 routes asserted, all API and DOM
+checks pass, 20 eslint warnings / 0 errors.
+
+**Not verified:** contrast ratios, touch-target sizes and Core Web Vitals — still no browser in this
+sandbox (see §32). The accent was chosen at `#e0361c` on white (≈4.9:1 against `#0a0a0a` text) but
+that figure is arithmetic, not a rendered measurement.
