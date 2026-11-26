@@ -227,8 +227,8 @@ export default function BriefForm({ inquiryType }: { inquiryType?: string }) {
     >
       {pathway && pathway.id !== "project-brief" && (
         <div className="col-span-2 border border-white/25 px-4 py-3">
-          <div className="font-mono text-[10px] tracking-mono opacity-60 mb-1">
-            {pathway.label.toUpperCase()}
+          <div className="mb-1 text-[10.5px] font-semibold uppercase tracking-[0.06em] text-signal">
+            {pathway.label}
           </div>
           <p className="text-[13px] leading-[1.55] opacity-85">{pathway.hint}</p>
         </div>
@@ -266,8 +266,8 @@ export default function BriefForm({ inquiryType }: { inquiryType?: string }) {
 
       {/* Required services — multi-select */}
       <fieldset className="col-span-2" aria-describedby={errors.services ? "services-err" : undefined}>
-        <legend className="font-mono text-[11px] tracking-mono opacity-60 mb-3">
-          {t("form.services").toUpperCase()} <span className="opacity-50 ml-1">*</span>
+        <legend className="mb-3 text-[11.5px] font-semibold uppercase tracking-[0.05em] text-white/55">
+          {t("form.services")} <span className="opacity-60 ml-1">*</span>
         </legend>
         <div className="flex flex-wrap gap-2">
           {SERVICE_CHOICES.map((choice) => {
@@ -276,10 +276,10 @@ export default function BriefForm({ inquiryType }: { inquiryType?: string }) {
               <label
                 key={choice.value}
                 className={cn(
-                  "inline-flex items-center gap-2 border px-3 py-2 font-mono text-[11px] tracking-mono cursor-pointer transition-colors select-none",
+                  "inline-flex items-center gap-2 border px-3 py-2 text-[12px] font-medium cursor-pointer transition-colors select-none",
                   checked
-                    ? "bg-white text-black border-white"
-                    : "border-white/40 hover:border-white",
+                    ? "bg-white text-ink border-white"
+                    : "border-white/30 text-white/80 hover:border-white/70 hover:text-white",
                   errors.services && !checked && "border-red-400/70"
                 )}
               >
@@ -291,10 +291,10 @@ export default function BriefForm({ inquiryType }: { inquiryType?: string }) {
                   onChange={() => toggleService(choice.value)}
                   className="sr-only"
                 />
-                <span aria-hidden="true" className="w-3">
-                  {checked ? "■" : "□"}
+                <span aria-hidden="true" className="w-2.5 text-[9px] text-signal">
+                  {checked ? "●" : ""}
                 </span>
-                {choice.label.toUpperCase()}
+                {choice.label}
               </label>
             );
           })}
@@ -307,16 +307,16 @@ export default function BriefForm({ inquiryType }: { inquiryType?: string }) {
           <label
             htmlFor="brief"
             className={cn(
-              "block font-mono text-[11px] tracking-mono transition-colors",
-              errors.brief ? "text-red-400" : "opacity-60"
+              "block text-[11.5px] font-semibold uppercase tracking-[0.05em] transition-colors",
+              errors.brief ? "text-red-400" : "text-white/55"
             )}
           >
             {t("form.brief").toUpperCase()} <span className="opacity-50 ml-1">*</span>
           </label>
           <span
             className={cn(
-              "font-mono text-[10px] tracking-mono",
-              data.brief.length > 5000 ? "text-red-400" : "opacity-40"
+              "text-[11px] tabular-nums",
+              data.brief.length > 5000 ? "text-red-400" : "text-white/35"
             )}
             aria-live="polite"
           >
@@ -397,7 +397,7 @@ export default function BriefForm({ inquiryType }: { inquiryType?: string }) {
       </div>
 
       <div className="col-span-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-2">
-        <div className="text-[12px] font-mono tracking-mono max-w-[38ch]" aria-live="polite">
+        <div className="text-[12px] max-w-[46ch] text-white/60" aria-live="polite">
           {status === "error" && errorMsg ? (
             <span className="text-red-400">{errorMsg}</span>
           ) : status === "sent" ? (
@@ -414,7 +414,7 @@ export default function BriefForm({ inquiryType }: { inquiryType?: string }) {
           {status === "error" && (
             <a
               href={mailtoHref}
-              className="text-[11px] font-mono tracking-mono underline opacity-70 hover:opacity-100"
+              className="text-[11.5px] underline decoration-1 underline-offset-4 text-white/70 hover:text-white"
             >
               EMAIL US DIRECTLY →
             </a>
@@ -423,7 +423,7 @@ export default function BriefForm({ inquiryType }: { inquiryType?: string }) {
             type="submit"
             disabled={status === "submitting"}
             aria-busy={status === "submitting"}
-            className="bg-white text-black px-5 py-3 font-mono text-[12px] tracking-mono font-semibold border border-white hover:bg-transparent hover:text-white transition-colors disabled:opacity-60 disabled:cursor-wait cursor-pointer whitespace-nowrap"
+            className="btn-inverse disabled:opacity-60 disabled:cursor-wait cursor-pointer whitespace-nowrap"
           >
             {status === "submitting"
               ? t("form.sending")
@@ -467,8 +467,8 @@ function Field({
       <label
         htmlFor={id}
         className={cn(
-          "block font-mono text-[11px] tracking-mono transition-colors mb-2",
-          error ? "text-red-400" : "opacity-60"
+          "block text-[11.5px] font-semibold uppercase tracking-[0.05em] transition-colors mb-2",
+          error ? "text-red-400" : "text-white/55"
         )}
       >
         {label}
@@ -485,7 +485,7 @@ function Field({
         aria-invalid={Boolean(error) || undefined}
         aria-describedby={error ? `${id}-err` : undefined}
         className={cn(
-          "w-full bg-transparent border-b py-2 text-[15px] outline-none transition-colors",
+          "w-full bg-transparent border-b py-2 text-[15px] text-white outline-none transition-colors",
           error
             ? "border-red-400 focus:border-red-400 text-white"
             : "border-white/50 focus:border-white text-white"
@@ -520,8 +520,8 @@ function Select({
       <label
         htmlFor={id}
         className={cn(
-          "block font-mono text-[11px] tracking-mono transition-colors mb-2",
-          error ? "text-red-400" : "opacity-60"
+          "block text-[11.5px] font-semibold uppercase tracking-[0.05em] transition-colors mb-2",
+          error ? "text-red-400" : "text-white/55"
         )}
       >
         {label}
@@ -561,7 +561,7 @@ function ErrLine({ children, id }: { children: React.ReactNode; id?: string }) {
     <p
       id={id}
       role="alert"
-      className="mt-1.5 font-mono text-[11px] tracking-mono text-red-400 flex items-center gap-1"
+      className="mt-1.5 text-[11.5px] text-red-400 flex items-center gap-1"
     >
       <span aria-hidden="true">↑</span>
       <span>{children}</span>

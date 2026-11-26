@@ -31,20 +31,20 @@ export default function WorkIndexPage() {
 
       <main id="main" className="flex-1">
         <section className="rule-b" aria-labelledby="work-heading">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-10 sm:py-16 lg:py-20">
-            <div className="font-mono text-[11px] tracking-mono opacity-60 mb-3">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8 py-10 sm:py-16 lg:py-20">
+            <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-3">
               WORK / ENGAGEMENT PATTERNS
             </div>
             <h1
               id="work-heading"
-              className="font-display tracking-display-tight font-light text-[40px] leading-[1.0] sm:text-[60px] sm:leading-[0.98] lg:text-[84px] lg:leading-[0.96] max-w-[16ch]"
+              className="display-xl text-[40px] leading-[1.0] sm:text-[60px] sm:leading-[0.98] lg:text-[84px] lg:leading-[0.96] max-w-[16ch]"
             >
               The shape of the work.
             </h1>
             <p className="mt-6 text-[16.5px] leading-[1.7] max-w-prose opacity-90">
               {workNote}
             </p>
-            <div className="mt-8 flex flex-wrap gap-x-8 gap-y-2 font-mono text-[11px] tracking-mono opacity-60">
+            <div className="mt-8 flex flex-wrap gap-x-8 gap-y-2 text-[11px] font-semibold uppercase tracking-[0.06em] text-mute">
               <span>{projects.length} PUBLISHED PATTERNS</span>
               <span>{verified} CLIENT-VERIFIED</span>
               <span>{projects.length - verified} PATTERNS, NO CLIENT CLAIMED</span>
@@ -53,18 +53,18 @@ export default function WorkIndexPage() {
         </section>
 
         <section aria-labelledby="patterns-heading">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 pb-14 sm:pb-20">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8 pb-14 sm:pb-20">
             <h2 id="patterns-heading" className="sr-only">
               Engagement patterns
             </h2>
-            <ul className="border-t border-black">
+            <ul className="border-t border-ink">
               {projects.map((p, i) => (
-                <li key={p.slug} className="border-b border-black/20">
+                <li key={p.slug} className="border-b border-faint/20">
                   <a
                     href={`/work/${p.slug}`}
                     className="group grid grid-cols-12 gap-x-6 gap-y-3 py-6 sm:py-8 items-baseline"
                   >
-                    <div className="col-span-12 sm:col-span-1 font-mono text-[10.5px] tracking-mono opacity-55">
+                    <div className="col-span-12 sm:col-span-1 text-[10.5px] font-medium text-mute">
                       {String(i + 1).padStart(2, "0")}
                     </div>
                     <div className="col-span-12 sm:col-span-6">
@@ -75,14 +75,14 @@ export default function WorkIndexPage() {
                         {p.summary}
                       </p>
                     </div>
-                    <div className="col-span-6 sm:col-span-2 font-mono text-[10.5px] tracking-mono opacity-60">
+                    <div className="col-span-6 sm:col-span-2 text-[11px] font-semibold uppercase tracking-[0.06em] text-mute">
                       {p.sector.toUpperCase()}
                     </div>
-                    <div className="col-span-6 sm:col-span-3 font-mono text-[10.5px] tracking-mono sm:text-right">
+                    <div className="col-span-6 sm:col-span-3 text-[10.5px] font-medium sm:text-right">
                       <span
                         className={
                           p.verified
-                            ? "border border-black px-2 py-0.5"
+                            ? "border border-ink px-2 py-0.5"
                             : "opacity-55"
                         }
                       >
@@ -94,8 +94,8 @@ export default function WorkIndexPage() {
               ))}
             </ul>
 
-            <div className="mt-10 border border-black p-5 sm:p-6 bg-paper-tint max-w-3xl">
-              <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-2">
+            <div className="mt-10 border border-ink p-5 sm:p-6 bg-paper-tint max-w-3xl">
+              <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-2">
                 WHY NOTHING HERE NAMES A CLIENT
               </div>
               <p className="text-[14.5px] leading-[1.7]">
@@ -111,10 +111,10 @@ export default function WorkIndexPage() {
         </section>
 
         <section aria-labelledby="work-cta">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-14 sm:py-20">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8 py-14 sm:py-20">
             <h2
               id="work-cta"
-              className="font-display tracking-display text-[30px] sm:text-[46px] leading-[1.02] font-light max-w-[22ch] mb-6"
+              className="display-xl text-[30px] sm:text-[46px] max-w-[22ch] mb-6"
             >
               Ask us for references instead.
             </h2>
@@ -124,7 +124,7 @@ export default function WorkIndexPage() {
             </p>
             <a
               href="/contact"
-              className="inline-block bg-black text-white px-6 py-3.5 font-mono text-[12px] tracking-mono font-semibold hover:bg-black/85 transition-colors"
+              className="inline-block btn-primary"
             >
               ASK FOR REFERENCES →
             </a>

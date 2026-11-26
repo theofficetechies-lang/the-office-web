@@ -24,8 +24,8 @@ function SelfAudit() {
   const gapServices = [...new Set(gaps.map((g) => g.service))];
 
   return (
-    <div className="border border-black p-6 sm:p-8 bg-white">
-      <div className="font-mono text-[10.5px] tracking-mono uppercase opacity-60 mb-3">
+    <div className="border border-ink p-6 sm:p-8 bg-white">
+      <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-3">
         {P ? "Comece aqui" : "Start here"}
       </div>
       <h2 className="font-display text-[24px] sm:text-[30px] tracking-display leading-snug mb-2">
@@ -53,8 +53,8 @@ function SelfAudit() {
         ))}
       </div>
 
-      <div className="mt-7 border-t border-black pt-5">
-        <div className="font-mono text-[12px] tracking-mono opacity-80 mb-3">
+      <div className="mt-7 border-t border-ink pt-5">
+        <div className="text-[12px] text-charcoal/80 mb-3">
           {P ? `RESULTADO: ${yes}/${checklistItems.length}` : `SCORE: ${yes}/${checklistItems.length}`}
         </div>
         {gapServices.length === 0 ? (
@@ -85,7 +85,7 @@ function SelfAudit() {
             </ul>
             <a
               href="/#contact"
-              className="mt-5 inline-block bg-black text-white px-5 py-3 font-mono text-[12px] tracking-mono font-semibold hover:bg-black/85 transition-colors"
+              className="mt-5 inline-block btn-primary"
             >
               {P ? "QUER QUE NÓS O FAÇAMOS A SÉRIO? →" : "WANT US TO RUN IT FOR REAL? →"}
             </a>
@@ -132,7 +132,7 @@ export default function DemosPage() {
       <SiteHeader mode="page" />
 
       <main id="main" className="flex-1 py-14 sm:py-20" aria-labelledby="demos-heading">
-        <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+        <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
           <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10">
             <MarginRail
               sectionNum="D"
@@ -142,10 +142,10 @@ export default function DemosPage() {
             />
             <div className="col-span-12 lg:col-span-10">
               <MobileFolioStrip sectionNum="D" sectionLabel="PROOF / THE WORK" folio="PROOF" />
-              <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">PROOF / THE WORK</div>
+              <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-4">PROOF / THE WORK</div>
               <h1
                 id="demos-heading"
-                className="font-display tracking-display text-[36px] sm:text-[52px] lg:text-[68px] leading-[0.98] font-light max-w-[20ch] mb-6"
+                className="display-xl text-[36px] sm:text-[52px] lg:text-[68px] max-w-[20ch] mb-6"
               >
                 {P ? "Veja o trabalho, não as promessas." : "See the work, not the promises."}
               </h1>
@@ -159,8 +159,8 @@ export default function DemosPage() {
                 <SelfAudit />
 
                 {/* Sample positioning document */}
-                <div className="border border-black p-6 sm:p-8 bg-paper-tint">
-                  <div className="font-mono text-[10.5px] tracking-mono uppercase opacity-60 mb-3">
+                <div className="border border-ink p-6 sm:p-8 bg-paper-tint">
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-3">
                     {P ? "O método, na prática" : "The method, in practice"}
                   </div>
                   <h2 className="font-display text-[24px] sm:text-[30px] tracking-display leading-snug mb-4">
@@ -168,11 +168,11 @@ export default function DemosPage() {
                   </h2>
                   <div className="space-y-5 max-w-prose">
                     <div>
-                      <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-1">THE SHELF</div>
+                      <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-1">THE SHELF</div>
                       <p className="text-[15px] leading-[1.6]">{samplePositioning.shelf}</p>
                     </div>
                     <div>
-                      <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-1">THE COMP SET</div>
+                      <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-1">THE COMP SET</div>
                       <ul className="space-y-1.5 text-[15px] leading-[1.6]">
                         {samplePositioning.comps.map((c) => (
                           <li key={c} className="flex gap-2"><span aria-hidden="true" className="opacity-50">—</span><span>{c}</span></li>
@@ -180,19 +180,19 @@ export default function DemosPage() {
                       </ul>
                     </div>
                     <div>
-                      <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-1">THE POSITIONING LINE</div>
+                      <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-1">THE POSITIONING LINE</div>
                       <p className="font-display text-[19px] tracking-display leading-[1.4]">{samplePositioning.line}</p>
                     </div>
                     <div>
-                      <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-1">WHAT NOT TO CLAIM</div>
+                      <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-1">WHAT NOT TO CLAIM</div>
                       <p className="text-[15px] leading-[1.6]">{samplePositioning.notToClaim}</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Sample report + real download */}
-                <div className="border border-black p-6 sm:p-8 bg-white">
-                  <div className="font-mono text-[10.5px] tracking-mono uppercase opacity-60 mb-3">
+                <div className="border border-ink p-6 sm:p-8 bg-white">
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-3">
                     {P ? "Relatórios" : "Reporting"}
                   </div>
                   <h2 className="font-display text-[24px] sm:text-[30px] tracking-display leading-snug mb-4">
@@ -200,7 +200,7 @@ export default function DemosPage() {
                   </h2>
                   <table className="w-full max-w-2xl text-[14px] border-collapse">
                     <thead>
-                      <tr className="border-b border-black text-left font-mono text-[11px] tracking-mono opacity-70">
+                      <tr className="border-b border-faint text-left text-[11px] font-medium text-mute">
                         <th className="py-2 pr-4">METRIC</th>
                         <th className="py-2 pr-4">BASELINE</th>
                         <th className="py-2 pr-4">WEEK 8</th>
@@ -209,10 +209,10 @@ export default function DemosPage() {
                     </thead>
                     <tbody>
                       {sampleReport.map((r) => (
-                        <tr key={r.metric} className="border-b border-black/15">
+                        <tr key={r.metric} className="border-b border-faint/15">
                           <td className="py-2.5 pr-4">{r.metric}</td>
-                          <td className="py-2.5 pr-4 font-mono">{r.baseline}</td>
-                          <td className="py-2.5 pr-4 font-mono">{r.week8}</td>
+                          <td className="py-2.5 pr-4 tabular-nums">{r.baseline}</td>
+                          <td className="py-2.5 pr-4 tabular-nums">{r.week8}</td>
                           <td className="py-2.5 opacity-70">{r.note}</td>
                         </tr>
                       ))}
@@ -226,7 +226,7 @@ export default function DemosPage() {
                   <a
                     href="/downloads/amazon-seo-sample-report.pdf"
                     download="Amazon-SEO-Sample-Report-The-Office.pdf"
-                    className="mt-5 inline-flex items-center gap-3 bg-black text-white px-5 py-3 font-mono text-[12px] tracking-mono font-semibold hover:bg-black/85 transition-colors"
+                    className="mt-5 inline-flex items-center gap-3 btn-primary"
                   >
                     <span>↓ Download the full report (PDF)</span>
                     <span className="opacity-60 text-[10px]">13 PAGES · REAL AUDIT</span>

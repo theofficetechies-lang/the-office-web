@@ -36,7 +36,7 @@ export default function AboutPage() {
       <main id="main" className="flex-1">
         {/* HERO */}
         <section className="rule-b" aria-labelledby="about-heading">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
             <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-10 sm:py-16 lg:py-24">
               <MarginRail
                 sectionNum="01"
@@ -50,12 +50,12 @@ export default function AboutPage() {
                   sectionLabel="ABOUT THE STUDIO"
                   folio="FOLIO II"
                 />
-                <div className="font-mono text-[11px] tracking-mono opacity-60 mb-6">
+                <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-6">
                   ABOUT / THE STUDIO
                 </div>
                 <h1
                   id="about-heading"
-                  className="font-display tracking-display-tight font-light text-[40px] leading-[1.0] sm:text-[64px] sm:leading-[0.98] lg:text-[92px] lg:leading-[0.96] max-w-[18ch]"
+                  className="display-xl text-[40px] leading-[1.0] sm:text-[64px] sm:leading-[0.98] lg:text-[92px] lg:leading-[0.96] max-w-[18ch]"
                 >
                   Six divisions.
                   <br />
@@ -82,7 +82,7 @@ export default function AboutPage() {
                     </p>
                   </div>
                   <div className="col-span-12 lg:col-span-4 lg:col-start-9">
-                    <dl className="border-t border-black">
+                    <dl className="border-t border-ink">
                       {[
                         ["DIVISIONS", String(divisions.length)],
                         ["SERVICES", String(TOTAL_SERVICES)],
@@ -92,9 +92,9 @@ export default function AboutPage() {
                       ].map(([k, v]) => (
                         <div
                           key={k}
-                          className="flex items-baseline justify-between border-b border-black/20 py-2.5"
+                          className="flex items-baseline justify-between border-b border-faint/20 py-2.5"
                         >
-                          <dt className="font-mono text-[10.5px] tracking-mono opacity-60">{k}</dt>
+                          <dt className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute">{k}</dt>
                           <dd className="font-display text-[22px] leading-none">{v}</dd>
                         </div>
                       ))}
@@ -108,15 +108,15 @@ export default function AboutPage() {
 
         {/* PHILOSOPHY */}
         <section className="rule-b" aria-labelledby="philosophy-heading">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-14 sm:py-20">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8 py-14 sm:py-20">
             <div className="grid grid-cols-12 gap-x-6 gap-y-10">
               <div className="col-span-12 lg:col-span-4">
-                <div className="font-mono text-[11px] tracking-mono opacity-60 mb-3">
+                <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-3">
                   02 / PHILOSOPHY
                 </div>
                 <h2
                   id="philosophy-heading"
-                  className="font-display tracking-display text-[32px] sm:text-[42px] leading-[1.02] font-light"
+                  className="display-xl text-[32px] sm:text-[42px]"
                 >
                   What we believe about this work.
                 </h2>
@@ -148,21 +148,21 @@ export default function AboutPage() {
 
         {/* WHAT WE DO */}
         <section className="rule-b" aria-labelledby="pillars-heading">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-14 sm:py-20">
-            <div className="font-mono text-[11px] tracking-mono opacity-60 mb-3">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8 py-14 sm:py-20">
+            <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-3">
               03 / CAPABILITIES
             </div>
             <h2
               id="pillars-heading"
-              className="font-display tracking-display text-[32px] sm:text-[46px] leading-[1.02] font-light max-w-[24ch] mb-10"
+              className="display-xl text-[32px] sm:text-[46px] max-w-[24ch] mb-10"
             >
               Six divisions, each with a real page behind it.
             </h2>
             <div className="grid grid-cols-12 gap-x-6 gap-y-8">
               {pillars.map((p) => (
                 <article key={p.division} className="col-span-12 sm:col-span-6 lg:col-span-4">
-                  <div className="border-t border-black pt-4">
-                    <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-2">
+                  <div className="border-t border-ink pt-4">
+                    <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-2">
                       {p.number}
                     </div>
                     <h3 className="font-display text-[21px] leading-[1.2] mb-2">
@@ -171,7 +171,7 @@ export default function AboutPage() {
                     <p className="text-[14.5px] leading-[1.65] opacity-85 mb-3">{p.summary}</p>
                     <a
                       href={`/services/${p.division}`}
-                      className="font-mono text-[11px] tracking-mono font-semibold border-b border-black"
+                      className="text-[12.5px] font-semibold border-b border-ink pb-0.5 hover:text-signal hover:border-signal transition-colors"
                     >
                       EXPLORE DIVISION →
                     </a>
@@ -184,11 +184,11 @@ export default function AboutPage() {
 
         {/* DIFFERENCES */}
         <section className="rule-b" aria-labelledby="why-heading">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-14 sm:py-20">
-            <div className="font-mono text-[11px] tracking-mono opacity-60 mb-3">04 / WHY US</div>
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8 py-14 sm:py-20">
+            <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-3">04 / WHY US</div>
             <h2
               id="why-heading"
-              className="font-display tracking-display text-[32px] sm:text-[46px] leading-[1.02] font-light max-w-[22ch] mb-10"
+              className="display-xl text-[32px] sm:text-[46px] max-w-[22ch] mb-10"
             >
               Six claims you can check.
             </h2>
@@ -201,8 +201,8 @@ export default function AboutPage() {
             <dl className="grid grid-cols-12 gap-x-6 gap-y-8">
               {differences.map((d, i) => (
                 <div key={d.title} className="col-span-12 sm:col-span-6">
-                  <dt className="border-t border-black pt-4 font-display text-[20px] leading-[1.2] mb-2">
-                    <span className="block font-mono text-[10.5px] tracking-mono opacity-60 mb-2">
+                  <dt className="border-t border-ink pt-4 font-display text-[20px] leading-[1.2] mb-2">
+                    <span className="block text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-2">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     {d.title}
@@ -216,11 +216,11 @@ export default function AboutPage() {
 
         {/* TEAM */}
         <section className="rule-b" aria-labelledby="team-heading">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-14 sm:py-20">
-            <div className="font-mono text-[11px] tracking-mono opacity-60 mb-3">05 / THE TEAM</div>
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8 py-14 sm:py-20">
+            <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-3">05 / THE TEAM</div>
             <h2
               id="team-heading"
-              className="font-display tracking-display text-[32px] sm:text-[46px] leading-[1.02] font-light max-w-[22ch] mb-4"
+              className="display-xl text-[32px] sm:text-[46px] max-w-[22ch] mb-4"
             >
               Who does the work.
             </h2>
@@ -232,9 +232,9 @@ export default function AboutPage() {
             <div className="grid grid-cols-12 gap-x-6 gap-y-10">
               {team.map((m) => (
                 <article key={m.role} className="col-span-12 sm:col-span-6 lg:col-span-3">
-                  <div className="border-t border-black pt-4">
+                  <div className="border-t border-ink pt-4">
                     <div
-                      className="w-14 h-14 rounded-full border border-black/30 flex items-center justify-center font-mono text-[13px] tracking-mono mb-4 overflow-hidden"
+                      className="w-14 h-14 rounded-full border border-ink/30 flex items-center justify-center text-[13px] font-semibold mb-4 overflow-hidden"
                       aria-hidden="true"
                     >
                       {m.portrait ? (
@@ -253,7 +253,7 @@ export default function AboutPage() {
                     <h3 className="font-display text-[19px] leading-[1.2]">
                       {m.name ?? m.role}
                     </h3>
-                    <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-2">
+                    <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-2">
                       {m.name ? m.role.toUpperCase() : "PRINCIPAL"}
                     </div>
                     <p className="text-[13.5px] leading-[1.6] opacity-85">{m.note}</p>
@@ -266,23 +266,23 @@ export default function AboutPage() {
 
         {/* CTA */}
         <section aria-labelledby="about-cta">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-14 sm:py-20">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8 py-14 sm:py-20">
             <h2
               id="about-cta"
-              className="font-display tracking-display text-[32px] sm:text-[52px] leading-[1.0] font-light max-w-[20ch] mb-8"
+              className="display-xl text-[32px] sm:text-[52px] max-w-[20ch] mb-8"
             >
               Ready to build a smarter digital business?
             </h2>
             <div className="flex flex-wrap gap-3">
               <a
                 href="/contact"
-                className="bg-black text-white px-6 py-3.5 font-mono text-[12px] tracking-mono font-semibold hover:bg-black/85 transition-colors"
+                className="btn-primary"
               >
                 START YOUR PROJECT →
               </a>
               <a
                 href="/services"
-                className="border border-black px-6 py-3.5 font-mono text-[12px] tracking-mono font-semibold hover:bg-black hover:text-white transition-colors"
+                className="btn-secondary"
               >
                 EXPLORE OUR SERVICES
               </a>

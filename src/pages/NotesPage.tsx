@@ -38,7 +38,7 @@ export default function NotesPage() {
       <SiteHeader mode="page" />
 
       <main id="main" className="flex-1 py-14 sm:py-20" aria-labelledby="notes-heading">
-        <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+        <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
           <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10">
             <MarginRail
               sectionNum="N"
@@ -49,16 +49,16 @@ export default function NotesPage() {
             <div className="col-span-12 lg:col-span-10">
               <MobileFolioStrip sectionNum="N" sectionLabel="NOTES & INSIGHTS" folio="NOTES" />
               <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
-                <div className="font-mono text-[11px] tracking-mono opacity-60">
+                <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute">
                   {P ? "ESCRITA / NOTAS DE CAMPO" : "WRITING / FIELD NOTES"}
                 </div>
-                <a href="/rss.xml" className="font-mono text-[11px] tracking-mono underline opacity-70 hover:opacity-100">
+                <a href="/rss.xml" className="text-[11.5px] underline decoration-1 underline-offset-4 text-mute hover:text-ink">
                   RSS ↗
                 </a>
               </div>
               <h1
                 id="notes-heading"
-                className="font-display tracking-display text-[36px] sm:text-[52px] lg:text-[68px] leading-[0.98] font-light max-w-[20ch] mb-4"
+                className="display-xl text-[36px] sm:text-[52px] lg:text-[68px] max-w-[20ch] mb-4"
               >
                 {P ? "Notas sobre o trabalho." : "Notes on the work."}
               </h1>
@@ -69,7 +69,7 @@ export default function NotesPage() {
               </p>
 
               <div className="mb-10">
-                <label htmlFor="notes-search" className="block font-mono text-[11px] tracking-mono opacity-60 mb-2">
+                <label htmlFor="notes-search" className="block text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-2">
                   {P ? "PESQUISAR NAS NOTAS" : "SEARCH THE NOTES"}
                 </label>
                 <input
@@ -78,10 +78,10 @@ export default function NotesPage() {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder={P ? "posicionamento, Amazon, IA…" : "positioning, Amazon, AI…"}
-                  className="w-full max-w-md bg-transparent border-b border-black/50 focus:border-black py-2 text-[15px] outline-none transition-colors"
+                  className="w-full max-w-md bg-transparent border-b border-faint/50 focus:border-black py-2 text-[15px] outline-none transition-colors"
                 />
                 {q && (
-                  <p className="mt-2 font-mono text-[11px] tracking-mono opacity-60" aria-live="polite">
+                  <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.06em] text-mute" aria-live="polite">
                     {filtered.length} {P ? "resultado(s)" : "result(s)"}
                   </p>
                 )}
@@ -89,8 +89,8 @@ export default function NotesPage() {
 
               <div className="space-y-12">
                 {filtered.map((note) => (
-                  <article key={note.slug} id={note.slug} className="border-t border-black pt-8">
-                    <div className="flex flex-wrap items-center gap-3 font-mono text-[11px] tracking-mono opacity-60 mb-3">
+                  <article key={note.slug} id={note.slug} className="border-t border-ink pt-8">
+                    <div className="flex flex-wrap items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-3">
                       <span>{note.date}</span>
                       <span aria-hidden="true">·</span>
                       <span>{note.category}</span>
@@ -108,21 +108,21 @@ export default function NotesPage() {
                     <p className="text-[16px] leading-[1.65] opacity-90 max-w-prose mb-6">{note.excerpt}</p>
                     <a
                       href={`/notes/${note.slug}`}
-                      className="inline-flex items-center gap-2 border border-black px-4 py-2 font-mono text-[11px] tracking-mono uppercase font-semibold hover:bg-black hover:text-white transition-colors"
+                      className="inline-flex items-center gap-2 border border-ink px-4 py-2 text-[11.5px] font-semibold uppercase tracking-[0.05em] hover:bg-ink hover:text-white transition-colors"
                     >
                       {P ? `Ler a nota completa (${note.readTime})` : `Read the full note (${note.readTime})`} →
                     </a>
                   </article>
                 ))}
                 {q && filtered.length === 0 && (
-                  <p className="text-[15px] leading-[1.6] opacity-70 border-t border-black pt-8">
+                  <p className="text-[15px] leading-[1.6] opacity-70 border-t border-ink pt-8">
                     {P ? "Nada encontrado para essa pesquisa." : "Nothing found for that search."}
                   </p>
                 )}
               </div>
 
-              <div className="mt-20 border border-black bg-paper-tint p-8 sm:p-10">
-                <div className="font-mono text-[11px] tracking-mono opacity-60 mb-2">
+              <div className="mt-20 border border-ink bg-paper-tint p-8 sm:p-10">
+                <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-2">
                   THE OFFICE 360 / EDITORIAL PRACTICE
                 </div>
                 <h2 className="font-display text-[24px] sm:text-[30px] tracking-display leading-snug mb-3">
@@ -135,7 +135,7 @@ export default function NotesPage() {
                 </p>
                 <a
                   href="/#contact"
-                  className="inline-flex items-center gap-2 bg-black text-white px-5 py-3 font-mono text-[12px] tracking-mono font-semibold hover:bg-black/80 transition-colors"
+                  className="btn-primary"
                 >
                   {P ? "ENVIE-NOS O SEU BRIEF →" : "SEND US YOUR BRIEF →"}
                 </a>

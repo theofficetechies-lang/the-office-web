@@ -43,14 +43,14 @@ export default function IndustryPage({ slug }: { slug: string }) {
         <SkipLink />
         <SiteHeader mode="page" />
         <main id="main" className="flex-1">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-20">
-            <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">404 / INDUSTRY</div>
-            <h1 className="font-display tracking-display text-[36px] sm:text-[56px] leading-[1] font-light max-w-[18ch] mb-6">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8 py-20">
+            <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-4">404 / INDUSTRY</div>
+            <h1 className="display-xl text-[36px] sm:text-[56px] max-w-[18ch] mb-6">
               That sector is not in the archive.
             </h1>
             <a
               href="/industries"
-              className="inline-block bg-black text-white px-5 py-3 font-mono text-[12px] tracking-mono font-semibold hover:bg-black/85 transition-colors"
+              className="inline-block btn-primary"
             >
               ALL INDUSTRIES →
             </a>
@@ -80,7 +80,7 @@ export default function IndustryPage({ slug }: { slug: string }) {
 
       <main id="main" className="flex-1">
         <section className="rule-b">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
             <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-12 sm:py-20">
               <MarginRail
                 sectionNum="I"
@@ -97,7 +97,7 @@ export default function IndustryPage({ slug }: { slug: string }) {
 
                 <nav
                   aria-label="Breadcrumb"
-                  className="font-mono text-[11px] tracking-mono opacity-60 mb-8 flex flex-wrap items-center gap-2"
+                  className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-8 flex flex-wrap items-center gap-2"
                 >
                   <a href="/industries" className="hover:opacity-100 underline-offset-2 hover:underline">
                     INDUSTRIES
@@ -108,7 +108,7 @@ export default function IndustryPage({ slug }: { slug: string }) {
                   </span>
                 </nav>
 
-                <h1 className="font-display tracking-display text-[34px] sm:text-[52px] lg:text-[62px] leading-[1] font-light max-w-[22ch] mb-5">
+                <h1 className="display-xl text-[34px] sm:text-[52px] lg:text-[62px] max-w-[22ch] mb-5">
                   {industry.title}
                 </h1>
                 <p className="text-[17px] sm:text-[19px] leading-[1.6] max-w-prose opacity-90">
@@ -121,10 +121,10 @@ export default function IndustryPage({ slug }: { slug: string }) {
 
         {/* Characteristic pressures */}
         <section className="rule-b">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
             <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-12 sm:py-16">
               <div className="col-span-12 lg:col-span-3">
-                <div className="font-mono text-[11px] tracking-mono opacity-60">THE PRESSURE</div>
+                <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute">THE PRESSURE</div>
                 <p className="mt-2 text-[13px] leading-[1.55] opacity-70 max-w-[28ch]">
                   Conditions that are characteristic of this sector, not claims about named
                   organisations.
@@ -132,8 +132,8 @@ export default function IndustryPage({ slug }: { slug: string }) {
               </div>
               <ul className="col-span-12 lg:col-span-9 mt-6 lg:mt-0">
                 {industry.challenges.map((c, i) => (
-                  <li key={c} className="flex gap-4 border-t border-black/20 py-4">
-                    <span className="font-mono text-[11px] tracking-mono opacity-50 shrink-0 pt-1">
+                  <li key={c} className="flex gap-4 border-t border-ink/20 py-4">
+                    <span className="text-[11px] font-medium text-faint shrink-0 pt-1">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span className="text-[15.5px] leading-[1.6]">{c}</span>
@@ -146,18 +146,18 @@ export default function IndustryPage({ slug }: { slug: string }) {
 
         {/* Where digital work changes it */}
         <section className="rule-b bg-paper-tint">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
             <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-12 sm:py-16">
               <div className="col-span-12 lg:col-span-3">
-                <div className="font-mono text-[11px] tracking-mono opacity-60">WHERE IT MOVES</div>
+                <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute">WHERE IT MOVES</div>
                 <p className="mt-2 text-[13px] leading-[1.55] opacity-70 max-w-[28ch]">
                   Typically. Not a promise about your organisation.
                 </p>
               </div>
               <ul className="col-span-12 lg:col-span-9 mt-6 lg:mt-0">
                 {industry.opportunities.map((o, i) => (
-                  <li key={o} className="flex gap-4 border-t border-black/20 py-4">
-                    <span className="font-mono text-[11px] tracking-mono opacity-50 shrink-0 pt-1">
+                  <li key={o} className="flex gap-4 border-t border-ink/20 py-4">
+                    <span className="text-[11px] font-medium text-faint shrink-0 pt-1">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span className="text-[15.5px] leading-[1.6]">{o}</span>
@@ -171,18 +171,18 @@ export default function IndustryPage({ slug }: { slug: string }) {
         {/* Scenario — explicitly illustrative */}
         {industry.scenarios.length > 0 && (
           <section className="rule-b">
-            <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+            <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
               <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-12 sm:py-16">
                 <div className="col-span-12 lg:col-span-3">
-                  <div className="font-mono text-[11px] tracking-mono opacity-60">ILLUSTRATIVE</div>
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute">ILLUSTRATIVE</div>
                   <p className="mt-2 text-[13px] leading-[1.55] opacity-70 max-w-[28ch]">
                     Illustrative, not client work. No organisation below is real.
                   </p>
                 </div>
                 <div className="col-span-12 lg:col-span-9 mt-6 lg:mt-0 space-y-6">
                   {industry.scenarios.map((s) => (
-                    <div key={s} className="border border-black p-5 bg-paper max-w-prose">
-                      <div className="font-mono text-[10px] tracking-mono opacity-50 mb-2">
+                    <div key={s} className="border border-ink p-5 bg-paper max-w-prose">
+                      <div className="text-[10.5px] font-medium text-faint mb-2">
                         SCENARIO
                       </div>
                       <p className="text-[15px] leading-[1.65]">{s}</p>
@@ -196,10 +196,10 @@ export default function IndustryPage({ slug }: { slug: string }) {
 
         {/* Services that apply */}
         <section className="rule-b bg-paper-tint">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
             <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-12 sm:py-16">
               <div className="col-span-12 lg:col-span-3">
-                <div className="font-mono text-[11px] tracking-mono opacity-60">WHAT APPLIES</div>
+                <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute">WHAT APPLIES</div>
                 <p className="mt-2 text-[13px] leading-[1.55] opacity-70 max-w-[28ch]">
                   {applied.length} services in this sector. Start with the problem, not the list.
                 </p>
@@ -211,17 +211,17 @@ export default function IndustryPage({ slug }: { slug: string }) {
                     <a
                       key={s.slug}
                       href={s.href}
-                      className="group flex flex-col gap-2 border border-black bg-paper p-5 no-underline text-inherit transition-colors hover:bg-black hover:text-white"
+                      className="group flex flex-col gap-2 border border-ink bg-paper p-5 no-underline text-inherit transition-colors hover:bg-black hover:text-white"
                     >
                       {division && (
-                        <span className="font-mono text-[10.5px] tracking-mono opacity-60">
+                        <span className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute">
                           {division.n} / {division.title.toUpperCase()}
                         </span>
                       )}
                       <span className="font-display text-[18px] tracking-display leading-[1.2]">
                         {s.title}
                       </span>
-                      <span className="font-mono text-[11px] tracking-mono opacity-70 mt-auto pt-3">
+                      <span className="text-[11px] font-medium text-mute mt-auto pt-3">
                         {t("common.readMore").toUpperCase()} →
                       </span>
                     </a>
@@ -234,14 +234,14 @@ export default function IndustryPage({ slug }: { slug: string }) {
 
         {/* Other industries */}
         <section className="rule-b">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-12 sm:py-16">
-            <div className="font-mono text-[11px] tracking-mono opacity-60 mb-6">OTHER SECTORS</div>
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8 py-12 sm:py-16">
+            <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-6">OTHER SECTORS</div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {others.map((o) => (
                 <a
                   key={o.slug}
                   href={`/industries/${o.slug}`}
-                  className="group flex flex-col gap-2 border border-black p-5 no-underline text-inherit transition-colors hover:bg-black hover:text-white"
+                  className="group flex flex-col gap-2 border border-ink p-5 no-underline text-inherit transition-colors hover:bg-black hover:text-white"
                 >
                   <span className="font-display text-[17px] tracking-display leading-tight">{o.title}</span>
                   <span className="text-[13px] leading-[1.5] opacity-80">{o.summary}</span>
@@ -250,7 +250,7 @@ export default function IndustryPage({ slug }: { slug: string }) {
             </div>
             <a
               href="/industries"
-              className="inline-block mt-6 font-mono text-[12px] tracking-mono font-semibold border-b border-black"
+              className="inline-block mt-6 text-[13px] font-semibold border-b border-ink pb-0.5 hover:text-signal hover:border-signal transition-colors"
             >
               ALL {industries.length} INDUSTRIES →
             </a>
@@ -258,8 +258,8 @@ export default function IndustryPage({ slug }: { slug: string }) {
         </section>
 
         <section className="bg-black text-white on-ink">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-16 sm:py-20">
-            <h2 className="font-display tracking-display text-[30px] sm:text-[44px] leading-[1.02] font-light max-w-[22ch] mb-5">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8 py-16 sm:py-20">
+            <h2 className="display-xl text-[30px] sm:text-[44px] max-w-[22ch] mb-5">
               Tell us where it <span className="italic">actually</span> breaks.
             </h2>
             <p className="text-[15.5px] leading-[1.7] max-w-prose opacity-85 mb-7">
@@ -268,7 +268,7 @@ export default function IndustryPage({ slug }: { slug: string }) {
             </p>
             <a
               href="/#contact"
-              className="inline-block bg-white text-black px-5 py-3 font-mono text-[12px] tracking-mono font-semibold border border-white hover:bg-transparent hover:text-white transition-colors"
+              className="inline-block btn-inverse"
             >
               {t("cta.requestAnalysis").toUpperCase()} →
             </a>

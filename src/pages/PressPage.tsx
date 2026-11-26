@@ -34,7 +34,7 @@ export default function PressPage() {
       <SiteHeader mode="page" />
 
       <main id="main" className="flex-1 py-14 sm:py-20" aria-labelledby="press-heading">
-        <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+        <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
           <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10">
             <MarginRail
               sectionNum="P"
@@ -44,23 +44,23 @@ export default function PressPage() {
             />
             <div className="col-span-12 lg:col-span-10">
               <MobileFolioStrip sectionNum="P" sectionLabel="PRESS / MEDIA KIT" folio="PRESS" />
-              <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">PRESS / MEDIA KIT</div>
+              <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-4">PRESS / MEDIA KIT</div>
               <h1
                 id="press-heading"
-                className="font-display tracking-display text-[36px] sm:text-[52px] lg:text-[68px] leading-[0.98] font-light max-w-[20ch] mb-10"
+                className="display-xl text-[36px] sm:text-[52px] lg:text-[68px] max-w-[20ch] mb-10"
               >
                 {P ? "Imprensa e media kit." : "Press & media kit."}
               </h1>
 
               <div className="grid grid-cols-12 gap-x-6 gap-y-10">
                 <div className="col-span-12 lg:col-span-7">
-                  <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-4">
                     {P ? "FACTOS DO ESTÚDIO" : "STUDIO FACTS"}
                   </div>
-                  <dl className="border-t border-black">
+                  <dl className="border-t border-ink">
                     {facts.map((f) => (
-                      <div key={f.k} className="grid grid-cols-12 border-b border-black py-3">
-                        <dt className="col-span-4 font-mono text-[11px] tracking-mono opacity-60">{f.k}</dt>
+                      <div key={f.k} className="grid grid-cols-12 border-b border-faint py-3">
+                        <dt className="col-span-4 text-[11px] font-semibold uppercase tracking-[0.06em] text-mute">{f.k}</dt>
                         <dd className="col-span-8 text-[15px] leading-[1.5]">{f.v}</dd>
                       </div>
                     ))}
@@ -73,29 +73,29 @@ export default function PressPage() {
                   </p>
                   <a
                     href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(P ? "Imprensa" : "Press enquiry")}`}
-                    className="mt-5 inline-block bg-black text-white px-5 py-3 font-mono text-[12px] tracking-mono font-semibold hover:bg-black/85 transition-colors"
+                    className="mt-5 inline-block btn-primary"
                   >
                     {CONTACT_EMAIL}
                   </a>
                 </div>
 
                 <div className="col-span-12 lg:col-span-4 lg:col-start-9">
-                  <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-4">
                     {P ? "MATERIAIS" : "ASSETS"}
                   </div>
                   <ul className="space-y-3 text-[14px]">
                     <li>
-                      <a href="/favicon.svg" download className="border border-black px-4 py-2.5 inline-block font-mono text-[11px] tracking-mono font-semibold hover:bg-black hover:text-white transition-colors">
+                      <a href="/favicon.svg" download className="btn-secondary inline-block !py-2.5 !px-4 !text-[11.5px]">
                         ↓ {P ? "Logótipo (SVG)" : "Logo (SVG)"}
                       </a>
                     </li>
                     <li>
-                      <a href="/og-image.png" download className="border border-black px-4 py-2.5 inline-block font-mono text-[11px] tracking-mono font-semibold hover:bg-black hover:text-white transition-colors">
+                      <a href="/og-image.png" download className="btn-secondary inline-block !py-2.5 !px-4 !text-[11.5px]">
                         ↓ {P ? "Imagem de partilha (PNG)" : "Share image (PNG)"}
                       </a>
                     </li>
                     <li>
-                      <a href="/downloads/amazon-seo-sample-report.pdf" download className="border border-black px-4 py-2.5 inline-block font-mono text-[11px] tracking-mono font-semibold hover:bg-black hover:text-white transition-colors">
+                      <a href="/downloads/amazon-seo-sample-report.pdf" download className="btn-secondary inline-block !py-2.5 !px-4 !text-[11.5px]">
                         ↓ {P ? "Relatório de exemplo (PDF)" : "Sample deliverable (PDF)"}
                       </a>
                     </li>

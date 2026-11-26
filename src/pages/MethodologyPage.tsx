@@ -29,7 +29,7 @@ export default function MethodologyPage() {
       <SiteHeader mode="page" />
 
       <main id="main" className="flex-1 py-14 sm:py-20" aria-labelledby="methodology-heading">
-        <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+        <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
           <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10">
             <MarginRail
               sectionNum="M"
@@ -39,36 +39,36 @@ export default function MethodologyPage() {
             />
             <div className="col-span-12 lg:col-span-10">
               <MobileFolioStrip sectionNum="M" sectionLabel="METHODOLOGY" folio="METHOD" />
-              <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
+              <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-4">
                 {P ? "METODOLOGIA" : "METHODOLOGY"}
               </div>
               <h1
                 id="methodology-heading"
-                className="font-display tracking-display text-[36px] sm:text-[52px] lg:text-[68px] leading-[0.98] font-light max-w-[20ch] mb-10"
+                className="display-xl text-[36px] sm:text-[52px] lg:text-[68px] max-w-[20ch] mb-10"
               >
                 {P ? "Seis etapas. Evidência entra, estratégia sai." : "Six stages. Evidence in, strategy out."}
               </h1>
 
-              <div className="border-t border-black">
+              <div className="border-t border-ink">
                 {processStages.map((stage) => (
-                  <div key={stage.n} className="grid grid-cols-12 gap-x-6 border-b border-black py-6">
-                    <div className="col-span-2 sm:col-span-1 font-mono text-[12px] tracking-mono opacity-50 pt-1">
+                  <div key={stage.n} className="grid grid-cols-12 gap-x-6 border-b border-faint py-6">
+                    <div className="col-span-2 sm:col-span-1 text-[12px] tabular-nums text-faint pt-1">
                       {stage.n}
                     </div>
                     <div className="col-span-10 sm:col-span-3">
                       <h2 className="font-display text-[22px] sm:text-[26px] tracking-display leading-tight">
                         {stage.title}
                       </h2>
-                      <div className="font-mono text-[10.5px] tracking-mono opacity-60 mt-1">{stage.weight}</div>
+                      <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mt-1">{stage.weight}</div>
                     </div>
                     <div className="col-span-12 sm:col-span-4 mt-3 sm:mt-0">
-                      <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-1.5">
+                      <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-1.5">
                         {P ? "O QUE ACONTECE" : "WHAT HAPPENS"}
                       </div>
                       <p className="text-[14.5px] leading-[1.65] opacity-90">{stage.happens}</p>
                     </div>
                     <div className="col-span-12 sm:col-span-4 mt-3 sm:mt-0">
-                      <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-1.5">
+                      <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-1.5">
                         {P ? "O QUE RECEBE" : "WHAT YOU RECEIVE"}
                       </div>
                       <p className="text-[14.5px] leading-[1.65] opacity-90">{stage.receive}</p>
@@ -84,7 +84,7 @@ export default function MethodologyPage() {
               <div className="mt-10">
                 <a
                   href="/#contact"
-                  className="inline-block bg-black text-white px-5 py-3 font-mono text-[12px] tracking-mono font-semibold hover:bg-black/85 transition-colors"
+                  className="inline-block btn-primary"
                 >
                   {P ? "PEDIR UMA ANÁLISE →" : "REQUEST AN ANALYSIS →"}
                 </a>

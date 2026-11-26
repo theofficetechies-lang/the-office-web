@@ -51,14 +51,14 @@ function ShareRow() {
       <button
         type="button"
         onClick={copy}
-        className="border border-black px-4 py-2 font-mono text-[11px] tracking-mono font-semibold hover:bg-black hover:text-white transition-colors cursor-pointer"
+        className="btn-secondary !py-2 !px-4 !text-[11.5px] cursor-pointer"
       >
         {copied ? "COPIED ✓" : "COPY LINK"}
       </button>
       <button
         type="button"
         onClick={() => window.print()}
-        className="border border-black px-4 py-2 font-mono text-[11px] tracking-mono font-semibold hover:bg-black hover:text-white transition-colors cursor-pointer"
+        className="btn-secondary !py-2 !px-4 !text-[11.5px] cursor-pointer"
       >
         PRINT
       </button>
@@ -87,16 +87,16 @@ export default function NotePage({ slug }: { slug: string }) {
         <SkipLink />
         <SiteHeader mode="page" />
         <main id="main" className="flex-1">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-20">
-            <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8 py-20">
+            <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-4">
               404 / NOTE NOT FOUND
             </div>
-            <h1 className="font-display tracking-display text-[36px] sm:text-[56px] leading-[1] font-light max-w-[18ch] mb-6">
+            <h1 className="display-xl text-[36px] sm:text-[56px] max-w-[18ch] mb-6">
               That note is not in the archive.
             </h1>
             <a
               href="/notes"
-              className="inline-block bg-black text-white px-5 py-3 font-mono text-[12px] tracking-mono font-semibold hover:bg-black/85 transition-colors"
+              className="inline-block btn-primary"
             >
               ALL NOTES →
             </a>
@@ -118,7 +118,7 @@ export default function NotePage({ slug }: { slug: string }) {
       <main id="main" className="flex-1">
         <article aria-labelledby="note-heading">
           <section className="rule-b">
-            <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+            <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
               <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-12 sm:py-16">
                 <MarginRail
                   sectionNum="N"
@@ -136,12 +136,12 @@ export default function NotePage({ slug }: { slug: string }) {
 
                   <a
                     href="/notes"
-                    className="inline-block font-mono text-[11px] tracking-mono opacity-60 hover:opacity-100 mb-8"
+                    className="inline-block text-[11px] font-semibold uppercase tracking-[0.06em] text-mute hover:opacity-100 mb-8"
                   >
                     ← ALL NOTES
                   </a>
 
-                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[11px] tracking-mono opacity-70 mb-5">
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] font-medium text-mute mb-5">
                     <span>{note.date}</span>
                     <span aria-hidden="true">·</span>
                     <span>{note.category}</span>
@@ -151,7 +151,7 @@ export default function NotePage({ slug }: { slug: string }) {
 
                   <h1
                     id="note-heading"
-                    className="font-display tracking-display text-[34px] sm:text-[52px] lg:text-[64px] leading-[1] font-light max-w-[20ch] mb-6"
+                    className="display-xl text-[34px] sm:text-[52px] lg:text-[64px] max-w-[20ch] mb-6"
                   >
                     {note.title}
                   </h1>
@@ -168,10 +168,10 @@ export default function NotePage({ slug }: { slug: string }) {
           </section>
 
           <section className="rule-b">
-            <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+            <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
               <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-12 sm:py-16">
                 <div className="col-span-12 lg:col-span-3">
-                  <div className="font-mono text-[11px] tracking-mono opacity-60 lg:sticky lg:top-24">
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute lg:sticky lg:top-24">
                     FIELD NOTE
                     <br />
                     {note.date.toUpperCase()}
@@ -189,7 +189,7 @@ export default function NotePage({ slug }: { slug: string }) {
                   ))}
 
                   <aside className="mt-10 border-l-2 border-black pl-5 py-2">
-                    <div className="font-mono text-[10.5px] tracking-mono uppercase opacity-60 mb-2">
+                    <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-2">
                       Key takeaway
                     </div>
                     <p className="font-display text-[20px] sm:text-[22px] tracking-display leading-[1.35]">
@@ -203,22 +203,22 @@ export default function NotePage({ slug }: { slug: string }) {
         </article>
 
         <section className="rule-b bg-paper-tint">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-12 sm:py-16">
-            <div className="font-mono text-[11px] tracking-mono opacity-60 mb-6">MORE NOTES</div>
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8 py-12 sm:py-16">
+            <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-6">MORE NOTES</div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
               {others.map((n) => (
                 <a
                   key={n.slug}
                   href={`/notes/${n.slug}`}
-                  className="group flex flex-col gap-3 border border-black p-6 no-underline text-inherit transition-colors hover:bg-black hover:text-white"
+                  className="group flex flex-col gap-3 border border-ink p-6 no-underline text-inherit transition-colors hover:bg-black hover:text-white"
                 >
-                  <span className="font-mono text-[10.5px] tracking-mono opacity-60">
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute">
                     {n.date} · {n.category}
                   </span>
                   <span className="font-display text-[20px] sm:text-[22px] tracking-display leading-[1.15]">
                     {n.title}
                   </span>
-                  <span className="font-mono text-[11px] tracking-mono opacity-70 mt-auto pt-3">
+                  <span className="text-[11px] font-medium text-mute mt-auto pt-3">
                     READ →
                   </span>
                 </a>
@@ -227,7 +227,7 @@ export default function NotePage({ slug }: { slug: string }) {
 
             {(prev || next) && (
               <nav
-                className="mt-10 pt-6 border-t border-black/15 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 font-mono text-[11px] tracking-mono"
+                className="mt-10 pt-6 border-t border-ink/15 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-[11px] font-medium"
                 aria-label="Note navigation"
               >
                 {prev ? (
@@ -248,8 +248,8 @@ export default function NotePage({ slug }: { slug: string }) {
         </section>
 
         <section className="bg-black text-white on-ink">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-16 sm:py-20">
-            <h2 className="font-display tracking-display text-[30px] sm:text-[44px] leading-[1.02] font-light max-w-[20ch] mb-5">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8 py-16 sm:py-20">
+            <h2 className="display-xl text-[30px] sm:text-[44px] max-w-[20ch] mb-5">
               Have a manuscript, backlist, or digital system to discuss?
             </h2>
             <p className="text-[16px] leading-[1.65] opacity-85 max-w-prose mb-8">
@@ -258,7 +258,7 @@ export default function NotePage({ slug }: { slug: string }) {
             </p>
             <a
               href="/#contact"
-              className="inline-block bg-white text-black px-5 py-3 font-mono text-[12px] tracking-mono font-semibold border border-white hover:bg-transparent hover:text-white transition-colors"
+              className="inline-block btn-inverse"
             >
               SEND US YOUR BRIEF →
             </a>

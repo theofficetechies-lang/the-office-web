@@ -1,59 +1,62 @@
 /**
- * The left "margin column" — manuscript galley inspired.
- * Holds running metadata so the right column can breathe.
- * Not used on mobile; collapses into a top strip.
+ * Section marker.
+ *
+ * This replaces the old "margin rail": a four-line manuscript galley column —
+ * SEC. / PORTFOLIO / RUNNING HEAD / MARGINALIA — pinned to the left of every
+ * section on the site. Those labels were decorative, and "folio", "running
+ * head" and "marginalia" are book-production words that mean nothing to a
+ * visitor evaluating a digital consultancy. A device a reader cannot use is
+ * decoration with extra steps.
+ *
+ * What it is now: one number, one short label. The number is in the accent and
+ * set large enough to act as a position marker, which is the only part of the
+ * old rail that did real work — knowing where you are in a long page. The
+ * label sits beneath it in small caps-free sans.
+ *
+ * The prop names are kept so the 23 pages that pass them keep compiling; the
+ * `folio` and `note` values are deliberately no longer rendered. The notes were
+ * marginal commentary addressed to nobody in particular and were the most
+ * generated-sounding copy on the site.
  */
 type Props = {
   sectionNum: string;
   sectionLabel: string;
+  /** Accepted for call-site compatibility; no longer rendered. */
   folio?: string;
+  /** Accepted for call-site compatibility; no longer rendered. */
   note?: string;
   inverse?: boolean;
 };
 
-export default function MarginRail({
-  sectionNum,
-  sectionLabel,
-  folio,
-  note,
-  inverse = false,
-}: Props) {
+export default function MarginRail({ sectionNum, sectionLabel, inverse = false }: Props) {
   return (
     <aside
-      className={[
-        "hidden lg:flex flex-col text-[11px] font-mono tracking-mono",
-        inverse ? "text-white/80" : "text-black",
-      ].join(" ")}
+      className={["hidden lg:block col-span-2", inverse ? "text-white" : "text-ink"].join(" ")}
       aria-hidden="true"
     >
-      <div className="sticky top-20 pt-2">
-        <div className={[inverse ? "border-t border-white/20" : "rule-t", "pt-3 mb-4"].join(" ")}>
-          <div className="opacity-50">SEC.</div>
-          <div className="text-base font-semibold">{sectionNum}</div>
+      <div className="sticky top-[92px] pt-1">
+        <div
+          className={[
+            "display-lg text-[38px] leading-none tabular-nums",
+            inverse ? "text-white/85" : "text-signal",
+          ].join(" ")}
+        >
+          {sectionNum}
         </div>
-
-        <div className="mb-6">
-          <div className="opacity-50 mb-1">PORTFOLIO</div>
-          <div>{folio ?? "—"}</div>
-        </div>
-
-        <div className="mb-6">
-          <div className="opacity-50 mb-1">RUNNING HEAD</div>
-          <div className="leading-snug">{sectionLabel}</div>
-        </div>
-
-        {note && (
-          <div className="mb-6">
-            <div className="opacity-50 mb-1">MARGINALIA</div>
-            <div className="leading-snug opacity-80">{note}</div>
-          </div>
-        )}
-
-        <div className="mt-auto pt-10 opacity-40 leading-tight">
-          <div>THE OFFICE 360</div>
-          <div>EST. 2021</div>
-          <div>LISBON · NYC</div>
-        </div>
+        <div
+          className={[
+            "mt-3 h-px w-8",
+            inverse ? "bg-white/30" : "bg-faint",
+          ].join(" ")}
+        />
+        <p
+          className={[
+            "mt-3 max-w-[14ch] text-[11.5px] font-medium leading-[1.45] tracking-[0.01em]",
+            inverse ? "text-white/55" : "text-mute",
+          ].join(" ")}
+        >
+          {sectionLabel}
+        </p>
       </div>
     </aside>
   );

@@ -20,7 +20,7 @@ export default function PrivacyPage() {
       <SiteHeader mode="page" />
 
       <main id="main" className="flex-1 py-14 sm:py-20" aria-labelledby="privacy-heading">
-        <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+        <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
           <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10">
             <MarginRail
               sectionNum="P"
@@ -30,12 +30,12 @@ export default function PrivacyPage() {
             />
             <div className="col-span-12 lg:col-span-10">
               <MobileFolioStrip sectionNum="P" sectionLabel="PRIVACY NOTICE" folio="LEGAL I" />
-              <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
+              <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-4">
                 LEGAL / PRIVACY
               </div>
               <h1
                 id="privacy-heading"
-                className="font-display tracking-display text-[36px] sm:text-[52px] lg:text-[68px] leading-[0.98] font-light max-w-[20ch] mb-10"
+                className="display-xl text-[36px] sm:text-[52px] lg:text-[68px] max-w-[20ch] mb-10"
               >
                 Privacy notice.
               </h1>

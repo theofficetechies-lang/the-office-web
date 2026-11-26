@@ -638,9 +638,13 @@ console.log("\nHome interactions:");
   check("skip link targets #main", firstFocusable?.getAttribute("href") === "#main");
 
   // Mobile menu.
-  const menuButton = [...document.querySelectorAll("button")].find((b) =>
-    b.textContent.includes("MENU")
-  );
+  /*
+   * The toggle used to upper-case its label via CSS-less JS ("MENU"). The redesign
+   * sets nav labels in sentence case, so match the word rather than a casing that
+   * was only ever there for styling.
+   */
+  const isMenuLabel = (el) => /\bmenu\b/i.test(el?.textContent ?? "");
+  const menuButton = [...document.querySelectorAll("button")].find(isMenuLabel);
   check("mobile menu button exists", Boolean(menuButton));
   check("mobile menu starts collapsed", menuButton?.getAttribute("aria-expanded") === "false");
   menuButton?.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
@@ -667,8 +671,8 @@ console.log("\nHome interactions:");
     document.getElementById("mobile-menu") === null
   );
   check(
-    "toggle label reverts to MENU",
-    document.querySelector("[aria-controls='mobile-menu']")?.textContent.includes("MENU")
+    "toggle label reverts to Menu",
+    isMenuLabel(document.querySelector("[aria-controls='mobile-menu']"))
   );
 
   // Reopen, then close via Escape.
@@ -990,7 +994,11 @@ console.log("\nTyping animation:");
   );
   check("FAQ section renders", document.body.textContent.includes("Questions we actually get."));
   check("Pricing section renders", document.body.textContent.includes("Three shapes of engagement."));
-  check("Reviews honesty block renders", document.body.textContent.includes("ASK FOR REFERENCES"));
+  check(
+    "Reviews honesty block renders",
+    /ask for references/i.test(document.body.textContent),
+    "references CTA missing"
+  );
   {
     const firstService = slugsFrom("src/data/services.ts")[0];
     check(
@@ -1005,11 +1013,22 @@ console.log("\nTyping animation:");
     !cta?.className.includes("pointer-events-none"),
     `class="${cta?.className}"`
   );
+  /*
+   * The CTA used to hand-roll its hover. It now takes the shared `.btn-primary`
+   * system, so the thing worth asserting is that it still HAS a hover state at
+   * all — the previous check pinned a literal `hover:bg-black/85` that no longer
+   * exists anywhere, which would have failed on a correct build.
+   */
   check(
-    "hero CTA keeps its hover colour transition",
-    cta?.className.includes("transition-colors") && cta?.className.includes("hover:bg-black/85"),
+    "hero CTA uses the shared button system",
+    Boolean(cta?.className.includes("btn-primary")),
     `class="${cta?.className}"`
   );
+  /*
+   * The hover rule itself is asserted in the "Shipped CSS" block below, which is
+   * where the built stylesheet is already being read. Asserting it here would
+   * mean opening the CSS file twice for one fact.
+   */
 
   /*
    * The old assertions here re-read the typewriter after 1.2s and 3.4s to watch it
@@ -1087,8 +1106,18 @@ console.log("\nPortuguese:");
   );
   check("html lang switches to pt", document.documentElement.lang === "pt", `lang=${document.documentElement.lang}`);
   check("hero sub is Portuguese", document.body.textContent.includes("ajuda organizações ambiciosas"));
-  check("nav Services is Serviços", document.body.textContent.includes("SERVIÇOS"));
-  check("form services prompt translated", document.body.textContent.includes("DE QUE PRECISA DE NÓS?"));
+  /*
+   * Both of these used to be asserted in upper case because the old design
+   * upper-cased nav and form labels in the DOM text. The redesign removed that, so
+   * the assertions match the string that is actually translated. They still test
+   * the thing that matters: the Portuguese dictionary is in use, not English.
+   */
+  check("nav Services is Serviços", document.body.textContent.includes("Serviços"));
+  check(
+    "form services prompt translated",
+    document.body.textContent.includes("De que precisa de nós?"),
+    "PT form legend missing"
+  );
   check("FAQ heading translated", document.body.textContent.includes("Perguntas que realmente recebemos."));
   check("language note present", document.body.textContent.includes("publicados em inglês"));
 }
@@ -1119,11 +1148,25 @@ console.log("\nShipped CSS:");
   check("inverse sections get their own focus ring", css.includes(".on-ink"));
   check("skip link reveals on focus", css.includes(".skip-link:focus"));
   check("reduced-motion media query shipped", css.includes("prefers-reduced-motion"));
-  check("charcoal type token shipped", css.includes("#141414"));
-  // The minifier may collapse ::after to :after, so accept either.
-  const caretRule = css.match(/\.caret:{1,2}after\{[^}]*\}/)?.[0] ?? "";
-  check("typewriter caret is pure black", caretRule.includes("background:#000"), caretRule || "rule missing");
-  check("warm paper token shipped", css.includes("#f4f3ef"));
+  check("charcoal type token shipped", css.includes("#111214"));
+  /*
+   * The typewriter is retired along with its caret, so the caret-colour check
+   * went with it. What replaces it is a check on the accent: the redesign's whole
+   * premise is that colour is structural, and a build that silently drops the
+   * accent token would look like the old monochrome site.
+   */
+  check("structural accent token shipped", /#e0361c/i.test(css), "signal token missing");
+  check(
+    "primary button hover is CSS-driven, not per-component",
+    /\.btn-primary:hover\{[^}]*background/.test(css),
+    ".btn-primary:hover rule missing"
+  );
+  check("cool paper token shipped", css.includes("#f2f3f5"), "paper-tint token missing");
+  check(
+    "the serif display face is fully retired",
+    !/Fraunces/i.test(css),
+    "Fraunces still referenced in shipped CSS"
+  );
   /*
    * The brief lists "no horizontal overflow" as a release condition. Nothing in the
    * layout should overflow -- it is built on max-width containers -- but one long

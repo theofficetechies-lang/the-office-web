@@ -82,25 +82,30 @@
     }
     </script>
 
-    <!-- Font preconnect + preloads for the display face used above the fold -->
+    <!--
+      One typeface, three weights. Archivo is a grotesque with a wide weight
+      range, which is what lets this system get scale and authority from a single
+      family instead of pairing a serif with a mono.
+
+      The old setup preloaded Fraunces AND loaded Inter Tight AND JetBrains Mono —
+      three families, ~14 font files. This is 6 files from one family.
+
+      Preloaded because it is the face above the fold; `display=swap` so body text
+      never blocks first paint.
+    -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!--
-      We only preload Fraunces (the display face) for above-the-fold hero text.
-      Body and mono faces load via the stylesheet below with display=swap,
-      so body text never blocks first paint.
-    -->
     <link
       rel="preload"
       as="style"
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..700,0..100&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&display=swap"
     />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..700,0..100&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&display=swap"
     />
 
-    <title>THE OFFICE 360 — Book strategy, web, automation, research</title>
+    <title>THE OFFICE 360 — Digital transformation, technology and growth</title>
 
     <!--
       Language, resolved before first paint.

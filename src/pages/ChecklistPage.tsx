@@ -33,10 +33,10 @@ export default function ChecklistPage() {
 
       <main id="main" className="flex-1 py-14 sm:py-20">
         <div className="mx-auto max-w-[800px] px-4 sm:px-6">
-          <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
+          <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-4">
             {P ? "RECURSO / CHECKLIST" : "RESOURCE / CHECKLIST"}
           </div>
-          <h1 className="font-display tracking-display text-[32px] sm:text-[48px] leading-[1] font-light max-w-[20ch] mb-4">
+          <h1 className="display-xl text-[32px] sm:text-[48px] max-w-[20ch] mb-4">
             {P ? "Checklist de auditoria de backlist." : "The backlist audit checklist."}
           </h1>
           <p className="text-[16px] leading-[1.65] opacity-85 max-w-prose mb-8">
@@ -45,12 +45,12 @@ export default function ChecklistPage() {
               : "Ten checks we run first. Print it or save it as a PDF — it's yours."}
           </p>
 
-          <ol className="space-y-4 border-t border-black pt-6 checklist">
+          <ol className="space-y-4 border-t border-ink pt-6 checklist">
             {items.map((item, i) => (
               <li key={item.en} className="flex gap-4">
                 <span
                   aria-hidden="true"
-                  className="shrink-0 w-6 h-6 border border-black flex items-center justify-center font-mono text-[11px]"
+                  className="shrink-0 w-6 h-6 border border-ink flex items-center justify-center text-[11px] font-medium"
                 >
                   {String(i + 1).padStart(2, "0")}
                 </span>
@@ -63,11 +63,11 @@ export default function ChecklistPage() {
             <button
               type="button"
               onClick={() => window.print()}
-              className="bg-black text-white px-5 py-3 font-mono text-[12px] tracking-mono font-semibold hover:bg-black/85 transition-colors cursor-pointer"
+              className="btn-primary cursor-pointer"
             >
               {P ? "IMPRIMIR / GUARDAR PDF ↓" : "PRINT / SAVE AS PDF ↓"}
             </button>
-            <a href="/#contact" className="font-mono text-[12px] tracking-mono font-semibold border-b border-black">
+            <a href="/#contact" className="text-[13px] font-semibold border-b border-ink pb-0.5 hover:text-signal hover:border-signal transition-colors">
               {P ? "QUER QUE NÓS O FAÇAMOS? →" : "WANT US TO RUN IT? →"}
             </a>
           </div>

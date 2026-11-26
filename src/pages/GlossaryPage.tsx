@@ -26,7 +26,7 @@ export default function GlossaryPage() {
       <SiteHeader mode="page" />
 
       <main id="main" className="flex-1 py-14 sm:py-20" aria-labelledby="glossary-heading">
-        <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+        <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
           <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10">
             <MarginRail
               sectionNum="G"
@@ -36,17 +36,17 @@ export default function GlossaryPage() {
             />
             <div className="col-span-12 lg:col-span-10">
               <MobileFolioStrip sectionNum="G" sectionLabel="GLOSSARY" folio="GLOSSARY" />
-              <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">GLOSSARY</div>
+              <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-4">GLOSSARY</div>
               <h1
                 id="glossary-heading"
-                className="font-display tracking-display text-[36px] sm:text-[52px] lg:text-[68px] leading-[0.98] font-light max-w-[20ch] mb-10"
+                className="display-xl text-[36px] sm:text-[52px] lg:text-[68px] max-w-[20ch] mb-10"
               >
                 {L === "pt" ? "O vocabulário do ofício." : "The vocabulary of the trade."}
               </h1>
 
               <dl className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8">
                 {glossary.map((term) => (
-                  <div key={term.term.en} className="border-t border-black pt-4">
+                  <div key={term.term.en} className="border-t border-ink pt-4">
                     <dt className="font-display text-[20px] sm:text-[22px] tracking-display leading-tight mb-2">
                       {term.term[L]}
                     </dt>

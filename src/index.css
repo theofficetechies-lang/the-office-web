@@ -1,26 +1,59 @@
 @import "tailwindcss";
 
 /* =========================================================================
-   THE OFFICE 360 — global styles
-   Black rules, warm paper surfaces, deep charcoal type.
-   Typography carries the personality; colour stays out of the way.
+   THE OFFICE 360 — design system
+
+   A high-contrast industrial-classical system: one grotesque family carrying
+   weight and scale contrast, real black, and a single structural accent.
+
+   WHAT CHANGED AND WHY
+
+   The previous system was a warm-paper literary broadsheet: Fraunces serif
+   display, JetBrains Mono for every eyebrow, black hairlines, one hidden accent.
+   It was coherent, and it was the wrong instrument — "giant serif + mono
+   micro-label above every section + hairline rules" is itself a recognisable
+   generated-design formula, the editorial cousin of the purple-gradient hero.
+   It was measured at 206 uppercase mono labels on one page.
+
+   So the serif is gone, the mono is demoted from decoration to data, and colour
+   is promoted from decoration to structure. The accent is not sprinkled: it
+   marks the things a reader actually navigates by — active state, index numbers,
+   the rule under a primary heading — so it carries meaning, which is the only
+   reason an accent earns its place.
    ========================================================================= */
 
 @theme {
-  --font-display: "Fraunces", ui-serif, Georgia, serif;
-  --font-sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  /* One family, two jobs. `display` is the same grotesque set tight and heavy at
+     large sizes; there is no second typeface to keep in sync. */
+  --font-display: "Archivo", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-sans: "Archivo", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /* Mono survives only where digits align or a value is machine-authored. */
+  --font-mono: "Archivo", ui-monospace, "SF Mono", Menlo, monospace;
 
-  /* Deep charcoal for type; pure black reserved for rules and ink blocks. */
-  --color-charcoal: #141414;
-  --color-ink: #000000;
+  /* --- Surfaces --------------------------------------------------------- */
   --color-paper: #ffffff;
-  --color-paper-tint: #f4f3ef;
-  --color-rule: #000000;
-  --color-mute: #5f5f5c;
-  --color-faint: #d6d3cc;
-  /* One restrained accent. Used for live/active markers only. */
-  --color-signal: #8a3324;
+  /* A cool near-white, not the old warm cream. Warmth read as stationery; this
+     reads as a screen. */
+  --color-paper-tint: #f2f3f5;
+  --color-surface: #e8eaed;
+
+  /* --- Type ------------------------------------------------------------- */
+  --color-ink: #0a0a0a;
+  --color-charcoal: #111214;
+  --color-mute: #55585e;
+  --color-faint: #b9bcc2;
+  --color-rule: #0a0a0a;
+
+  /* --- Structural accent ------------------------------------------------
+     Vermilion. Used for: the active nav state, index numerals, the rule beneath
+     a primary heading, and focus rings. Never as a background wash, never as a
+     gradient stop. Scarcity is what makes it read as intentional. */
+  --color-signal: #e0361c;
+  --color-signal-deep: #b82a14;
+
+  /* --- Inverse (dark bands) -------------------------------------------- */
+  --color-night: #0a0a0a;
+  --color-night-soft: #17181a;
 }
 
 @layer base {
@@ -29,46 +62,59 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     background: var(--color-paper);
-    color: var(--color-charcoal);
+    color: var(--color-ink);
     scroll-behavior: smooth;
   }
 
   body {
     font-family: var(--font-sans);
-    font-feature-settings: "ss01", "cv11";
+    /* Archivo's default metrics are a touch loose for UI copy at small sizes. */
+    font-feature-settings: "ss01";
     font-variant-numeric: tabular-nums;
+    letter-spacing: -0.011em;
   }
 
   /*
-   * Last-resort horizontal overflow guard.
-   *
-   * The layout is built on max-w-[1400px] containers and grid columns, so nothing
-   * is *supposed* to overflow — but a long unbroken string in editorial copy (a URL,
-   * an email, a slug) can still push a narrow viewport sideways, and once a page
-   * scrolls horizontally every fixed element slides with it. `clip` rather than
-   * `hidden` because `hidden` on the body would make it a scroll container and break
-   * position: sticky in the header.
-   *
-   * Deliberately not `overflow-x: hidden` on <html>: that disables the browser's own
-   * scroll anchoring on some engines. This clips; it does not hide content behind a
-   * scrollbar the visitor cannot see.
+   * Headings are set tight and heavy rather than light and wide. The old system
+   * leaned on a light serif at enormous sizes; this leans on weight, which is
+   * what makes a grotesque read as engineered rather than friendly.
+   */
+  h1,
+  h2,
+  h3,
+  h4 {
+    letter-spacing: -0.03em;
+    font-weight: 600;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /*
+   * Horizontal overflow guard. Kept from the previous system — the reason is
+   * unchanged: one unbroken string scrolls a narrow viewport sideways and drags
+   * fixed elements with it. `clip` rather than `hidden` so the body does not
+   * become a scroll container and break the sticky header.
    */
   body {
     overflow-x: clip;
   }
 
   ::selection {
-    background: #000;
+    background: var(--color-signal);
     color: #fff;
   }
 
-  /* Accessible focus */
+  /*
+   * Focus is the accent, not black. On a white page a black ring is invisible
+   * against black text; the accent is unambiguous and matches its structural use.
+   */
   :focus-visible {
-    outline: 2px solid #000;
+    outline: 2px solid var(--color-signal);
     outline-offset: 3px;
   }
-
-  /* Honor reduced motion */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -83,24 +129,24 @@
 
 /* Unlayered so these beat the layered Tailwind rules above. */
 
-/* Phase 17 — skip link: hidden until focused. */
 .skip-link {
   position: absolute;
   left: -9999px;
   top: 0;
   z-index: 100;
-  background: #000;
+  background: var(--color-ink);
   color: #fff;
-  padding: 0.75rem 1rem;
-  font-family: var(--font-mono);
-  font-size: 12px;
+  padding: 0.875rem 1.25rem;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
   letter-spacing: -0.01em;
 }
 .skip-link:focus {
   left: 0;
 }
 
-/* Phase 17 — the black contact section needs a white focus ring, not a black one. */
+/* Dark bands need a light ring, and the accent is still legible on near-black. */
 .on-ink :focus-visible,
 .on-ink:focus-visible {
   outline-color: #ffffff;
@@ -109,7 +155,6 @@
 @layer utilities {
   .font-display {
     font-family: var(--font-display);
-    font-optical-sizing: auto;
   }
   .font-sans-tight {
     font-family: var(--font-sans);
@@ -118,50 +163,110 @@
     font-family: var(--font-mono);
   }
 
-  /* Tight editorial tracking on display copy */
+  /* --- Tracking scale ---------------------------------------------------
+     Two, not four. A display setting for large type and a label setting for
+     small. The old system had four overlapping tracking utilities, which is how
+     a page ends up with five different letter-spacings. */
   .tracking-display {
     letter-spacing: -0.035em;
   }
   .tracking-display-tight {
-    letter-spacing: -0.055em;
+    letter-spacing: -0.05em;
   }
+  /* Small type in a grotesque needs POSITIVE tracking to stay legible; the old
+     system set it negative, which is a serif habit. */
   .tracking-meta {
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
   }
   .tracking-mono {
-    letter-spacing: -0.01em;
+    letter-spacing: 0.02em;
   }
 
-  /* The signature element: typewriter cursor. Pure black, matching the
-     original — it only ever renders on the paper-white hero. */
-  .caret::after {
-    content: "";
-    display: inline-block;
-    width: 0.55em;
-    height: 0.85em;
-    background: #000;
-    margin-left: 0.05em;
-    vertical-align: -0.05em;
-    animation: blink 1s steps(1) infinite;
-  }
-  @keyframes blink {
-    50% {
-      opacity: 0;
-    }
-  }
-
+  /* --- Data label -------------------------------------------------------
+     Replaces the old uppercase-mono eyebrow. Sans, medium weight, accent
+     numeral where one exists — so a section is identified by a number you can
+     navigate by rather than by a nested mono typographic flourish. */
   /*
-    Phase 14 — scroll reveal.
-    The hidden state is scoped under `.js`, added to <html> by main.tsx, so a
-    visitor with scripting disabled never sees an invisible page.
-  */
+   * Deliberately lighter and quieter than the old mono label it replaces, and
+   * *not* a repeated header device. It carries a numeral in the accent so a
+   * reader can see position, and it is small enough to recede — the heading
+   * beneath it does the announcing. If this starts feeling like a stamp
+   * repeated above every block, it is being used too often.
+   */
+  .eyebrow {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-mute);
+  }
+  .eyebrow-num {
+    color: var(--color-signal);
+    font-weight: 700;
+  }
+
+  /* --- Display headings -------------------------------------------------- */
+  .display-xl {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.045em;
+    line-height: 0.92;
+    text-wrap: balance;
+  }
+  .display-lg {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.038em;
+    line-height: 0.96;
+    text-wrap: balance;
+  }
+
+  /* --- Rules ------------------------------------------------------------
+     Hairlines are structural, as before, but thinner and greyer so they read as
+     grid rather than as a stationery border. The accent rule is the only
+     coloured line in the system. */
+  .rule-t {
+    border-top: 1px solid var(--color-faint);
+  }
+  .rule-b {
+    border-bottom: 1px solid var(--color-faint);
+  }
+  .rule-r {
+    border-right: 1px solid var(--color-faint);
+  }
+  .rule-l {
+    border-left: 1px solid var(--color-faint);
+  }
+  .rule-accent {
+    border-bottom: 2px solid var(--color-signal);
+  }
+  .grid-rule > * + * {
+    border-left: 1px solid var(--color-faint);
+  }
+
+  /* --- Inverse ---------------------------------------------------------- */
+  .ink-block {
+    background: var(--color-night);
+    color: #fff;
+  }
+  .ink-soft {
+    background: var(--color-night-soft);
+    color: #fff;
+  }
+
+  /* --- Scroll reveal ----------------------------------------------------
+     Kept, but shorter and with less travel. The old 700ms/10px read as
+     "animated"; this reads as "settled". */
   .reveal {
-    transition: opacity 700ms cubic-bezier(0.2, 0.7, 0.2, 1),
-      transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition:
+      opacity 420ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
   }
   .js .reveal {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(8px);
   }
   .js .reveal.is-visible {
     opacity: 1;
@@ -174,7 +279,106 @@
     }
   }
 
-  /* Toast entrance */
+  /* --- Buttons ---------------------------------------------------------
+     Three roles, defined once. Before this every CTA was hand-rolled with its
+     own padding and hover state, which is why they drifted. */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--color-ink);
+    color: #fff;
+    padding: 0.95rem 1.6rem;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    transition: background 160ms ease;
+  }
+  .btn-primary:hover {
+    background: var(--color-signal);
+  }
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    border: 1px solid var(--color-ink);
+    color: var(--color-ink);
+    padding: 0.95rem 1.6rem;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    transition:
+      background 160ms ease,
+      color 160ms ease,
+      border-color 160ms ease;
+  }
+  .btn-secondary:hover {
+    background: var(--color-ink);
+    color: #fff;
+  }
+  .btn-inverse {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: #fff;
+    color: var(--color-ink);
+    padding: 0.95rem 1.6rem;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background 160ms ease;
+  }
+  .btn-inverse:hover {
+    background: var(--color-signal);
+    color: #fff;
+  }
+
+  /* --- Field ------------------------------------------------------------ */
+  .field {
+    width: 100%;
+    background: #fff;
+    border: 1px solid var(--color-faint);
+    padding: 0.7rem 0.85rem;
+    font-size: 14px;
+    color: var(--color-ink);
+    outline: none;
+    transition: border-color 140ms ease;
+  }
+  .field:hover {
+    border-color: var(--color-mute);
+  }
+  .field:focus {
+    border-color: var(--color-ink);
+    box-shadow: inset 2px 0 0 var(--color-signal);
+  }
+
+  /* --- Index numeral ----------------------------------------------------
+     The one place the accent appears at size. Used in lists and section
+     heads so "where am I" is answered by colour. */
+  .index-num {
+    font-family: var(--font-sans);
+    font-variant-numeric: tabular-nums;
+    color: var(--color-signal);
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+
+  /* Legacy caret, retained for print/notes usage; nothing on the homepage. */
+  .caret::after {
+    content: "";
+    display: inline-block;
+    width: 0.55em;
+    height: 0.85em;
+    background: var(--color-ink);
+    margin-left: 0.05em;
+    vertical-align: -0.05em;
+    animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
   @keyframes toast-in {
     from {
       opacity: 0;
@@ -184,31 +388,6 @@
       opacity: 1;
       transform: translateY(0) scale(1);
     }
-  }
-
-  /* Hairline rules — only used structurally */
-  .rule-t {
-    border-top: 1px solid #000;
-  }
-  .rule-b {
-    border-bottom: 1px solid #000;
-  }
-  .rule-r {
-    border-right: 1px solid #000;
-  }
-  .rule-l {
-    border-left: 1px solid #000;
-  }
-
-  /* Number grid for portfolio */
-  .grid-rule > * + * {
-    border-left: 1px solid #000;
-  }
-
-  /* Inverse blocks */
-  .ink-block {
-    background: #000;
-    color: #fff;
   }
 }
 

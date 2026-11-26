@@ -134,8 +134,8 @@ export default function AdminLeadsPage() {
       <SiteHeader mode="page" />
       <main id="main" className="flex-1 rule-t">
         <div className="mx-auto max-w-[1100px] px-4 sm:px-6 py-14 sm:py-20">
-          <div className="font-mono text-[11px] tracking-mono opacity-60 mb-3">ADMIN / LEADS</div>
-          <h1 className="font-display tracking-display text-[34px] sm:text-[46px] leading-[1] font-light max-w-[22ch] mb-5">
+          <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-3">ADMIN / LEADS</div>
+          <h1 className="display-xl text-[34px] sm:text-[46px] max-w-[22ch] mb-5">
             The pipeline
           </h1>
           <p className="text-[15px] leading-[1.65] opacity-80 max-w-prose mb-8">
@@ -143,10 +143,10 @@ export default function AdminLeadsPage() {
             checked on the server, not in this page.
           </p>
 
-          <form onSubmit={submit} className="border border-black p-5 sm:p-6 max-w-xl mb-10">
+          <form onSubmit={submit} className="border border-ink p-5 sm:p-6 max-w-xl mb-10">
             <label
               htmlFor="lead-passcode"
-              className="block font-mono text-[10.5px] tracking-mono opacity-60 mb-2"
+              className="block text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-2"
             >
               ADMIN PASSCODE
             </label>
@@ -157,7 +157,7 @@ export default function AdminLeadsPage() {
                 autoComplete="current-password"
                 value={passcode}
                 onChange={(e) => setPasscode(e.target.value)}
-                className="flex-1 min-w-[200px] bg-white border border-black/40 px-3 py-2.5 text-[14px] outline-none focus:border-black"
+                className="flex-1 min-w-[200px] bg-white border border-ink/40 px-3 py-2.5 text-[14px] outline-none focus:border-black"
               />
               <button
                 type="submit"
@@ -169,13 +169,13 @@ export default function AdminLeadsPage() {
                 <button
                   type="button"
                   onClick={signOut}
-                  className="border border-black/40 px-4 py-2.5 font-mono text-[12px] tracking-mono opacity-70 hover:opacity-100 cursor-pointer"
+                  className="border border-ink/40 px-4 py-2.5 font-mono text-[12px] tracking-mono opacity-70 hover:opacity-100 cursor-pointer"
                 >
                   CLEAR
                 </button>
               )}
             </div>
-            <p className="mt-3 font-mono text-[10.5px] tracking-mono opacity-60">
+            <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.06em] text-mute">
               THE PASSCODE IS CHECKED BY THE SERVER. NOTHING LOADS UNTIL YOU UNLOCK.
             </p>
           </form>
@@ -185,15 +185,15 @@ export default function AdminLeadsPage() {
           )}
 
           {state.kind === "error" && (
-            <div className="border border-black p-5 bg-paper-tint max-w-2xl">
+            <div className="border border-ink p-5 bg-paper-tint max-w-2xl">
               <p className="text-[14px] leading-[1.6]">{state.message}</p>
             </div>
           )}
 
           {state.kind === "ready" && (
             <>
-              <div className="flex items-baseline justify-between border-b border-black pb-3 mb-6">
-                <div className="font-mono text-[11px] tracking-mono opacity-60">
+              <div className="flex items-baseline justify-between border-b border-faint pb-3 mb-6">
+                <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute">
                   {state.total} TOTAL · SHOWING {state.leads.length}
                 </div>
               </div>
@@ -206,7 +206,7 @@ export default function AdminLeadsPage() {
               ) : (
                 <ul className="space-y-0">
                   {state.leads.map((lead) => (
-                    <li key={lead.id} className="border-t border-black/20 py-4">
+                    <li key={lead.id} className="border-t border-ink/20 py-4">
                       <button
                         type="button"
                         onClick={() => setOpen(open === lead.id ? null : lead.id)}
@@ -219,17 +219,17 @@ export default function AdminLeadsPage() {
                               {lead.name}
                               {lead.org ? <span className="opacity-50"> · {lead.org}</span> : null}
                             </div>
-                            <div className="font-mono text-[11px] tracking-mono opacity-60">
+                            <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute">
                               {lead.email}
                             </div>
                           </div>
-                          <div className="col-span-6 sm:col-span-2 font-mono text-[11px] tracking-mono opacity-70">
+                          <div className="col-span-6 sm:col-span-2 text-[11px] font-medium text-mute">
                             {lead.stage.replace(/_/g, " ").toUpperCase()}
                           </div>
-                          <div className="col-span-6 sm:col-span-3 font-mono text-[11px] tracking-mono opacity-70">
+                          <div className="col-span-6 sm:col-span-3 text-[11px] font-medium text-mute">
                             {lead.interest ?? "—"}
                           </div>
-                          <div className="col-span-12 sm:col-span-3 font-mono text-[11px] tracking-mono opacity-60 sm:text-right">
+                          <div className="col-span-12 sm:col-span-3 text-[11px] font-semibold uppercase tracking-[0.06em] text-mute sm:text-right">
                             {new Date(lead.created_at).toISOString().slice(0, 16).replace("T", " ")}
                           </div>
                         </div>
@@ -238,7 +238,7 @@ export default function AdminLeadsPage() {
                       {open === lead.id && (
                         <div className="mt-4 border-l-2 border-black pl-4 space-y-3 max-w-3xl">
                           <p className="text-[14.5px] leading-[1.7] whitespace-pre-wrap">{lead.brief}</p>
-                          <dl className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-2 font-mono text-[10.5px] tracking-mono">
+                          <dl className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-2 text-[10.5px] font-medium">
                             {[
                               ["SERVICES", lead.services],
                               ["TIMELINE", lead.timeline],
@@ -255,7 +255,7 @@ export default function AdminLeadsPage() {
                           </dl>
                           <a
                             href={`mailto:${lead.email}?subject=${encodeURIComponent("Re: your brief")}`}
-                            className="inline-block font-mono text-[11px] tracking-mono font-semibold border-b border-black"
+                            className="inline-block text-[12.5px] font-semibold border-b border-ink pb-0.5 hover:text-signal hover:border-signal transition-colors"
                           >
                             {t("common.readMore").toUpperCase()} → REPLY BY EMAIL
                           </a>

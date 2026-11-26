@@ -1,41 +1,35 @@
 /**
- * Compact mobile/tablet version of the manuscript galley's "margin rail".
- * Persists the signature layout device (SEC. / PORTFOLIO / RUNNING HEAD) at
- * every breakpoint — the full rail still appears at lg+, but most traffic
- * sees this.
+ * Compact mobile counterpart to the section marker.
+ *
+ * The old version recreated the galley strip — SEC. / PORTFOLIO / RUNNING
+ * HEAD — at every breakpoint under `lg`. Most traffic never saw the desktop
+ * rail, so most traffic saw the most decorative version of it. This keeps the
+ * one part that carried information (the section number) and drops the rest.
  */
 type Props = {
   sectionNum: string;
   sectionLabel: string;
+  /** Accepted for call-site compatibility; no longer rendered. */
   folio?: string;
   inverse?: boolean;
 };
 
-export default function MobileFolioStrip({
-  sectionNum,
-  sectionLabel,
-  folio,
-  inverse = false,
-}: Props) {
+export default function MobileFolioStrip({ sectionNum, sectionLabel, inverse = false }: Props) {
   return (
     <div
       className={[
-        "lg:hidden",
-        inverse ? "" : "rule-b",
-        "py-2 font-mono text-[10.5px] tracking-mono",
-        inverse ? "text-white/70" : "opacity-80",
+        "lg:hidden mb-6 flex items-baseline gap-3",
+        inverse ? "text-white" : "text-ink",
       ].join(" ")}
       aria-hidden="true"
     >
-      <div className="flex items-center gap-2 whitespace-nowrap overflow-hidden">
-        <span className="opacity-60">SEC.</span>
-        <span className="font-semibold">{sectionNum}</span>
-        <span className="opacity-50">/</span>
-        <span className="opacity-60">PORTFOLIO</span>
-        <span>{folio ?? "—"}</span>
-        <span className="opacity-50">/</span>
-        <span className="truncate">{sectionLabel}</span>
-      </div>
+      <span className={["display-lg text-[26px] leading-none tabular-nums", inverse ? "text-white/85" : "text-signal"].join(" ")}>
+        {sectionNum}
+      </span>
+      <span className={["h-3 w-px", inverse ? "bg-white/25" : "bg-faint"].join(" ")} />
+      <span className={["text-[11px] font-medium", inverse ? "text-white/55" : "text-mute"].join(" ")}>
+        {sectionLabel}
+      </span>
     </div>
   );
 }

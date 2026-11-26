@@ -177,28 +177,40 @@ function renderRoute(route: Route): React.ReactNode {
 function ServiceRow({ s }: { s: (typeof services)[number] }) {
   const { t } = useI18n();
   return (
-    <article className="grid grid-cols-12 gap-x-6 py-10 sm:py-12 border-t border-black/90 first:border-t-0">
-      <div className="col-span-12 sm:col-span-3 mb-4 sm:mb-0">
-        <div className="font-mono text-xs tracking-mono opacity-60 mb-2">{s.n} / SERVICE</div>
-        <h3 className="font-display text-2xl sm:text-3xl tracking-display leading-[1.05]">
-          <a href={`/services/${s.slug}`} className="no-underline text-inherit hover:underline decoration-1 underline-offset-4">
+    <article className="group grid grid-cols-12 gap-x-6 gap-y-6 border-t border-faint py-10 sm:py-12">
+      <div className="col-span-12 sm:col-span-3">
+        <div className="flex items-baseline gap-2">
+          <span className="display-lg text-[22px] leading-none tabular-nums text-signal">
+            {s.n}
+          </span>
+          <span className="eyebrow">Service</span>
+        </div>
+        <h3 className="mt-3 text-[24px] font-semibold leading-[1.08] tracking-display">
+          <a
+            href={`/services/${s.slug}`}
+            className="decoration-1 underline-offset-4 hover:underline"
+          >
             {s.title}
           </a>
         </h3>
-        <div className="font-mono text-[10.5px] tracking-mono opacity-60 mt-2">{s.tagline}</div>
-        <a href={`/services/${s.slug}`} className="mt-3 inline-block font-mono text-[11px] tracking-mono font-semibold border-b border-black">
-          {t("common.readMore").toUpperCase()} →
+        <p className="mt-2 text-[12.5px] leading-[1.5] text-mute">{s.tagline}</p>
+        <a
+          href={`/services/${s.slug}`}
+          className="mt-4 inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-ink border-b border-ink pb-0.5 hover:text-signal hover:border-signal transition-colors"
+        >
+          {t("common.readMore")}
+          <span aria-hidden="true">→</span>
         </a>
       </div>
 
-      <div className="col-span-12 sm:col-span-6 space-y-5">
-        <p className="text-[15.5px] leading-[1.65] max-w-prose">{s.what}</p>
+      <div className="col-span-12 sm:col-span-5 space-y-5">
+        <p className="text-[15.5px] leading-[1.62] text-charcoal/90">{s.what}</p>
         <div>
-          <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-1.5">{t("common.analyze").toUpperCase()}</div>
-          <ul className="text-[14px] leading-[1.6] opacity-90 space-y-1.5">
+          <h4 className="eyebrow mb-2">{t("common.analyze")}</h4>
+          <ul className="space-y-1.5 text-[14px] leading-[1.55] text-charcoal/85">
             {s.analyze.map((a) => (
-              <li key={a} className="flex gap-2">
-                <span aria-hidden="true" className="opacity-50">—</span>
+              <li key={a} className="flex gap-2.5">
+                <span aria-hidden="true" className="mt-[9px] h-px w-2.5 shrink-0 bg-faint" />
                 <span>{a}</span>
               </li>
             ))}
@@ -206,43 +218,47 @@ function ServiceRow({ s }: { s: (typeof services)[number] }) {
         </div>
       </div>
 
-      <div className="col-span-12 sm:col-span-3 mt-5 sm:mt-0">
-        <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-2">{t("common.receive").toUpperCase()}</div>
-        <ul className="text-[13.5px] leading-[1.6] space-y-1.5">
+      <div className="col-span-12 sm:col-span-4">
+        <h4 className="eyebrow mb-2">{t("common.receive")}</h4>
+        <ul className="space-y-1.5 text-[13.5px] leading-[1.55] text-charcoal/85">
           {s.receive.map((d) => (
-            <li key={d} className="flex gap-2">
-              <span aria-hidden="true" className="opacity-50">—</span>
+            <li key={d} className="flex gap-2.5">
+              <span aria-hidden="true" className="mt-[8px] h-px w-2.5 shrink-0 bg-faint" />
               <span>{d}</span>
             </li>
           ))}
         </ul>
-        <div className="mt-4 pt-3 border-t border-black/15 font-mono text-[10.5px] tracking-mono opacity-70 leading-[1.6]">
-          {t("common.pricing").toUpperCase()}: {s.pricing}
+        <div className="mt-4 border-t border-faint pt-3 text-[12.5px] leading-[1.5] text-mute">
+          <span className="font-semibold text-ink">{t("common.pricing")}</span>
+          {" — "}
+          {s.pricing}
+        </div>
+        <div className="mt-3 text-[12.5px] leading-[1.5] text-mute">
+          <span className="font-semibold text-ink">{t("common.measured")}</span>
+          {" — "}
+          {s.measured}
         </div>
       </div>
 
-      <div className="col-span-12 mt-7">
-        <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-3">{t("common.actions").toUpperCase()}</div>
-        <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-4">
+      <div className="col-span-12 border-t border-faint pt-5">
+        <h4 className="eyebrow mb-3">{t("common.actions")}</h4>
+        <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-3">
           {s.actions.map((step, i) => (
             <li key={step} className="flex gap-3">
-              <span className="font-mono text-[10.5px] tracking-mono opacity-50 pt-0.5">
+              <span className="mt-px text-[11px] font-semibold tabular-nums text-mute">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <span className="text-[13.5px] leading-[1.55] opacity-90">{step}</span>
+              <span className="text-[13.5px] leading-[1.5] text-charcoal/85">{step}</span>
             </li>
           ))}
         </ol>
-        <p className="mt-5 font-mono text-[11px] tracking-mono opacity-70 max-w-prose leading-[1.6]">
-          {t("common.measured").toUpperCase()}: {s.measured}
-        </p>
       </div>
     </article>
   );
 }
 
 /* ------------------------------------------------------------------ */
-/* Work card — Phase 6                                                 */
+/* Work card                                                          */
 /* ------------------------------------------------------------------ */
 
 function ProjectCard({
@@ -257,39 +273,37 @@ function ProjectCard({
       href={`/work/${p.slug}`}
       className={[
         "group relative flex flex-col h-full p-6 sm:p-7",
-        "border border-black no-underline text-inherit",
+        "border border-faint bg-paper",
         "transition-colors duration-200",
-        "hover:bg-black hover:text-white",
-        "focus-visible:bg-black focus-visible:text-white",
+        "hover:border-ink hover:bg-paper-tint",
+        "focus-visible:border-ink",
       ].join(" ")}
     >
-      <header className="flex items-start justify-between mb-6 font-mono text-[11px] tracking-mono opacity-70 group-hover:opacity-90">
-        <span>{p.n}</span>
-        <span>{p.year}</span>
+      <header className="flex items-baseline justify-between mb-6">
+        <span className="display-lg text-[15px] tabular-nums text-signal">{p.n}</span>
+        <span className="text-[12px] tabular-nums text-mute">{p.year}</span>
       </header>
 
-      <div className="font-mono text-[10.5px] tracking-mono uppercase opacity-60 group-hover:opacity-80 mb-3">
-        {p.sector}
-      </div>
+      <div className="eyebrow mb-3 group-hover:text-ink transition-colors">{p.sector}</div>
 
       <h3
         className={[
-          "font-display tracking-display leading-[1.05] mb-5",
-          large ? "text-2xl sm:text-[28px]" : "text-[20px] sm:text-[22px]",
+          "font-semibold tracking-display leading-[1.08] mb-4",
+          large ? "text-[26px] sm:text-[32px]" : "text-[20px] sm:text-[23px]",
         ].join(" ")}
       >
         {p.title}
       </h3>
 
-      <p className="text-[14px] leading-[1.6] mb-6 flex-1 opacity-90">{p.summary}</p>
+      <p className="text-[14px] leading-[1.6] mb-6 flex-1 text-charcoal/80">{p.summary}</p>
 
-      <footer className="mt-auto pt-4 border-t border-current/20 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] tracking-mono">
+      <footer className="mt-auto pt-4 border-t border-faint flex flex-wrap items-center gap-x-3 gap-y-1 text-[11.5px] text-mute">
         {p.services.map((tag) => (
-          <span key={tag} className="opacity-80">
-            {tag}
-          </span>
+          <span key={tag}>{tag}</span>
         ))}
-        <span className="ml-auto opacity-70 group-hover:opacity-100">READ →</span>
+        <span className="ml-auto font-semibold text-ink group-hover:text-signal transition-colors">
+          Read →
+        </span>
       </footer>
     </a>
   );
@@ -301,44 +315,42 @@ function ProjectCard({
 
 function TeamMember({ member }: { member: (typeof team)[number] }) {
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-4">
+    <div className="px-5 py-5">
+      <div className="flex items-center gap-3.5">
         {member.portrait ? (
           <img
             src={member.portrait}
             alt={member.name ? `${member.name}, ${member.role}` : member.role}
-            className="h-14 w-14 rounded-full object-cover shrink-0"
+            className="h-11 w-11 rounded-full object-cover shrink-0"
             loading="lazy"
-            width={56}
-            height={56}
+            width={44}
+            height={44}
           />
         ) : (
           <div
             aria-hidden="true"
-            className="h-14 w-14 rounded-full bg-black text-white flex items-center justify-center font-mono text-[13px] tracking-mono font-semibold shrink-0"
+            className="h-11 w-11 rounded-full bg-ink text-white flex items-center justify-center text-[12px] font-semibold shrink-0"
           >
             {member.initials}
           </div>
         )}
-        <div>
-          <div className="font-display text-[17px] sm:text-[18px] tracking-display leading-tight">
+        <div className="min-w-0">
+          <div className="text-[16px] font-semibold tracking-display leading-tight truncate">
             {member.name ?? member.role}
           </div>
-          {member.name && (
-            <div className="font-mono text-[11px] tracking-mono opacity-60 mt-0.5">{member.role}</div>
-          )}
-          {!member.name && (
-            <div className="font-mono text-[11px] tracking-mono opacity-60 mt-0.5">PRINCIPAL</div>
-          )}
+          <div className="mt-0.5 text-[12px] text-mute">
+            {member.role}
+            {!member.name && " · Principal"}
+          </div>
         </div>
       </div>
-      <p className="text-[13.5px] leading-[1.6] opacity-85">{member.note}</p>
+      <p className="mt-3.5 text-[13.5px] leading-[1.55] text-charcoal/80">{member.note}</p>
       {member.verified && member.link && (
         <a
           href={member.link}
-          className="font-mono text-[11px] tracking-mono underline opacity-70 hover:opacity-100 self-start"
+          className="mt-2.5 inline-flex items-center gap-1 text-[12px] font-semibold text-ink underline decoration-1 underline-offset-4 hover:text-signal transition-colors"
         >
-          PROFILE →
+          Profile
         </a>
       )}
     </div>
@@ -382,31 +394,26 @@ function HomePage() {
       <main id="main">
         {/* 00 / HERO */}
         <section id="top" className="rule-b" aria-labelledby="hero-heading">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
-            <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-10 sm:py-16 lg:py-24">
-              <MarginRail
-                sectionNum="00"
-                sectionLabel="THE OFFICE 360 / DIGITAL TRANSFORMATION, TECHNOLOGY, AND GROWTH"
-                folio="PORTFOLIO I"
-                note="If you are reading this, the manifest bar above is real time. It is also the only animation on this page."
-              />
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
+            <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10">
+              <MarginRail sectionNum="00" sectionLabel="Digital transformation, technology and growth" />
 
-              <div className="col-span-12 lg:col-span-10">
-                <MobileFolioStrip
-                  sectionNum="00"
-                  sectionLabel="DIGITAL TRANSFORMATION, TECHNOLOGY, AND GROWTH"
-                  folio="PORTFOLIO I"
-                />
-                <div className="font-mono text-[11px] sm:text-[12px] tracking-mono opacity-70 mb-6 sm:mb-10">
-                  <span className="opacity-60">{t("hero.kicker1").toUpperCase()} </span>
-                  <span>{t("hero.kicker2").toUpperCase()} </span>
-                  <span className="hidden sm:inline">{t("hero.kicker3").toUpperCase()} </span>
-                  <span>{t("hero.kicker4").toUpperCase()}</span>
+              <div className="col-span-12 lg:col-span-10 pt-10 pb-14 sm:pt-14 sm:pb-20 lg:pt-20">
+                <MobileFolioStrip sectionNum="00" sectionLabel="Digital transformation, technology and growth" />
+
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                  <span className="eyebrow">
+                    <span className="eyebrow-num">Est. 2021</span> · Six divisions
+                  </span>
+                  <span className="h-3 w-px bg-faint" aria-hidden="true" />
+                  <span className="text-[11px] font-medium text-mute">
+                    Four principals · No subcontractors
+                  </span>
                 </div>
 
                 <h1
                   id="hero-heading"
-                  className="font-display tracking-display-tight font-light text-[44px] leading-[0.98] sm:text-[72px] sm:leading-[0.96] lg:text-[112px] lg:leading-[0.94]"
+                  className="display-xl mt-7 text-[46px] leading-[0.94] sm:text-[76px] lg:text-[104px] xl:text-[118px]"
                 >
                   {t("hero.title1")}
                   <br />
@@ -415,58 +422,44 @@ function HomePage() {
                   {t("hero.title3")}
                 </h1>
 
-                <div className="mt-10 sm:mt-14 grid grid-cols-12 gap-x-6 gap-y-8">
+                <div className="mt-10 sm:mt-14 grid grid-cols-12 gap-x-6 gap-y-10 rule-t pt-8 sm:pt-10">
                   <div className="col-span-12 lg:col-span-7">
-                    <p className="font-display text-[20px] sm:text-[24px] tracking-display leading-[1.3] max-w-prose mb-5">
+                    <p className="text-[20px] leading-[1.42] tracking-[-0.015em] font-medium max-w-[42ch] text-ink">
                       {t("home.positioning")}
                     </p>
-                    <p className="text-[16.5px] sm:text-[18px] leading-[1.6] max-w-prose opacity-90">
+                    <p className="mt-5 text-[16px] leading-[1.62] max-w-[54ch] text-mute">
                       {t("hero.sub")}
                     </p>
                   </div>
 
-                  <div className="col-span-12 lg:col-span-4 lg:col-start-9 flex flex-col gap-3">
-                    <div className="font-mono text-[11px] tracking-mono opacity-60">
-                      START HERE
+                  <div className="col-span-12 lg:col-span-4 lg:col-start-9">
+                    <div className="flex flex-col items-stretch gap-2.5">
+                      {/*
+                        Primary then secondary, per the transformation brief. Both
+                        are real destinations: /contact is a page with a real form,
+                        and /services is the index. The old primary CTA was an anchor
+                        to a section on this page — fine for a one-page studio, wrong
+                        for a site the visitor may have entered on a division page.
+                      */}
+                      <a href="/contact" className="btn-primary justify-between">
+                        <span>Book a free consultation</span>
+                        <span aria-hidden="true">→</span>
+                      </a>
+                      <a href="/services" className="btn-secondary justify-between">
+                        <span>Explore our services</span>
+                        <span aria-hidden="true">→</span>
+                      </a>
                     </div>
-                    {/*
-                      Primary then secondary, per the transformation brief. Both are
-                      real destinations: /contact is a page with a real form, and
-                      /services is the index. The old primary CTA was an anchor to a
-                      section on this page, which is fine for a one-page studio and
-                      wrong for a site where the visitor may have arrived on a
-                      division page.
-                    */}
-                    <a
-                      href="/contact"
-                      className={[
-                        "inline-flex items-center gap-2 self-start",
-                        "bg-black text-white px-4 py-3",
-                        "font-mono text-[12px] tracking-mono font-semibold",
-                        "transition-colors duration-200",
-                        "hover:bg-black/85",
-                      ].join(" ")}
-                    >
-                      BOOK A FREE CONSULTATION →
-                    </a>
-                    <a
-                      href="/services"
-                      className={[
-                        "inline-flex items-center gap-2 self-start",
-                        "border border-black px-4 py-3",
-                        "font-mono text-[12px] tracking-mono font-semibold",
-                        "transition-colors duration-200",
-                        "hover:bg-black hover:text-white",
-                        "focus-visible:bg-black focus-visible:text-white",
-                      ].join(" ")}
-                    >
-                      EXPLORE OUR SERVICES
-                    </a>
-                    <div className="mt-3 font-mono text-[10.5px] tracking-mono opacity-55 leading-[1.7]">
-                      FOUR PRINCIPALS · SIX DIVISIONS
-                      <br />
-                      REPLY WITHIN TWO WORKING DAYS
-                    </div>
+                    <dl className="mt-7 grid grid-cols-2 gap-x-4 gap-y-3 border-t border-faint pt-5 text-[12px]">
+                      <div>
+                        <dt className="text-mute">Reply window</dt>
+                        <dd className="mt-0.5 font-semibold text-ink">2 working days</dd>
+                      </div>
+                      <div>
+                        <dt className="text-mute">Engagements</dt>
+                        <dd className="mt-0.5 font-semibold text-ink">4–14 weeks</dd>
+                      </div>
+                    </dl>
                   </div>
                 </div>
               </div>
@@ -474,30 +467,46 @@ function HomePage() {
           </div>
         </section>
 
-
-        {/* 00b / POSITIONING + TRUST (Part 2 §1) */}
-        <section className="rule-b bg-paper-tint" aria-label="Positioning">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
-            <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-10 sm:py-14">
+        {/* 00b / POSITIONING */}
+        <section className="bg-paper-tint" aria-label="Who we work with and why we can be trusted">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
+            <div className="grid grid-cols-12 gap-x-6 gap-y-9 py-12 sm:py-14">
               <div className="col-span-12 lg:col-span-4">
-                <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-3">{t("home.audience").toUpperCase()}</div>
-                <p className="text-[15px] leading-[1.65] max-w-prose">
-                  Nonfiction and technical authors, independent authors, and small-to-mid publishers.
+                <h2 className="eyebrow mb-3">{t("home.audience")}</h2>
+                <p className="text-[15px] leading-[1.6] text-charcoal/85 max-w-[40ch]">
+                  Nonfiction and technical authors, independent authors, and
+                  small-to-mid publishers — plus the organisations that serve them.
                 </p>
               </div>
-              <div className="col-span-12 lg:col-span-4 mt-6 lg:mt-0">
-                <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-3">{t("home.problem").toUpperCase()}</div>
-                <p className="text-[15px] leading-[1.65] max-w-prose">
-                  Books that are good but invisible. Marketing that is activity without analysis. Vendors that report impressions instead of outcomes.
+              <div className="col-span-12 lg:col-span-4">
+                <h2 className="eyebrow mb-3">{t("home.problem")}</h2>
+                <p className="text-[15px] leading-[1.6] text-charcoal/85 max-w-[40ch]">
+                  Books that are good but invisible. Marketing that is activity
+                  without analysis. Vendors that report impressions instead of
+                  outcomes.
                 </p>
               </div>
-              <div className="col-span-12 lg:col-span-4 mt-6 lg:mt-0">
-                <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-3">WHY TRUST US</div>
-                <ul className="font-mono text-[11.5px] tracking-mono leading-[1.9] opacity-80">
-                  <li>EST. 2021 · FOUR PRINCIPALS · SIX DIVISIONS · NO SUBCONTRACTORS</li>
-                  <li>SIX-STAGE NAMED METHODOLOGY</li>
-                  <li>YOU KEEP THE ANALYSIS</li>
-                  <li><a href="/#work" className="underline">CASE STUDIES →</a></li>
+              <div className="col-span-12 lg:col-span-4">
+                <h2 className="eyebrow mb-3">Why trust us</h2>
+                <ul className="space-y-2 text-[14px] text-charcoal/85">
+                  <li className="flex gap-2.5">
+                    <span className="text-faint font-semibold" aria-hidden="true">—</span>
+                    Est. 2021 · four principals · six divisions
+                  </li>
+                  <li className="flex gap-2.5">
+                    <span className="text-faint font-semibold" aria-hidden="true">—</span>
+                    Six-stage named methodology
+                  </li>
+                  <li className="flex gap-2.5">
+                    <span className="text-faint font-semibold" aria-hidden="true">—</span>
+                    You keep the analysis
+                  </li>
+                  <li className="flex gap-2.5">
+                    <span className="text-faint font-semibold" aria-hidden="true">—</span>
+                    <a href="/#work" className="underline decoration-1 underline-offset-4 hover:text-signal transition-colors">
+                      See the engagement patterns
+                    </a>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -506,41 +515,20 @@ function HomePage() {
 
         {/* 01 / SERVICES */}
         <section id="services" className="rule-b" aria-labelledby="services-heading">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
-            <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-14 sm:py-20">
-              <MarginRail
-                sectionNum="01"
-                sectionLabel="THE CORE PRACTICE. ONE STUDIO."
-                folio="PORTFOLIO II"
-                note="These are not packages. We scope each engagement against the brief."
-              />
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
+            <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-16 sm:py-24">
+              <MarginRail sectionNum="01" sectionLabel="The core practice. One studio." />
 
-              <div className="col-span-12 lg:col-span-10 reveal">
-                <MobileFolioStrip
-                  sectionNum="01"
-                  sectionLabel="THE CORE PRACTICE. ONE STUDIO."
-                  folio="PORTFOLIO II"
-                />
-                <nav className="mb-8 border-t border-black" aria-label={t("section.services")}>
-                  {services.map((svc) => (
-                    <a
-                      key={svc.slug}
-                      href={`/services/${svc.slug}`}
-                      className="flex items-baseline justify-between gap-6 border-b border-black py-2.5 no-underline text-inherit hover:bg-black hover:text-white transition-colors"
-                    >
-                      <span className="font-display text-[17px] sm:text-[19px] tracking-display">{svc.title}</span>
-                      <span className="font-mono text-[11px] tracking-mono opacity-60 truncate">{svc.tagline}</span>
-                    </a>
-                  ))}
-                </nav>
+              <div className="col-span-12 lg:col-span-10">
+                <MobileFolioStrip sectionNum="01" sectionLabel="The core practice. One studio." />
 
-                <div className="mb-10 sm:mb-14">
-                  <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
-                    01 / {t("section.services").toUpperCase()}
-                  </div>
+                <div className="mb-12 sm:mb-16">
+                  <span className="eyebrow">
+                    <span className="eyebrow-num">01</span> — {t("section.services")}
+                  </span>
                   <h2
                     id="services-heading"
-                    className="font-display tracking-display text-[36px] sm:text-[52px] lg:text-[68px] leading-[0.98] font-light max-w-[18ch]"
+                    className="display-xl rule-accent mt-5 pb-6 text-[36px] sm:text-[54px] lg:text-[68px] max-w-[19ch]"
                   >
                     {t("section.servicesTitle")}
                   </h2>
@@ -550,7 +538,7 @@ function HomePage() {
                   <ServiceRow key={s.n} s={s} />
                 ))}
 
-                <p className="mt-10 sm:mt-12 text-[14px] leading-[1.7] max-w-prose opacity-80">
+                <p className="mt-12 text-[15px] leading-[1.65] max-w-[58ch] text-mute">
                   Engagements typically run 4–14 weeks. We work with a small
                   number of clients at a time and turn down more than we take.
                 </p>
@@ -561,19 +549,19 @@ function HomePage() {
                   on the services index. Without this the homepage still read as a
                   one-division studio, which is what the expansion was for.
                 */}
-                <div className="mt-8 border-t border-black pt-6">
-                  <p className="text-[14px] leading-[1.7] max-w-prose mb-4">
+                <div className="mt-10 grid grid-cols-12 gap-x-6 gap-y-6 rule-t pt-8">
+                  <p className="col-span-12 lg:col-span-7 text-[15px] leading-[1.65] max-w-[56ch] text-charcoal/85">
                     These five are the core practice. The same method runs across{" "}
-                    {divisions.length} divisions and {TOTAL_SERVICES} services — web and
-                    digital architecture, AI and automation, growth, brand, publishing and
-                    technology consulting.
+                    {divisions.length} divisions and {TOTAL_SERVICES} services — web
+                    and digital architecture, AI and automation, growth, brand,
+                    publishing and technology consulting.
                   </p>
-                  <a
-                    href="/services"
-                    className="inline-block border border-black px-4 py-2.5 font-mono text-[11px] tracking-mono font-semibold hover:bg-black hover:text-white transition-colors"
-                  >
-                    ALL {TOTAL_SERVICES} SERVICES →
-                  </a>
+                  <div className="col-span-12 lg:col-span-5 lg:justify-self-end">
+                    <a href="/services" className="btn-secondary">
+                      All {TOTAL_SERVICES} services
+                      <span aria-hidden="true">→</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -581,37 +569,29 @@ function HomePage() {
         </section>
 
         {/* 02 / WORK */}
-        <section id="work" className="rule-b" aria-labelledby="work-heading">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
-            <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-14 sm:py-20">
-              <MarginRail
-                sectionNum="02"
-                sectionLabel="SELECTED ENGAGEMENTS, 2024–2025"
-                folio="PORTFOLIO III"
-                note="Engagement patterns. No client is named and no result is claimed. Verified case studies are shared under NDA."
-              />
+        <section id="work" className="rule-b bg-paper-tint" aria-labelledby="work-heading">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
+            <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-16 sm:py-24">
+              <MarginRail sectionNum="02" sectionLabel="Selected engagements, 2024–2025" />
 
-              <div className="col-span-12 lg:col-span-10 reveal">
-                <MobileFolioStrip
-                  sectionNum="02"
-                  sectionLabel="SELECTED ENGAGEMENTS, 2024–2025"
-                  folio="PORTFOLIO III"
-                />
+              <div className="col-span-12 lg:col-span-10">
+                <MobileFolioStrip sectionNum="02" sectionLabel="Selected engagements, 2024–2025" />
                 <div className="mb-10 sm:mb-14">
-                  <div className="font-mono text-[11px] tracking-mono opacity-60 mb-3">
-                    02 / {t("section.work").toUpperCase()}
-                  </div>
-                  <div className="font-mono text-[10.5px] tracking-mono uppercase opacity-70 mb-5">
-                    Engagement patterns · No client named · No result claimed
-                  </div>
+                  <span className="eyebrow">
+                    <span className="eyebrow-num">02</span> — {t("section.work")}
+                  </span>
                   <h2
                     id="work-heading"
-                    className="font-display tracking-display text-[36px] sm:text-[52px] lg:text-[68px] leading-[0.98] font-light max-w-[22ch]"
+                    className="display-xl mt-5 text-[36px] sm:text-[54px] lg:text-[68px] max-w-[21ch]"
                   >
                     {t("section.workTitle")}
                   </h2>
-                  <p className="mt-6 text-[15px] leading-[1.7] max-w-prose opacity-80">
+                  <p className="mt-6 text-[15.5px] leading-[1.65] max-w-[60ch] text-mute">
                     {workNote}
+                  </p>
+                  <p className="mt-4 inline-flex items-center gap-2 border border-faint bg-paper px-3 py-1.5 text-[11.5px] font-medium text-mute">
+                    <span className="h-1.5 w-1.5 rounded-full bg-signal" aria-hidden="true" />
+                    Engagement patterns · no client named · no result claimed
                   </p>
                 </div>
 
@@ -622,82 +602,62 @@ function HomePage() {
                 </div>
 
                 {/* Verified sample deliverable — a real audit, published in full. */}
-                <div className="mt-8 border border-black p-6 sm:p-8">
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="font-mono text-[10.5px] tracking-mono uppercase opacity-60">
-                      Sample deliverable · published in full
-                    </div>
-                    <div className="font-mono text-[11px] tracking-mono opacity-70">
-                      P/050 · 2025
-                    </div>
+                <div className="mt-10 border border-ink bg-paper p-6 sm:p-8">
+                  <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-faint">
+                    <span className="eyebrow">Sample deliverable · published in full</span>
+                    <span className="text-[11.5px] tabular-nums text-mute">P/050 · 2025</span>
                   </div>
 
-                  <h3 className="font-display text-[24px] sm:text-[32px] tracking-display leading-[1.05] mb-3">
+                  <h3 className="display-lg mt-6 text-[26px] sm:text-[34px]">
                     Amazon SEO Performance Report
                   </h3>
-                  <p className="text-[15px] leading-[1.6] opacity-85 max-w-prose mb-8">
+                  <p className="mt-3 text-[15px] leading-[1.62] text-charcoal/80 max-w-[62ch]">
                     Two backlist titles. Eight weeks. Two grade tiers. This is
                     what an audit deliverable looks like: grade tracking,
                     visibility metrics, backlink analysis, and recommended next
                     steps.
                   </p>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-                    <div className="border border-black/20 p-4">
-                      <div className="font-mono text-[10px] tracking-mono uppercase opacity-60 mb-2">
-                        Grade Movement
-                      </div>
-                      <div className="font-display text-[28px] sm:text-[36px] tracking-display leading-none">
-                        E → C
-                      </div>
-                      <div className="font-mono text-[11px] tracking-mono opacity-70 mt-1">
-                        and D → B
-                      </div>
+                  <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-px bg-faint border border-faint">
+                    <div className="bg-paper p-5">
+                      <div className="eyebrow">Grade movement</div>
+                      <div className="display-lg mt-2 text-[30px] sm:text-[36px] text-signal">E → C</div>
+                      <div className="mt-1 text-[11.5px] text-mute">and D → B</div>
                     </div>
-                    <div className="border border-black/20 p-4">
-                      <div className="font-mono text-[10px] tracking-mono uppercase opacity-60 mb-2">
-                        Performance Gain
-                      </div>
-                      <div className="font-display text-[28px] sm:text-[36px] tracking-display leading-none">
-                        +45 pts
-                      </div>
-                      <div className="font-mono text-[11px] tracking-mono opacity-70 mt-1">
-                        visibility +43 pts
-                      </div>
+                    <div className="bg-paper p-5">
+                      <div className="eyebrow">Performance gain</div>
+                      <div className="display-lg mt-2 text-[30px] sm:text-[36px] text-signal">+45 pts</div>
+                      <div className="mt-1 text-[11.5px] text-mute">visibility +43 pts</div>
                     </div>
-                    <div className="border border-black/20 p-4">
-                      <div className="font-mono text-[10px] tracking-mono uppercase opacity-60 mb-2">
-                        Backlinking
-                      </div>
-                      <div className="font-display text-[28px] sm:text-[36px] tracking-display leading-none">
-                        12 → 27
-                      </div>
-                      <div className="font-mono text-[11px] tracking-mono opacity-70 mt-1">
-                        more than doubled
-                      </div>
+                    <div className="bg-paper p-5">
+                      <div className="eyebrow">Backlinking</div>
+                      <div className="display-lg mt-2 text-[30px] sm:text-[36px] text-signal">12 → 27</div>
+                      <div className="mt-1 text-[11.5px] text-mute">more than doubled</div>
                     </div>
                   </div>
 
                   <a
                     href="/downloads/amazon-seo-sample-report.pdf"
                     download="Amazon-SEO-Sample-Report-The-Office.pdf"
-                    className="inline-flex items-center gap-3 bg-black text-white px-5 py-3 font-mono text-[12px] tracking-mono font-semibold hover:bg-black/85 transition-colors"
+                    className="btn-primary mt-7 !items-center"
                   >
-                    <span>↓ Download the full report (PDF)</span>
-                    <span className="opacity-60 text-[10px]">13 PAGES · REAL AUDIT</span>
+                    <span aria-hidden="true">↓</span>
+                    <span>Download the full report (PDF)</span>
+                    <span className="text-[10.5px] font-medium text-white/55">13 pages · real audit</span>
                   </a>
                 </div>
 
-                <div className="mt-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-                  <p className="text-[14px] leading-[1.7] max-w-prose opacity-80">
+                <div className="mt-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5 border-t border-faint pt-7">
+                  <p className="text-[14.5px] leading-[1.65] max-w-[56ch] text-mute">
                     Verified case studies — with the client named and the
                     numbers attached — are shared under NDA on request.
                   </p>
                   <a
-                    href="#contact"
-                    className="font-mono text-[12px] tracking-mono font-semibold border-b border-black self-start sm:self-auto"
+                    href="/contact"
+                    className="inline-flex items-center gap-1.5 self-start text-[13px] font-semibold text-ink border-b border-ink pb-0.5 hover:text-signal hover:border-signal transition-colors"
                   >
-                    REQUEST THE FULL BOOK →
+                    Request the full book
+                    <span aria-hidden="true">→</span>
                   </a>
                 </div>
               </div>
@@ -705,78 +665,76 @@ function HomePage() {
           </div>
         </section>
 
-        {/* 03 / APPROACH — Phase 5 */}
-        <section
-          id="approach"
-          className="rule-b bg-paper-tint"
-          aria-labelledby="approach-heading"
-        >
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
-            <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-14 sm:py-20">
-              <MarginRail
-                sectionNum="03"
-                sectionLabel="THE METHOD, IN SIX STAGES"
-                folio="PORTFOLIO IV"
-                note="Stage 01 is where engagements are won or lost. We do not rush it."
-              />
+        {/* 03 / APPROACH */}
+        <section id="approach" className="rule-b" aria-labelledby="approach-heading">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
+            <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-16 sm:py-24">
+              <MarginRail sectionNum="03" sectionLabel="The method, in six stages" />
 
-              <div className="col-span-12 lg:col-span-10 reveal">
-                <MobileFolioStrip
-                  sectionNum="03"
-                  sectionLabel="THE METHOD, IN SIX STAGES"
-                  folio="PORTFOLIO IV"
-                />
+              <div className="col-span-12 lg:col-span-10">
+                <MobileFolioStrip sectionNum="03" sectionLabel="The method, in six stages" />
                 <div className="mb-10 sm:mb-14">
-                  <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
-                    03 / {t("section.approach").toUpperCase()}
-                  </div>
+                  <span className="eyebrow">
+                    <span className="eyebrow-num">03</span> — {t("section.approach")}
+                  </span>
                   <h2
                     id="approach-heading"
-                    className="font-display tracking-display text-[36px] sm:text-[52px] lg:text-[68px] leading-[0.98] font-light max-w-[18ch]"
+                    className="display-xl rule-accent mt-5 pb-6 text-[36px] sm:text-[54px] lg:text-[68px] max-w-[18ch]"
                   >
                     {t("section.approachTitle")}
                   </h2>
-                  <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[11px] sm:text-[12px] tracking-mono" aria-label="Process">
+                  <div
+                    className="mt-7 flex flex-wrap items-center gap-1.5"
+                    aria-label="Process"
+                  >
                     {processStages.map((st, i) => (
-                      <span key={st.n} className="flex items-center gap-3">
-                        <span className="border border-black px-2.5 py-1">{st.title.toUpperCase()}</span>
-                        {i < processStages.length - 1 && <span aria-hidden="true" className="opacity-50">→</span>}
+                      <span key={st.n} className="flex items-center gap-1.5">
+                        <span className="border border-faint bg-paper-tint px-2.5 py-1 text-[11.5px] font-medium text-charcoal/80">
+                          <span className="mr-1.5 tabular-nums text-mute">{st.n}</span>
+                          {st.title}
+                        </span>
+                        {i < processStages.length - 1 && (
+                          <span aria-hidden="true" className="text-faint text-[11px]">→</span>
+                        )}
                       </span>
                     ))}
                   </div>
-                  <a href="/methodology" className="mt-5 inline-block font-mono text-[12px] tracking-mono font-semibold border-b border-black">
-                    {t("section.methodology").toUpperCase()} →
+                  <a
+                    href="/methodology"
+                    className="mt-6 inline-flex items-center gap-1.5 text-[13px] font-semibold text-ink border-b border-ink pb-0.5 hover:text-signal hover:border-signal transition-colors"
+                  >
+                    {t("section.methodology")}
+                    <span aria-hidden="true">→</span>
                   </a>
                 </div>
 
-                <ol className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-10">
+                <ol className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-9">
                   {processStages.map((stage) => (
-                    <li key={stage.n} className="flex gap-5">
-                      <div className="font-mono text-[11px] tracking-mono opacity-50 pt-1 shrink-0 w-8">
-                        {stage.n}
+                    <li key={stage.n}>
+                      <div className="flex items-baseline gap-3 border-t border-ink pt-4">
+                        <span className="display-lg text-[20px] leading-none tabular-nums text-signal">
+                          {stage.n}
+                        </span>
+                        <h3 className="text-[22px] font-semibold tracking-display leading-tight flex-1">
+                          {stage.title}
+                        </h3>
+                        <span className="whitespace-nowrap text-[11px] font-medium text-mute">
+                          {stage.weight}
+                        </span>
                       </div>
-                      <div className="flex-1 border-t border-black pt-4">
-                        <div className="flex items-baseline justify-between gap-4 mb-2">
-                          <h3 className="font-display text-[22px] sm:text-[26px] tracking-display leading-tight">
-                            {stage.title}
-                          </h3>
-                          <span className="font-mono text-[10.5px] tracking-mono opacity-60 whitespace-nowrap">
-                            {stage.weight}
-                          </span>
-                        </div>
-                        <p className="text-[14.5px] leading-[1.65] opacity-90 max-w-prose">
-                          {stage.happens}
-                        </p>
-                        <p className="mt-3 font-mono text-[11px] tracking-mono opacity-70">
-                          <span className="opacity-60">{t("common.receive").toUpperCase()}: </span>
-                          {stage.receive}
-                        </p>
-                      </div>
+                      <p className="mt-3 text-[14.5px] leading-[1.62] text-charcoal/85 max-w-[52ch]">
+                        {stage.happens}
+                      </p>
+                      <p className="mt-3 border-t border-faint pt-3 text-[12.5px] leading-[1.5] text-mute">
+                        <span className="font-semibold text-ink">{t("common.receive")}</span>
+                        {" — "}
+                        {stage.receive}
+                      </p>
                     </li>
                   ))}
                 </ol>
 
-                <p className="mt-12 border-l-2 border-black pl-5 text-[14.5px] leading-[1.7] max-w-prose opacity-90">
+                <p className="mt-12 max-w-[62ch] border-l-2 border-signal pl-5 text-[14.5px] leading-[1.7] text-charcoal/85">
                   {processCaveat}
                 </p>
               </div>
@@ -784,30 +742,21 @@ function HomePage() {
           </div>
         </section>
 
-        {/* 04 / WHY — Phase 7 + Phase 9 */}
-        <section id="why" className="rule-b" aria-labelledby="why-heading">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
-            <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-14 sm:py-20">
-              <MarginRail
-                sectionNum="04"
-                sectionLabel="WHY THIS STUDIO"
-                folio="PORTFOLIO V"
-                note="No client logos, no invented statistics. What follows is what we commit to, not what we claim."
-              />
+        {/* 04 / WHY */}
+        <section id="why" className="rule-b bg-paper-tint" aria-labelledby="why-heading">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
+            <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-16 sm:py-24">
+              <MarginRail sectionNum="04" sectionLabel="Why this studio" />
 
-              <div className="col-span-12 lg:col-span-10 reveal">
-                <MobileFolioStrip
-                  sectionNum="04"
-                  sectionLabel="WHY THIS STUDIO"
-                  folio="PORTFOLIO V"
-                />
+              <div className="col-span-12 lg:col-span-10">
+                <MobileFolioStrip sectionNum="04" sectionLabel="Why this studio" />
                 <div className="mb-10 sm:mb-14">
-                  <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
-                    04 / {t("section.why").toUpperCase()}
-                  </div>
+                  <span className="eyebrow">
+                    <span className="eyebrow-num">04</span> — {t("section.why")}
+                  </span>
                   <h2
                     id="why-heading"
-                    className="font-display tracking-display text-[36px] sm:text-[52px] lg:text-[68px] leading-[0.98] font-light max-w-[18ch]"
+                    className="display-xl mt-5 text-[36px] sm:text-[54px] lg:text-[68px] max-w-[18ch]"
                   >
                     {t("section.whyTitle")}
                   </h2>
@@ -815,32 +764,33 @@ function HomePage() {
 
                 <dl className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8">
                   {whyThemes.map((theme) => (
-                    <div key={theme.k} className="border-t border-black pt-4">
-                      <dt className="font-display text-[20px] sm:text-[22px] tracking-display leading-tight mb-2">
+                    <div key={theme.k} className="border-t border-ink pt-4">
+                      <dt className="text-[20px] font-semibold tracking-display leading-tight mb-2">
                         {theme.k}
                       </dt>
-                      <dd className="text-[14.5px] leading-[1.65] opacity-90 max-w-prose">
+                      <dd className="text-[14.5px] leading-[1.62] text-charcoal/85 max-w-[50ch]">
                         {theme.v}
                       </dd>
                     </div>
                   ))}
                 </dl>
 
-                <div className="mt-14 border border-black p-6 sm:p-8">
-                  <div className="font-mono text-[10.5px] tracking-mono uppercase opacity-60 mb-5">
-                    What we commit to, instead of testimonials
-                  </div>
+                <div className="mt-14 border border-ink bg-paper p-6 sm:p-8">
+                  <h3 className="eyebrow mb-6">What we commit to, instead of testimonials</h3>
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-6">
                     {commitments.map((c) => (
-                      <li key={c.k}>
-                        <div className="font-display text-[17px] sm:text-[18px] tracking-display leading-tight mb-1.5">
-                          {c.k}
+                      <li key={c.k} className="flex gap-3">
+                        <span className="mt-[3px] text-[13px] font-semibold text-ink" aria-hidden="true">✓</span>
+                        <div>
+                          <div className="text-[16px] font-semibold tracking-display leading-tight mb-1">
+                            {c.k}
+                          </div>
+                          <div className="text-[13.5px] leading-[1.55] text-charcoal/80">{c.v}</div>
                         </div>
-                        <div className="text-[13.5px] leading-[1.6] opacity-85">{c.v}</div>
                       </li>
                     ))}
                   </ul>
-                  <p className="mt-7 pt-5 border-t border-black/15 text-[13px] leading-[1.65] opacity-75 max-w-prose">
+                  <p className="mt-8 border-t border-faint pt-5 text-[13px] leading-[1.6] text-mute max-w-[62ch]">
                     This section used to carry testimonials. We would rather you
                     read the sample deliverable in section 02 and the notes we
                     publish, and ask us for references directly — we will give
@@ -854,43 +804,34 @@ function HomePage() {
 
         {/* 05 / ABOUT */}
         <section id="about" className="rule-b" aria-labelledby="about-heading">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
-            <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-14 sm:py-20">
-              <MarginRail
-                sectionNum="05"
-                sectionLabel="FOUR PRINCIPALS. SIX DIVISIONS."
-                folio="PORTFOLIO VI"
-                note="The person on the kickoff call is the person who does the work."
-              />
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
+            <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-16 sm:py-24">
+              <MarginRail sectionNum="05" sectionLabel="Four principals. Six divisions." />
 
-              <div className="col-span-12 lg:col-span-10 reveal">
-                <MobileFolioStrip
-                  sectionNum="05"
-                  sectionLabel="FOUR PRINCIPALS. SIX DIVISIONS."
-                  folio="PORTFOLIO VI"
-                />
+              <div className="col-span-12 lg:col-span-10">
+                <MobileFolioStrip sectionNum="05" sectionLabel="Four principals. Six divisions." />
                 <div className="mb-10 sm:mb-14">
-                  <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
-                    05 / {t("section.about").toUpperCase()}
-                  </div>
+                  <span className="eyebrow">
+                    <span className="eyebrow-num">05</span> — {t("section.about")}
+                  </span>
                   <h2
                     id="about-heading"
-                    className="font-display tracking-display text-[36px] sm:text-[52px] lg:text-[68px] leading-[0.98] font-light max-w-[20ch]"
+                    className="display-xl rule-accent mt-5 pb-6 text-[36px] sm:text-[54px] lg:text-[68px] max-w-[20ch]"
                   >
                     {t("section.aboutTitle")}
                   </h2>
                 </div>
 
-                <div className="grid grid-cols-12 gap-x-6 gap-y-8">
-                  <div className="col-span-12 lg:col-span-7 space-y-6 text-[16.5px] leading-[1.7]">
-                    <p>
+                <div className="grid grid-cols-12 gap-x-6 gap-y-10">
+                  <div className="col-span-12 lg:col-span-7 space-y-6">
+                    <p className="text-[19px] leading-[1.5] tracking-[-0.01em] font-medium text-ink max-w-[46ch]">
                       THE OFFICE 360 was started in 2021 by people who had spent the
                       previous decade working inside publishing houses, literary
-                      agencies, and product teams. We were tired of the same
-                      brief: <em>make it louder</em>.
+                      agencies, and product teams.
                     </p>
-                    <p>
-                      We took a different bet — that the work in publishing and
+                    <p className="text-[15.5px] leading-[1.68] text-charcoal/85 max-w-[60ch]">
+                      We were tired of the same brief: <em>make it louder</em>. We
+                      took a different bet — that the work in publishing and
                       adjacent fields is mostly a craft problem, not a marketing
                       one. Position the book correctly and the rest of the job
                       gets easier. Build the site like a piece of editorial
@@ -898,20 +839,27 @@ function HomePage() {
                       automation to do the boring half of the job and the human
                       team gets their week back.
                     </p>
-                    <p>
+                    <p className="text-[15.5px] leading-[1.68] text-charcoal/85 max-w-[60ch]">
                       We are four. We do not subcontract, do not staff with
                       juniors, and do not put our name on work we did not do.
                       The person on the kickoff call is the person writing the
                       brief.
                     </p>
+                    <a
+                      href="/about"
+                      className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-ink border-b border-ink pb-0.5 hover:text-signal hover:border-signal transition-colors"
+                    >
+                      More about the studio
+                      <span aria-hidden="true">→</span>
+                    </a>
                   </div>
 
                   <div className="col-span-12 lg:col-span-4 lg:col-start-9">
-                    <div className="border border-black p-6">
-                      <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
-                        THE FOUR / BY SEAT
+                    <div className="border border-ink bg-paper">
+                      <div className="border-b border-faint px-5 py-3.5">
+                        <span className="eyebrow">The four · by seat</span>
                       </div>
-                      <div className="space-y-6">
+                      <div className="divide-y divide-faint">
                         {team.map((member) => (
                           <TeamMember key={member.role} member={member} />
                         ))}
@@ -933,84 +881,76 @@ function HomePage() {
         {/* 06 / CONTACT */}
         <section
           id="contact"
-          className="bg-black text-white on-ink"
+          className="bg-night text-white on-ink"
           aria-labelledby="contact-heading"
         >
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
             <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-16 sm:py-24">
-              <MarginRail
-                sectionNum="06"
-                sectionLabel="START A BRIEF"
-                folio="PORTFOLIO VII"
-                inverse
-                note="We reply to every brief within two working days. If we are not the right studio, we will say so and point you to someone who is."
-              />
+              <MarginRail sectionNum="06" sectionLabel="Start a brief" inverse />
 
-              <div className="col-span-12 lg:col-span-10 reveal">
-                <MobileFolioStrip
-                  sectionNum="06"
-                  sectionLabel="START A BRIEF"
-                  folio="PORTFOLIO VII"
-                  inverse
-                />
-                <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
-                  06 / {t("section.contact").toUpperCase()}
+              <div className="col-span-12 lg:col-span-10">
+                <MobileFolioStrip sectionNum="06" sectionLabel="Start a brief" inverse />
+
+                <div className="max-w-[46rem]">
+                  <span className="eyebrow !text-white/45">
+                    <span className="text-signal">06</span> — {t("section.contact")}
+                  </span>
+                  <h2
+                    id="contact-heading"
+                    className="display-xl mt-5 text-[40px] leading-[0.96] sm:text-[62px] lg:text-[76px]"
+                  >
+                    {t("section.contactTitle1")}{" "}
+                    <span className="text-signal">{t("section.contactTitle2")}</span>{" "}
+                    {t("section.contactTitle3")}
+                  </h2>
+                  <p className="mt-6 max-w-[56ch] text-[16px] leading-[1.62] text-white/70">
+                    No form-filling if you would rather write. Email works too —
+                    we read every line of it. The more specific you are about the
+                    timeline and the shape of the work, the faster we can tell you
+                    whether we are the right studio for it.
+                  </p>
                 </div>
-                <h2
-                  id="contact-heading"
-                  className="font-display tracking-display text-[40px] sm:text-[60px] lg:text-[84px] leading-[0.95] font-light max-w-[16ch]"
-                >
-                  {t("section.contactTitle1")}
-                  <br />
-                  <span className="italic">{t("section.contactTitle2")}</span>{" "}
-                  {t("section.contactTitle3")}
-                </h2>
-                <p className="mt-6 max-w-prose text-[16px] leading-[1.65] opacity-85">
-                  No form-filling if you would rather write. Email works too —
-                  we read every line of it. The more specific you are about the
-                  timeline and the shape of the work, the faster we can tell you
-                  whether we are the right studio for it.
-                </p>
 
-                <div className="mt-12 grid grid-cols-12 gap-x-6 gap-y-10">
+                <div className="mt-12 grid grid-cols-12 gap-x-6 gap-y-12 border-t border-white/15 pt-10">
                   <div className="col-span-12 lg:col-span-4">
-                    <div className="font-mono text-[11px] tracking-mono opacity-60 mb-3">
-                      DIRECT
-                    </div>
+                    <span className="eyebrow !text-white/40">Direct</span>
                     <a
                       href={`mailto:${CONTACT_EMAIL}`}
-                      className="block font-display text-[22px] sm:text-[26px] tracking-display leading-tight border-b border-white/40 pb-2 hover:border-white transition-colors"
+                      className="mt-3 block break-all text-[20px] sm:text-[24px] font-semibold tracking-display leading-tight border-b border-white/30 pb-2.5 hover:border-signal hover:text-signal transition-colors"
                     >
                       {CONTACT_EMAIL}
                     </a>
 
-                    <div className="mt-6 font-mono text-[11px] tracking-mono opacity-70 leading-[1.7]">
-                      REPLY WINDOW
-                      <br />
-                      MON–THU · WITHIN 2 WORKING DAYS
-                    </div>
-
-                    <div className="mt-8 border border-white/25 p-5">
-                      <div className="font-mono text-[10.5px] tracking-mono uppercase opacity-60 mb-3">
-                        What happens next
+                    <dl className="mt-7 grid grid-cols-2 gap-4 text-[12.5px]">
+                      <div>
+                        <dt className="text-white/45">Reply window</dt>
+                        <dd className="mt-0.5 font-semibold text-white/90">Mon–Thu</dd>
+                        <dd className="text-white/60">within 2 working days</dd>
                       </div>
-                      <ol className="space-y-2.5 text-[13px] leading-[1.6] opacity-85">
+                      <div>
+                        <dt className="text-white/45">Principals</dt>
+                        <dd className="mt-0.5 font-semibold text-white/90">Four</dd>
+                        <dd className="text-white/60">no subcontractors</dd>
+                      </div>
+                    </dl>
+
+                    <div className="mt-8 border border-white/15 bg-night-soft p-5">
+                      <h3 className="eyebrow !text-white/45 mb-4">What happens next</h3>
+                      <ol className="space-y-3 text-[13.5px] leading-[1.55] text-white/75">
                         <li className="flex gap-3">
-                          <span className="font-mono opacity-60">01</span>
+                          <span className="text-[11px] font-semibold tabular-nums text-white/45">01</span>
                           <span>A human reads it — not a triage bot.</span>
                         </li>
                         <li className="flex gap-3">
-                          <span className="font-mono opacity-60">02</span>
+                          <span className="text-[11px] font-semibold tabular-nums text-white/45">02</span>
                           <span>
-                            We reply with questions, or with a referral if we
-                            are not the right fit.
+                            We reply with questions, or with a referral if we are
+                            not the right fit.
                           </span>
                         </li>
                         <li className="flex gap-3">
-                          <span className="font-mono opacity-60">03</span>
-                          <span>
-                            A 30-minute call, then a written scope with a price.
-                          </span>
+                          <span className="text-[11px] font-semibold tabular-nums text-white/45">03</span>
+                          <span>A 30-minute call, then a written scope with a price.</span>
                         </li>
                       </ol>
                     </div>
@@ -1049,7 +989,7 @@ function NotFound({ path }: { path: string }) {
       <SiteHeader mode="page" />
 
       <main id="main" className="flex-1 flex items-center py-20">
-        <div className="mx-auto max-w-[1400px] px-4 sm:px-6 w-full">
+        <div className="mx-auto max-w-[1440px] px-5 sm:px-8 w-full">
           <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10">
             <MarginRail
               sectionNum="404"
@@ -1066,7 +1006,7 @@ function NotFound({ path }: { path: string }) {
               <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
                 HTTP 404 / NOT FOUND
               </div>
-              <h1 className="font-display tracking-display text-[42px] sm:text-[68px] lg:text-[88px] leading-[0.95] font-light max-w-[16ch] mb-6">
+              <h1 className="display-xl text-[42px] sm:text-[68px] lg:text-[88px] max-w-[16ch] mb-6">
                 This document is not in the archive.
               </h1>
               <p className="font-mono text-[11px] tracking-mono opacity-60 mb-6 break-all">

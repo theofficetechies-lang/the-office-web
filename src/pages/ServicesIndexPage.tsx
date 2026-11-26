@@ -40,7 +40,7 @@ export default function ServicesIndexPage() {
 
       <main id="main" className="flex-1">
         <section className="rule-b">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
             <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-12 sm:py-20">
               <MarginRail
                 sectionNum="S"
@@ -51,8 +51,8 @@ export default function ServicesIndexPage() {
               <div className="col-span-12 lg:col-span-10">
                 <MobileFolioStrip sectionNum="S" sectionLabel="SIX DIVISIONS, ONE METHOD" folio="SERVICES" />
 
-                <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">SERVICES</div>
-                <h1 className="font-display tracking-display text-[36px] sm:text-[56px] lg:text-[68px] leading-[0.98] font-light max-w-[20ch] mb-5">
+                <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-4">SERVICES</div>
+                <h1 className="display-xl text-[36px] sm:text-[56px] lg:text-[68px] max-w-[20ch] mb-5">
                   Six divisions. <span className="italic">One analytical method.</span>
                 </h1>
                 <p className="text-[17px] sm:text-[19px] leading-[1.6] max-w-prose opacity-90">
@@ -60,7 +60,7 @@ export default function ServicesIndexPage() {
                   situation before recommending anything, state what you will get, then measure whether
                   it worked. The six divisions below are that method applied to six kinds of problem.
                 </p>
-                <div className="mt-6 font-mono text-[11px] tracking-mono opacity-60">
+                <div className="mt-6 text-[11px] font-semibold uppercase tracking-[0.06em] text-mute">
                   {TOTAL_SERVICES} SERVICES · {divisions.length} DIVISIONS · {industries.length} INDUSTRIES
                 </div>
               </div>
@@ -70,20 +70,20 @@ export default function ServicesIndexPage() {
 
         {/* Divisions */}
         <section className="rule-b">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
             {divisions.map((d, i) => {
               const flagship = flagshipInDivision(d.id).length;
               const catalogue = catalogueInDivision(d.id).length;
               const published = d.id === "publishing" ? publishedServices.length : 0;
               return (
-                <article key={d.id} className={i === 0 ? "py-10 sm:py-12" : "py-10 sm:py-12 border-t border-black"}>
+                <article key={d.id} className={i === 0 ? "py-10 sm:py-12" : "py-10 sm:py-12 border-t border-ink"}>
                   <div className="grid grid-cols-12 gap-x-6">
                     <div className="col-span-12 sm:col-span-3 mb-3 sm:mb-0">
-                      <div className="font-mono text-xs tracking-mono opacity-60 mb-2">{d.n} / DIVISION</div>
+                      <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-2">{d.n} / DIVISION</div>
                       <h2 className="font-display text-2xl sm:text-[28px] tracking-display leading-[1.1]">
                         {d.title}
                       </h2>
-                      <div className="font-mono text-[10.5px] tracking-mono opacity-50 mt-2">
+                      <div className="text-[10.5px] font-medium text-faint mt-2">
                         {flagship + catalogue + published} services
                       </div>
                     </div>
@@ -94,7 +94,7 @@ export default function ServicesIndexPage() {
                     <div className="col-span-12 sm:col-span-3 mt-4 sm:mt-0">
                       <a
                         href={`/services/${d.id}`}
-                        className="inline-block border border-black px-4 py-2.5 font-mono text-[11px] tracking-mono font-semibold hover:bg-black hover:text-white transition-colors"
+                        className="inline-block btn-secondary !py-2.5 !px-4 !text-[11.5px]"
                       >
                         VIEW DIVISION →
                       </a>
@@ -108,18 +108,18 @@ export default function ServicesIndexPage() {
 
         {/* The core practice */}
         <section className="rule-b bg-paper-tint">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-12 sm:py-16">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8 py-12 sm:py-16">
             <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10">
               <div className="col-span-12 lg:col-span-3">
-                <div className="font-mono text-[11px] tracking-mono opacity-60 mb-2">THE CORE PRACTICE</div>
+                <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-2">THE CORE PRACTICE</div>
                 <p className="text-[13px] leading-[1.55] opacity-70 max-w-[28ch]">
                   The five services the studio was built on, each with a full page.
                 </p>
               </div>
               <div className="col-span-12 lg:col-span-9 mt-6 lg:mt-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {publishedServices.map((s) => (
-                  <a key={s.slug} href={`/services/${s.slug}`} className="group flex flex-col gap-2 border border-black bg-paper p-5 no-underline text-inherit transition-colors hover:bg-black hover:text-white">
-                    <span className="font-mono text-[10.5px] tracking-mono opacity-60">{s.n}</span>
+                  <a key={s.slug} href={`/services/${s.slug}`} className="group flex flex-col gap-2 border border-ink bg-paper p-5 no-underline text-inherit transition-colors hover:bg-black hover:text-white">
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute">{s.n}</span>
                     <span className="font-display text-[18px] tracking-display leading-[1.2]">{s.title}</span>
                     <span className="text-[13px] leading-[1.5] opacity-80">{s.tagline}</span>
                   </a>
@@ -131,21 +131,21 @@ export default function ServicesIndexPage() {
 
         {/* Industries */}
         <section className="rule-b">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-12 sm:py-16">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8 py-12 sm:py-16">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
               <div>
-                <div className="font-mono text-[11px] tracking-mono opacity-60 mb-2">INDUSTRIES</div>
-                <h2 className="font-display tracking-display text-[28px] sm:text-[40px] leading-tight font-light max-w-[20ch]">
+                <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-2">INDUSTRIES</div>
+                <h2 className="display-lg text-[28px] sm:text-[40px] max-w-[20ch]">
                   Applied to your sector.
                 </h2>
               </div>
-              <a href="/industries" className="font-mono text-[12px] tracking-mono font-semibold border-b border-black self-start sm:self-auto">
+              <a href="/industries" className="text-[13px] font-semibold border-b border-ink pb-0.5 hover:text-signal hover:border-signal transition-colors self-start sm:self-auto">
                 ALL {industries.length} INDUSTRIES →
               </a>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-1">
               {industries.map((ind) => (
-                <a key={ind.slug} href={`/industries/${ind.slug}`} className="py-2 border-t border-black/15 text-[14px] hover:opacity-60">
+                <a key={ind.slug} href={`/industries/${ind.slug}`} className="py-2 border-t border-ink/15 text-[14px] hover:opacity-60">
                   {ind.title}
                 </a>
               ))}
@@ -154,15 +154,15 @@ export default function ServicesIndexPage() {
         </section>
 
         <section className="bg-black text-white on-ink">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-16 sm:py-20">
-            <h2 className="font-display tracking-display text-[30px] sm:text-[44px] leading-[1.02] font-light max-w-[20ch] mb-5">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8 py-16 sm:py-20">
+            <h2 className="display-xl text-[30px] sm:text-[44px] max-w-[20ch] mb-5">
               Send us the <span className="italic">actual</span> brief.
             </h2>
             <p className="text-[15.5px] leading-[1.7] max-w-prose opacity-85 mb-7">
               The more specific you are about the problem, the faster we can tell you whether we are
               the right studio for it.
             </p>
-            <a href="/#contact" className="inline-block bg-white text-black px-5 py-3 font-mono text-[12px] tracking-mono font-semibold border border-white hover:bg-transparent hover:text-white transition-colors">
+            <a href="/#contact" className="inline-block btn-inverse">
               {t("cta.requestAnalysis").toUpperCase()} →
             </a>
           </div>

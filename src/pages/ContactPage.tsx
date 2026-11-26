@@ -47,15 +47,15 @@ export default function ContactPage() {
 
       <main id="main" className="flex-1">
         <section className="rule-b" aria-labelledby="contact-heading">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-10 sm:py-16 lg:py-20">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8 py-10 sm:py-16 lg:py-20">
             <div className="grid grid-cols-12 gap-x-6 gap-y-10">
               <div className="col-span-12 lg:col-span-5">
-                <div className="font-mono text-[11px] tracking-mono opacity-60 mb-3">
+                <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-3">
                   CONTACT / START
                 </div>
                 <h1
                   id="contact-heading"
-                  className="font-display tracking-display-tight font-light text-[40px] leading-[1.0] sm:text-[58px] sm:leading-[0.98] lg:text-[76px] lg:leading-[0.96] max-w-[16ch]"
+                  className="display-xl text-[40px] leading-[1.0] sm:text-[58px] sm:leading-[0.98] lg:text-[76px] lg:leading-[0.96] max-w-[16ch]"
                 >
                   Ready to build a smarter digital business?
                 </h1>
@@ -79,7 +79,7 @@ export default function ContactPage() {
                           : "border-black/30 hover:border-black",
                       ].join(" ")}
                     >
-                      <div className="font-mono text-[11.5px] tracking-mono font-semibold">
+                      <div className="text-[11.5px] font-semibold">
                         {m.label.toUpperCase()}
                       </div>
                       <div
@@ -94,7 +94,7 @@ export default function ContactPage() {
                   ))}
                 </div>
 
-                <dl className="mt-10 border-t border-black">
+                <dl className="mt-10 border-t border-ink">
                   {[
                     ["EMAIL", CONTACT_EMAIL],
                     ["REPLY TIME", "Within two working days"],
@@ -103,12 +103,12 @@ export default function ContactPage() {
                   ].map(([k, v]) => (
                     <div
                       key={k}
-                      className="flex flex-wrap items-baseline justify-between gap-2 border-b border-black/20 py-2.5"
+                      className="flex flex-wrap items-baseline justify-between gap-2 border-b border-faint/20 py-2.5"
                     >
-                      <dt className="font-mono text-[10.5px] tracking-mono opacity-60">{k}</dt>
-                      <dd className="font-mono text-[11.5px] tracking-mono">
+                      <dt className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute">{k}</dt>
+                      <dd className="text-[11.5px] tabular-nums">
                         {k === "EMAIL" ? (
-                          <a href={`mailto:${v}`} className="border-b border-black">
+                          <a href={`mailto:${v}`} className="border-b border-faint">
                             {v}
                           </a>
                         ) : (
@@ -121,8 +121,8 @@ export default function ContactPage() {
               </div>
 
               <div className="col-span-12 lg:col-span-6 lg:col-start-7">
-                <div className="border border-black p-5 sm:p-8">
-                  <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-4">
+                <div className="border border-ink p-5 sm:p-8">
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-4">
                     {modeLabel}
                   </div>
                   {/* Keyed on the pathway so switching mode remounts with a fresh
@@ -130,9 +130,9 @@ export default function ContactPage() {
                   <BriefForm key={mode} inquiryType={mode} />
                 </div>
 
-                <p className="mt-4 font-mono text-[10.5px] tracking-mono opacity-60 leading-relaxed">
+                <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.06em] text-mute leading-relaxed">
                   YOUR DETAILS ARE STORED ON OUR OWN DATABASE AND NEVER SOLD. SEE THE{" "}
-                  <a href="/privacy" className="border-b border-black">
+                  <a href="/privacy" className="border-b border-faint">
                     PRIVACY NOTICE
                   </a>
                   .
@@ -144,13 +144,13 @@ export default function ContactPage() {
 
         {/* WHAT HAPPENS NEXT */}
         <section className="rule-b" aria-labelledby="next-heading">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-14 sm:py-20">
-            <div className="font-mono text-[11px] tracking-mono opacity-60 mb-3">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8 py-14 sm:py-20">
+            <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-3">
               WHAT HAPPENS NEXT
             </div>
             <h2
               id="next-heading"
-              className="font-display tracking-display text-[30px] sm:text-[42px] leading-[1.02] font-light max-w-[24ch] mb-10"
+              className="display-xl text-[30px] sm:text-[42px] max-w-[24ch] mb-10"
             >
               Three steps, no sales sequence.
             </h2>
@@ -173,8 +173,8 @@ export default function ContactPage() {
                 },
               ].map((s) => (
                 <li key={s.n} className="col-span-12 sm:col-span-4">
-                  <div className="border-t border-black pt-4">
-                    <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-2">
+                  <div className="border-t border-ink pt-4">
+                    <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-2">
                       {s.n}
                     </div>
                     <h3 className="font-display text-[21px] leading-[1.2] mb-2">{s.t}</h3>
@@ -188,23 +188,23 @@ export default function ContactPage() {
 
         {/* THE FIVE QUESTIONS */}
         <section aria-labelledby="questions-heading">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-14 sm:py-20">
-            <div className="font-mono text-[11px] tracking-mono opacity-60 mb-3">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8 py-14 sm:py-20">
+            <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-3">
               BEFORE YOU WRITE
             </div>
             <h2
               id="questions-heading"
-              className="font-display tracking-display text-[30px] sm:text-[42px] leading-[1.02] font-light max-w-[24ch] mb-10"
+              className="display-xl text-[30px] sm:text-[42px] max-w-[24ch] mb-10"
             >
               Five questions, answered without a call.
             </h2>
-            <dl className="border-t border-black">
+            <dl className="border-t border-ink">
               {customerQuestions.map((q) => (
-                <div key={q.question} className="border-b border-black/20 py-5">
+                <div key={q.question} className="border-b border-faint/20 py-5">
                   <dt className="font-display text-[19px] leading-[1.25] mb-1.5">{q.question}</dt>
                   <dd className="text-[14.5px] leading-[1.65] opacity-85 max-w-prose">
                     {q.answer}{" "}
-                    <a href={q.where} className="border-b border-black font-mono text-[11px] tracking-mono">
+                    <a href={q.where} className="border-b border-faint text-[11.5px] font-medium">
                       MORE →
                     </a>
                   </dd>

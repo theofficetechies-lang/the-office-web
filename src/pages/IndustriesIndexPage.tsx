@@ -37,7 +37,7 @@ export default function IndustriesIndexPage() {
 
       <main id="main" className="flex-1">
         <section className="rule-b">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
             <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-12 sm:py-20">
               <MarginRail
                 sectionNum="I"
@@ -48,8 +48,8 @@ export default function IndustriesIndexPage() {
               <div className="col-span-12 lg:col-span-10">
                 <MobileFolioStrip sectionNum="I" sectionLabel="TWENTY SECTORS" folio="INDUSTRIES" />
 
-                <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">INDUSTRIES</div>
-                <h1 className="font-display tracking-display text-[36px] sm:text-[56px] lg:text-[68px] leading-[0.98] font-light max-w-[20ch] mb-5">
+                <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-4">INDUSTRIES</div>
+                <h1 className="display-xl text-[36px] sm:text-[56px] lg:text-[68px] max-w-[20ch] mb-5">
                   Applied to <span className="italic">your sector.</span>
                 </h1>
                 <p className="text-[17px] sm:text-[19px] leading-[1.6] max-w-prose opacity-90">
@@ -58,8 +58,8 @@ export default function IndustriesIndexPage() {
                   from a client list, and it is the honest version of the same page.
                 </p>
 
-                <div className="mt-8 border border-black p-5 sm:p-6 max-w-prose">
-                  <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-2">
+                <div className="mt-8 border border-ink p-5 sm:p-6 max-w-prose">
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-2">
                     A NOTE ON WHAT IS NOT HERE
                   </div>
                   <p className="text-[14px] leading-[1.65] opacity-85">
@@ -70,7 +70,7 @@ export default function IndustriesIndexPage() {
                   </p>
                 </div>
 
-                <div className="mt-6 font-mono text-[11px] tracking-mono opacity-60">
+                <div className="mt-6 text-[11px] font-semibold uppercase tracking-[0.06em] text-mute">
                   {industries.length} INDUSTRIES
                 </div>
               </div>
@@ -79,15 +79,15 @@ export default function IndustriesIndexPage() {
         </section>
 
         <section className="rule-b">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
             {industries.map((ind, i) => (
               <article
                 key={ind.slug}
-                className={i === 0 ? "py-8 sm:py-10" : "py-8 sm:py-10 border-t border-black"}
+                className={i === 0 ? "py-8 sm:py-10" : "py-8 sm:py-10 border-t border-ink"}
               >
                 <div className="grid grid-cols-12 gap-x-6 gap-y-3">
                   <div className="col-span-12 sm:col-span-4">
-                    <div className="font-mono text-[10.5px] tracking-mono opacity-50 mb-2">
+                    <div className="text-[10.5px] font-medium text-faint mb-2">
                       {String(i + 1).padStart(2, "0")} / SECTOR
                     </div>
                     <h2 className="font-display text-2xl sm:text-[26px] tracking-display leading-[1.1]">
@@ -98,14 +98,14 @@ export default function IndustriesIndexPage() {
                   </div>
                   <div className="col-span-12 sm:col-span-6">
                     <p className="text-[15px] leading-[1.6] max-w-prose">{ind.summary}</p>
-                    <div className="mt-2 font-mono text-[10.5px] tracking-mono opacity-50">
+                    <div className="mt-2 text-[10.5px] font-medium text-faint">
                       {ind.services.length} SERVICES APPLY
                     </div>
                   </div>
                   <div className="col-span-12 sm:col-span-2 sm:text-right">
                     <a
                       href={`/industries/${ind.slug}`}
-                      className="inline-block border border-black px-3 py-2 font-mono text-[10.5px] tracking-mono font-semibold hover:bg-black hover:text-white transition-colors"
+                      className="inline-block border border-ink px-3 py-2 text-[11.5px] font-semibold hover:bg-ink hover:text-white transition-colors"
                     >
                       VIEW →
                     </a>
@@ -117,8 +117,8 @@ export default function IndustriesIndexPage() {
         </section>
 
         <section className="bg-black text-white on-ink">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-16 sm:py-20">
-            <h2 className="font-display tracking-display text-[30px] sm:text-[44px] leading-[1.02] font-light max-w-[20ch] mb-5">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8 py-16 sm:py-20">
+            <h2 className="display-xl text-[30px] sm:text-[44px] max-w-[20ch] mb-5">
               Your sector is not on the list? <span className="italic">Say so.</span>
             </h2>
             <p className="text-[15.5px] leading-[1.7] max-w-prose opacity-85 mb-7">
@@ -127,7 +127,7 @@ export default function IndustriesIndexPage() {
             </p>
             <a
               href="/#contact"
-              className="inline-block bg-white text-black px-5 py-3 font-mono text-[12px] tracking-mono font-semibold border border-white hover:bg-transparent hover:text-white transition-colors"
+              className="inline-block btn-inverse"
             >
               {t("cta.requestAnalysis").toUpperCase()} →
             </a>

@@ -31,16 +31,16 @@ function ListBlock({
 }) {
   return (
     <section className={tint ? "rule-b bg-paper-tint" : "rule-b"}>
-      <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+      <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
         <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-12 sm:py-16">
           <div className="col-span-12 lg:col-span-3">
-            <div className="font-mono text-[11px] tracking-mono opacity-60">{label}</div>
+            <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute">{label}</div>
           </div>
           <ul className="col-span-12 lg:col-span-9 mt-4 lg:mt-0 space-y-4">
             {items.map((item, i) => (
               <li key={item} className="flex gap-4 text-[15.5px] leading-[1.65]">
                 {numbered && (
-                  <span className="font-mono text-[11px] tracking-mono opacity-50 pt-1 shrink-0">
+                  <span className="text-[11px] font-medium text-faint pt-1 shrink-0">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                 )}
@@ -71,10 +71,10 @@ function ProseBlock({
 }) {
   return (
     <section className="rule-b">
-      <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+      <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
         <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-12 sm:py-16">
           <div className="col-span-12 lg:col-span-3">
-            <div className="font-mono text-[11px] tracking-mono opacity-60">{label}</div>
+            <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute">{label}</div>
           </div>
           <div className="col-span-12 lg:col-span-9 mt-4 lg:mt-0 space-y-5">
             {paragraphs.map((p, i) => (
@@ -106,23 +106,23 @@ function ProseBlock({
 function ProcessBlock() {
   return (
     <section className="rule-b">
-      <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+      <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
         <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-12 sm:py-16">
           <div className="col-span-12 lg:col-span-3">
-            <div className="font-mono text-[11px] tracking-mono opacity-60">HOW IT RUNS</div>
+            <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute">HOW IT RUNS</div>
             <p className="mt-3 text-[13px] leading-[1.6] opacity-70 max-w-[26ch]">
               The same six stages on every engagement. Only what happens inside them changes.
             </p>
           </div>
           <ol className="col-span-12 lg:col-span-9 mt-6 lg:mt-0 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
             {processStages.map((stage) => (
-              <li key={stage.n} className="border-t border-black pt-3">
+              <li key={stage.n} className="border-t border-ink pt-3">
                 <div className="flex items-baseline gap-3 mb-1">
-                  <span className="font-mono text-[11px] tracking-mono opacity-60">{stage.n}</span>
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute">{stage.n}</span>
                   <span className="font-display text-[19px] tracking-display leading-tight">
                     {stage.title}
                   </span>
-                  <span className="font-mono text-[10.5px] tracking-mono opacity-50 ml-auto">
+                  <span className="text-[10.5px] font-medium text-faint ml-auto">
                     {stage.weight}
                   </span>
                 </div>
@@ -140,18 +140,18 @@ function ProcessBlock() {
 function FaqBlock({ faqs }: { faqs: ServiceDetail["faqs"] }) {
   return (
     <section className="rule-b">
-      <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+      <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
         <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-12 sm:py-16">
           <div className="col-span-12 lg:col-span-3">
-            <div className="font-mono text-[11px] tracking-mono opacity-60">QUESTIONS</div>
+            <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute">QUESTIONS</div>
           </div>
-          <div className="col-span-12 lg:col-span-9 mt-6 lg:mt-0 divide-y divide-black/15 border-t border-black/15">
+          <div className="col-span-12 lg:col-span-9 mt-6 lg:mt-0 divide-y divide-faint/15 border-t border-ink/15">
             {faqs.map((f) => (
               <details key={f.q} className="group py-4">
                 <summary className="flex cursor-pointer items-start gap-3 list-none [&::-webkit-details-marker]:hidden">
                   <span
                     aria-hidden="true"
-                    className="font-mono text-[13px] leading-[1.4] opacity-60 group-open:opacity-100 shrink-0 w-3"
+                    className="text-[13px] leading-[1.4] text-mute group-open:text-signal shrink-0 w-3"
                   >
                     +
                   </span>
@@ -203,14 +203,14 @@ export default function ServiceDetailPage({ slug }: { slug: string }) {
         <SkipLink />
         <SiteHeader mode="page" />
         <main id="main" className="flex-1">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-20">
-            <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">404 / SERVICE</div>
-            <h1 className="font-display tracking-display text-[36px] sm:text-[56px] leading-[1] font-light max-w-[18ch] mb-6">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8 py-20">
+            <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-4">404 / SERVICE</div>
+            <h1 className="display-xl text-[36px] sm:text-[56px] max-w-[18ch] mb-6">
               That service is not in the archive.
             </h1>
             <a
               href="/services"
-              className="inline-block bg-black text-white px-5 py-3 font-mono text-[12px] tracking-mono font-semibold hover:bg-black/85 transition-colors"
+              className="inline-block btn-primary"
             >
               ALL SERVICES →
             </a>
@@ -233,7 +233,7 @@ export default function ServiceDetailPage({ slug }: { slug: string }) {
       <main id="main" className="flex-1">
         {/* HERO */}
         <section className="rule-b">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
             <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-12 sm:py-20">
               <MarginRail
                 sectionNum="S"
@@ -250,7 +250,7 @@ export default function ServiceDetailPage({ slug }: { slug: string }) {
 
                 <nav
                   aria-label="Breadcrumb"
-                  className="font-mono text-[11px] tracking-mono opacity-60 mb-8 flex flex-wrap items-center gap-2"
+                  className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-8 flex flex-wrap items-center gap-2"
                 >
                   <a href="/services" className="hover:opacity-100 underline-offset-2 hover:underline">
                     SERVICES
@@ -272,10 +272,10 @@ export default function ServiceDetailPage({ slug }: { slug: string }) {
                   </span>
                 </nav>
 
-                <div className="font-mono text-[11px] tracking-mono opacity-60 mb-4">
+                <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-4">
                   {division ? division.title.toUpperCase() : "SERVICE"}
                 </div>
-                <h1 className="font-display tracking-display text-[34px] sm:text-[52px] lg:text-[62px] leading-[1] font-light max-w-[22ch] mb-5">
+                <h1 className="display-xl text-[34px] sm:text-[52px] lg:text-[62px] max-w-[22ch] mb-5">
                   {service.tagline}
                 </h1>
                 <p className="text-[17px] sm:text-[19px] leading-[1.6] max-w-prose opacity-90">
@@ -285,11 +285,11 @@ export default function ServiceDetailPage({ slug }: { slug: string }) {
                 <div className="mt-8 flex flex-wrap items-center gap-3">
                   <a
                     href={`/#contact`}
-                    className="bg-black text-white px-5 py-3 font-mono text-[12px] tracking-mono font-semibold hover:bg-black/85 transition-colors"
+                    className="btn-primary"
                   >
                     DISCUSS THIS →
                   </a>
-                  <span className="font-mono text-[11px] tracking-mono opacity-60">
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute">
                     {service.pricing}
                   </span>
                 </div>
@@ -308,11 +308,11 @@ export default function ServiceDetailPage({ slug }: { slug: string }) {
 
         {service.examples && service.examples.length > 0 && (
           <section className="rule-b bg-paper-tint">
-            <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+            <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
               <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-12 sm:py-16">
                 <div className="col-span-12 lg:col-span-3">
-                  <div className="font-mono text-[11px] tracking-mono opacity-60">WHAT IT LOOKS LIKE</div>
-                  <p className="mt-2 font-mono text-[10.5px] tracking-mono uppercase opacity-50">
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute">WHAT IT LOOKS LIKE</div>
+                  <p className="mt-2 text-[10.5px] font-medium uppercase tracking-[0.06em] text-mute">
                     Illustrative, not client work
                   </p>
                 </div>
@@ -335,10 +335,10 @@ export default function ServiceDetailPage({ slug }: { slug: string }) {
 
         {/* CTA */}
         <section className="bg-black text-white on-ink">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-16 sm:py-20">
+          <div className="mx-auto max-w-[1440px] px-5 sm:px-8 py-16 sm:py-20">
             <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10">
               <div className="col-span-12 lg:col-span-8">
-                <h2 className="font-display tracking-display text-[30px] sm:text-[44px] leading-[1.02] font-light max-w-[22ch] mb-5">
+                <h2 className="display-xl text-[30px] sm:text-[44px] max-w-[22ch] mb-5">
                   Tell us what you are <span className="italic">trying to make happen</span>.
                 </h2>
                 <p className="text-[15.5px] leading-[1.7] max-w-prose opacity-85 mb-7">
@@ -347,7 +347,7 @@ export default function ServiceDetailPage({ slug }: { slug: string }) {
                 </p>
                 <a
                   href="/#contact"
-                  className="inline-block bg-white text-black px-5 py-3 font-mono text-[12px] tracking-mono font-semibold border border-white hover:bg-transparent hover:text-white transition-colors"
+                  className="inline-block btn-inverse"
                 >
                   {t("cta.requestAnalysis").toUpperCase()} →
                 </a>
@@ -358,8 +358,8 @@ export default function ServiceDetailPage({ slug }: { slug: string }) {
 
         {related.length > 0 && (
           <section className="rule-b">
-            <div className="mx-auto max-w-[1400px] px-4 sm:px-6 py-12 sm:py-16">
-              <div className="font-mono text-[11px] tracking-mono opacity-60 mb-6">
+            <div className="mx-auto max-w-[1440px] px-5 sm:px-8 py-12 sm:py-16">
+              <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-mute mb-6">
                 RELATED SERVICES
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
@@ -367,12 +367,12 @@ export default function ServiceDetailPage({ slug }: { slug: string }) {
                   <a
                     key={r.slug}
                     href={r.href}
-                    className="group flex flex-col gap-3 border border-black p-5 no-underline text-inherit transition-colors hover:bg-black hover:text-white"
+                    className="group flex flex-col gap-3 border border-ink p-5 no-underline text-inherit transition-colors hover:bg-black hover:text-white"
                   >
                     <span className="font-display text-[18px] tracking-display leading-[1.2]">
                       {r.title}
                     </span>
-                    <span className="font-mono text-[11px] tracking-mono opacity-70 mt-auto pt-3">
+                    <span className="text-[11px] font-medium text-mute mt-auto pt-3">
                       {r.href.includes("#") ? "PART OF A DIVISION" : t("common.readMore").toUpperCase()} →
                     </span>
                   </a>
