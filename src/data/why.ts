@@ -26,8 +26,8 @@ export const whyThemes: WhyTheme[] = [
     v: "Taste, argument, and knowing when a sentence is lying are not automatable. That is what the four of us are actually for.",
   },
   {
-    k: "Small, deliberately.",
-    v: "Four people, no subcontractors, no juniors learning on your budget. The person on the kickoff call is the person doing the work.",
+    k: "Four principals, deliberately.",
+    v: "Six divisions, no subcontractors, no juniors learning on your budget. The person on the kickoff call is one of the four people doing the work.",
   },
   {
     k: "Cross-disciplinary, on one brief.",

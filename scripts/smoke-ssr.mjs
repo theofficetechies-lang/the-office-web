@@ -55,7 +55,7 @@ const cases = [
   {
     route: "/",
     must: [
-      "We do the work",
+      "Transform your business",
       "Five services. One analytical method.",
       "What the work looks like when it is done properly.",
       "Six stages. Then we bend them to fit the brief.",
@@ -401,9 +401,9 @@ if (typeof seoGlobal.prerenderPaths === "function" && typeof render === "functio
  * The h1 renders in 112px display type at the largest breakpoint. A line that
  * grows by a clause is not a copy change only: at that size a long line wraps,
  * pushes the fold down, and breaks the three-line rhythm the hero is built on.
- * The line was widened deliberately (audit 4c.1) to cover all six divisions, so
- * this pins the ceiling that made it safe -- roughly what still sets on one line
- * at lg -- rather than letting a future edit quietly overflow it.
+ * The headline was replaced wholesale by the transformation brief, so this pins
+ * both the shape and the two required clauses rather than letting a future edit
+ * quietly revert to a literary one-liner or overflow the fold.
  *
  * Measured without a layout engine, so it is a character budget, not a pixel
  * measurement; it is a tripwire for a wholesale rewrite, not a typesetter.
@@ -420,11 +420,14 @@ if (typeof seoGlobal.prerenderPaths === "function" && typeof render === "functio
   for (const [i, line] of lines.entries()) {
     if (line.length > 42) problems.push(`line ${i + 1} is ${line.length} chars: "${line}"`);
   }
-  if (problems.length === 0 && lines.join(" ").includes("the business around it")) {
-    console.log("✓ the hero headline holds its three-line shape and covers the divisions");
+  const headline = lines.join(" ").toLowerCase();
+  if (!headline.includes("transform your business")) problems.push("missing the transformation clause");
+  if (!headline.includes("digital future")) problems.push("missing the digital-future clause");
+  if (problems.length === 0) {
+    console.log("✓ the hero headline holds its three-line shape and both required clauses");
   } else {
     failures++;
-    console.error(`✗ hero headline — ${problems.join(" | ") || "the widened line is missing"}`);
+    console.error(`✗ hero headline — ${problems.join(" | ")}`);
   }
 }
 

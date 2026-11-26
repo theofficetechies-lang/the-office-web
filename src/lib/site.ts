@@ -83,15 +83,23 @@ export interface NavItem {
  * the site chrome — they were reachable only by typing a URL, so 68 of 96 pages
  * were orphaned despite being in the sitemap.
  */
+/**
+ * Primary navigation — the transformation brief's seven items.
+ *
+ * ABOUT, OUR WORK and INSIGHTS now point at real pages rather than homepage
+ * anchors. The anchors still exist for the homepage's own section rail; the top
+ * navigation stops asking a visitor on /services to jump into the middle of a page
+ * they are not on.
+ *
+ * HOME is the wordmark, so it is not repeated here.
+ */
 export const NAV_ITEMS: NavItem[] = [
+  { label: "About", tkey: "nav.about", anchor: "/#about", href: "/about" },
   { label: "Services", tkey: "nav.services", anchor: "/services", href: "/services" },
-  { label: "Work", tkey: "nav.work", anchor: "#work", href: "/#work" },
-  { label: "Approach", tkey: "nav.approach", anchor: "#approach", href: "/#approach" },
-  { label: "Why", tkey: "nav.why", anchor: "#why", href: "/#why" },
-  { label: "About", tkey: "nav.about", anchor: "#about", href: "/#about" },
   { label: "Industries", tkey: "nav.industries", anchor: "/industries", href: "/industries" },
-  { label: "Notes", tkey: "nav.notes", anchor: "/notes", href: "/notes" },
-  { label: "Contact", tkey: "nav.contact", anchor: "#contact", href: "/#contact" },
+  { label: "Our work", tkey: "nav.ourWork", anchor: "/#work", href: "/work" },
+  { label: "Insights", tkey: "nav.insights", anchor: "/notes", href: "/insights" },
+  { label: "Contact", tkey: "nav.contact", anchor: "/#contact", href: "/contact" },
 ];
 
 /**

@@ -16,7 +16,7 @@ export default function SiteFooter({ mode }: { mode: "home" | "page" }) {
         <div className="grid grid-cols-12 gap-x-6 gap-y-10">
           <div className="col-span-12 lg:col-span-5">
             <div className="font-display text-[26px] sm:text-[30px] tracking-display leading-[1.1] max-w-[22ch]">
-              A four-person studio for books, the web, automation, and research.
+              Digital transformation, intelligent technology and business growth — six divisions, one studio.
             </div>
             <p className="mt-5 text-[14px] leading-[1.65] opacity-75 max-w-[46ch]">
               Research, strategy, design and technology on one brief — with a

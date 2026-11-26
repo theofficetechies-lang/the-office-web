@@ -22,7 +22,7 @@ export default function PressPage() {
   const facts = [
     { k: P ? "Nome" : "Name", v: "THE OFFICE 360" },
     { k: P ? "Fundado" : "Founded", v: "2021" },
-    { k: P ? "Dimensão" : "Size", v: P ? "Quatro pessoas, sem subcontratados" : "Four people, no subcontractors" },
+    { k: P ? "Dimensão" : "Size", v: P ? "Quatro sócios, seis divisões" : "Four principals, six divisions" },
     { k: P ? "Bases" : "Bases", v: P ? "Lisboa & Nova Iorque" : "Lisbon & New York" },
     { k: P ? "Idiomas" : "Languages", v: "EN · PT" },
     { k: P ? "Serviços" : "Services", v: P ? "Estratégia de livros · Investigação · Web · Automação" : "Book strategy · Research · Web · Automation" },

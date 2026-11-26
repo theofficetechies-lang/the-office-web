@@ -106,6 +106,11 @@ function divisionIds() {
 
 const KNOWN = [
   "/",
+  /* Transformation-brief pages. Listed here so the link sweep resolves them. */
+  "/about",
+  "/contact",
+  "/insights",
+  "/work",
   "/notes",
   "/privacy",
   "/terms",
@@ -289,7 +294,7 @@ function setValue(window, el, value) {
 /* ------------------------------------------------------------------ */
 
 const expectations = {
-  "/": { title: "THE OFFICE 360 — Book strategy, web, automation, research", h1: "We do the work" },
+  "/": { title: "THE OFFICE 360 — Digital transformation, technology and growth", h1: "Transform your business" },
   "/notes": { title: "Notes — THE OFFICE 360", h1: "Notes on the work." },
   "/notes/why-most-author-websites-fail": {
     title: "Why most author websites fail — Notes, THE OFFICE 360",
@@ -612,7 +617,7 @@ console.log("\nLink and image hygiene:");
   }
   check("every internal link resolves to a real route", broken.size === 0, [...broken].join(", "));
   check(
-    "the admin panel is not linked from public pages",
+    "no admin page is linked from public pages",
     ![...broken].length || ![...broken].some((b) => b.includes("/admin")),
     "a public page links to /admin"
   );
@@ -963,30 +968,25 @@ console.log("\nTyping animation:");
    * matched nothing, so `className` was undefined and two assertions failed with
    * class="undefined" — which looked like a styling bug in the app and was not.
    */
-  const cta = [...document.querySelectorAll('a[href="#contact"]')].find((a) =>
-    a.textContent.trim().toUpperCase().startsWith("REQUEST AN ANALYSIS")
+  const cta = [...document.querySelectorAll('a[href="/contact"]')].find((a) =>
+    a.textContent.trim().toUpperCase().startsWith("BOOK A FREE CONSULTATION")
   );
 
   check(
     "hero CTA found",
     Boolean(cta),
-    "no #contact anchor labelled REQUEST AN ANALYSIS in the hero"
+    "no /contact link labelled BOOK A FREE CONSULTATION in the hero"
   );
-  check("line starts empty with a caret", line().typed === 0 && line().caret === 1);
+  /*
+   * The hero typewriter was removed with the transformation-brief hero, which now
+   * carries two CTAs instead of a reading widget. Asserting the component is gone
+   * is worth keeping: a stale import left the homepage 45 KB heavier before, and
+   * "the removal actually happened" is a checkable fact.
+   */
   check(
-    "full line is exposed to assistive tech immediately",
-    line().spoken.includes(TW_TEXT),
-    `accessible text="${line().spoken}"`
-  );
-  check(
-    "the exposed line is not hidden behind a prohibited attribute",
-    !line().el?.getAttribute("aria-label"),
-    `aria-label="${line().el?.getAttribute("aria-label")}"`
-  );
-  check(
-    "hero CTA is visible from the first paint",
-    !cta?.className.includes("opacity-0"),
-    `class="${cta?.className}"`
+    "the retired typewriter is no longer rendered on the homepage",
+    !document.querySelector(".caret") && line().typed === -1,
+    "a .caret element or typewriter wrapper is still present"
   );
   check("FAQ section renders", document.body.textContent.includes("Questions we actually get."));
   check("Pricing section renders", document.body.textContent.includes("Three shapes of engagement."));
@@ -1007,36 +1007,39 @@ console.log("\nTyping animation:");
   );
   check(
     "hero CTA keeps its hover colour transition",
-    cta?.className.includes("transition-colors") && cta?.className.includes("hover:bg-black"),
+    cta?.className.includes("transition-colors") && cta?.className.includes("hover:bg-black/85"),
     `class="${cta?.className}"`
   );
 
+  /*
+   * The old assertions here re-read the typewriter after 1.2s and 3.4s to watch it
+   * type, and checked a CTA label that no longer exists. Both went with the
+   * component; what remains worth asserting is that the replacement hero's primary
+   * CTA is present and stable — no timed reveal, nothing that appears late.
+   */
   await new Promise((r) => setTimeout(r, 1200));
-  const mid = line();
-  check("line is typing partway through", mid.typed > 0 && mid.caret === 1, `typed=${mid.typed}`);
-
-  await new Promise((r) => setTimeout(r, 2200));
-  const end = line();
-  check("line finishes typing", end.typed === 66 && end.caret === 0, `typed=${end.typed} caret=${end.caret}`);
+  const laterCta = [...document.querySelectorAll('a[href="/contact"]')].find((a) =>
+    a.textContent.trim().toUpperCase().startsWith("BOOK A FREE CONSULTATION")
+  );
   check(
-    "hero CTA is still visible once typing ends",
-    ![...document.querySelectorAll('a[href="#contact"]')]
-      .find((a) => a.textContent.includes("SEND A BRIEF"))
-      ?.className.includes("opacity-0")
+    "the hero CTA is present and unchanged after 1.2s",
+    Boolean(laterCta) && !laterCta.className.includes("opacity-0"),
+    laterCta ? `class="${laterCta.className}"` : "CTA disappeared"
   );
 }
 
 console.log("\nReduced motion:");
 {
   const { document } = await mount("/", { reducedMotion: true });
-  const tw = [...document.querySelectorAll("span")].find((el) =>
-    el.querySelector(".sr-only")?.textContent.includes("A working class of letters")
-  );
-  const painted = tw?.querySelector('[aria-hidden="true"]')?.textContent.length ?? -1;
+  /*
+   * The typewriter is retired (see the typing block above), so reduced-motion is
+   * asserted on what replaced it: nothing on the hero animates, and the global
+   * reduced-motion rule still ships.
+   */
   check(
-    "full line is present on the first paint",
-    painted === 66,
-    `typed=${painted}`
+    "the hero carries no animation to disable",
+    document.querySelectorAll(".caret").length === 0,
+    "a .caret element is still rendered"
   );
   check(
     "no blinking caret is rendered",
@@ -1083,7 +1086,7 @@ console.log("\nPortuguese:");
     `stamp ${stampedLang || "(none)"}`
   );
   check("html lang switches to pt", document.documentElement.lang === "pt", `lang=${document.documentElement.lang}`);
-  check("hero sub is Portuguese", document.body.textContent.includes("um estúdio de quatro pessoas"));
+  check("hero sub is Portuguese", document.body.textContent.includes("ajuda organizações ambiciosas"));
   check("nav Services is Serviços", document.body.textContent.includes("SERVIÇOS"));
   check("form services prompt translated", document.body.textContent.includes("DE QUE PRECISA DE NÓS?"));
   check("FAQ heading translated", document.body.textContent.includes("Perguntas que realmente recebemos."));

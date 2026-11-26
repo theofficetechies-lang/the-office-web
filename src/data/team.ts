@@ -25,11 +25,11 @@ export interface TeamMember {
 }
 
 /**
- * Three of the four principals supplied and confirmed their names and roles
+ * The four principals supplied and confirmed their names and roles
  * (27 Aug 2026). Portraits arrive with the studio's photo file; when each
  * image is dropped into public/team/ set `portrait` and the card picks it up
- * with no other change. The Research & Analysis seat stays role-first until
- * the fourth name is provided.
+ * with no other change. If a seat is ever added without a name, the card stays
+ * role-first rather than inventing an identity for it.
  *
  * Names are recorded exactly as supplied; spelling confirmation pending.
  */

@@ -390,6 +390,54 @@ rather than "done".
 
 ---
 
+### 4f. Transformation brief — repositioning applied
+
+The client supplied a second, later brief that repositions the studio as a digital
+transformation consultancy. It supersedes the literary-studio framing. What changed
+in code, and what did not:
+
+**Applied in full**
+
+| Brief requirement | Implemented |
+|---|---|
+| Hero: "Transform Your Business. Engineer Your Digital Future." | Yes — three-line h1, both clauses now asserted by a gate |
+| Primary CTA "Explore Our Services", secondary "Book a Free Consultation" | Yes, both real destinations |
+| Nav: HOME · ABOUT · SERVICES · INDUSTRIES · OUR WORK · INSIGHTS · CONTACT | Yes (HOME is the wordmark) |
+| `/about` with philosophy, methodology, why-us, team | New page |
+| `/contact` with consultation / proposal / audit paths | New page, wired to the real inquiry pathways |
+| `/insights` editorial index | New page over the existing notes, grouped by their own category |
+| `/work` portfolio index | New page, honest about unverified patterns |
+| Six divisions matching Divisions A–F | Already built in Phase 2 |
+| SEO + structured data | Already built; 100 routes now |
+
+**Deliberately not done, and why**
+
+- **No invented staff.** The brief wants an international consultancy; the studio is
+  four verified principals. `/about` states both plainly and explains how four
+  people cover six divisions. Inflating the team is the one change that would make
+  every other claim on the site worthless.
+- **No client names or results on `/work`.** All five entries are `verified: false`
+  engagement patterns. The index says so above the fold rather than in a footnote.
+- **No fabricated pricing.** Still "Request a custom quote" where no approved number
+  exists.
+- **Portal, CMS and booking remain deferred** per the earlier instruction; the
+  brief's Phase 10 items are architected around, not faked.
+
+**What rewriting the positioning exposed.** Five separate places claimed "four-person
+studio" as identity rather than fact — the manifest bar, the footer, the press
+sheet, the homepage margin rail and the meta description. Repositioning the hero
+without fixing those would have produced a site that said "digital transformation
+consultancy" at the top and "small book studio" at the bottom. All five now read
+"four principals, six divisions", which is true and survives the new positioning.
+
+**Regression caught by the suite.** `/about` shipped an invalid `<dl>` (a numbered
+eyebrow as a sibling of `dt`/`dd`), which axe flagged as `definition-list` and
+`dlitem`. Fixed. The link sweep also flagged ~400 false "broken link" reports until
+the four new routes were added to its known-route list — the same stale-list failure
+mode recorded in §4d, caught this time before commit.
+
+---
+
 ## 4d. Prerendering: what it found
 
 Adding prerendering (Phase 6) exposed a defect class that was invisible while the

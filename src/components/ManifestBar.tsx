@@ -48,7 +48,7 @@ export default function ManifestBar() {
         </span>
         <span className="opacity-60 hidden md:inline">/</span>
         <span className="hidden md:inline opacity-80">
-          FOUR PEOPLE · NO SUBCONTRACTORS
+          SIX DIVISIONS · FOUR PRINCIPALS · NO SUBCONTRACTORS
         </span>
         <span className="opacity-60 ml-auto">/</span>
         <span className="ml-auto sm:ml-0 opacity-90 tabular-nums">{now}</span>

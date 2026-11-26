@@ -40,7 +40,7 @@ export interface HeadMeta {
 }
 
 const DEFAULT_DESCRIPTION =
-  "THE OFFICE 360 — a four-person studio for book strategy, book research, web design, and automation. Research, strategy, design and technology on one brief. No subcontractors, no juniors on your project.";
+  "THE OFFICE 360 — a digital transformation studio: web architecture, AI and business automation, digital growth, brand and creative, publishing, and technology consulting. Six divisions, one analytical method, four principals. No subcontractors, no juniors on your project.";
 
 function truncate(text: string, max = 158): string {
   const flat = text.replace(/\s+/g, " ").trim();
@@ -409,6 +409,46 @@ export function headFor(path: string): HeadMeta {
         jsonLd: [],
       };
 
+    case "about":
+      return {
+        title: "About — THE OFFICE 360",
+        description:
+          "Six divisions, one analytical method, four principals. How THE OFFICE 360 grew from a publishing studio into a digital transformation practice.",
+        url: `${SITE_URL}/about`,
+        noindex: false,
+        jsonLd: [],
+      };
+
+    case "contact":
+      return {
+        title: "Contact — THE OFFICE 360",
+        description:
+          "Send a brief, book a free consultation, request a proposal or ask for a website audit. We reply within two working days.",
+        url: `${SITE_URL}/contact`,
+        noindex: false,
+        jsonLd: [],
+      };
+
+    case "insightsIndex":
+      return {
+        title: "Insights — THE OFFICE 360",
+        description:
+          "Written thinking on technology, AI and automation, digital growth, publishing and business strategy.",
+        url: `${SITE_URL}/insights`,
+        noindex: false,
+        jsonLd: [],
+      };
+
+    case "workIndex":
+      return {
+        title: "Work — THE OFFICE 360",
+        description:
+          "Engagement patterns from the studio's practice. Client identities are never claimed unless verified.",
+        url: `${SITE_URL}/work`,
+        noindex: false,
+        jsonLd: [],
+      };
+
     /* Admin pages are never public and must never be indexed. */
     case "adminLeads":
       return {
@@ -430,7 +470,7 @@ export function headFor(path: string): HeadMeta {
 
     case "home":
       return {
-        title: "THE OFFICE 360 — Book strategy, web, automation, research",
+        title: "THE OFFICE 360 — Digital transformation, technology and growth",
         description: DEFAULT_DESCRIPTION,
         url: `${SITE_URL}/`,
         noindex: false,
@@ -471,6 +511,10 @@ export function prerenderPaths(): string[] {
     "/resources/backlist-audit-checklist",
     "/privacy",
     "/terms",
+    "/about",
+    "/contact",
+    "/insights",
+    "/work",
   ];
   return [...new Set(paths)];
 }

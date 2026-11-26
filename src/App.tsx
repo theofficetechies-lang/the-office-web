@@ -1,7 +1,6 @@
 import { useState } from "react";
 import MarginRail from "./components/MarginRail";
 import MobileFolioStrip from "./components/MobileFolioStrip";
-import Typewriter from "./components/Typewriter";
 import ToastContainer from "./components/Toast";
 import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
@@ -40,6 +39,10 @@ import DemosPage from "./pages/DemosPage";
 import StorePage from "./pages/StorePage";
 import AdminPage from "./pages/AdminPage";
 import AdminLeadsPage from "./pages/AdminLeadsPage";
+import AboutPage from "./pages/AboutPage";
+import ContactPage from "./pages/ContactPage";
+import InsightsPage from "./pages/InsightsPage";
+import WorkIndexPage from "./pages/WorkIndexPage";
 import { useI18n } from "./lib/i18n";
 import { routeKey, useRoute } from "./lib/router";
 import type { Route } from "./lib/router";
@@ -134,6 +137,16 @@ function renderRoute(route: Route): React.ReactNode {
       return <AdminPage />;
     case "adminLeads":
       return <AdminLeadsPage />;
+
+    /* Transformation-brief pages. */
+    case "about":
+      return <AboutPage />;
+    case "contact":
+      return <ContactPage />;
+    case "insightsIndex":
+      return <InsightsPage />;
+    case "workIndex":
+      return <WorkIndexPage />;
     /*
      * Phase 1 added these four route kinds to the router so the architecture is
      * in place, but their pages arrive in Phase 2. Until then they must resolve
@@ -354,9 +367,9 @@ function HomePage() {
   });
 
   useDocumentMeta({
-    title: "THE OFFICE 360 — Book strategy, web, automation, research",
+    title: "THE OFFICE 360 — Digital transformation, technology and growth",
     description:
-      "A four-person studio for authors, publishers, and the people who run literary businesses. Book strategy, book research, custom web design, and automation — research, strategy, design and technology on one brief.",
+      "A digital transformation studio for organisations that run on content and systems: publishing, web architecture, AI automation, growth, brand and technology consulting. Six divisions, one analytical method, and the same four principals on every engagement.",
     path: "/",
   });
 
@@ -373,7 +386,7 @@ function HomePage() {
             <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-10 sm:py-16 lg:py-24">
               <MarginRail
                 sectionNum="00"
-                sectionLabel="THE OFFICE 360 / A STUDIO FOR BOOKS, WEB, AUTOMATION, AND RESEARCH"
+                sectionLabel="THE OFFICE 360 / DIGITAL TRANSFORMATION, TECHNOLOGY, AND GROWTH"
                 folio="PORTFOLIO I"
                 note="If you are reading this, the manifest bar above is real time. It is also the only animation on this page."
               />
@@ -381,7 +394,7 @@ function HomePage() {
               <div className="col-span-12 lg:col-span-10">
                 <MobileFolioStrip
                   sectionNum="00"
-                  sectionLabel="A STUDIO FOR BOOKS, WEB, AUTOMATION, AND RESEARCH"
+                  sectionLabel="DIGITAL TRANSFORMATION, TECHNOLOGY, AND GROWTH"
                   folio="PORTFOLIO I"
                 />
                 <div className="font-mono text-[11px] sm:text-[12px] tracking-mono opacity-70 mb-6 sm:mb-10">
@@ -414,30 +427,46 @@ function HomePage() {
 
                   <div className="col-span-12 lg:col-span-4 lg:col-start-9 flex flex-col gap-3">
                     <div className="font-mono text-[11px] tracking-mono opacity-60">
-                      {t("hero.reading").toUpperCase()}
+                      START HERE
                     </div>
-                    <div className="font-display text-[20px] sm:text-[22px] tracking-display leading-[1.25]">
-                      <Typewriter
-                        text="“A working class of letters.” — a novel repositioning, Spring '26."
-                        speed={28}
-                      />
-                    </div>
+                    {/*
+                      Primary then secondary, per the transformation brief. Both are
+                      real destinations: /contact is a page with a real form, and
+                      /services is the index. The old primary CTA was an anchor to a
+                      section on this page, which is fine for a one-page studio and
+                      wrong for a site where the visitor may have arrived on a
+                      division page.
+                    */}
                     <a
-                      href="#contact"
+                      href="/contact"
                       className={[
-                        "mt-2 inline-flex items-center gap-2 self-start",
-                        "border border-black px-4 py-2.5",
+                        "inline-flex items-center gap-2 self-start",
+                        "bg-black text-white px-4 py-3",
+                        "font-mono text-[12px] tracking-mono font-semibold",
+                        "transition-colors duration-200",
+                        "hover:bg-black/85",
+                      ].join(" ")}
+                    >
+                      BOOK A FREE CONSULTATION →
+                    </a>
+                    <a
+                      href="/services"
+                      className={[
+                        "inline-flex items-center gap-2 self-start",
+                        "border border-black px-4 py-3",
                         "font-mono text-[12px] tracking-mono font-semibold",
                         "transition-colors duration-200",
                         "hover:bg-black hover:text-white",
                         "focus-visible:bg-black focus-visible:text-white",
-                        // Visible from the first paint. Gating the primary CTA on
-                        // the typewriter left it invisible-but-clickable for the
-                        // ~2.5s the animation runs; the animation is decoration.
                       ].join(" ")}
                     >
-                      {t("cta.requestAnalysis").toUpperCase()} →
+                      EXPLORE OUR SERVICES
                     </a>
+                    <div className="mt-3 font-mono text-[10.5px] tracking-mono opacity-55 leading-[1.7]">
+                      FOUR PRINCIPALS · SIX DIVISIONS
+                      <br />
+                      REPLY WITHIN TWO WORKING DAYS
+                    </div>
                   </div>
                 </div>
               </div>
@@ -465,7 +494,7 @@ function HomePage() {
               <div className="col-span-12 lg:col-span-4 mt-6 lg:mt-0">
                 <div className="font-mono text-[10.5px] tracking-mono opacity-60 mb-3">WHY TRUST US</div>
                 <ul className="font-mono text-[11.5px] tracking-mono leading-[1.9] opacity-80">
-                  <li>EST. 2021 · FOUR PEOPLE · NO SUBCONTRACTORS</li>
+                  <li>EST. 2021 · FOUR PRINCIPALS · SIX DIVISIONS · NO SUBCONTRACTORS</li>
                   <li>SIX-STAGE NAMED METHODOLOGY</li>
                   <li>YOU KEEP THE ANALYSIS</li>
                   <li><a href="/#work" className="underline">CASE STUDIES →</a></li>
@@ -829,7 +858,7 @@ function HomePage() {
             <div className="grid grid-cols-12 gap-x-6 sm:gap-x-10 py-14 sm:py-20">
               <MarginRail
                 sectionNum="05"
-                sectionLabel="FOUR PEOPLE. ONE STUDIO."
+                sectionLabel="FOUR PRINCIPALS. SIX DIVISIONS."
                 folio="PORTFOLIO VI"
                 note="The person on the kickoff call is the person who does the work."
               />
@@ -837,7 +866,7 @@ function HomePage() {
               <div className="col-span-12 lg:col-span-10 reveal">
                 <MobileFolioStrip
                   sectionNum="05"
-                  sectionLabel="FOUR PEOPLE. ONE STUDIO."
+                  sectionLabel="FOUR PRINCIPALS. SIX DIVISIONS."
                   folio="PORTFOLIO VI"
                 />
                 <div className="mb-10 sm:mb-14">
